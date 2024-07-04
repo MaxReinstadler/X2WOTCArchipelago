@@ -197,10 +197,10 @@ async def handle_tick_tactical(request: web.Request):
 #----------------------------------------------------------------------------------------------------------------------#
 
 async def run_proxy(local_ctx: CommonContext):
-    address = ("localhost", 24728)
-    
     global ctx
     ctx = local_ctx
+
+    address = ("localhost", ctx.proxy_port)
     
     app = web.Application()
     app.router.add_get("/Tick/Strategy", handle_tick_strategy)
