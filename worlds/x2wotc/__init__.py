@@ -1,10 +1,18 @@
 from BaseClasses import Tutorial
 from worlds.AutoWorld import WebWorld, World
+from worlds.LauncherComponents import Component, components, launch_subprocess, Type
 from .Items import X2WOTCItem, item_table, item_display_name_to_key, disable_item
 from .Locations import location_table, disable_location
 from .Regions import create_regions
 from .Rules import set_rules
 from .Options import X2WOTCOptions
+
+def launch_client():
+    from .Client import launch
+    launch_subprocess(launch, name="X2WOTCClient")
+
+components.append(Component("XCOM 2 War of the Chosen Client", "X2WOTCClient",
+                            func=launch_client, component_type=Type.CLIENT))
 
 class X2WOTCWeb(WebWorld):
     theme = "partyTime"
