@@ -15,4 +15,5 @@ informing the player of what they got and who gave it to them.
 
 ## What does another world's item look like in the game?
 
-When another world's item is collected, a pop-up will appear informing the player of what they found and who it belongs to.
+When another world's item is collected, a pop-up will appear informing the player of what they found and who it
+belongs to.
