@@ -28,7 +28,7 @@ through Steam.
 
 1. Download the latest release of the
 [XCOM 2 WotC APWorld](https://github.com/MaxReinstadler/X2WOTCArchipelago/releases) from GitHub.
-2. Launch the XCOM 2 War of the Chosen Client from the Archipelago Launcher.
+2. Launch the XCOM 2 War of the Chosen AP Client from the Archipelago Launcher.
 
 ## Generating a Multiworld
 
@@ -41,8 +41,7 @@ hosting a Multiworld.
 
 ## Joining a Multiworld
 
-0. Upon launching the XCOM 2 WotC AP Client (`X2WOTCClient.exe`), the proxy server will be hosted locally
-(at port 24728 by default).
+0. Upon launching the XCOM 2 WotC AP Client, the proxy server will be hosted locally (at port 24728 by default).
     - If this doesn't work for you for whatever reason, the port can be changed using the `/proxy` command.
     If you do, you will also have to edit the XCOM 2 WotC AP Mod's
     [config file](https://www.reddit.com/r/xcom2mods/wiki/wotc_modding/folder_paths/#wiki_user_config) to reflect
