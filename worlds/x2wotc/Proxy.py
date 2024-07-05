@@ -136,12 +136,13 @@ async def handle_check(request: web.Request):
     
     response_body = ""
     for loc_name, (item_name, item, slot_info) in get_locations_info(checks).items():
+        item_data = item_table[item_name]
+        
         if response_body != "":
             response_body += "\n\n"
 
         if item == None:
             logger.debug(f"Proxy: No item at location {loc_name}, will be treated as disabled")
-            item_data = item_table[item_name]
             response_body += f"[{item_data.type}]{item_name}\n"
             response_body += f"Regular Item Found\n"
             response_body += f"Found your {item_data.display_name}!"
