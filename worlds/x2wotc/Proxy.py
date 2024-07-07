@@ -12,7 +12,7 @@ ctx: CommonContext
 LocationsInfo = Dict[
     str,  # Location name (key)
     Tuple[
-        str,  # Item name (key)
+        Optional[str],  # Item name (key)
         Optional[NetworkItem],
         Optional[NetworkSlot]
     ]
@@ -135,14 +135,21 @@ async def handle_check(request: web.Request):
     await send_checks(checks)
     
     response_body = ""
+    
     for loc_name, (item_name, item, slot_info) in get_locations_info(checks).items():
-        item_data = item_table[item_name]
-        
         if response_body != "":
             response_body += "\n\n"
 
+        if item_name == None:
+            logger.debug(f"Proxy: Location {loc_name} disabled, no regular item")
+            response_body += "None\n"
+            response_body += "None"
+            continue
+
+        item_data = item_table[item_name]
+
         if item == None:
-            logger.debug(f"Proxy: No item at location {loc_name}, will be treated as disabled")
+            logger.debug(f"Proxy: Location {loc_name} disabled, regular item found")
             response_body += f"[{item_data.type}]{item_name}\n"
             response_body += f"Regular Item Found\n"
             response_body += f"Found your {item_data.display_name}!"
