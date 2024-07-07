@@ -116,12 +116,24 @@ async def send_checks(checks: List[str]):
 
 # ---------------------------------------------------- RECEIVE ------------------------------------------------------- #
 
-def get_received_items() -> ItemsInfo:
+def get_received_items(layer: str, number_received: int) -> ItemsInfo:
     items_info = {}
+    number = 0  # Number in sequence of received items (from 1)
+
     for item in ctx.items_received:
         item_name = item_id_to_key[item.item]
+        item_data = item_table[item_name]
+
+        if item_data.layer != layer:
+            continue
+
+        number += 1
+        if number <= number_received:
+            continue
+
         slot_info = get_slot_info(item.player)
         items_info[item_name] = (item, slot_info)
+
     return items_info
 
 #======================================================================================================================#
@@ -135,7 +147,7 @@ async def handle_check(request: web.Request):
     await send_checks(checks)
     
     response_body = ""
-    
+
     for loc_name, (item_name, item, slot_info) in get_locations_info(checks).items():
         if response_body != "":
             response_body += "\n\n"
@@ -167,37 +179,38 @@ async def handle_check(request: web.Request):
 
 # ----------------------------------------------------- TICK --------------------------------------------------------- #
 
-def handle_tick(layer: str) -> str:
+def handle_tick(layer: str, number_received: int) -> str:
     response_body = ""
 
-    for item_name, (item, slot_info) in get_received_items().items():
+    for item_name, (item, slot_info) in get_received_items(layer, number_received).items():
+        if response_body != "":
+            response_body += "\n\n"
+
         item_data = item_table[item_name]
 
-        if item_data.layer == layer:
-            if response_body != "":
-                response_body += "\n\n"
+        # Info for the game to process
+        response_body += f"[{item_data.type}]{item_name}\n"
 
-            # Info for the game to process
-            response_body += f"[{item_data.type}]{item_name}\n"
-
-            if item.player == ctx.slot:
-                response_body += "Archipelago Item Found\n"
-                response_body += f"Found your {item_data.display_name}!"
-            elif slot_info:
-                response_body += "Archipelago Item Received\n"
-                response_body += f"Received {item_data.display_name} from {slot_info.name} ({slot_info.game})!"
-            else:
-                response_body += "Archipelago Item Received\n"
-                response_body += f"Received {item_data.display_name} from the server."
+        if item.player == ctx.slot:
+            response_body += "Archipelago Item Found\n"
+            response_body += f"Found your {item_data.display_name}!"
+        elif slot_info:
+            response_body += "Archipelago Item Received\n"
+            response_body += f"Received {item_data.display_name} from {slot_info.name} ({slot_info.game})!"
+        else:
+            response_body += "Archipelago Item Received\n"
+            response_body += f"Received {item_data.display_name} from the server."
 
     return response_body
 
 async def handle_tick_strategy(request: web.Request):
-    response_body = handle_tick("Strategy")
+    number_received = int(request.match_info["tail"])
+    response_body = handle_tick("Strategy", number_received)
     return web.Response(text=response_body)
 
 async def handle_tick_tactical(request: web.Request):
-    response_body = handle_tick("Tactical")
+    number_received = int(request.match_info["tail"])
+    response_body = handle_tick("Tactical", number_received)
     return web.Response(text=response_body)
 
 #======================================================================================================================#
@@ -211,8 +224,8 @@ async def run_proxy(local_ctx: CommonContext):
     address = ("localhost", ctx.proxy_port)
     
     app = web.Application()
-    app.router.add_get("/Tick/Strategy", handle_tick_strategy)
-    app.router.add_get("/Tick/Tactical", handle_tick_tactical)
+    app.router.add_get("/Tick/Strategy/{tail:[0-9]+}", handle_tick_strategy)
+    app.router.add_get("/Tick/Tactical/{tail:[0-9]+}", handle_tick_tactical)
     app.router.add_get("/Check/{tail:.*}", handle_check)
 
     runner = web.AppRunner(app)
