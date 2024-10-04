@@ -586,8 +586,13 @@ location_table: Dict[str, X2WOTCLocationData] = {
 loc_display_name_to_key = {loc_data.display_name: key for key, loc_data in location_table.items()}
 loc_id_to_key = {loc_data.id: key for key, loc_data in location_table.items() if loc_data.id}
 
-def disable_location(loc_name: str):
-    loc_data = location_table[loc_name]
-    location_table[loc_name] = loc_data._replace(
-        type = "Disabled",
-    )
+enabled: Dict[int, Dict[str, bool]] = {}
+
+def init_location_vars(player: int):
+    enabled[player] = {loc_name: True for loc_name in location_table.keys()}
+
+def is_enabled(player: int, loc_name: str) -> bool:
+    return enabled[player][loc_name]
+
+def disable_location(player: int, loc_name: str):
+    enabled[player][loc_name] = False

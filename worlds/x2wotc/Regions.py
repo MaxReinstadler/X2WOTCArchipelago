@@ -1,22 +1,25 @@
 from BaseClasses import MultiWorld, Region
-from .Locations import X2WOTCLocation, location_table
+from .Locations import X2WOTCLocation, location_table, is_enabled
 from .Rules import has_shadow_chamber
 from typing import Dict, Optional
 
-region_table: Dict[str, Dict[str, Optional[int]]] = {
-    "Menu": {},
-    "Avenger": {},
-    "Research Lab": {},
-    "Shadow Chamber": {}
-}
+region_table: Dict[int, Dict[str, Dict[str, Optional[int]]]] = {}
+
+def init_region_vars(player: int):
+    region_table[player] = {
+        "Menu": {},
+        "Avenger": {},
+        "Research Lab": {},
+        "Shadow Chamber": {}
+    }
 
 def create_regions(world: MultiWorld, player: int):
     # Add locations
     for loc_name, loc_data in location_table.items():
-        region_name = "Avenger"
-
-        if loc_data.type == "Disabled":
+        if not is_enabled(player, loc_name):
             continue
+
+        region_name = "Avenger"
 
         if loc_data.type == "Event":
             if loc_name == "Victory":
@@ -28,10 +31,10 @@ def create_regions(world: MultiWorld, player: int):
             else:
                 region_name = "Research Lab"
 
-        region_table[region_name][loc_data.display_name] = loc_data.id
+        region_table[player][region_name][loc_data.display_name] = loc_data.id
 
     # Create regions
-    for region_name in region_table.keys():
+    for region_name in region_table[player].keys():
         world.regions.append(create_region(world, player, region_name))
 
     # Connect regions
@@ -42,5 +45,5 @@ def create_regions(world: MultiWorld, player: int):
 
 def create_region(world: MultiWorld, player: int, name: str) -> Region:
     region = Region(name, player, world)
-    region.add_locations(region_table[name], X2WOTCLocation)
+    region.add_locations(region_table[player][name], X2WOTCLocation)
     return region

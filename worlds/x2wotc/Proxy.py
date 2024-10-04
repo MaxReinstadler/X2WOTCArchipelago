@@ -3,7 +3,6 @@ from typing import Optional, List, Dict, Tuple
 from CommonClient import CommonContext, NetworkItem, NetworkSlot, logger
 from NetUtils import ClientStatus
 
-# Note: item and location tables include disabled item/location pairs
 from .Items import item_table, item_id_to_key
 from .Locations import location_table, loc_id_to_key
 
@@ -55,14 +54,14 @@ async def scout_locations():
     logger.debug("Proxy: Locations scouted")
 
 def get_locations_info(checks: List[str]) -> LocationsInfo:
-    locations_info = {}
+    locations_info: LocationsInfo = {}
     for loc_name in checks:
 
         try:
             loc_data = location_table[loc_name]
             loc_id = loc_data.id
         except KeyError:
-            logger.warn(f"Proxy: Location {loc_name} not found")
+            logger.warning(f"Proxy: Location {loc_name} not found")
             continue
 
         if loc_id not in ctx.locations_scouted:
@@ -93,11 +92,11 @@ async def send_checks(checks: List[str]):
         try:
             loc_id = location_table[loc_name].id
         except KeyError:
-            logger.warn(f"Proxy: Location {loc_name} not found")
+            logger.warning(f"Proxy: Location {loc_name} not found")
             continue
 
         if loc_id == None:
-            logger.warn(f"Proxy: Location {loc_name} is event, can't be checked")
+            logger.warning(f"Proxy: Location {loc_name} is event, can't be checked")
             continue
         
         if loc_id not in ctx.server_locations:
@@ -117,12 +116,18 @@ async def send_checks(checks: List[str]):
 # ---------------------------------------------------- RECEIVE ------------------------------------------------------- #
 
 def get_received_items(layer: str, number_received: int) -> ItemsInfo:
-    items_info = {}
+    items_info: ItemsInfo = {}
+    progressive_index: Dict[str, int] = {}
     number = 0  # Number in sequence of received items (from 1)
 
     for item in ctx.items_received:
         item_name = item_id_to_key[item.item]
         item_data = item_table[item_name]
+
+        # Track progressive items
+        stages = item_data.stages
+        if stages is not None:
+            progressive_index[item_name] = progressive_index.get(item_name, -1) + 1
 
         if item_data.layer != layer:
             continue
@@ -130,6 +135,13 @@ def get_received_items(layer: str, number_received: int) -> ItemsInfo:
         number += 1
         if number <= number_received:
             continue
+
+        # Translate progressive items
+        if stages is not None:
+            try:
+                item_name = stages[progressive_index[item_name]]
+            except IndexError:
+                logger.warning(f"Proxy: Too many instances of progressive item {item_name}")
 
         slot_info = get_slot_info(item.player)
         items_info[item_name] = (item, slot_info)

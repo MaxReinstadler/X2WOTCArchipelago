@@ -1,7 +1,7 @@
 from BaseClasses import MultiWorld, CollectionState
 from worlds.generic.Rules import set_rule, add_rule
 from .Items import item_table, get_total_power
-from .Locations import location_table
+from .Locations import location_table, is_enabled
 from typing import Callable
 
 #======================================================================================================================#
@@ -11,8 +11,11 @@ from typing import Callable
 def get_current_power(state: CollectionState, player: int) -> float:
     power = 0.0
     for item_data in item_table.values():
-        if state.has(item_data.display_name, player):
-            power += item_data.power
+        count = state.count(item_data.display_name, player)
+        if item_data.stages is None:
+            power += item_data.power * count
+        else:
+            power += sum([item_table[item_data.stages[i]].power for i in range(count)])
     return power
 
 def has_power(state: CollectionState, player: int, power: float) -> bool:
@@ -20,7 +23,7 @@ def has_power(state: CollectionState, player: int, power: float) -> bool:
 
 def can_reasonably_reach(state: CollectionState, player: int, location: str) -> bool:
     difficulty = location_table[location].difficulty
-    total_power = get_total_power()
+    total_power = get_total_power(player)
     req_power = difficulty * total_power / 100.0
     return has_power(state, player, req_power)
 
@@ -101,7 +104,7 @@ def set_rules(world: MultiWorld, player: int):
     #------------------------------------------------ Power rules -----------------------------------------------------#
     #------------------------------------------------------------------------------------------------------------------#
     for loc_name, loc_data in location_table.items():
-        if loc_data.type == "Disabled":
+        if not is_enabled(player, loc_name):
             continue
 
         location = world.get_location(loc_data.display_name, player)

@@ -24,6 +24,7 @@ class X2WOTCItemData(NamedTuple):
                                 # "SLG": Shens Last Gift,
                                 # "WOTC": War of the Chosen
     normal_location: Optional[str] = None
+    stages: Optional[List[str]] = None  # For progressive items
 
 base_id = 2482748367
 
@@ -608,6 +609,78 @@ wotc_chosen_weapon_tech_items: Dict[str, X2WOTCItemData] = {
     )
 }
 
+#=======================================================================================================================
+#                                            PROGRESSIVE TECH ITEMS
+#-----------------------------------------------------------------------------------------------------------------------
+
+progressive_tech_items: Dict[str, X2WOTCItemData] = {
+    "ProgressiveRifleTechCompleted": X2WOTCItemData(
+        display_name = "Progressive Rifle Tech",
+        id = tech_base_id + 49,
+        classification = ItemClassification.progression,
+        layer = "Strategy",
+        type = "TechCompleted",
+        tags = ["weapon", "progressive"],
+        dlc = None,
+        stages = [
+            "MagnetizedWeaponsCompleted",
+            "PlasmaRifleCompleted"
+        ]
+    ),
+    "ProgressiveMeleeTechCompleted": X2WOTCItemData(
+        display_name = "Progressive Melee Weapon Tech",
+        id = tech_base_id + 50,
+        classification = ItemClassification.progression,
+        layer = "Strategy",
+        type = "TechCompleted",
+        tags = ["weapon", "progressive"],
+        dlc = None,
+        stages = [
+            "AutopsyAdventStunLancerCompleted",
+            "AutopsyArchonCompleted"
+        ]
+    ),
+    "ProgressiveArmorTechCompleted": X2WOTCItemData(
+        display_name = "Progressive Armor Tech",
+        id = tech_base_id + 51,
+        classification = ItemClassification.progression,
+        layer = "Strategy",
+        type = "TechCompleted",
+        tags = ["armor", "progressive"],
+        dlc = None,
+        stages = [
+            "PlatedArmorCompleted",
+            "PoweredArmorCompleted"
+        ]
+    ),
+    "ProgressiveGREMLINTechCompleted": X2WOTCItemData(
+        display_name = "Progressive GREMLIN Tech",
+        id = tech_base_id + 52,
+        classification = ItemClassification.progression,
+        layer = "Strategy",
+        type = "TechCompleted",
+        tags = ["utility", "weapon", "progressive"],
+        dlc = None,
+        stages = [
+            "AutopsyAdventMECCompleted",
+            "AutopsySectopodCompleted"
+        ]
+    ),
+    "ProgressivePsionicsTechCompleted": X2WOTCItemData(
+        display_name = "Progressive Psionics Tech",
+        id = tech_base_id + 53,
+        classification = ItemClassification.progression,
+        layer = "Strategy",
+        type = "TechCompleted",
+        tags = ["facility", "weapon", "progressive"],
+        dlc = None,
+        stages = [
+            "PsionicsCompleted",
+            "AutopsyGatekeeperCompleted"
+        ]
+    )
+}
+
 ########################################################################################################################
 ##                                                EVENT ITEMS                                                         ##
 ########################################################################################################################
@@ -632,7 +705,8 @@ tech_item_table: Dict[str, X2WOTCItemData] = {
     **vanilla_other_tech_items,
     **alien_hunters_tech_items,
     **wotc_autopsy_tech_items,
-    **wotc_chosen_weapon_tech_items
+    **wotc_chosen_weapon_tech_items,
+    **progressive_tech_items
 }
 
 item_table: Dict[str, X2WOTCItemData] = {
@@ -643,19 +717,49 @@ item_table: Dict[str, X2WOTCItemData] = {
 item_display_name_to_key = {item_data.display_name: key for key, item_data in item_table.items()}
 item_id_to_key = {item_data.id: key for key, item_data in item_table.items() if item_data.id}
 
-power_values = [item_data.power for item_data in item_table.values()]
-total_power = sum(power_values)
+total_power: Dict[int, float] = {}
+item_count: Dict[int, Dict[str, int]] = {}
 
-def get_total_power():
-    return total_power
+def init_item_vars(player: int):
+    item_count[player] = {}
+    for item_name, item_data in item_table.items():
+        if item_data.stages is None:
+            item_count[player][item_name] = 1
+        else:
+            item_count[player][item_name] = 0
 
-def disable_item(item_name: str):
+    power_values = [item_data.power * item_count[player][item_name] for item_name, item_data in item_table.items()]
+    total_power[player] = sum(power_values)
+
+def get_total_power(player: int) -> float:
+    return total_power[player]
+
+def get_item_count(player: int, item_name: str) -> int:
+    return item_count[player][item_name]
+
+def set_item_count(player: int, item_name: str, new_count: int, adjust_total_power: bool = True):
+    old_count = item_count[player][item_name]
+    item_count[player][item_name] = new_count
+
+    if adjust_total_power:
+        item_data = item_table[item_name]
+        total_power[player] += item_data.power * (new_count - old_count)
+
+def disable_item(player: int, item_name: str):
+    set_item_count(player, item_name, 0)
+
+def enable_progressive_item(player: int, item_name: str) -> bool:
     item_data = item_table[item_name]
-    item_table[item_name] = item_data._replace(
-        classification = ItemClassification.useful,
-        type = "Disabled",
-        power = 0.0
-    )
+    stages = item_data.stages
+    if stages is None:
+        return False
+    
+    for stage_name in stages:
+        if item_count[player][stage_name] != 1:
+            return False
+        
+    for stage_name in stages:
+        set_item_count(player, stage_name, 0, False)
 
-    global total_power
-    total_power -= item_data.power
+    set_item_count(player, item_name, len(stages))
+    return True
