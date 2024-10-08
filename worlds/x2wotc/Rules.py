@@ -145,8 +145,7 @@ def can_do_final_mission(state: CollectionState, player: int) -> bool:
 
 # Victory
 def has_won(state: CollectionState, player: int) -> bool:
-    victory_item_data = item_table["Victory"]
-    return state.has(victory_item_data.display_name, player)
+    return state.has(item_table["Victory"].display_name, player)
 
 #======================================================================================================================#
 #                                                     SET RULES                                                        #
