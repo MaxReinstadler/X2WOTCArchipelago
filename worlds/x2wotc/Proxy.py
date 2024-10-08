@@ -66,13 +66,18 @@ def get_locations_info(checks: List[str]) -> LocationsInfo:
 
         if loc_id not in ctx.locations_scouted:
             logger.debug(f"Proxy: Location {loc_name} not scouted, will be treated as disabled")
-            item_name = loc_data.normal_item
+            item_name = loc_data.normal_item  # Send internal key for disabled locations
             locations_info[loc_name] = (item_name, None, None)
             continue
         
         network_item = ctx.locations_info[loc_id]
-        item_name = item_id_to_key[network_item.item]
         slot_info = get_slot_info(network_item.player)
+
+        # Send external name for all locations touched by generation
+        # (Receiving is handled by tick calls)
+        item_name_lookup: CommonContext.NameLookupDict = ctx.item_names
+        item_name = item_name_lookup.lookup_in_game(network_item.item, slot_info.game)
+
         locations_info[loc_name] = (item_name, network_item, slot_info)
 
     return locations_info
@@ -168,24 +173,26 @@ async def handle_check(request: web.Request):
             logger.debug(f"Proxy: Location {loc_name} disabled, no regular item")
             response_body += "None\n"
             response_body += "None"
-            continue
 
-        item_data = item_table[item_name]
-
-        if item == None:
+        # For disabled locations, item_name is the internal key
+        elif item == None:
             logger.debug(f"Proxy: Location {loc_name} disabled, regular item found")
+            item_data = item_table[item_name]
             response_body += f"[{item_data.type}]{item_name}\n"
             response_body += f"Regular Item Found\n"
             response_body += f"Found your {item_data.display_name}!"
+        
+        # No message for items sent to ourselves
         elif item.player == ctx.slot:
             response_body += "None\n"
             response_body += "None"
+
         elif slot_info:
             response_body += "Archipelago Item Sent\n"
-            response_body += f"Sent {item_data.display_name} to {slot_info.name} ({slot_info.game})!"
+            response_body += f"Sent {item_name} to {slot_info.name} ({slot_info.game})!"
         else:
             response_body += "Archipelago Item Sent\n"
-            response_body += f"Sent {item_data.display_name} to no one..."
+            response_body += f"Sent {item_name} to no one..."
 
     return web.Response(text=response_body)
 
