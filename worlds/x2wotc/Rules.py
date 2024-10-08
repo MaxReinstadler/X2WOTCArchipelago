@@ -34,16 +34,7 @@ def get_power_rule(player: int, location: str) -> Callable[[CollectionState], bo
 #                                                 STORY RULE HELPERS                                                   #
 #----------------------------------------------------------------------------------------------------------------------#
 
-def has_proving_ground(state: CollectionState, player: int) -> bool:
-    return state.has(item_table["AutopsyAdventOfficerCompleted"].display_name, player)
-
-def has_skulljack(state: CollectionState, player: int) -> bool:
-    return has_proving_ground(state, player)
-
-def can_skulljack_officer(state: CollectionState, player: int) -> bool:
-    return (state.has(item_table["AutopsyAdventOfficerCompleted"].display_name, player)
-            and has_skulljack(state, player))
-
+# Contact
 def can_make_contact(state: CollectionState, player: int) -> bool:
     return state.has(item_table["ResistanceCommunicationsCompleted"].display_name, player)
 
@@ -54,9 +45,11 @@ def can_make_more_contact(state: CollectionState, player: int) -> bool:
     return (can_make_contact(state, player)
             and has_resistance_comms(state, player))
 
+# Facility Assault
 def can_do_facility_mission(state: CollectionState, player: int) -> bool:
     return can_make_more_contact(state, player)
 
+# Chosen Hunt
 def has_resistance_ring(state: CollectionState, player: int) -> bool:
     return True
 
@@ -67,31 +60,90 @@ def can_kill_chosen(state: CollectionState, player: int) -> bool:
     return (can_find_chosen(state, player)
             and can_make_more_contact(state, player))
 
+# Shadow Chamber
 def has_shadow_chamber(state: CollectionState, player: int) -> bool:
     return state.has(item_table["AlienEncryptionCompleted"].display_name, player)
 
+# Blacksite -> Blacksite Data -> Forge -> Forge Stasis Suit
 def can_do_blacksite_mission(state: CollectionState, player: int) -> bool:
     return can_make_contact(state, player)
 
+def has_blacksite_data_objective(state: CollectionState, player: int) -> bool:
+    return can_do_blacksite_mission(state, player)
+
 def can_do_forge_mission(state: CollectionState, player: int) -> bool:
     return (state.has(item_table["BlacksiteDataCompleted"].display_name, player)
+            and has_blacksite_data_objective(state, player)
             and can_make_more_contact(state, player))
+
+def has_forge_stasis_suit_objective(state: CollectionState, player: int) -> bool:
+    return can_do_forge_mission(state, player)
+
+def finished_forge_stasis_suit_objective(state: CollectionState, player: int) -> bool:
+    return (state.has(item_table["ForgeStasisSuitCompleted"].display_name, player)
+            and has_forge_stasis_suit_objective(state, player))
+
+# Skulljack
+def has_proving_ground(state: CollectionState, player: int) -> bool:
+    return state.has(item_table["AutopsyAdventOfficerCompleted"].display_name, player)
+
+def has_skulljack(state: CollectionState, player: int) -> bool:
+    return has_proving_ground(state, player)
+
+# Skulljack Officer -> Codex Brain -> Psi Gate
+def has_autopsy_officer_objective(state: CollectionState, player: int) -> bool:
+    return state.has(item_table["AlienBiotechCompleted"].display_name, player)
+
+def has_skulljack_officer_objective(state: CollectionState, player: int) -> bool:
+    return (state.has(item_table["AutopsyAdventOfficerCompleted"].display_name, player)
+            and has_autopsy_officer_objective(state, player))
+
+def can_skulljack_officer(state: CollectionState, player: int) -> bool:
+    return (has_skulljack_officer_objective(state, player)
+            and has_skulljack(state, player))
+
+def has_codex_brain_pt1_objective(state: CollectionState, player: int) -> bool:
+    return can_skulljack_officer(state, player)
 
 def can_do_psi_gate_mission(state: CollectionState, player: int) -> bool:
     return (state.has(item_table["CodexBrainPt1Completed"].display_name, player)
+            and has_codex_brain_pt1_objective(state, player)
             and can_make_more_contact(state, player))
 
-def can_skulljack_codex(state: CollectionState, player: int) -> bool:
+def has_psi_gate_objective(state: CollectionState, player: int) -> bool:
+    return can_do_psi_gate_mission(state, player)
+
+def finished_psi_gate_objective(state: CollectionState, player: int) -> bool:
+    return (state.has(item_table["PsiGateCompleted"].display_name, player)
+            and has_psi_gate_objective(state, player))
+
+# Skulljack Codex -> Avatar Corpse
+def has_codex_brain_pt2_objective(state: CollectionState, player: int) -> bool:
+    return (state.has(item_table["CodexBrainPt1Completed"].display_name, player)
+            and has_codex_brain_pt1_objective(state, player))
+
+def has_skulljack_codex_objective(state: CollectionState, player: int) -> bool:
     return (state.has(item_table["CodexBrainPt2Completed"].display_name, player)
+            and has_codex_brain_pt2_objective(state, player))
+
+def can_skulljack_codex(state: CollectionState, player: int) -> bool:
+    return (has_skulljack_codex_objective(state, player)
             and has_skulljack(state, player))
+
+# Final Mission
+def has_autopsy_avatar_objective(state: CollectionState, player: int) -> bool:
+    return (finished_forge_stasis_suit_objective(state, player)
+            and finished_psi_gate_objective(state, player))
 
 def can_do_truth_mission(state: CollectionState, player: int) -> bool:
     return (state.has(item_table["AutopsyAdventPsiWitchCompleted"].display_name, player)
+            and has_autopsy_avatar_objective(state, player)
             and has_shadow_chamber(state, player))
 
 def can_do_final_mission(state: CollectionState, player: int) -> bool:
     return can_do_truth_mission(state, player)
 
+# Victory
 def has_won(state: CollectionState, player: int) -> bool:
     victory_item_data = item_table["Victory"]
     return state.has(victory_item_data.display_name, player)
@@ -120,7 +172,7 @@ def set_rules(world: MultiWorld, player: int):
     loc_name_alien_encryption = location_table["AlienEncryption"].display_name
     add_rule(world.get_location(loc_name_alien_encryption, player),
              lambda state: (can_do_blacksite_mission(state, player)
-             or can_skulljack_officer(state, player)))
+                            or can_skulljack_officer(state, player)))
     
     loc_name_codex_brain_pt1 = location_table["CodexBrainPt1"].display_name
     add_rule(world.get_location(loc_name_codex_brain_pt1, player),
@@ -145,8 +197,8 @@ def set_rules(world: MultiWorld, player: int):
     loc_name_autopsy_advent_psi_witch = location_table["AutopsyAdventPsiWitch"].display_name
     add_rule(world.get_location(loc_name_autopsy_advent_psi_witch, player),
              lambda state: (world.get_location(loc_name_forge_stasis_suit, player).can_reach(state)
-             and world.get_location(loc_name_psi_gate, player).can_reach(state)
-             and can_skulljack_codex(state, player)))
+                            and world.get_location(loc_name_psi_gate, player).can_reach(state)
+                            and can_skulljack_codex(state, player)))
     
     loc_name_victory = location_table["Victory"].display_name
     add_rule(world.get_location(loc_name_victory, player),
@@ -157,15 +209,15 @@ def set_rules(world: MultiWorld, player: int):
     try:
         loc_name_autopsy_viper_king = location_table["AutopsyViperKing"].display_name
         add_rule(world.get_location(loc_name_autopsy_viper_king, player),
-                lambda state: can_do_facility_mission(state, player))
+                 lambda state: can_do_facility_mission(state, player))
         
         loc_name_autopsy_berserker_queen = location_table["AutopsyBerserkerQueen"].display_name
         add_rule(world.get_location(loc_name_autopsy_berserker_queen, player),
-                lambda state: can_do_facility_mission(state, player))
+                 lambda state: can_do_facility_mission(state, player))
         
         loc_name_autopsy_archon_king = location_table["AutopsyArchonKing"].display_name
         add_rule(world.get_location(loc_name_autopsy_archon_king, player),
-                lambda state: can_do_facility_mission(state, player))
+                 lambda state: can_do_facility_mission(state, player))
         
     except KeyError:
         print("Alien Ruler autopsy locations not found, assuming disabled.")
