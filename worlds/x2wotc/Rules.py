@@ -38,12 +38,12 @@ def get_power_rule(player: int, location: str) -> Callable[[CollectionState], bo
 def can_make_contact(state: CollectionState, player: int) -> bool:
     return state.has(item_table["ResistanceCommunicationsCompleted"].display_name, player)
 
-def has_resistance_comms(state: CollectionState, player: int) -> bool:
-    return state.has(item_table["ResistanceCommunicationsCompleted"].display_name, player)
+def has_radio_relays(state: CollectionState, player: int) -> bool:
+    return state.has(item_table["ResistanceRadioCompleted"].display_name, player)
 
 def can_make_more_contact(state: CollectionState, player: int) -> bool:
     return (can_make_contact(state, player)
-            and has_resistance_comms(state, player))
+            and has_radio_relays(state, player))
 
 # Facility Assault
 def can_do_facility_mission(state: CollectionState, player: int) -> bool:
