@@ -13,10 +13,16 @@ class DisableIntegratedDLC(Toggle):
     display_name = "Disable Integrated DLC"
     default = False
 
+class DisableContactTechs(Toggle):
+    """Generation leaves Resistance Communications and Resistance Radio untouched.
+    **RECOMMENDED** These techs are currently broken and create weird playthroughs."""
+    display_name = "Disable Contact Techs"
+    default = True
+
 class EnableProgressiveRifleTechs(Toggle):
     """Forces rifle techs to be collected in order."""
     display_name = "Enable Progressive Rifle Techs"
-    default = False
+    default = True
 
 class EnableProgressiveMeleeTechs(Toggle):
     """Forces melee weapon techs to be collected in order."""
@@ -42,6 +48,7 @@ class EnableProgressivePsionicsTechs(Toggle):
 class X2WOTCOptions(PerGameCommonOptions):
     disable_alien_hunters: DisableAlienHunters
     disable_integrated_dlc: DisableIntegratedDLC
+    disable_contact_techs: DisableContactTechs
     enable_progressive_rifle_techs: EnableProgressiveRifleTechs
     enable_progressive_melee_techs: EnableProgressiveMeleeTechs
     enable_progressive_armor_techs: EnableProgressiveArmorTechs

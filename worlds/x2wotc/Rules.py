@@ -36,10 +36,12 @@ def get_power_rule(player: int, location: str) -> Callable[[CollectionState], bo
 
 # Contact
 def can_make_contact(state: CollectionState, player: int) -> bool:
-    return state.has(item_table["ResistanceCommunicationsCompleted"].display_name, player)
+    return (state.has(item_table["ResistanceCommunicationsCompleted"].display_name, player)
+            or not is_enabled(player, "ResistanceCommunications"))
 
 def has_radio_relays(state: CollectionState, player: int) -> bool:
-    return state.has(item_table["ResistanceRadioCompleted"].display_name, player)
+    return (state.has(item_table["ResistanceRadioCompleted"].display_name, player)
+            or not is_enabled(player, "ResistanceRadio"))
 
 def can_make_more_contact(state: CollectionState, player: int) -> bool:
     return (can_make_contact(state, player)

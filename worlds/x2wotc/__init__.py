@@ -58,6 +58,13 @@ class X2WOTCWorld(World):
             self.disable_location("ExperimentalWeapons")
             self.disable_item("ExperimentalWeaponsCompleted")
 
+        # Disable Contact Techs
+        if self.options.disable_contact_techs:
+            self.disable_location("ResistanceCommunications")
+            self.disable_item("ResistanceCommunicationsCompleted")
+            self.disable_location("ResistanceRadio")
+            self.disable_item("ResistanceRadioCompleted")
+
         # Enable progressive tech items
         if self.options.enable_progressive_rifle_techs:
             if not self.enable_progressive_item("ProgressiveRifleTechCompleted"):
