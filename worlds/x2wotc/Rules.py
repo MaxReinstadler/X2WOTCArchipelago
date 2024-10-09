@@ -69,7 +69,8 @@ def can_do_blacksite_mission(state: CollectionState, player: int) -> bool:
     return can_make_contact(state, player)
 
 def has_blacksite_data_objective(state: CollectionState, player: int) -> bool:
-    return can_do_blacksite_mission(state, player)
+    return (can_do_blacksite_mission(state, player)
+            and has_shadow_chamber(state, player))
 
 def can_do_forge_mission(state: CollectionState, player: int) -> bool:
     return (state.has(item_table["BlacksiteDataCompleted"].display_name, player)
@@ -103,7 +104,8 @@ def can_skulljack_officer(state: CollectionState, player: int) -> bool:
             and has_skulljack(state, player))
 
 def has_codex_brain_pt1_objective(state: CollectionState, player: int) -> bool:
-    return can_skulljack_officer(state, player)
+    return (can_skulljack_officer(state, player)
+            and has_shadow_chamber(state, player))
 
 def can_do_psi_gate_mission(state: CollectionState, player: int) -> bool:
     return (state.has(item_table["CodexBrainPt1Completed"].display_name, player)
