@@ -15,7 +15,7 @@ class DisableIntegratedDLC(Toggle):
 
 class DisableContactTechs(Toggle):
     """Generation leaves Resistance Communications and Resistance Radio untouched.
-    **RECOMMENDED** These techs are currently broken and create weird playthroughs."""
+    **RECOMMENDED** These techs are currently broken and may create near-impossible playthroughs."""
     display_name = "Disable Contact Techs"
     default = True
 

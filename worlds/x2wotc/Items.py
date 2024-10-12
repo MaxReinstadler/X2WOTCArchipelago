@@ -46,7 +46,7 @@ vanilla_weapon_tech_items: Dict[str, X2WOTCItemData] = {
         layer = "Strategy",
         type = "TechCompleted",
         tags = ["weapon"],
-        power = 15.0,
+        power = 30.0,
         dlc = None,
         normal_location = "ModularWeapons"
     ),
@@ -79,7 +79,7 @@ vanilla_weapon_tech_items: Dict[str, X2WOTCItemData] = {
         layer = "Strategy",
         type = "TechCompleted",
         tags = ["weapon"],
-        power = 170.0,
+        power = 160.0,
         dlc = None,
         normal_location = "PlasmaRifle"
     ),
@@ -90,7 +90,7 @@ vanilla_weapon_tech_items: Dict[str, X2WOTCItemData] = {
         layer = "Strategy",
         type = "TechCompleted",
         tags = ["weapon"],
-        power = 140.0,
+        power = 160.0,
         dlc = None,
         normal_location = "HeavyPlasma"
     ),
@@ -101,7 +101,7 @@ vanilla_weapon_tech_items: Dict[str, X2WOTCItemData] = {
         layer = "Strategy",
         type = "TechCompleted",
         tags = ["weapon"],
-        power = 140.0,
+        power = 160.0,
         dlc = None,
         normal_location = "PlasmaSniper"
     ),
@@ -112,7 +112,7 @@ vanilla_weapon_tech_items: Dict[str, X2WOTCItemData] = {
         layer = "Strategy",
         type = "TechCompleted",
         tags = ["weapon"],
-        power = 140.0,
+        power = 160.0,
         dlc = None,
         normal_location = "AlloyCannon"
     )
@@ -137,7 +137,7 @@ vanilla_armor_tech_items: Dict[str, X2WOTCItemData] = {
         layer = "Strategy",
         type = "TechCompleted",
         tags = ["armor"],
-        power = 85.0,
+        power = 100.0,
         dlc = None,
         normal_location = "PlatedArmor"
     ),
@@ -162,7 +162,7 @@ vanilla_autopsy_tech_items: Dict[str, X2WOTCItemData] = {
         layer = "Strategy",
         type = "TechCompleted",
         tags = ["utility"],
-        power = 10.0,
+        power = 20.0,
         dlc = None,
         normal_location = "AutopsySectoid"
     ),
@@ -184,7 +184,7 @@ vanilla_autopsy_tech_items: Dict[str, X2WOTCItemData] = {
         layer = "Strategy",
         type = "TechCompleted",
         tags = ["weapon"],
-        power = 60.0,
+        power = 75.0,
         dlc = None,
         normal_location = "AutopsyMuton"
     ),
@@ -195,7 +195,7 @@ vanilla_autopsy_tech_items: Dict[str, X2WOTCItemData] = {
         layer = "Strategy",
         type = "TechCompleted",
         tags = ["utility"],
-        power = 15.0,
+        power = 20.0,
         dlc = None,
         normal_location = "AutopsyBerserker"
     ),
@@ -206,7 +206,7 @@ vanilla_autopsy_tech_items: Dict[str, X2WOTCItemData] = {
         layer = "Strategy",
         type = "TechCompleted",
         tags = ["weapon"],
-        power = 55.0,
+        power = 80.0,
         dlc = None,
         normal_location = "AutopsyArchon"
     ),
@@ -217,7 +217,7 @@ vanilla_autopsy_tech_items: Dict[str, X2WOTCItemData] = {
         layer = "Strategy",
         type = "TechCompleted",
         tags = ["weapon"],
-        power = 35.0,
+        power = 50.0,
         dlc = None,
         normal_location = "AutopsyGatekeeper"
     ),
@@ -239,7 +239,7 @@ vanilla_autopsy_tech_items: Dict[str, X2WOTCItemData] = {
         layer = "Strategy",
         type = "TechCompleted",
         tags = ["utility"],
-        power = 90.0,
+        power = 80.0,
         dlc = None,
         normal_location = "AutopsyFaceless"
     ),
@@ -261,7 +261,7 @@ vanilla_autopsy_tech_items: Dict[str, X2WOTCItemData] = {
         layer = "Strategy",
         type = "TechCompleted",
         tags = ["utility"],
-        power = 25.0,
+        power = 20.0,
         dlc = None,
         normal_location = "AutopsyAdventTrooper"
     ),
@@ -272,7 +272,7 @@ vanilla_autopsy_tech_items: Dict[str, X2WOTCItemData] = {
         layer = "Strategy",
         type = "TechCompleted",
         tags = ["weapon"],
-        power = 75.0,
+        power = 70.0,
         dlc = None,
         normal_location = "AutopsyAdventStunLancer"
     ),
@@ -283,7 +283,7 @@ vanilla_autopsy_tech_items: Dict[str, X2WOTCItemData] = {
         layer = "Strategy",
         type = "TechCompleted",
         tags = ["armor"],
-        power = 40.0,
+        power = 30.0,
         dlc = None,
         normal_location = "AutopsyAdventShieldbearer"
     ),
@@ -294,7 +294,7 @@ vanilla_autopsy_tech_items: Dict[str, X2WOTCItemData] = {
         layer = "Strategy",
         type = "TechCompleted",
         tags = ["weapon", "utility"],
-        power = 80.0,
+        power = 100.0,
         dlc = None,
         normal_location = "AutopsyAdventMEC"
     ),
@@ -316,7 +316,7 @@ vanilla_autopsy_tech_items: Dict[str, X2WOTCItemData] = {
         layer = "Strategy",
         type = "TechCompleted",
         tags = ["weapon", "utility"],
-        power = 50.0,
+        power = 60.0,
         dlc = None,
         normal_location = "AutopsySectopod"
     )
@@ -330,7 +330,7 @@ vanilla_goldenpath_tech_items: Dict[str, X2WOTCItemData] = {
         layer = "Strategy",
         type = "TechCompleted",
         tags = ["facility"],
-        power = 0.0,
+        power = 20.0,
         dlc = None,
         normal_location = "AlienBiotech"
     ),
@@ -341,7 +341,7 @@ vanilla_goldenpath_tech_items: Dict[str, X2WOTCItemData] = {
         layer = "Strategy",
         type = "TechCompleted",
         tags = ["facility"],
-        power = 30.0,
+        power = 0.0,
         dlc = None,
         normal_location = "ResistanceCommunications"
     ),
@@ -352,7 +352,7 @@ vanilla_goldenpath_tech_items: Dict[str, X2WOTCItemData] = {
         layer = "Strategy",
         type = "TechCompleted",
         tags = ["facility"],
-        power = 85.0,
+        power = 150.0,
         dlc = None,
         normal_location = "AutopsyAdventOfficer"
     ),
@@ -363,7 +363,7 @@ vanilla_goldenpath_tech_items: Dict[str, X2WOTCItemData] = {
         layer = "Strategy",
         type = "TechCompleted",
         tags = ["facility"],
-        power = 0.0,
+        power = 10.0,
         dlc = None,
         normal_location = "AlienEncryption"
     ),
@@ -443,7 +443,7 @@ vanilla_other_tech_items: Dict[str, X2WOTCItemData] = {
         layer = "Strategy",
         type = "TechCompleted",
         tags = ["facility"],
-        power = 40.0,
+        power = 0.0,
         dlc = None,
         normal_location = "ResistanceRadio"
     ),
@@ -465,7 +465,7 @@ vanilla_other_tech_items: Dict[str, X2WOTCItemData] = {
         layer = "Strategy",
         type = "TechCompleted",
         tags = ["facility", "weapon"],
-        power = 80.0,
+        power = 140.0,
         dlc = None,
         normal_location = "Psionics"
     )
@@ -494,7 +494,7 @@ alien_hunters_tech_items: Dict[str, X2WOTCItemData] = {
         layer = "Strategy",
         type = "TechCompleted",
         tags = ["armor"],
-        power = 70.0,
+        power = 120.0,
         dlc = "AH",
         normal_location = "AutopsyViperKing"
     ),
@@ -505,7 +505,7 @@ alien_hunters_tech_items: Dict[str, X2WOTCItemData] = {
         layer = "Strategy",
         type = "TechCompleted",
         tags = ["armor"],
-        power = 70.0,
+        power = 120.0,
         dlc = "AH",
         normal_location = "AutopsyBerserkerQueen"
     ),
@@ -516,7 +516,7 @@ alien_hunters_tech_items: Dict[str, X2WOTCItemData] = {
         layer = "Strategy",
         type = "TechCompleted",
         tags = ["armor"],
-        power = 80.0,
+        power = 130.0,
         dlc = "AH",
         normal_location = "AutopsyArchonKing"
     )
@@ -534,7 +534,7 @@ wotc_autopsy_tech_items: Dict[str, X2WOTCItemData] = {
         layer = "Strategy",
         type = "TechCompleted",
         tags = ["armor"],
-        power = 15.0,
+        power = 20.0,
         dlc = "WOTC",
         normal_location = "AutopsyAdventPurifier"
     ),
@@ -567,7 +567,7 @@ wotc_autopsy_tech_items: Dict[str, X2WOTCItemData] = {
         layer = "Strategy",
         type = "TechCompleted",
         tags = ["utility"],
-        power = 15.0,
+        power = 10.0,
         dlc = "WOTC",
         normal_location = "AutopsySpectre"
     )
@@ -581,7 +581,7 @@ wotc_chosen_weapon_tech_items: Dict[str, X2WOTCItemData] = {
         layer = "Strategy",
         type = "TechCompleted",
         tags = ["weapon"],
-        power = 190.0,
+        power = 200.0,
         dlc = "WOTC",
         normal_location = "ChosenAssassinWeapons"
     ),
@@ -592,7 +592,7 @@ wotc_chosen_weapon_tech_items: Dict[str, X2WOTCItemData] = {
         layer = "Strategy",
         type = "TechCompleted",
         tags = ["weapon"],
-        power = 190.0,
+        power = 200.0,
         dlc = "WOTC",
         normal_location = "ChosenHunterWeapons"
     ),
@@ -603,7 +603,7 @@ wotc_chosen_weapon_tech_items: Dict[str, X2WOTCItemData] = {
         layer = "Strategy",
         type = "TechCompleted",
         tags = ["weapon"],
-        power = 160.0,
+        power = 180.0,
         dlc = "WOTC",
         normal_location = "ChosenWarlockWeapons"
     )

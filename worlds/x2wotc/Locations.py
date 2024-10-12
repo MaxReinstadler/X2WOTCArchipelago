@@ -129,7 +129,7 @@ vanilla_armor_techs: Dict[str, X2WOTCLocationData] = {
         layer = "Strategy",
         type = "Tech",
         tags = [],
-        difficulty = 50.0,
+        difficulty = 45.0,
         dlc = None,
         normal_item = "PoweredArmorCompleted"
     )
@@ -172,7 +172,7 @@ vanilla_autopsy_techs: Dict[str, X2WOTCLocationData] = {
         layer = "Strategy",
         type = "Tech",
         tags = ["autopsy"],
-        difficulty = 40.0,
+        difficulty = 35.0,
         dlc = None,
         normal_item = "AutopsyBerserkerCompleted"
     ),
@@ -182,7 +182,7 @@ vanilla_autopsy_techs: Dict[str, X2WOTCLocationData] = {
         layer = "Strategy",
         type = "Tech",
         tags = ["autopsy"],
-        difficulty = 60.0,
+        difficulty = 45.0,
         dlc = None,
         normal_item = "AutopsyArchonCompleted"
     ),
@@ -192,7 +192,7 @@ vanilla_autopsy_techs: Dict[str, X2WOTCLocationData] = {
         layer = "Strategy",
         type = "Tech",
         tags = ["autopsy"],
-        difficulty = 80.0,
+        difficulty = 75.0,
         dlc = None,
         normal_item = "AutopsyGatekeeperCompleted"
     ),
@@ -202,7 +202,7 @@ vanilla_autopsy_techs: Dict[str, X2WOTCLocationData] = {
         layer = "Strategy",
         type = "Tech",
         tags = ["autopsy"],
-        difficulty = 70.0,
+        difficulty = 65.0,
         dlc = None,
         normal_item = "AutopsyAndromedonCompleted"
     ),
@@ -212,7 +212,7 @@ vanilla_autopsy_techs: Dict[str, X2WOTCLocationData] = {
         layer = "Strategy",
         type = "Tech",
         tags = ["autopsy"],
-        difficulty = 20.0,
+        difficulty = 10.0,
         dlc = None,
         normal_item = "AutopsyFacelessCompleted"
     ),
@@ -222,7 +222,7 @@ vanilla_autopsy_techs: Dict[str, X2WOTCLocationData] = {
         layer = "Strategy",
         type = "Tech",
         tags = ["autopsy"],
-        difficulty = 45.0,
+        difficulty = 55.0,
         dlc = None,
         normal_item = "AutopsyChryssalidCompleted"
     ),
@@ -272,7 +272,7 @@ vanilla_autopsy_techs: Dict[str, X2WOTCLocationData] = {
         layer = "Strategy",
         type = "Tech",
         tags = ["autopsy"],
-        difficulty = 80.0,
+        difficulty = 85.0,
         dlc = None,
         normal_item = "AutopsyAdventTurretCompleted"
     ),
@@ -305,7 +305,7 @@ vanilla_goldenpath_techs: Dict[str, X2WOTCLocationData] = {
         layer = "Strategy",
         type = "Tech",
         tags = ["goldenpath"],
-        difficulty = 10.0,
+        difficulty = 5.0,
         dlc = None,
         normal_item = "ResistanceCommunicationsCompleted"
     ),
@@ -315,7 +315,7 @@ vanilla_goldenpath_techs: Dict[str, X2WOTCLocationData] = {
         layer = "Strategy",
         type = "Tech",
         tags = ["goldenpath", "autopsy"],
-        difficulty = 10.0,
+        difficulty = 5.0,
         dlc = None,
         normal_item = "AutopsyAdventOfficerCompleted"
     ),
@@ -325,7 +325,7 @@ vanilla_goldenpath_techs: Dict[str, X2WOTCLocationData] = {
         layer = "Strategy",
         type = "Tech",
         tags = ["goldenpath"],
-        difficulty = 25.0,
+        difficulty = 20.0,
         dlc = None,
         normal_item = "AlienEncryptionCompleted"
     ),
@@ -335,7 +335,7 @@ vanilla_goldenpath_techs: Dict[str, X2WOTCLocationData] = {
         layer = "Strategy",
         type = "Tech",
         tags = ["goldenpath", "shadow"],
-        difficulty = 45.0,
+        difficulty = 40.0,
         dlc = None,
         normal_item = "CodexBrainPt1Completed"
     ),
@@ -345,7 +345,7 @@ vanilla_goldenpath_techs: Dict[str, X2WOTCLocationData] = {
         layer = "Strategy",
         type = "Tech",
         tags = ["goldenpath", "shadow"],
-        difficulty = 55.0,
+        difficulty = 50.0,
         dlc = None,
         normal_item = "CodexBrainPt2Completed"
     ),
@@ -375,7 +375,7 @@ vanilla_goldenpath_techs: Dict[str, X2WOTCLocationData] = {
         layer = "Strategy",
         type = "Tech",
         tags = ["goldenpath", "shadow"],
-        difficulty = 70.0,
+        difficulty = 60.0,
         dlc = None,
         normal_item = "PsiGateCompleted"
     ),
@@ -385,7 +385,7 @@ vanilla_goldenpath_techs: Dict[str, X2WOTCLocationData] = {
         layer = "Strategy",
         type = "Tech",
         tags = ["goldenpath", "shadow"],
-        difficulty = 90.0,
+        difficulty = 75.0,
         dlc = None,
         normal_item = "AutopsyAdventPsiWitchCompleted"
     )
@@ -398,7 +398,7 @@ vanilla_other_techs: Dict[str, X2WOTCLocationData] = {
         layer = "Strategy",
         type = "Tech",
         tags = [],
-        difficulty = 20.0,
+        difficulty = 15.0,
         dlc = None,
         normal_item = "ResistanceRadioCompleted"
     ),
@@ -408,7 +408,7 @@ vanilla_other_techs: Dict[str, X2WOTCLocationData] = {
         layer = "Strategy",
         type = "Tech",
         tags = [],
-        difficulty = 55.0,
+        difficulty = 35.0,
         dlc = None,
         normal_item = "EleriumCompleted"
     ),
@@ -418,7 +418,7 @@ vanilla_other_techs: Dict[str, X2WOTCLocationData] = {
         layer = "Strategy",
         type = "Tech",
         tags = [],
-        difficulty = 40.0,
+        difficulty = 20.0,
         dlc = None,
         normal_item = "PsionicsCompleted"
     )
@@ -482,7 +482,7 @@ wotc_autopsy_techs: Dict[str, X2WOTCLocationData] = {
         layer = "Strategy",
         type = "Tech",
         tags = ["autopsy"],
-        difficulty = 25.0,
+        difficulty = 20.0,
         dlc = "WOTC",
         normal_item = "AutopsyAdventPurifierCompleted"
     ),
@@ -492,7 +492,7 @@ wotc_autopsy_techs: Dict[str, X2WOTCLocationData] = {
         layer = "Strategy",
         type = "Tech",
         tags = ["autopsy"],
-        difficulty = 25.0,
+        difficulty = 20.0,
         dlc = "WOTC",
         normal_item = "AutopsyAdventPriestCompleted"
     ),
@@ -502,7 +502,7 @@ wotc_autopsy_techs: Dict[str, X2WOTCLocationData] = {
         layer = "Strategy",
         type = "Tech",
         tags = ["autopsy"],
-        difficulty = 25.0,
+        difficulty = 15.0,
         dlc = "WOTC",
         normal_item = "AutopsyTheLostCompleted"
     ),
@@ -512,7 +512,7 @@ wotc_autopsy_techs: Dict[str, X2WOTCLocationData] = {
         layer = "Strategy",
         type = "Tech",
         tags = ["autopsy"],
-        difficulty = 55.0,
+        difficulty = 35.0,
         dlc = "WOTC",
         normal_item = "AutopsySpectreCompleted"
     )
