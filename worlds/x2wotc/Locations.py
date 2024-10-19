@@ -31,395 +31,319 @@ tech_base_id = base_id
 
 vanilla_weapon_techs: Dict[str, X2WOTCLocationData] = {
     "ModularWeapons": X2WOTCLocationData(
-        display_name ="(Research Project) Modular Weapons",
+        display_name = "(Research Project) Modular Weapons",
         id = tech_base_id,
-        layer = "Strategy",
         type = "Tech",
         tags = [],
         difficulty = 0.0,
-        dlc = None,
         normal_item = "ModularWeaponsCompleted"
     ),
     "MagnetizedWeapons": X2WOTCLocationData(
-        display_name ="(Research Project) Magnetic Weapons",
+        display_name = "(Research Project) Magnetic Weapons",
         id = tech_base_id + 1,
-        layer = "Strategy",
         type = "Tech",
         tags = [],
         difficulty = 15.0,
-        dlc = None,
         normal_item = "MagnetizedWeaponsCompleted"
     ),
     "GaussWeapons": X2WOTCLocationData(
-        display_name ="(Research Project) Gauss Weapons",
+        display_name = "(Research Project) Gauss Weapons",
         id = tech_base_id + 2,
-        layer = "Strategy",
         type = "Tech",
         tags = [],
         difficulty = 25.0,
-        dlc = None,
         normal_item = "GaussWeaponsCompleted"
     ),
     "PlasmaRifle": X2WOTCLocationData(
-        display_name ="(Research Project) Plasma Rifle",
+        display_name = "(Research Project) Plasma Rifle",
         id = tech_base_id + 3,
-        layer = "Strategy",
         type = "Tech",
         tags = [],
         difficulty = 45.0,
-        dlc = None,
         normal_item = "PlasmaRifleCompleted"
     ),
     "HeavyPlasma": X2WOTCLocationData(
-        display_name ="(Research Project) Beam Cannon",
+        display_name = "(Research Project) Beam Cannon",
         id = tech_base_id + 4,
-        layer = "Strategy",
         type = "Tech",
         tags = [],
         difficulty = 55.0,
-        dlc = None,
         normal_item = "HeavyPlasmaCompleted"
     ),
     "PlasmaSniper": X2WOTCLocationData(
-        display_name ="(Research Project) Plasma Lance",
+        display_name = "(Research Project) Plasma Lance",
         id = tech_base_id + 5,
-        layer = "Strategy",
         type = "Tech",
         tags = [],
         difficulty = 55.0,
-        dlc = None,
         normal_item = "PlasmaSniperCompleted"
     ),
     "AlloyCannon": X2WOTCLocationData(
-        display_name ="(Research Project) Storm Gun",
+        display_name = "(Research Project) Storm Gun",
         id = tech_base_id + 6,
-        layer = "Strategy",
         type = "Tech",
         tags = [],
         difficulty = 55.0,
-        dlc = None,
         normal_item = "AlloyCannonCompleted"
     )
 }
 
 vanilla_armor_techs: Dict[str, X2WOTCLocationData] = {
     "HybridMaterials": X2WOTCLocationData(
-        display_name ="(Research Project) Hybrid Materials",
+        display_name = "(Research Project) Hybrid Materials",
         id = tech_base_id + 7,
-        layer = "Strategy",
         type = "Tech",
         tags = [],
         difficulty = 0.0,
-        dlc = None,
         normal_item = "HybridMaterialsCompleted"
     ),
     "PlatedArmor": X2WOTCLocationData(
-        display_name ="(Research Project) Plated Armor",
+        display_name = "(Research Project) Plated Armor",
         id = tech_base_id + 8,
-        layer = "Strategy",
         type = "Tech",
         tags = [],
         difficulty = 25.0,
-        dlc = None,
         normal_item = "PlatedArmorCompleted"
     ),
     "PoweredArmor": X2WOTCLocationData(
-        display_name ="(Research Project) Powered Armor",
+        display_name = "(Research Project) Powered Armor",
         id = tech_base_id + 9,
-        layer = "Strategy",
         type = "Tech",
         tags = [],
         difficulty = 45.0,
-        dlc = None,
         normal_item = "PoweredArmorCompleted"
     )
 }
 
 vanilla_autopsy_techs: Dict[str, X2WOTCLocationData] = {
     "AutopsySectoid": X2WOTCLocationData(
-        display_name ="(Research Project) Sectoid Autopsy",
+        display_name = "(Research Project) Sectoid Autopsy",
         id = tech_base_id + 10,
-        layer = "Strategy",
         type = "Tech",
         tags = ["autopsy"],
         difficulty = 5.0,
-        dlc = None,
         normal_item = "AutopsySectoidCompleted"
     ),
     "AutopsyViper": X2WOTCLocationData(
-        display_name ="(Research Project) Viper Autopsy",
+        display_name = "(Research Project) Viper Autopsy",
         id = tech_base_id + 11,
-        layer = "Strategy",
         type = "Tech",
         tags = ["autopsy"],
         difficulty = 15.0,
-        dlc = None,
         normal_item = "AutopsyViperCompleted"
     ),
     "AutopsyMuton": X2WOTCLocationData(
-        display_name ="(Research Project) Muton Autopsy",
+        display_name = "(Research Project) Muton Autopsy",
         id = tech_base_id + 12,
-        layer = "Strategy",
         type = "Tech",
         tags = ["autopsy"],
         difficulty = 25.0,
-        dlc = None,
         normal_item = "AutopsyMutonCompleted"
     ),
     "AutopsyBerserker": X2WOTCLocationData(
-        display_name ="(Research Project) Berserker Autopsy",
+        display_name = "(Research Project) Berserker Autopsy",
         id = tech_base_id + 13,
-        layer = "Strategy",
         type = "Tech",
         tags = ["autopsy"],
         difficulty = 35.0,
-        dlc = None,
         normal_item = "AutopsyBerserkerCompleted"
     ),
     "AutopsyArchon": X2WOTCLocationData(
-        display_name ="(Research Project) Archon Autopsy",
+        display_name = "(Research Project) Archon Autopsy",
         id = tech_base_id + 14,
-        layer = "Strategy",
         type = "Tech",
         tags = ["autopsy"],
         difficulty = 45.0,
-        dlc = None,
         normal_item = "AutopsyArchonCompleted"
     ),
     "AutopsyGatekeeper": X2WOTCLocationData(
-        display_name ="(Research Project) Gatekeeper Autopsy",
+        display_name = "(Research Project) Gatekeeper Autopsy",
         id = tech_base_id + 15,
-        layer = "Strategy",
         type = "Tech",
         tags = ["autopsy"],
         difficulty = 75.0,
-        dlc = None,
         normal_item = "AutopsyGatekeeperCompleted"
     ),
     "AutopsyAndromedon": X2WOTCLocationData(
-        display_name ="(Research Project) Andromedon Autopsy",
+        display_name = "(Research Project) Andromedon Autopsy",
         id = tech_base_id + 16,
-        layer = "Strategy",
         type = "Tech",
         tags = ["autopsy"],
         difficulty = 65.0,
-        dlc = None,
         normal_item = "AutopsyAndromedonCompleted"
     ),
     "AutopsyFaceless": X2WOTCLocationData(
-        display_name ="(Research Project) Faceless Autopsy",
+        display_name = "(Research Project) Faceless Autopsy",
         id = tech_base_id + 17,
-        layer = "Strategy",
         type = "Tech",
         tags = ["autopsy"],
         difficulty = 10.0,
-        dlc = None,
         normal_item = "AutopsyFacelessCompleted"
     ),
     "AutopsyChryssalid": X2WOTCLocationData(
-        display_name ="(Research Project) Chryssalid Autopsy",
+        display_name = "(Research Project) Chryssalid Autopsy",
         id = tech_base_id + 18,
-        layer = "Strategy",
         type = "Tech",
         tags = ["autopsy"],
         difficulty = 55.0,
-        dlc = None,
         normal_item = "AutopsyChryssalidCompleted"
     ),
     "AutopsyAdventTrooper": X2WOTCLocationData(
-        display_name ="(Research Project) ADVENT Trooper Autopsy",
+        display_name = "(Research Project) ADVENT Trooper Autopsy",
         id = tech_base_id + 19,
-        layer = "Strategy",
         type = "Tech",
         tags = ["autopsy"],
         difficulty = 5.0,
-        dlc = None,
         normal_item = "AutopsyAdventTrooperCompleted"
     ),
     "AutopsyAdventStunLancer": X2WOTCLocationData(
-        display_name ="(Research Project) ADVENT Stun Lancer Autopsy",
+        display_name = "(Research Project) ADVENT Stun Lancer Autopsy",
         id = tech_base_id + 20,
-        layer = "Strategy",
         type = "Tech",
         tags = ["autopsy"],
         difficulty = 15.0,
-        dlc = None,
         normal_item = "AutopsyAdventStunLancerCompleted"
     ),
     "AutopsyAdventShieldbearer": X2WOTCLocationData(
-        display_name ="(Research Project) ADVENT Shieldbearer Autopsy",
+        display_name = "(Research Project) ADVENT Shieldbearer Autopsy",
         id = tech_base_id + 21,
-        layer = "Strategy",
         type = "Tech",
         tags = ["autopsy"],
         difficulty = 15.0,
-        dlc = None,
         normal_item = "AutopsyAdventShieldbearerCompleted"
     ),
     "AutopsyAdventMEC": X2WOTCLocationData(
-        display_name ="(Research Project) ADVENT MEC Breakdown",
+        display_name = "(Research Project) ADVENT MEC Breakdown",
         id = tech_base_id + 22,
-        layer = "Strategy",
         type = "Tech",
         tags = ["autopsy"],
         difficulty = 25.0,
-        dlc = None,
         normal_item = "AutopsyAdventMECCompleted"
     ),
     "AutopsyAdventTurret": X2WOTCLocationData(
-        display_name ="(Research Project) ADVENT Turret Breakdown",
+        display_name = "(Research Project) ADVENT Turret Breakdown",
         id = tech_base_id + 23,
-        layer = "Strategy",
         type = "Tech",
         tags = ["autopsy"],
         difficulty = 85.0,
-        dlc = None,
         normal_item = "AutopsyAdventTurretCompleted"
     ),
     "AutopsySectopod": X2WOTCLocationData(
-        display_name ="(Research Project) Sectopod Breakdown",
+        display_name = "(Research Project) Sectopod Breakdown",
         id = tech_base_id + 24,
-        layer = "Strategy",
         type = "Tech",
         tags = ["autopsy"],
         difficulty = 75.0,
-        dlc = None,
         normal_item = "AutopsySectopodCompleted"
     )
 }
 
 vanilla_goldenpath_techs: Dict[str, X2WOTCLocationData] = {
     "AlienBiotech": X2WOTCLocationData(
-        display_name ="(Research Project) Alien Biotech",
+        display_name = "(Research Project) Alien Biotech",
         id = tech_base_id + 25,
-        layer = "Strategy",
         type = "Tech",
         tags = ["goldenpath"],
         difficulty = 0.0,
-        dlc = None,
         normal_item = "AlienBiotechCompleted"
     ),
     "ResistanceCommunications": X2WOTCLocationData(
-        display_name ="(Research Project) Resistance Communications",
+        display_name = "(Research Project) Resistance Communications",
         id = tech_base_id + 26,
-        layer = "Strategy",
         type = "Tech",
         tags = ["goldenpath"],
         difficulty = 5.0,
-        dlc = None,
         normal_item = "ResistanceCommunicationsCompleted"
     ),
     "AutopsyAdventOfficer": X2WOTCLocationData(
-        display_name ="(Research Project) ADVENT Officer Autopsy",
+        display_name = "(Research Project) ADVENT Officer Autopsy",
         id = tech_base_id + 27,
-        layer = "Strategy",
         type = "Tech",
         tags = ["goldenpath", "autopsy"],
         difficulty = 5.0,
-        dlc = None,
         normal_item = "AutopsyAdventOfficerCompleted"
     ),
     "AlienEncryption": X2WOTCLocationData(
-        display_name ="(Research Project) Alien Encryption",
+        display_name = "(Research Project) Alien Encryption",
         id = tech_base_id + 28,
-        layer = "Strategy",
         type = "Tech",
         tags = ["goldenpath"],
         difficulty = 20.0,
-        dlc = None,
         normal_item = "AlienEncryptionCompleted"
     ),
     "CodexBrainPt1": X2WOTCLocationData(
-        display_name ="(Shadow Project) Codex Brain",
+        display_name = "(Shadow Project) Codex Brain",
         id = tech_base_id + 29,
-        layer = "Strategy",
         type = "Tech",
         tags = ["goldenpath", "shadow"],
         difficulty = 40.0,
-        dlc = None,
         normal_item = "CodexBrainPt1Completed"
     ),
     "CodexBrainPt2": X2WOTCLocationData(
-        display_name ="(Shadow Project) Encrypted Codex Data",
+        display_name = "(Shadow Project) Encrypted Codex Data",
         id = tech_base_id + 30,
-        layer = "Strategy",
         type = "Tech",
         tags = ["goldenpath", "shadow"],
         difficulty = 50.0,
-        dlc = None,
         normal_item = "CodexBrainPt2Completed"
     ),
     "BlacksiteData": X2WOTCLocationData(
-        display_name ="(Shadow Project) Blacksite Vial",
+        display_name = "(Shadow Project) Blacksite Vial",
         id = tech_base_id + 31,
-        layer = "Strategy",
         type = "Tech",
         tags = ["goldenpath", "shadow"],
         difficulty = 30.0,
-        dlc = None,
         normal_item = "BlacksiteDataCompleted"
     ),
     "ForgeStasisSuit": X2WOTCLocationData(
-        display_name ="(Shadow Project) Recovered ADVENT Stasis Suit",
+        display_name = "(Shadow Project) Recovered ADVENT Stasis Suit",
         id = tech_base_id + 32,
-        layer = "Strategy",
         type = "Tech",
         tags = ["goldenpath", "shadow"],
         difficulty = 50.0,
-        dlc = None,
         normal_item = "ForgeStasisSuitCompleted"
     ),
     "PsiGate": X2WOTCLocationData(
-        display_name ="(Shadow Project) Psionic Gate",
+        display_name = "(Shadow Project) Psionic Gate",
         id = tech_base_id + 33,
-        layer = "Strategy",
         type = "Tech",
         tags = ["goldenpath", "shadow"],
         difficulty = 60.0,
-        dlc = None,
         normal_item = "PsiGateCompleted"
     ),
     "AutopsyAdventPsiWitch": X2WOTCLocationData(
-        display_name ="(Shadow Project) Avatar Autopsy",
+        display_name = "(Shadow Project) Avatar Autopsy",
         id = tech_base_id + 34,
-        layer = "Strategy",
         type = "Tech",
         tags = ["goldenpath", "shadow"],
         difficulty = 75.0,
-        dlc = None,
         normal_item = "AutopsyAdventPsiWitchCompleted"
     )
 }
 
 vanilla_other_techs: Dict[str, X2WOTCLocationData] = {
     "ResistanceRadio": X2WOTCLocationData(
-        display_name ="(Research Project) Resistance Radio",
+        display_name = "(Research Project) Resistance Radio",
         id = tech_base_id + 35,
-        layer = "Strategy",
         type = "Tech",
         tags = [],
         difficulty = 15.0,
-        dlc = None,
         normal_item = "ResistanceRadioCompleted"
     ),
     "Tech_Elerium": X2WOTCLocationData(
-        display_name ="(Research Project) Elerium",
+        display_name = "(Research Project) Elerium",
         id = tech_base_id + 36,
-        layer = "Strategy",
         type = "Tech",
         tags = [],
         difficulty = 35.0,
-        dlc = None,
         normal_item = "EleriumCompleted"
     ),
     "Psionics": X2WOTCLocationData(
-        display_name ="(Research Project) Psionics",
+        display_name = "(Research Project) Psionics",
         id = tech_base_id + 37,
-        layer = "Strategy",
         type = "Tech",
         tags = [],
         difficulty = 20.0,
-        dlc = None,
         normal_item = "PsionicsCompleted"
     )
 }
@@ -430,9 +354,8 @@ vanilla_other_techs: Dict[str, X2WOTCLocationData] = {
 
 alien_hunters_techs: Dict[str, X2WOTCLocationData] = {
     "ExperimentalWeapons": X2WOTCLocationData(
-        display_name ="(Research Project) Experimental Weapons",
+        display_name = "(Research Project) Experimental Weapons",
         id = tech_base_id + 38,
-        layer = "Strategy",
         type = "Tech",
         tags = [],
         difficulty = 5.0,
@@ -440,9 +363,8 @@ alien_hunters_techs: Dict[str, X2WOTCLocationData] = {
         normal_item = "ExperimentalWeaponsCompleted"
     ),
     "AutopsyViperKing": X2WOTCLocationData(
-        display_name ="(Research Project) Viper King Autopsy",
+        display_name = "(Research Project) Viper King Autopsy",
         id = tech_base_id + 39,
-        layer = "Strategy",
         type = "Tech",
         tags = ["autopsy"],
         difficulty = 35.0,
@@ -450,9 +372,8 @@ alien_hunters_techs: Dict[str, X2WOTCLocationData] = {
         normal_item = "AutopsyViperKingCompleted"
     ),
     "AutopsyBerserkerQueen": X2WOTCLocationData(
-        display_name ="(Research Project) Berserker Queen Autopsy",
+        display_name = "(Research Project) Berserker Queen Autopsy",
         id = tech_base_id + 40,
-        layer = "Strategy",
         type = "Tech",
         tags = ["autopsy"],
         difficulty = 55.0,
@@ -460,9 +381,8 @@ alien_hunters_techs: Dict[str, X2WOTCLocationData] = {
         normal_item = "AutopsyBerserkerQueenCompleted"
     ),
     "AutopsyArchonKing": X2WOTCLocationData(
-        display_name ="(Research Project) Archon King Autopsy",
+        display_name = "(Research Project) Archon King Autopsy",
         id = tech_base_id + 41,
-        layer = "Strategy",
         type = "Tech",
         tags = ["autopsy"],
         difficulty = 75.0,
@@ -477,9 +397,8 @@ alien_hunters_techs: Dict[str, X2WOTCLocationData] = {
 
 wotc_autopsy_techs: Dict[str, X2WOTCLocationData] = {
     "AutopsyAdventPurifier": X2WOTCLocationData(
-        display_name ="(Research Project) ADVENT Purifier Autopsy",
+        display_name = "(Research Project) ADVENT Purifier Autopsy",
         id = tech_base_id + 42,
-        layer = "Strategy",
         type = "Tech",
         tags = ["autopsy"],
         difficulty = 20.0,
@@ -487,9 +406,8 @@ wotc_autopsy_techs: Dict[str, X2WOTCLocationData] = {
         normal_item = "AutopsyAdventPurifierCompleted"
     ),
     "AutopsyAdventPriest": X2WOTCLocationData(
-        display_name ="(Research Project) ADVENT Priest Autopsy",
+        display_name = "(Research Project) ADVENT Priest Autopsy",
         id = tech_base_id + 43,
-        layer = "Strategy",
         type = "Tech",
         tags = ["autopsy"],
         difficulty = 20.0,
@@ -497,9 +415,8 @@ wotc_autopsy_techs: Dict[str, X2WOTCLocationData] = {
         normal_item = "AutopsyAdventPriestCompleted"
     ),
     "AutopsyTheLost": X2WOTCLocationData(
-        display_name ="(Research Project) The Lost Autopsy",
+        display_name = "(Research Project) The Lost Autopsy",
         id = tech_base_id + 44,
-        layer = "Strategy",
         type = "Tech",
         tags = ["autopsy"],
         difficulty = 15.0,
@@ -507,9 +424,8 @@ wotc_autopsy_techs: Dict[str, X2WOTCLocationData] = {
         normal_item = "AutopsyTheLostCompleted"
     ),
     "AutopsySpectre": X2WOTCLocationData(
-        display_name ="(Research Project) Spectre Autopsy",
+        display_name = "(Research Project) Spectre Autopsy",
         id = tech_base_id + 45,
-        layer = "Strategy",
         type = "Tech",
         tags = ["autopsy"],
         difficulty = 35.0,
@@ -520,9 +436,8 @@ wotc_autopsy_techs: Dict[str, X2WOTCLocationData] = {
 
 wotc_chosen_weapon_techs: Dict[str, X2WOTCLocationData] = {
     "ChosenAssassinWeapons": X2WOTCLocationData(
-        display_name ="(Research Project) Assassin Weapons",
+        display_name = "(Research Project) Assassin Weapons",
         id = tech_base_id + 46,
-        layer = "Strategy",
         type = "Tech",
         tags = [],
         difficulty = 85.0,
@@ -530,9 +445,8 @@ wotc_chosen_weapon_techs: Dict[str, X2WOTCLocationData] = {
         normal_item = "ChosenAssassinWeaponsCompleted"
     ),
     "ChosenHunterWeapons": X2WOTCLocationData(
-        display_name ="(Research Project) Hunter Weapons",
+        display_name = "(Research Project) Hunter Weapons",
         id = tech_base_id + 47,
-        layer = "Strategy",
         type = "Tech",
         tags = [],
         difficulty = 85.0,
@@ -540,9 +454,8 @@ wotc_chosen_weapon_techs: Dict[str, X2WOTCLocationData] = {
         normal_item = "ChosenHunterWeaponsCompleted"
     ),
     "ChosenWarlockWeapons": X2WOTCLocationData(
-        display_name ="(Research Project) Warlock Weapons",
+        display_name = "(Research Project) Warlock Weapons",
         id = tech_base_id + 48,
-        layer = "Strategy",
         type = "Tech",
         tags = [],
         difficulty = 85.0,
@@ -552,12 +465,281 @@ wotc_chosen_weapon_techs: Dict[str, X2WOTCLocationData] = {
 }
 
 ########################################################################################################################
+##                                            ENEMY KILL LOCATIONS                                                    ##
+########################################################################################################################
+
+kill_base_id = tech_base_id + 49
+
+#=======================================================================================================================
+#                                                 BASE GAME
+#-----------------------------------------------------------------------------------------------------------------------
+
+vanilla_enemy_kills: Dict[str, X2WOTCLocationData] = {
+    "KillSectoid": X2WOTCLocationData(
+        display_name = "Sectoid Killed",
+        id = kill_base_id,
+        layer = "Tactical",
+        type = "EnemyKill",
+        tags = [],
+        difficulty = 5.0
+    ),
+    "KillViper": X2WOTCLocationData(
+        display_name = "Viper Killed",
+        id = kill_base_id + 1,
+        layer = "Tactical",
+        type = "EnemyKill",
+        tags = [],
+        difficulty = 15.0
+    ),
+    "KillMuton": X2WOTCLocationData(
+        display_name = "Muton Killed",
+        id = kill_base_id + 2,
+        layer = "Tactical",
+        type = "EnemyKill",
+        tags = [],
+        difficulty = 25.0
+    ),
+    "KillBerserker": X2WOTCLocationData(
+        display_name = "Berserker Killed",
+        id = kill_base_id + 3,
+        layer = "Tactical",
+        type = "EnemyKill",
+        tags = [],
+        difficulty = 35.0
+    ),
+    "KillArchon": X2WOTCLocationData(
+        display_name = "Archon Killed",
+        id = kill_base_id + 4,
+        layer = "Tactical",
+        type = "EnemyKill",
+        tags = [],
+        difficulty = 45.0
+    ),
+    "KillGatekeeper": X2WOTCLocationData(
+        display_name = "Gatekeeper Killed",
+        id = kill_base_id + 5,
+        layer = "Tactical",
+        type = "EnemyKill",
+        tags = [],
+        difficulty = 75.0
+    ),
+    "KillAndromedon": X2WOTCLocationData(
+        display_name = "Andromedon Killed",
+        id = kill_base_id + 6,
+        layer = "Tactical",
+        type = "EnemyKill",
+        tags = [],
+        difficulty = 65.0
+    ),
+    "KillAndromedonRobot": X2WOTCLocationData(
+        display_name = "Andromedon Suit Destroyed",
+        id = kill_base_id + 7,
+        layer = "Tactical",
+        type = "EnemyKill",
+        tags = [],
+        difficulty = 65.0
+    ),
+    "KillFaceless": X2WOTCLocationData(
+        display_name = "Faceless Killed",
+        id = kill_base_id + 8,
+        layer = "Tactical",
+        type = "EnemyKill",
+        tags = [],
+        difficulty = 10.0
+    ),
+    "KillChryssalid": X2WOTCLocationData(
+        display_name = "Chryssalid Killed",
+        id = kill_base_id + 9,
+        layer = "Tactical",
+        type = "EnemyKill",
+        tags = [],
+        difficulty = 55.0
+    ),
+    "KillAdventTrooper": X2WOTCLocationData(
+        display_name = "ADVENT Trooper Killed",
+        id = kill_base_id + 10,
+        layer = "Tactical",
+        type = "EnemyKill",
+        tags = [],
+        difficulty = 0.0
+    ),
+    "KillAdventCaptain": X2WOTCLocationData(
+        display_name = "ADVENT Officer Killed",
+        id = kill_base_id + 11,
+        layer = "Tactical",
+        type = "EnemyKill",
+        tags = [],
+        difficulty = 0.0
+    ),
+    "KillCyberus": X2WOTCLocationData(
+        display_name = "Codex Killed",
+        id = kill_base_id + 12,
+        layer = "Tactical",
+        type = "EnemyKill",
+        tags = [],
+        difficulty = 40.0
+    ),
+    "KillAdventPsiWitch": X2WOTCLocationData(
+        display_name = "Avatar Killed",
+        id = kill_base_id + 13,
+        layer = "Tactical",
+        type = "EnemyKill",
+        tags = [],
+        difficulty = 75.0
+    ),
+    "KillAdventStunLancer": X2WOTCLocationData(
+        display_name = "ADVENT Stun Lancer Killed",
+        id = kill_base_id + 14,
+        layer = "Tactical",
+        type = "EnemyKill",
+        tags = [],
+        difficulty = 15.0
+    ),
+    "KillAdventShieldBearer": X2WOTCLocationData(
+        display_name = "ADVENT Shieldbearer Killed",
+        id = kill_base_id + 15,
+        layer = "Tactical",
+        type = "EnemyKill",
+        tags = [],
+        difficulty = 15.0
+    ),
+    "KillAdventMEC": X2WOTCLocationData(
+        display_name = "ADVENT MEC Destroyed",
+        id = kill_base_id + 16,
+        layer = "Tactical",
+        type = "EnemyKill",
+        tags = [],
+        difficulty = 25.0
+    ),
+    "KillAdventTurret": X2WOTCLocationData(
+        display_name = "ADVENT Turret Destroyed",
+        id = kill_base_id + 17,
+        layer = "Tactical",
+        type = "EnemyKill",
+        tags = [],
+        difficulty = 35.0
+    ),
+    "KillSectopod": X2WOTCLocationData(
+        display_name = "Sectopod Destroyed",
+        id = kill_base_id + 18,
+        layer = "Tactical",
+        type = "EnemyKill",
+        tags = [],
+        difficulty = 75.0
+    )
+}
+
+#=======================================================================================================================
+#                                               ALIEN HUNTERS
+#-----------------------------------------------------------------------------------------------------------------------
+
+alien_hunters_enemy_kills: Dict[str, X2WOTCLocationData] = {
+    "KillViperKing": X2WOTCLocationData(
+        display_name = "Viper King Killed",
+        id = kill_base_id + 19,
+        layer = "Tactical",
+        type = "EnemyKill",
+        tags = [],
+        difficulty = 35.0,
+        dlc = "AH"
+    ),
+    "KillBerserkerQueen": X2WOTCLocationData(
+        display_name = "Berserker Queen Killed",
+        id = kill_base_id + 20,
+        layer = "Tactical",
+        type = "EnemyKill",
+        tags = [],
+        difficulty = 55.0,
+        dlc = "AH"
+    ),
+    "KillArchonKing": X2WOTCLocationData(
+        display_name = "Archon King Killed",
+        id = kill_base_id + 21,
+        layer = "Tactical",
+        type = "EnemyKill",
+        tags = [],
+        difficulty = 75.0,
+        dlc = "AH"
+    )
+}
+
+#=======================================================================================================================
+#                                             WAR OF THE CHOSEN
+#-----------------------------------------------------------------------------------------------------------------------
+
+wotc_enemy_kills: Dict[str, X2WOTCLocationData] = {
+    "KillAdventPurifier": X2WOTCLocationData(
+        display_name = "ADVENT Purifier Killed",
+        id = kill_base_id + 22,
+        layer = "Tactical",
+        type = "EnemyKill",
+        tags = [],
+        difficulty = 20.0,
+        dlc = "WOTC"
+    ),
+    "KillAdventPriest": X2WOTCLocationData(
+        display_name = "ADVENT Priest Killed",
+        id = kill_base_id + 23,
+        layer = "Tactical",
+        type = "EnemyKill",
+        tags = [],
+        difficulty = 20.0,
+        dlc = "WOTC"
+    ),
+    "KillTheLost": X2WOTCLocationData(
+        display_name = "The Lost Killed",
+        id = kill_base_id + 24,
+        layer = "Tactical",
+        type = "EnemyKill",
+        tags = [],
+        difficulty = 15.0,
+        dlc = "WOTC"
+    ),
+    "KillSpectre": X2WOTCLocationData(
+        display_name = "Spectre Killed",
+        id = kill_base_id + 25,
+        layer = "Tactical",
+        type = "EnemyKill",
+        tags = [],
+        difficulty = 35.0,
+        dlc = "WOTC"
+    ),
+    "KillChosenAssassin": X2WOTCLocationData(
+        display_name = "Chosen Assassin Killed",
+        id = kill_base_id + 26,
+        layer = "Tactical",
+        type = "EnemyKill",
+        tags = [],
+        difficulty = 85.0,
+        dlc = "WOTC"
+    ),
+    "KillChosenSniper": X2WOTCLocationData(
+        display_name = "Chosen Hunter Killed",
+        id = kill_base_id + 27,
+        layer = "Tactical",
+        type = "EnemyKill",
+        tags = [],
+        difficulty = 85.0,
+        dlc = "WOTC"
+    ),
+    "KillChosenWarlock": X2WOTCLocationData(
+        display_name = "Chosen Warlock Killed",
+        id = kill_base_id + 28,
+        layer = "Tactical",
+        type = "EnemyKill",
+        tags = [],
+        difficulty = 85.0,
+        dlc = "WOTC"
+    )
+}
+
+########################################################################################################################
 ##                                              EVENT LOCATIONS                                                       ##
 ########################################################################################################################
 
 event_locations: Dict[str, X2WOTCLocationData] = {
     "Victory": X2WOTCLocationData(
-        display_name ="Victory",
+        display_name = "Victory",
         difficulty = 90.0,
         normal_item = "Victory"
     )
@@ -578,8 +760,15 @@ tech_location_table: Dict[str, X2WOTCLocationData] = {
     **wotc_chosen_weapon_techs
 }
 
+kill_location_table: Dict[str, X2WOTCLocationData] = {
+    **vanilla_enemy_kills,
+    **alien_hunters_enemy_kills,
+    **wotc_enemy_kills
+}
+
 location_table: Dict[str, X2WOTCLocationData] = {
     **tech_location_table,
+    **kill_location_table,
     **event_locations
 }
 
@@ -587,12 +776,18 @@ loc_display_name_to_key = {loc_data.display_name: key for key, loc_data in locat
 loc_id_to_key = {loc_data.id: key for key, loc_data in location_table.items() if loc_data.id}
 
 enabled: Dict[int, Dict[str, bool]] = {}
+num_locations: Dict[int, int] = {}
 
 def init_location_vars(player: int):
     enabled[player] = {loc_name: True for loc_name in location_table.keys()}
+    num_locations[player] = len(location_table)
 
 def is_enabled(player: int, loc_name: str) -> bool:
     return enabled[player][loc_name]
 
+def get_num_locations(player: int) -> int:
+    return num_locations[player]
+
 def disable_location(player: int, loc_name: str):
     enabled[player][loc_name] = False
+    num_locations[player] -= 1

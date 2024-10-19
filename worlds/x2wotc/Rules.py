@@ -223,7 +223,7 @@ def set_rules(world: MultiWorld, player: int):
                  lambda state: can_do_facility_mission(state, player))
         
     except KeyError:
-        print("Alien Ruler autopsy locations not found, assuming disabled.")
+        print("X2WOTC: Alien Ruler autopsy locations not found, assuming disabled.")
     
     #------------------------------------------- Chosen weapon tech rules ---------------------------------------------#
     #------------------------------------------------------------------------------------------------------------------#
@@ -237,6 +237,48 @@ def set_rules(world: MultiWorld, player: int):
     
     loc_name_chosen_warlock_weapons = location_table["ChosenWarlockWeapons"].display_name
     add_rule(world.get_location(loc_name_chosen_warlock_weapons, player),
+             lambda state: can_kill_chosen(state, player))
+    
+    #------------------------------------------- Vanilla enemy kill rules ---------------------------------------------#
+    #------------------------------------------------------------------------------------------------------------------#
+    loc_name_kill_cyberus = location_table["KillCyberus"].display_name
+    add_rule(world.get_location(loc_name_kill_cyberus, player),
+             lambda state: can_skulljack_officer(state, player))
+    
+    loc_name_kill_advent_psi_witch = location_table["KillAdventPsiWitch"].display_name
+    add_rule(world.get_location(loc_name_kill_advent_psi_witch, player),
+             lambda state: can_skulljack_codex(state, player))
+    
+    #-------------------------------------------- Alien Ruler kill rules ----------------------------------------------#
+    #------------------------------------------------------------------------------------------------------------------#
+    try:
+        loc_name_kill_viper_king = location_table["KillViperKing"].display_name
+        add_rule(world.get_location(loc_name_kill_viper_king, player),
+                 lambda state: can_do_facility_mission(state, player))
+        
+        loc_name_kill_berserker_queen = location_table["KillBerserkerQueen"].display_name
+        add_rule(world.get_location(loc_name_kill_berserker_queen, player),
+                 lambda state: can_do_facility_mission(state, player))
+        
+        loc_name_kill_archon_king = location_table["KillArchonKing"].display_name
+        add_rule(world.get_location(loc_name_kill_archon_king, player),
+                 lambda state: can_do_facility_mission(state, player))
+        
+    except KeyError:
+        print("X2WOTC: Alien Ruler kill locations not found, assuming disabled.")
+
+    #---------------------------------------------- Chosen kill rules -------------------------------------------------#
+    #------------------------------------------------------------------------------------------------------------------#
+    loc_name_kill_chosen_assassin = location_table["KillChosenAssassin"].display_name
+    add_rule(world.get_location(loc_name_kill_chosen_assassin, player),
+             lambda state: can_kill_chosen(state, player))
+    
+    loc_name_kill_chosen_hunter = location_table["KillChosenSniper"].display_name
+    add_rule(world.get_location(loc_name_kill_chosen_hunter, player),
+             lambda state: can_kill_chosen(state, player))
+    
+    loc_name_kill_chosen_warlock = location_table["KillChosenWarlock"].display_name
+    add_rule(world.get_location(loc_name_kill_chosen_warlock, player),
              lambda state: can_kill_chosen(state, player))
     
     #------------------------------------------------------------------------------------------------------------------#

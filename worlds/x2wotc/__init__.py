@@ -2,8 +2,9 @@ from BaseClasses import Tutorial
 from worlds.AutoWorld import WebWorld, World
 from worlds.LauncherComponents import Component, components, launch_subprocess, Type
 from .Items import X2WOTCItem, item_table, item_display_name_to_key
-from .Items import init_item_vars, get_item_count, disable_item, enable_progressive_item
-from .Locations import location_table, init_location_vars, disable_location
+from .Items import init_item_vars, get_item_count, get_num_items
+from .Items import disable_item, enable_progressive_item, add_filler_items
+from .Locations import location_table, init_location_vars, get_num_locations, disable_location
 from .Regions import init_region_vars, create_regions
 from .Rules import set_rules
 from .Options import X2WOTCOptions
@@ -49,8 +50,9 @@ class X2WOTCWorld(World):
         if self.options.disable_alien_hunters:
             for loc_name, loc_data in location_table.items():
                 if loc_data.dlc == "AH":
-                    item_name = loc_data.normal_item
                     self.disable_location(loc_name)
+            for item_name, item_data in item_table.items():
+                if item_data.dlc == "AH":
                     self.disable_item(item_name)
 
         # Disable Integrated DLC
@@ -82,6 +84,11 @@ class X2WOTCWorld(World):
             if not self.enable_progressive_item("ProgressivePsionicsTechCompleted"):
                 print("Failed to enable progressive psionics techs")
 
+        # Add filler items
+        num_filler_items = get_num_locations(self.player) - get_num_items(self.player)
+        print(f"X2WOTC: Adding {num_filler_items} filler items.")
+        add_filler_items(self.player, num_filler_items)
+
     def create_item(self, name: str) -> X2WOTCItem:
         item_name = item_display_name_to_key[name]
         return X2WOTCItem(self.player, item_name)
@@ -89,7 +96,7 @@ class X2WOTCWorld(World):
     def create_items(self):
         for item_name, item_data in item_table.items():
             if item_data.type != "Event":
-                for i in range(self.get_item_count(item_name)):
+                for i in range(get_item_count(self.player, item_name)):
                     item = self.create_item(item_data.display_name)
                     self.multiworld.itempool.append(item)
 
@@ -110,9 +117,6 @@ class X2WOTCWorld(World):
         init_item_vars(self.player)
         init_location_vars(self.player)
         init_region_vars(self.player)
-
-    def get_item_count(self, item_name: str) -> int:
-        return get_item_count(self.player, item_name)
 
     def disable_location(self, loc_name: str):
         disable_location(self.player, loc_name)
