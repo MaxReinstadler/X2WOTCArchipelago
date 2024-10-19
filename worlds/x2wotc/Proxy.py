@@ -182,11 +182,9 @@ async def handle_check(request: web.Request):
             response_body += f"Regular Item Found\n"
             response_body += f"Found your {item_data.display_name}!"
         
-        # No message for items sent to ourselves
         elif item.player == ctx.slot:
-            response_body += "None\n"
-            response_body += "None"
-
+            response_body += "Archipelago Item Sent\n"
+            response_body += f"Sent {item_name} to yourself!"
         elif slot_info:
             response_body += "Archipelago Item Sent\n"
             response_body += f"Sent {item_name} to {slot_info.name} ({slot_info.game})!"
@@ -211,8 +209,8 @@ def handle_tick(layer: str, number_received: int) -> str:
         response_body += f"[{item_data.type}]{item_name}\n"
 
         if item.player == ctx.slot:
-            response_body += "Archipelago Item Found\n"
-            response_body += f"Found your {item_data.display_name}!"
+            response_body += "Archipelago Item Received\n"
+            response_body += f"Received {item_data.display_name} from yourself!"
         elif slot_info:
             response_body += "Archipelago Item Received\n"
             response_body += f"Received {item_data.display_name} from {slot_info.name} ({slot_info.game})!"
