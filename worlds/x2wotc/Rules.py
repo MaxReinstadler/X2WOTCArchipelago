@@ -2,7 +2,10 @@ from BaseClasses import MultiWorld, CollectionState
 from worlds.generic.Rules import set_rule, add_rule
 from .Items import item_table, get_total_power
 from .Locations import location_table, is_enabled
+from .Options import X2WOTCOptions
 from typing import Callable
+
+options: X2WOTCOptions
 
 #======================================================================================================================#
 #                                                 POWER RULE HELPERS                                                   #
@@ -137,11 +140,24 @@ def can_skulljack_codex(state: CollectionState, player: int) -> bool:
 # Final Mission
 def has_autopsy_avatar_objective(state: CollectionState, player: int) -> bool:
     return (finished_forge_stasis_suit_objective(state, player)
-            and finished_psi_gate_objective(state, player))
+            or finished_psi_gate_objective(state, player)
+            or can_skulljack_codex(state, player))
+
+def can_finish_autopsy_avatar_objective(state: CollectionState, player: int) -> bool:
+    req_psi_gate_obj = "PsiGateObjective" in options.campaign_completion_requirements
+    req_stasis_suit_obj = "StasisSuitObjective" in options.campaign_completion_requirements
+    req_avatar_corpse_obj = "AvatarCorpseObjective" in options.campaign_completion_requirements
+
+    psi_gate_condition = finished_psi_gate_objective(state, player) or not req_psi_gate_obj
+    stasis_suit_condition = finished_forge_stasis_suit_objective(state, player) or not req_stasis_suit_obj
+    avatar_corpse_condition = can_skulljack_codex(state, player) or not req_avatar_corpse_obj
+
+    return (psi_gate_condition and stasis_suit_condition and avatar_corpse_condition)
 
 def can_do_truth_mission(state: CollectionState, player: int) -> bool:
     return (state.has(item_table["AutopsyAdventPsiWitchCompleted"].display_name, player)
             and has_autopsy_avatar_objective(state, player)
+            and can_finish_autopsy_avatar_objective(state, player)
             and has_shadow_chamber(state, player))
 
 def can_do_final_mission(state: CollectionState, player: int) -> bool:
@@ -156,6 +172,9 @@ def has_won(state: CollectionState, player: int) -> bool:
 #----------------------------------------------------------------------------------------------------------------------#
 
 def set_rules(world: MultiWorld, player: int):
+    global options
+    options = world.worlds[player].options
+
     #------------------------------------------------ Power rules -----------------------------------------------------#
     #------------------------------------------------------------------------------------------------------------------#
     for loc_name, loc_data in location_table.items():
