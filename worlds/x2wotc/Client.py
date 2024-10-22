@@ -3,6 +3,7 @@ from CommonClient import CommonContext, ClientCommandProcessor
 from CommonClient import server_loop, get_base_parser
 from CommonClient import gui_enabled
 from .Proxy import run_proxy
+from .Version import client_version, recommended_mod_version
 from typing import Optional
 
 class X2WOTCCommandProcessor(ClientCommandProcessor):
@@ -12,21 +13,26 @@ class X2WOTCCommandProcessor(ClientCommandProcessor):
     def _cmd_proxy(self, port: str = "") -> bool:
         """Start the proxy server with a specific port number."""
         if port == "":
-            self.output("Please specify a port number.")
+            self.output(f"Current proxy port: {self.ctx.proxy_port}")
             return False
         
         try:
             port = int(port)
         except ValueError:
-            self.output("Invalid port number (not a number).")
+            self.output("Invalid port number (not an integer).")
             return False
         
         if port < 0 or port > 65535:
-            self.output("Port number out of range (0-65535).")
+            self.output("Port number out of range (0 to 65535).")
             return False
         
         self.ctx.proxy_port = port
         self.ctx.start_proxy()
+        return True
+    
+    def _cmd_version(self) -> bool:
+        """Print the version of the client."""
+        self.output(f"Client version: {client_version}\nRecommended mod version: {recommended_mod_version}")
         return True
 
 class X2WOTCContext(CommonContext):
