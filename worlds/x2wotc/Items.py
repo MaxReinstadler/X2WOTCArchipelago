@@ -545,7 +545,7 @@ progressive_tech_items: Dict[str, X2WOTCItemData] = {
         ]
     ),
     "ProgressiveMeleeTechCompleted": X2WOTCItemData(
-        display_name = tech_item_prefix + "Progressive Melee Weapons",
+        display_name = tech_item_prefix + "Progressive Melee Weapon",
         id = tech_base_id + 50,
         classification = ItemClassification.progression,
         type = "TechCompleted",
