@@ -601,20 +601,20 @@ filler_base_id = tech_base_id + 54
 #-----------------------------------------------------------------------------------------------------------------------
 
 supplies_items: Dict[str, X2WOTCItemData] = {
-    "Supplies:50": X2WOTCItemData(
-        display_name = resource_item_prefix + "50 Supplies",
+    "Supplies:20": X2WOTCItemData(
+        display_name = resource_item_prefix + "20 Supplies",
         id = filler_base_id,
         type = "Resource",
         tags = ["filler", "supplies"]
     ),
-    "Supplies:75": X2WOTCItemData(
-        display_name = resource_item_prefix + "75 Supplies",
+    "Supplies:35": X2WOTCItemData(
+        display_name = resource_item_prefix + "35 Supplies",
         id = filler_base_id + 1,
         type = "Resource",
         tags = ["filler", "supplies"]
     ),
-    "Supplies:100": X2WOTCItemData(
-        display_name = resource_item_prefix + "100 Supplies",
+    "Supplies:50": X2WOTCItemData(
+        display_name = resource_item_prefix + "50 Supplies",
         id = filler_base_id + 2,
         type = "Resource",
         tags = ["filler", "supplies"]
@@ -622,20 +622,20 @@ supplies_items: Dict[str, X2WOTCItemData] = {
 }
 
 intel_items: Dict[str, X2WOTCItemData] = {
-    "Intel:20": X2WOTCItemData(
-        display_name = resource_item_prefix + "20 Intel",
+    "Intel:10": X2WOTCItemData(
+        display_name = resource_item_prefix + "10 Intel",
         id = filler_base_id + 3,
         type = "Resource",
         tags = ["filler", "intel"]
     ),
-    "Intel:30": X2WOTCItemData(
-        display_name = resource_item_prefix + "30 Intel",
+    "Intel:15": X2WOTCItemData(
+        display_name = resource_item_prefix + "15 Intel",
         id = filler_base_id + 4,
         type = "Resource",
         tags = ["filler", "intel"]
     ),
-    "Intel:40": X2WOTCItemData(
-        display_name = resource_item_prefix + "40 Intel",
+    "Intel:20": X2WOTCItemData(
+        display_name = resource_item_prefix + "20 Intel",
         id = filler_base_id + 5,
         type = "Resource",
         tags = ["filler", "intel"]
@@ -643,20 +643,20 @@ intel_items: Dict[str, X2WOTCItemData] = {
 }
 
 alien_alloys_items: Dict[str, X2WOTCItemData] = {
-    "AlienAlloy:10": X2WOTCItemData(
-        display_name = resource_item_prefix + "10 Alien Alloys",
+    "AlienAlloy:5": X2WOTCItemData(
+        display_name = resource_item_prefix + "5 Alien Alloys",
         id = filler_base_id + 6,
         type = "Resource",
         tags = ["filler", "alien_alloy"]
     ),
-    "AlienAlloy:20": X2WOTCItemData(
-        display_name = resource_item_prefix + "20 Alien Alloys",
+    "AlienAlloy:10": X2WOTCItemData(
+        display_name = resource_item_prefix + "10 Alien Alloys",
         id = filler_base_id + 7,
         type = "Resource",
         tags = ["filler", "alien_alloy"]
     ),
-    "AlienAlloy:30": X2WOTCItemData(
-        display_name = resource_item_prefix + "30 Alien Alloys",
+    "AlienAlloy:15": X2WOTCItemData(
+        display_name = resource_item_prefix + "15 Alien Alloys",
         id = filler_base_id + 8,
         type = "Resource",
         tags = ["filler", "alien_alloy"]
@@ -664,20 +664,20 @@ alien_alloys_items: Dict[str, X2WOTCItemData] = {
 }
 
 elerium_dust_items: Dict[str, X2WOTCItemData] = {
-    "EleriumDust:10": X2WOTCItemData(
-        display_name = resource_item_prefix + "10 Elerium Crystals",
+    "EleriumDust:5": X2WOTCItemData(
+        display_name = resource_item_prefix + "5 Elerium Crystals",
         id = filler_base_id + 9,
         type = "Resource",
         tags = ["filler", "elerium_dust"]
     ),
-    "EleriumDust:20": X2WOTCItemData(
-        display_name = resource_item_prefix + "20 Elerium Crystals",
+    "EleriumDust:10": X2WOTCItemData(
+        display_name = resource_item_prefix + "10 Elerium Crystals",
         id = filler_base_id + 10,
         type = "Resource",
         tags = ["filler", "elerium_dust"]
     ),
-    "EleriumDust:30": X2WOTCItemData(
-        display_name = resource_item_prefix + "30 Elerium Crystals",
+    "EleriumDust:15": X2WOTCItemData(
+        display_name = resource_item_prefix + "15 Elerium Crystals",
         id = filler_base_id + 11,
         type = "Resource",
         tags = ["filler", "elerium_dust"]
