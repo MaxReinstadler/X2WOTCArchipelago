@@ -68,19 +68,19 @@ class X2WOTCWorld(World):
             self.disable_item("ResistanceRadioCompleted")
 
         # Enable progressive tech items
-        if self.options.enable_progressive_rifle_techs:
+        if "RifleTech" in self.options.progressive_items:
             if not self.enable_progressive_item("ProgressiveRifleTechCompleted"):
                 print("Failed to enable progressive rifle techs")
-        if self.options.enable_progressive_melee_techs:
+        if "MeleeWeaponTech" in self.options.progressive_items:
             if not self.enable_progressive_item("ProgressiveMeleeTechCompleted"):
                 print("Failed to enable progressive melee techs")
-        if self.options.enable_progressive_armor_techs:
+        if "ArmorTech" in self.options.progressive_items:
             if not self.enable_progressive_item("ProgressiveArmorTechCompleted"):
                 print("Failed to enable progressive armor techs")
-        if self.options.enable_progressive_gremlin_techs:
+        if "GREMLINTech" in self.options.progressive_items:
             if not self.enable_progressive_item("ProgressiveGREMLINTechCompleted"):
                 print("Failed to enable progressive GREMLIN techs")
-        if self.options.enable_progressive_psionics_techs:
+        if "PsionicsTech" in self.options.progressive_items:
             if not self.enable_progressive_item("ProgressivePsionicsTechCompleted"):
                 print("Failed to enable progressive psionics techs")
 

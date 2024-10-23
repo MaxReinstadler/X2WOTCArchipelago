@@ -21,40 +21,34 @@ class DisableContactTechs(Toggle):
 
 class CampaignCompletionRequirements(OptionSet):
     """Require these objectives to be completed for the final mission to be unlocked.
-    Set this if you wish to experience more classical XCOM 2 story progression.
+    Set this if you wish to experience a more classical XCOM 2 story progression.
     **IMPORTANT** Must adjust the corresponding in-game settings accordingly (e.g. via MCM).
 
-    PsiGateObjective: Requires completion of the psi gate research.
-    StasisSuitObjective: Requires completion of the stasis suit research.
-    AvatarCorpseObjective: Requires acquisition of an avatar corpse."""
+    'PsiGateObjective': Require completion of the psi gate research.
+    'StasisSuitObjective': Require completion of the stasis suit research.
+    'AvatarCorpseObjective': Require acquisition of an avatar corpse."""
     display_name = "Campaign Completion Requirements"
-    default = {}
-    valid_keys = {"PsiGateObjective", "StasisSuitObjective", "AvatarCorpseObjective"}
+    completion_requirements = frozenset([
+        "PsiGateObjective",
+        "StasisSuitObjective",
+        "AvatarCorpseObjective"
+    ])
+    default = frozenset()
+    valid_keys = completion_requirements
 
-class EnableProgressiveRifleTechs(Toggle):
-    """Forces rifle techs to be collected in order."""
-    display_name = "Enable Progressive Rifle Techs"
-    default = True
-
-class EnableProgressiveMeleeTechs(Toggle):
-    """Forces melee weapon techs to be collected in order."""
-    display_name = "Enable Progressive Melee Weapon Techs"
-    default = True
-
-class EnableProgressiveArmorTechs(Toggle):
-    """Forces armor techs to be collected in order."""
-    display_name = "Enable Progressive Armor Techs"
-    default = True
-
-class EnableProgressiveGREMLINTechs(Toggle):
-    """Forces GREMLIN techs to be collected in order."""
-    display_name = "Enable Progressive GREMLIN Techs"
-    default = True
-
-class EnableProgressivePsionicsTechs(Toggle):
-    """Forces psionics techs to be collected in order."""
-    display_name = "Enable Progressive Psionics Techs"
-    default = True
+class ProgressiveItems(OptionSet):
+    """Force these items to be collected in order.
+    Values: 'RifleTech', 'MeleeWeaponTech', 'ArmorTech', 'GREMLINTech', 'PsionicsTech'"""
+    display_name = "Progressive Items"
+    progressive_items = frozenset([
+        "RifleTech",
+        "MeleeWeaponTech",
+        "ArmorTech",
+        "GREMLINTech",
+        "PsionicsTech"
+    ])
+    default = progressive_items
+    valid_keys = progressive_items
 
 @dataclass
 class X2WOTCOptions(PerGameCommonOptions):
@@ -62,8 +56,4 @@ class X2WOTCOptions(PerGameCommonOptions):
     disable_integrated_dlc: DisableIntegratedDLC
     disable_contact_techs: DisableContactTechs
     campaign_completion_requirements: CampaignCompletionRequirements
-    enable_progressive_rifle_techs: EnableProgressiveRifleTechs
-    enable_progressive_melee_techs: EnableProgressiveMeleeTechs
-    enable_progressive_armor_techs: EnableProgressiveArmorTechs
-    enable_progressive_gremlin_techs: EnableProgressiveGREMLINTechs
-    enable_progressive_psionics_techs: EnableProgressivePsionicsTechs
+    progressive_items: ProgressiveItems
