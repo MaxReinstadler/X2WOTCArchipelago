@@ -1,20 +1,34 @@
 # XCOM 2 War of the Chosen
 
-## What does randomization do to this game?
+## What are locations and items in this game?
 
-Research and shadow project unlocks are shuffled. This includes story research, weapon upgrades, autopsies, etc.
-There are also checks for the first time each enemy type is killed.
+### Locations
 
-## Which items can appear in another player's world?
+- Completion of research and shadow projects
+- First kill on each enemy type
 
-Research and shadow project unlocks, as well as resources and weapon mods, can be shuffled into other worlds.
+### Items
 
-## What happens when the player receives an item?
+- Research/shadow project unlocks (including story progress)
+- Resources such as supplies, intel, elerium cores, etc.
+- Weapon upgrades
 
-Items are currently only received while in the Geoscape. When the game receives an item, a pop-up will appear
-informing the player of what they got and who gave it to them.
+## What do location checks and items look like in this game?
 
-## What does another world's item look like in the game?
+When reaching a location in the strategic layer, a pop-up appears to inform the player about the item they found
+and who it belongs to. No such pop-up will currently appear in the tactical layer.
 
-When another world's item is collected in the strategic layer, a pop-up will appear informing the player of what
-they found and who it belongs to. No such pop-up will currently appear for checks in the tactical layer.
+Items are currently only received in the geoscape, including any the player sent to themself. When the game receives an item,
+a pop-up appears to inform the player about what they got and from whom.
+
+## How was this game adapted to fit into Archipelago?
+
+Various features have been added to the game to reduce the length of a campaign. Expect it to be comfortably beatable in
+roughly 15 to 20 hours on default settings.
+
+## What if I want to play a vanilla campaign?
+
+Download [Mod Config Menu for WotC](https://steamcommunity.com/sharedfiles/filedetails/?id=667104300) and navigate to
+`Settings > Mod Settings > WOTCArchipelago`. Turn off all settings under "Reduced Campaign Duration" (also set sliders to 0).
+Turn on all settings under "Campaign Completion Requirements" (NOTE: you will also need to set the corresponding
+option correctly in your yaml for generation).
