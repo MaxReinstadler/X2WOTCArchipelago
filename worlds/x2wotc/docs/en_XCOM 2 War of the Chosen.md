@@ -23,8 +23,9 @@ a pop-up appears to inform the player about what they got and from whom.
 
 ## How was this game adapted to fit into Archipelago?
 
-Various features have been added to the game to reduce the length of a campaign. Expect it to be comfortably beatable in
-roughly 15 to 20 hours on default settings.
+Various features have been added to reduce the length of a campaign, such as missions being skipped and soldiers gaining more XP passively.
+Additionally, the final mission can be unlocked via three different routes (previously requiring the completion of all three).
+Expect the game to be comfortably beatable in roughly 15 to 20 hours on default settings.
 
 ## What if I want to play a vanilla campaign?
 
