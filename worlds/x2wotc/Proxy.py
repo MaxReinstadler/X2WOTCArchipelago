@@ -129,6 +129,10 @@ def get_received_items(layer: str, number_received: int) -> ItemsInfo:
         item_name = item_id_to_key[item.item]
         item_data = item_table[item_name]
 
+        # Ignore event items
+        if item_data.type == "Event":
+            continue
+
         # Track progressive items
         stages = item_data.stages
         if stages is not None:
