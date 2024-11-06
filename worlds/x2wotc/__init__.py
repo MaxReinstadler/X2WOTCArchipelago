@@ -7,7 +7,7 @@ from .Items import disable_item, enable_progressive_item, add_filler_items
 from .Locations import location_table, init_location_vars, get_num_locations, disable_location
 from .Regions import init_region_vars, create_regions
 from .Rules import set_rules
-from .Options import X2WOTCOptions
+from .Options import X2WOTCOptions, AlienHuntersDLC
 
 def launch_client():
     from .Client import launch
@@ -46,19 +46,24 @@ class X2WOTCWorld(World):
     def generate_early(self):
         self.init_vars()
 
-        # Disable Alien Hunters
-        if self.options.disable_alien_hunters:
+        # Set Alien Hunters Locations
+        if self.options.alien_hunters_dlc == AlienHuntersDLC.option_no_integrated_dlc:
+            self.disable_location("ExperimentalWeapons")
+            self.disable_item("ExperimentalWeaponsCompleted")
+
+        elif self.options.alien_hunters_dlc == AlienHuntersDLC.option_no_alien_rulers:
+            for loc_name, loc_data in location_table.items():
+                if "kill_ruler" in loc_data.tags:
+                    self.disable_location(loc_name)
+                    self.disable_item(loc_data.normal_item) if loc_data.normal_item else None
+
+        elif self.options.alien_hunters_dlc == AlienHuntersDLC.option_none:
             for loc_name, loc_data in location_table.items():
                 if loc_data.dlc == "AH":
                     self.disable_location(loc_name)
             for item_name, item_data in item_table.items():
                 if item_data.dlc == "AH":
                     self.disable_item(item_name)
-
-        # Disable Integrated DLC
-        if self.options.disable_integrated_dlc:
-            self.disable_location("ExperimentalWeapons")
-            self.disable_item("ExperimentalWeaponsCompleted")
 
         # Disable Contact Techs
         if self.options.disable_contact_techs:
@@ -70,23 +75,23 @@ class X2WOTCWorld(World):
         # Enable progressive tech items
         if "RifleTech" in self.options.progressive_items:
             if not self.enable_progressive_item("ProgressiveRifleTechCompleted"):
-                print("Failed to enable progressive rifle techs")
+                print(f"X2WOTC: Failed to enable progressive rifle techs for player {self.player_name}")
         if "MeleeWeaponTech" in self.options.progressive_items:
             if not self.enable_progressive_item("ProgressiveMeleeTechCompleted"):
-                print("Failed to enable progressive melee techs")
+                print(f"X2WOTC: Failed to enable progressive melee techs for player {self.player_name}")
         if "ArmorTech" in self.options.progressive_items:
             if not self.enable_progressive_item("ProgressiveArmorTechCompleted"):
-                print("Failed to enable progressive armor techs")
+                print(f"X2WOTC: Failed to enable progressive armor techs for player {self.player_name}")
         if "GREMLINTech" in self.options.progressive_items:
             if not self.enable_progressive_item("ProgressiveGREMLINTechCompleted"):
-                print("Failed to enable progressive GREMLIN techs")
+                print(f"X2WOTC: Failed to enable progressive GREMLIN techs for player {self.player_name}")
         if "PsionicsTech" in self.options.progressive_items:
             if not self.enable_progressive_item("ProgressivePsionicsTechCompleted"):
-                print("Failed to enable progressive psionics techs")
+                print(f"X2WOTC: Failed to enable progressive psionics techs for player {self.player_name}")
 
         # Add filler items
         num_filler_items = get_num_locations(self.player) - get_num_items(self.player)
-        print(f"X2WOTC: Adding {num_filler_items} filler items.")
+        print(f"X2WOTC: Adding {num_filler_items} filler items for player {self.player_name}")
         add_filler_items(self.player, num_filler_items)
 
     def create_item(self, name: str) -> X2WOTCItem:
