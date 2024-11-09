@@ -33,6 +33,7 @@ tech_item_prefix = "[Tech] "
 shadow_tech_item_prefix = "[Tech] "
 resource_item_prefix = "[Resource] "
 weapon_mod_item_prefix = "[Upgrade] "
+staff_item_prefix = "[Staff] "
 
 ########################################################################################################################
 ##                        TECH COMPLETION ITEMS (RESEARCH PROJECTS / SHADOW PROJECTS)                                 ##
@@ -642,7 +643,7 @@ intel_items: Dict[str, X2WOTCItemData] = {
     )
 }
 
-alien_alloys_items: Dict[str, X2WOTCItemData] = {
+alien_alloy_items: Dict[str, X2WOTCItemData] = {
     "AlienAlloy:5": X2WOTCItemData(
         display_name = resource_item_prefix + "5 Alien Alloys",
         id = filler_base_id + 6,
@@ -693,6 +694,27 @@ elerium_core_items: Dict[str, X2WOTCItemData] = {
     )
 }
 
+ability_point_items: Dict[str, X2WOTCItemData] = {
+    "AbilityPoint:3": X2WOTCItemData(
+        display_name = resource_item_prefix + "3 Ability Points",
+        id = filler_base_id + 13,
+        type = "Resource",
+        tags = ["filler", "ability_point"]
+    ),
+    "AbilityPoint:5": X2WOTCItemData(
+        display_name = resource_item_prefix + "5 Ability Points",
+        id = filler_base_id + 14,
+        type = "Resource",
+        tags = ["filler", "ability_point"]
+    ),
+    "AbilityPoint:7": X2WOTCItemData(
+        display_name = resource_item_prefix + "7 Ability Points",
+        id = filler_base_id + 15,
+        type = "Resource",
+        tags = ["filler", "ability_point"]
+    )
+}
+
 #=======================================================================================================================
 #                                               WEAPON MOD ITEMS
 #-----------------------------------------------------------------------------------------------------------------------
@@ -700,43 +722,43 @@ elerium_core_items: Dict[str, X2WOTCItemData] = {
 advanced_weapon_mod_items: Dict[str, X2WOTCItemData] = {
     "AimUpgrade_Adv": X2WOTCItemData(
         display_name = weapon_mod_item_prefix + "Advanced Scope",
-        id = filler_base_id + 13,
+        id = filler_base_id + 16,
         type = "WeaponMod",
         tags = ["filler", "scope", "advanced"]
     ),
     "CritUpgrade_Adv": X2WOTCItemData(
         display_name = weapon_mod_item_prefix + "Advanced Laser Sight",
-        id = filler_base_id + 14,
+        id = filler_base_id + 17,
         type = "WeaponMod",
         tags = ["filler", "laser_sight", "advanced"]
     ),
     "ReloadUpgrade_Adv": X2WOTCItemData(
         display_name = weapon_mod_item_prefix + "Advanced Auto-Loader",
-        id = filler_base_id + 15,
+        id = filler_base_id + 18,
         type = "WeaponMod",
         tags = ["filler", "auto_loader", "advanced"]
     ),
     "FreeKillUpgrade_Adv": X2WOTCItemData(
         display_name = weapon_mod_item_prefix + "Advanced Repeater",
-        id = filler_base_id + 16,
+        id = filler_base_id + 19,
         type = "WeaponMod",
         tags = ["filler", "repeater", "advanced"]
     ),
     "MissDamageUpgrade_Adv": X2WOTCItemData(
         display_name = weapon_mod_item_prefix + "Advanced Stock",
-        id = filler_base_id + 17,
+        id = filler_base_id + 20,
         type = "WeaponMod",
         tags = ["filler", "stock", "advanced"]
     ),
     "FreeFireUpgrade_Adv": X2WOTCItemData(
         display_name = weapon_mod_item_prefix + "Advanced Hair Trigger",
-        id = filler_base_id + 18,
+        id = filler_base_id + 21,
         type = "WeaponMod",
         tags = ["filler", "hair_trigger", "advanced"]
     ),
     "ClipSizeUpgrade_Adv": X2WOTCItemData(
         display_name = weapon_mod_item_prefix + "Advanced Expanded Magazine",
-        id = filler_base_id + 19,
+        id = filler_base_id + 22,
         type = "WeaponMod",
         tags = ["filler", "expanded_magazine", "advanced"]
     ),
@@ -745,45 +767,67 @@ advanced_weapon_mod_items: Dict[str, X2WOTCItemData] = {
 superior_weapon_mod_items: Dict[str, X2WOTCItemData] = {
     "AimUpgrade_Sup": X2WOTCItemData(
         display_name = weapon_mod_item_prefix + "Superior Scope",
-        id = filler_base_id + 20,
+        id = filler_base_id + 23,
         type = "WeaponMod",
         tags = ["filler", "scope", "superior"]
     ),
     "CritUpgrade_Sup": X2WOTCItemData(
         display_name = weapon_mod_item_prefix + "Superior Laser Sight",
-        id = filler_base_id + 21,
+        id = filler_base_id + 24,
         type = "WeaponMod",
         tags = ["filler", "laser_sight", "superior"]
     ),
     "ReloadUpgrade_Sup": X2WOTCItemData(
         display_name = weapon_mod_item_prefix + "Superior Auto-Loader",
-        id = filler_base_id + 22,
+        id = filler_base_id + 25,
         type = "WeaponMod",
         tags = ["filler", "auto_loader", "superior"]
     ),
     "FreeKillUpgrade_Sup": X2WOTCItemData(
         display_name = weapon_mod_item_prefix + "Superior Repeater",
-        id = filler_base_id + 23,
+        id = filler_base_id + 26,
         type = "WeaponMod",
         tags = ["filler", "repeater", "superior"]
     ),
     "MissDamageUpgrade_Sup": X2WOTCItemData(
         display_name = weapon_mod_item_prefix + "Superior Stock",
-        id = filler_base_id + 24,
+        id = filler_base_id + 27,
         type = "WeaponMod",
         tags = ["filler", "stock", "superior"]
     ),
     "FreeFireUpgrade_Sup": X2WOTCItemData(
         display_name = weapon_mod_item_prefix + "Superior Hair Trigger",
-        id = filler_base_id + 25,
+        id = filler_base_id + 28,
         type = "WeaponMod",
         tags = ["filler", "hair_trigger", "superior"]
     ),
     "ClipSizeUpgrade_Sup": X2WOTCItemData(
         display_name = weapon_mod_item_prefix + "Superior Expanded Magazine",
-        id = filler_base_id + 26,
+        id = filler_base_id + 29,
         type = "WeaponMod",
         tags = ["filler", "expanded_magazine", "superior"]
+    )
+}
+
+#=======================================================================================================================
+#                                                 STAFF ITEMS
+#-----------------------------------------------------------------------------------------------------------------------
+
+scientist_items: Dict[str, X2WOTCItemData] = {
+    "Scientist:1": X2WOTCItemData(
+        display_name = staff_item_prefix + "1 Scientist",
+        id = filler_base_id + 30,
+        type = "Staff",
+        tags = ["filler", "scientist"]
+    )
+}
+
+engineer_items: Dict[str, X2WOTCItemData] = {
+    "Engineer:1": X2WOTCItemData(
+        display_name = staff_item_prefix + "1 Engineer",
+        id = filler_base_id + 31,
+        type = "Staff",
+        tags = ["filler", "engineer"]
     )
 }
 
@@ -818,9 +862,10 @@ tech_item_table: Dict[str, X2WOTCItemData] = {
 resource_item_table: Dict[str, X2WOTCItemData] = {
     **supplies_items,
     **intel_items,
-    **alien_alloys_items,
+    **alien_alloy_items,
     **elerium_dust_items,
-    **elerium_core_items
+    **elerium_core_items,
+    **ability_point_items
 }
 
 weapon_mod_item_table: Dict[str, X2WOTCItemData] = {
@@ -828,10 +873,20 @@ weapon_mod_item_table: Dict[str, X2WOTCItemData] = {
     **superior_weapon_mod_items
 }
 
-item_table: Dict[str, X2WOTCItemData] = {
-    **tech_item_table,
+staff_item_table: Dict[str, X2WOTCItemData] = {
+    **scientist_items,
+    **engineer_items
+}
+
+filler_item_table: Dict[str, X2WOTCItemData] = {
     **resource_item_table,
     **weapon_mod_item_table,
+    **staff_item_table
+}
+
+item_table: Dict[str, X2WOTCItemData] = {
+    **tech_item_table,
+    **filler_item_table,
     **event_items
 }
 
@@ -846,7 +901,7 @@ def init_item_vars(player: int):
     item_count[player] = {}
     num_items[player] = 0
     for item_name, item_data in item_table.items():
-        if item_data.normal_location is None:  # Progressive and filler items
+        if item_data.normal_location is None:  # Progressive and filler/trap items
             item_count[player][item_name] = 0
         else:
             item_count[player][item_name] = 1
@@ -893,15 +948,22 @@ def enable_progressive_item(player: int, item_name: str) -> bool:
     return True
 
 def add_filler_items(player: int, num_filler_items: int):
-    num_weapon_mod_items = num_filler_items // 4
-    num_resource_items = num_filler_items - num_weapon_mod_items
+    num_names_pairs = [
+        (num_filler_items // 6, list(weapon_mod_item_table.keys())),
+        (num_filler_items // 6, list(staff_item_table.keys()))
+    ]
 
-    for i in range(num_resource_items):
-        resource_item_name = random.choice(list(resource_item_table.keys()))
-        resource_item_count = item_count[player][resource_item_name]
-        set_item_count(player, resource_item_name, resource_item_count + 1)
+    # Add specified number of each type of filler
+    for (num, names) in num_names_pairs:
+        for _ in range(num):
+            item_name = random.choice(names)
+            old_count = item_count[player][item_name]
+            set_item_count(player, item_name, old_count + 1)
 
-    for i in range(num_weapon_mod_items):
-        weapon_mod_item_name = random.choice(list(weapon_mod_item_table.keys()))
-        weapon_mod_item_count = item_count[player][weapon_mod_item_name]
-        set_item_count(player, weapon_mod_item_name, weapon_mod_item_count + 1)
+    # Fill the rest with resource items
+    num_resource_items = num_filler_items - sum([num for (num, _) in num_names_pairs])
+    resource_names = list(resource_item_table.keys())
+    for _ in range(num_resource_items):
+        item_name = random.choice(resource_names)
+        old_count = item_count[player][item_name]
+        set_item_count(player, item_name, old_count + 1)
