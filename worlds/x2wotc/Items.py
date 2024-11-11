@@ -34,6 +34,7 @@ shadow_tech_item_prefix = "[Tech] "
 resource_item_prefix = "[Resource] "
 weapon_mod_item_prefix = "[Upgrade] "
 staff_item_prefix = "[Staff] "
+trap_item_prefix = "[Trap] "
 
 ########################################################################################################################
 ##                        TECH COMPLETION ITEMS (RESEARCH PROJECTS / SHADOW PROJECTS)                                 ##
@@ -832,6 +833,30 @@ engineer_items: Dict[str, X2WOTCItemData] = {
 }
 
 ########################################################################################################################
+##                                                TRAP ITEMS                                                          ##
+########################################################################################################################
+
+trap_base_id = filler_base_id + 32
+
+doom_items: Dict[str, X2WOTCItemData] = {
+    "Doom:1": X2WOTCItemData(
+        display_name = trap_item_prefix + "Avatar Project +1",
+        id = trap_base_id,
+        type = "Trap",
+        tags = ["doom"]
+    )
+}
+
+force_level_items: Dict[str, X2WOTCItemData] = {
+    "ForceLevel:1": X2WOTCItemData(
+        display_name = trap_item_prefix + "Force Level +1",
+        id = trap_base_id + 1,
+        type = "Trap",
+        tags = ["force_level"]
+    )
+}
+
+########################################################################################################################
 ##                                                EVENT ITEMS                                                         ##
 ########################################################################################################################
 
@@ -884,9 +909,15 @@ filler_item_table: Dict[str, X2WOTCItemData] = {
     **staff_item_table
 }
 
+trap_item_table: Dict[str, X2WOTCItemData] = {
+    **doom_items,
+    **force_level_items
+}
+
 item_table: Dict[str, X2WOTCItemData] = {
     **tech_item_table,
     **filler_item_table,
+    **trap_item_table,
     **event_items
 }
 
@@ -950,10 +981,11 @@ def enable_progressive_item(player: int, item_name: str) -> bool:
 def add_filler_items(player: int, num_filler_items: int):
     num_names_pairs = [
         (num_filler_items // 6, list(weapon_mod_item_table.keys())),
-        (num_filler_items // 6, list(staff_item_table.keys()))
+        (num_filler_items // 6, list(staff_item_table.keys())),
+        (num_filler_items // 5, list(trap_item_table.keys()))
     ]
 
-    # Add specified number of each type of filler
+    # Add specified number of each type of filler/trap
     for (num, names) in num_names_pairs:
         for _ in range(num):
             item_name = random.choice(names)
