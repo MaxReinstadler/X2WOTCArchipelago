@@ -9,17 +9,17 @@ from .Locations import location_table, loc_id_to_key
 ctx: CommonContext
 
 LocationsInfo = Dict[
-    str,  # Location name (key)
+    str,  # Location name (internal)
     Tuple[
-        Optional[str],  # Item name (key)
+        Optional[str],  # Item name (internal or external)
         Optional[NetworkItem],
         Optional[NetworkSlot]
     ]
 ]
 
-ItemsInfo = Dict[
-    str,  # Item name (key)
+ItemsInfo = List[
     Tuple[
+        str,  # Item name (internal)
         NetworkItem,
         Optional[NetworkSlot]
     ]
@@ -121,12 +121,12 @@ async def send_checks(checks: List[str]):
 # ---------------------------------------------------- RECEIVE ------------------------------------------------------- #
 
 def get_received_items(layer: str, number_received: int) -> ItemsInfo:
-    items_info: ItemsInfo = {}
+    items_info: ItemsInfo = []
     progressive_index: Dict[str, int] = {}
     number = 0  # Number in sequence of received items (from 1)
 
-    for item in ctx.items_received:
-        item_name = item_id_to_key[item.item]
+    for network_item in ctx.items_received:
+        item_name = item_id_to_key[network_item.item]
         item_data = item_table[item_name]
 
         # Ignore event items
@@ -152,8 +152,8 @@ def get_received_items(layer: str, number_received: int) -> ItemsInfo:
             except IndexError:
                 logger.warning(f"Proxy: Too many instances of progressive item {item_name}")
 
-        slot_info = get_slot_info(item.player)
-        items_info[item_name] = (item, slot_info)
+        slot_info = get_slot_info(network_item.player)
+        items_info.append((item_name, network_item, slot_info))
 
     return items_info
 
@@ -169,7 +169,7 @@ async def handle_check(request: web.Request):
     
     response_body = ""
 
-    for loc_name, (item_name, item, slot_info) in get_locations_info(checks).items():
+    for loc_name, (item_name, network_item, slot_info) in get_locations_info(checks).items():
         if response_body != "":
             response_body += "\n\n"
 
@@ -179,14 +179,14 @@ async def handle_check(request: web.Request):
             response_body += "None"
 
         # For disabled locations, item_name is the internal key
-        elif item == None:
+        elif network_item == None:
             logger.debug(f"Proxy: Location {loc_name} disabled, regular item found")
             item_data = item_table[item_name]
             response_body += f"[{item_data.type}]{item_name}\n"
             response_body += f"Regular Item Found\n"
             response_body += f"Found your {item_data.display_name}!"
         
-        elif item.player == ctx.slot:
+        elif network_item.player == ctx.slot:
             response_body += "Archipelago Item Sent\n"
             response_body += f"Sent {item_name} to yourself!"
         elif slot_info:
@@ -203,7 +203,7 @@ async def handle_check(request: web.Request):
 def handle_tick(layer: str, number_received: int) -> str:
     response_body = ""
 
-    for item_name, (item, slot_info) in get_received_items(layer, number_received).items():
+    for (item_name, network_item, slot_info) in get_received_items(layer, number_received):
         if response_body != "":
             response_body += "\n\n"
 
@@ -212,7 +212,7 @@ def handle_tick(layer: str, number_received: int) -> str:
         # Info for the game to process
         response_body += f"[{item_data.type}]{item_name}\n"
 
-        if item.player == ctx.slot:
+        if network_item.player == ctx.slot:
             response_body += "Archipelago Item Received\n"
             response_body += f"Received {item_data.display_name} from yourself!"
         elif slot_info:
