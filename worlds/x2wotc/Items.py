@@ -700,19 +700,22 @@ ability_point_items: Dict[str, X2WOTCItemData] = {
         display_name = resource_item_prefix + "3 Ability Points",
         id = filler_base_id + 13,
         type = "Resource",
-        tags = ["filler", "ability_point"]
+        tags = ["filler", "ability_point"],
+        dlc = "WOTC"
     ),
     "AbilityPoint:5": X2WOTCItemData(
         display_name = resource_item_prefix + "5 Ability Points",
         id = filler_base_id + 14,
         type = "Resource",
-        tags = ["filler", "ability_point"]
+        tags = ["filler", "ability_point"],
+        dlc = "WOTC"
     ),
     "AbilityPoint:7": X2WOTCItemData(
         display_name = resource_item_prefix + "7 Ability Points",
         id = filler_base_id + 15,
         type = "Resource",
-        tags = ["filler", "ability_point"]
+        tags = ["filler", "ability_point"],
+        dlc = "WOTC"
     )
 }
 
