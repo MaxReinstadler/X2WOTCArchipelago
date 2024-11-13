@@ -845,7 +845,7 @@ doom_items: Dict[str, X2WOTCItemData] = {
     "Doom:1": X2WOTCItemData(
         display_name = trap_item_prefix + "Avatar Project +1",
         id = trap_base_id,
-        item_classification = ItemClassification.trap,
+        classification = ItemClassification.trap,
         type = "Trap",
         tags = ["doom"]
     )
@@ -855,7 +855,7 @@ force_level_items: Dict[str, X2WOTCItemData] = {
     "ForceLevel:1": X2WOTCItemData(
         display_name = trap_item_prefix + "Force Level +1",
         id = trap_base_id + 1,
-        item_classification = ItemClassification.trap,
+        classification = ItemClassification.trap,
         type = "Trap",
         tags = ["force_level"]
     )
