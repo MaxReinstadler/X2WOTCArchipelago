@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from Options import Choice, Toggle, OptionSet, PerGameCommonOptions
+from Options import Choice, Toggle, OptionSet, Range, PerGameCommonOptions
 
 class AlienHuntersDLC(Choice):
     """Set which locations and items from the Alien Hunters DLC are enabled.
@@ -35,8 +35,8 @@ class CampaignCompletionRequirements(OptionSet):
         "StasisSuitObjective",
         "AvatarCorpseObjective"
     ])
-    default = frozenset()
     valid_keys = completion_requirements
+    default = frozenset()
 
 class ProgressiveItems(OptionSet):
     """Force these items to be collected in order.
@@ -49,13 +49,31 @@ class ProgressiveItems(OptionSet):
         "GREMLINTech",
         "PsionicsTech"
     ])
-    default = progressive_items
     valid_keys = progressive_items
+    default = progressive_items
 
 class ChosenHuntSanity(Toggle):
     """Shuffle Chosen Hunt covert actions and their rewards, i.e. Resistance Faction influence and Chosen Stronghold missions."""
     display_name = "Chosen Hunt-Sanity"
     default = True
+
+class WeaponModShare(Range):
+    """Set the share of filler items to be weapon upgrades."""
+    range_start = 0
+    range_end = 100
+    default = 15
+
+class StaffShare(Range):
+    """Set the share of filler items to be staff."""
+    range_start = 0
+    range_end = 100
+    default = 20
+
+class TrapShare(Range):
+    """Set the share of filler items to be traps."""
+    range_start = 0
+    range_end = 100
+    default = 20
 
 @dataclass
 class X2WOTCOptions(PerGameCommonOptions):
@@ -64,3 +82,6 @@ class X2WOTCOptions(PerGameCommonOptions):
     campaign_completion_requirements: CampaignCompletionRequirements
     progressive_items: ProgressiveItems
     chosen_hunt_sanity: ChosenHuntSanity
+    weapon_mod_share: WeaponModShare
+    staff_share: StaffShare
+    trap_share: TrapShare

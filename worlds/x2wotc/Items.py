@@ -1049,13 +1049,14 @@ def enable_chosen_hunt_items(player: int):
     set_item_count(player, "HunterStronghold", 1)
     set_item_count(player, "WarlockStronghold", 1)
 
-def add_filler_items(player: int, num_filler_items: int):
+def add_filler_items(player: int, num_filler_items: int, weapon_mod_share: float, staff_share: float, trap_share: float):
     num_names_pairs = [
-        (num_filler_items // 6, list(weapon_mod_item_table.keys())),
-        (num_filler_items // 6, list(staff_item_table.keys())),
-        (num_filler_items // 5, list(trap_item_table.keys()))
+        (int(num_filler_items * weapon_mod_share), list(weapon_mod_item_table.keys())),
+        (int(num_filler_items * staff_share), list(staff_item_table.keys())),
+        (int(num_filler_items * trap_share), list(trap_item_table.keys()))
     ]
 
+    num_unfilled = num_filler_items
     # Add specified number of each type of filler/trap
     for (num, names) in num_names_pairs:
         for _ in range(num):
@@ -1063,10 +1064,13 @@ def add_filler_items(player: int, num_filler_items: int):
             old_count = item_count[player][item_name]
             set_item_count(player, item_name, old_count + 1)
 
+            num_unfilled -= 1
+            if num_unfilled == 0:
+                return
+
     # Fill the rest with resource items
-    num_resource_items = num_filler_items - sum([num for (num, _) in num_names_pairs])
     resource_names = list(resource_item_table.keys())
-    for _ in range(num_resource_items):
+    for _ in range(num_unfilled):
         item_name = random.choice(resource_names)
         old_count = item_count[player][item_name]
         set_item_count(player, item_name, old_count + 1)
