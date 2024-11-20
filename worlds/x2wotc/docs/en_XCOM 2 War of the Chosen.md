@@ -5,13 +5,17 @@
 ### Locations
 
 - Completion of research and shadow projects
-- First kill on each enemy type
+- Completion of chosen hunt covert actions
+- First kill of each enemy type
 
 ### Items
 
 - Research/shadow project unlocks (including story progress)
-- Resources such as supplies, intel, elerium cores, etc.
+- Chosen hunt covert action unlocks, i.e. faction influence, chosen strongholds
+- Resources, i.e. supplies, intel, elerium cores, etc.
 - Weapon upgrades
+- Staff, i.e. scientists, engineers
+- Traps, i.e. avatar project progress, force level increases
 
 ## What do location checks and items look like in this game?
 
