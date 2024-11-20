@@ -59,18 +59,21 @@ class ChosenHuntSanity(Toggle):
 
 class WeaponModShare(Range):
     """Set the share of filler items to be weapon upgrades."""
+    display_name = "Weapon Mod Share"
     range_start = 0
     range_end = 100
     default = 15
 
 class StaffShare(Range):
     """Set the share of filler items to be staff."""
+    display_name = "Staff Share"
     range_start = 0
     range_end = 100
     default = 20
 
 class TrapShare(Range):
     """Set the share of filler items to be traps."""
+    display_name = "Trap Share"
     range_start = 0
     range_end = 100
     default = 20
