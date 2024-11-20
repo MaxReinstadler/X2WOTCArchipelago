@@ -23,6 +23,7 @@ tech_location_prefix = "Research "
 shadow_tech_location_prefix = "Research "
 enemy_kill_location_prefix = "Kill "
 enemy_destroy_location_prefix = "Destroy "
+covert_action_location_prefix = "Complete "
 
 ########################################################################################################################
 ##                            TECH LOCATIONS (RESEARCH PROJECTS / SHADOW PROJECTS)                                    ##
@@ -372,7 +373,7 @@ alien_hunters_techs: Dict[str, X2WOTCLocationData] = {
         id = tech_base_id + 39,
         type = "Tech",
         tags = ["autopsy", "kill_ruler"],
-        difficulty = 35.0,
+        difficulty = 45.0,
         dlc = "AH",
         normal_item = "AutopsyViperKingCompleted"
     ),
@@ -381,7 +382,7 @@ alien_hunters_techs: Dict[str, X2WOTCLocationData] = {
         id = tech_base_id + 40,
         type = "Tech",
         tags = ["autopsy", "kill_ruler"],
-        difficulty = 55.0,
+        difficulty = 60.0,
         dlc = "AH",
         normal_item = "AutopsyBerserkerQueenCompleted"
     ),
@@ -444,8 +445,8 @@ wotc_chosen_weapon_techs: Dict[str, X2WOTCLocationData] = {
         display_name = tech_location_prefix + "Assassin Weapons",
         id = tech_base_id + 46,
         type = "Tech",
-        tags = ["kill_chosen"],
-        difficulty = 85.0,
+        tags = ["defeat_assassin"],
+        difficulty = 80.0,
         dlc = "WOTC",
         normal_item = "ChosenAssassinWeaponsCompleted"
     ),
@@ -453,8 +454,8 @@ wotc_chosen_weapon_techs: Dict[str, X2WOTCLocationData] = {
         display_name = tech_location_prefix + "Hunter Weapons",
         id = tech_base_id + 47,
         type = "Tech",
-        tags = ["kill_chosen"],
-        difficulty = 85.0,
+        tags = ["defeat_hunter"],
+        difficulty = 80.0,
         dlc = "WOTC",
         normal_item = "ChosenHunterWeaponsCompleted"
     ),
@@ -462,8 +463,8 @@ wotc_chosen_weapon_techs: Dict[str, X2WOTCLocationData] = {
         display_name = tech_location_prefix + "Warlock Weapons",
         id = tech_base_id + 48,
         type = "Tech",
-        tags = ["kill_chosen"],
-        difficulty = 85.0,
+        tags = ["defeat_warlock"],
+        difficulty = 80.0,
         dlc = "WOTC",
         normal_item = "ChosenWarlockWeaponsCompleted"
     )
@@ -645,7 +646,7 @@ alien_hunters_enemy_kills: Dict[str, X2WOTCLocationData] = {
         layer = "Tactical",
         type = "EnemyKill",
         tags = ["kill_ruler"],
-        difficulty = 35.0,
+        difficulty = 45.0,
         dlc = "AH"
     ),
     "KillBerserkerQueen": X2WOTCLocationData(
@@ -654,7 +655,7 @@ alien_hunters_enemy_kills: Dict[str, X2WOTCLocationData] = {
         layer = "Tactical",
         type = "EnemyKill",
         tags = ["kill_ruler"],
-        difficulty = 55.0,
+        difficulty = 60.0,
         dlc = "AH"
     ),
     "KillArchonKing": X2WOTCLocationData(
@@ -714,8 +715,8 @@ wotc_enemy_kills: Dict[str, X2WOTCLocationData] = {
         id = kill_base_id + 26,
         layer = "Tactical",
         type = "EnemyKill",
-        tags = ["kill_chosen"],
-        difficulty = 85.0,
+        tags = ["kill_assassin"],
+        difficulty = 80.0,
         dlc = "WOTC"
     ),
     "KillChosenSniper": X2WOTCLocationData(
@@ -723,8 +724,8 @@ wotc_enemy_kills: Dict[str, X2WOTCLocationData] = {
         id = kill_base_id + 27,
         layer = "Tactical",
         type = "EnemyKill",
-        tags = ["kill_chosen"],
-        difficulty = 85.0,
+        tags = ["kill_hunter"],
+        difficulty = 80.0,
         dlc = "WOTC"
     ),
     "KillChosenWarlock": X2WOTCLocationData(
@@ -732,9 +733,103 @@ wotc_enemy_kills: Dict[str, X2WOTCLocationData] = {
         id = kill_base_id + 28,
         layer = "Tactical",
         type = "EnemyKill",
-        tags = ["kill_chosen"],
-        difficulty = 85.0,
+        tags = ["kill_warlock"],
+        difficulty = 80.0,
         dlc = "WOTC"
+    )
+}
+
+########################################################################################################################
+##                                          COVERT ACTION LOCATIONS                                                   ##
+########################################################################################################################
+
+covert_action_base_id = kill_base_id + 29
+
+#=======================================================================================================================
+#                                                 CHOSEN HUNT
+#-----------------------------------------------------------------------------------------------------------------------
+
+chosen_hunt_covert_actions: Dict[str, X2WOTCLocationData] = {
+    "ChosenHuntPt1:1": X2WOTCLocationData(
+        display_name = covert_action_location_prefix + "First Chosen Hunt 1/3",
+        id = covert_action_base_id,
+        type = "CovertAction",
+        tags = ["chosen_hunt", "meet_first_chosen", "influence:0"],
+        difficulty = 20.0,
+        dlc = "WOTC",
+        normal_item = "DefaultChosenHuntReward"
+    ),
+    "ChosenHuntPt1:2": X2WOTCLocationData(
+        display_name = covert_action_location_prefix + "Second Chosen Hunt 1/3",
+        id = covert_action_base_id + 1,
+        type = "CovertAction",
+        tags = ["chosen_hunt", "meet_all_chosen", "influence:0"],
+        difficulty = 40.0,
+        dlc = "WOTC",
+        normal_item = "DefaultChosenHuntReward"
+    ),
+    "ChosenHuntPt1:3": X2WOTCLocationData(
+        display_name = covert_action_location_prefix + "Third Chosen Hunt 1/3",
+        id = covert_action_base_id + 2,
+        type = "CovertAction",
+        tags = ["chosen_hunt", "meet_all_chosen", "influence:0"],
+        difficulty = 60.0,
+        dlc = "WOTC",
+        normal_item = "DefaultChosenHuntReward"
+    ),
+    "ChosenHuntPt2:1": X2WOTCLocationData(
+        display_name = covert_action_location_prefix + "First Chosen Hunt 2/3",
+        id = covert_action_base_id + 3,
+        type = "CovertAction",
+        tags = ["chosen_hunt", "meet_first_chosen", "influence:1"],
+        difficulty = 40.0,
+        dlc = "WOTC",
+        normal_item = "DefaultChosenHuntReward"
+    ),
+    "ChosenHuntPt2:2": X2WOTCLocationData(
+        display_name = covert_action_location_prefix + "Second Chosen Hunt 2/3",
+        id = covert_action_base_id + 4,
+        type = "CovertAction",
+        tags = ["chosen_hunt", "meet_all_chosen", "influence:3"],
+        difficulty = 55.0,
+        dlc = "WOTC",
+        normal_item = "DefaultChosenHuntReward"
+    ),
+    "ChosenHuntPt2:3": X2WOTCLocationData(
+        display_name = covert_action_location_prefix + "Third Chosen Hunt 2/3",
+        id = covert_action_base_id + 5,
+        type = "CovertAction",
+        tags = ["chosen_hunt", "meet_all_chosen", "influence:5"],
+        difficulty = 70.0,
+        dlc = "WOTC",
+        normal_item = "DefaultChosenHuntReward"
+    ),
+    "ChosenHuntPt3:1": X2WOTCLocationData(
+        display_name = covert_action_location_prefix + "First Chosen Hunt 3/3",
+        id = covert_action_base_id + 6,
+        type = "CovertAction",
+        tags = ["chosen_hunt", "meet_first_chosen", "influence:2"],
+        difficulty = 60.0,
+        dlc = "WOTC",
+        normal_item = "DefaultChosenHuntReward"
+    ),
+    "ChosenHuntPt3:2": X2WOTCLocationData(
+        display_name = covert_action_location_prefix + "Second Chosen Hunt 3/3",
+        id = covert_action_base_id + 7,
+        type = "CovertAction",
+        tags = ["chosen_hunt", "meet_all_chosen", "influence:4"],
+        difficulty = 70.0,
+        dlc = "WOTC",
+        normal_item = "DefaultChosenHuntReward"
+    ),
+    "ChosenHuntPt3:3": X2WOTCLocationData(
+        display_name = covert_action_location_prefix + "Third Chosen Hunt 3/3",
+        id = covert_action_base_id + 8,
+        type = "CovertAction",
+        tags = ["chosen_hunt", "meet_all_chosen", "influence:6"],
+        difficulty = 80.0,
+        dlc = "WOTC",
+        normal_item = "DefaultChosenHuntReward"
     )
 }
 
@@ -771,9 +866,14 @@ kill_location_table: Dict[str, X2WOTCLocationData] = {
     **wotc_enemy_kills
 }
 
+covert_action_location_table: Dict[str, X2WOTCLocationData] = {
+    **chosen_hunt_covert_actions
+}
+
 location_table: Dict[str, X2WOTCLocationData] = {
     **tech_location_table,
     **kill_location_table,
+    **covert_action_location_table,
     **event_locations
 }
 

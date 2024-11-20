@@ -52,9 +52,15 @@ class ProgressiveItems(OptionSet):
     default = progressive_items
     valid_keys = progressive_items
 
+class ChosenHuntSanity(Toggle):
+    """Shuffle Chosen Hunt covert actions and their rewards, i.e. Resistance Faction influence and Chosen Stronghold missions."""
+    display_name = "Chosen Hunt-Sanity"
+    default = True
+
 @dataclass
 class X2WOTCOptions(PerGameCommonOptions):
     alien_hunters_dlc: AlienHuntersDLC
     disable_contact_techs: DisableContactTechs
     campaign_completion_requirements: CampaignCompletionRequirements
     progressive_items: ProgressiveItems
+    chosen_hunt_sanity: ChosenHuntSanity

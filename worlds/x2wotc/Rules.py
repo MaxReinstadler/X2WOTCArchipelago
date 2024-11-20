@@ -8,6 +8,13 @@ from typing import Callable
 options: X2WOTCOptions
 
 #======================================================================================================================#
+#                                                   GENERAL HELPERS                                                    #
+#----------------------------------------------------------------------------------------------------------------------#
+
+def get_item_count_rule(player: int, item: str, count: int) -> Callable[[CollectionState], bool]:
+    return lambda state: state.count(item_table[item].display_name, player) >= count
+
+#======================================================================================================================#
 #                                                 POWER RULE HELPERS                                                   #
 #----------------------------------------------------------------------------------------------------------------------#
 
@@ -40,11 +47,11 @@ def get_power_rule(player: int, location: str) -> Callable[[CollectionState], bo
 # Contact
 def can_make_contact(state: CollectionState, player: int) -> bool:
     return (state.has(item_table["ResistanceCommunicationsCompleted"].display_name, player)
-            or not is_enabled(player, "ResistanceCommunications"))
+            or options.disable_contact_techs)
 
 def has_radio_relays(state: CollectionState, player: int) -> bool:
     return (state.has(item_table["ResistanceRadioCompleted"].display_name, player)
-            or not is_enabled(player, "ResistanceRadio"))
+            or options.disable_contact_techs)
 
 def can_make_more_contact(state: CollectionState, player: int) -> bool:
     return (can_make_contact(state, player)
@@ -58,12 +65,45 @@ def can_do_facility_mission(state: CollectionState, player: int) -> bool:
 def has_resistance_ring(state: CollectionState, player: int) -> bool:
     return True
 
-def can_find_chosen(state: CollectionState, player: int) -> bool:
-    return has_resistance_ring(state, player)
+def can_meet_first_chosen(state: CollectionState, player: int) -> bool:
+    return True
 
-def can_kill_chosen(state: CollectionState, player: int) -> bool:
-    return (can_find_chosen(state, player)
-            and can_make_more_contact(state, player))
+def can_meet_all_chosen(state: CollectionState, player: int) -> bool:
+    return can_make_more_contact(state, player)
+
+def can_hunt_all_chosen(state: CollectionState, player: int) -> bool:
+    return (can_meet_all_chosen(state, player)
+            and has_resistance_ring(state, player))
+
+def can_defeat_assassin(state: CollectionState, player: int) -> bool:
+    return (state.has(item_table["AssassinStronghold"].display_name, player)
+            and can_meet_all_chosen(state, player)
+            or (not options.chosen_hunt_sanity
+                and can_hunt_all_chosen(state, player)))
+
+def can_defeat_hunter(state: CollectionState, player: int) -> bool:
+    return (state.has(item_table["HunterStronghold"].display_name, player)
+            and can_meet_all_chosen(state, player)
+            or (not options.chosen_hunt_sanity
+                and can_hunt_all_chosen(state, player)))
+
+def can_defeat_warlock(state: CollectionState, player: int) -> bool:
+    return (state.has(item_table["WarlockStronghold"].display_name, player)
+            and can_meet_all_chosen(state, player)
+            or (not options.chosen_hunt_sanity
+                and can_hunt_all_chosen(state, player)))
+
+def can_kill_assassin(state: CollectionState, player: int) -> bool:
+    return (can_meet_all_chosen(state, player)
+            or can_defeat_assassin(state, player))
+
+def can_kill_hunter(state: CollectionState, player: int) -> bool:
+    return (can_meet_all_chosen(state, player)
+            or can_defeat_hunter(state, player))
+
+def can_kill_warlock(state: CollectionState, player: int) -> bool:
+    return (can_meet_all_chosen(state, player)
+            or can_defeat_warlock(state, player))
 
 # Shadow Chamber
 def has_shadow_chamber(state: CollectionState, player: int) -> bool:
@@ -241,10 +281,32 @@ def set_rules(world: MultiWorld, player: int):
     for loc_name, loc_data in location_table.items():
         if not is_enabled(player, loc_name):
             continue
+
+        location = world.get_location(loc_data.display_name, player)
+
+        if "meet_first_chosen" in loc_data.tags:
+            add_rule(location, lambda state: can_meet_first_chosen(state, player))
+        if "meet_all_chosen" in loc_data.tags:
+            add_rule(location, lambda state: can_meet_all_chosen(state, player))
         
-        if "kill_chosen" in loc_data.tags:
-            add_rule(world.get_location(loc_data.display_name, player),
-                     lambda state: can_kill_chosen(state, player))
+        if "kill_assassin" in loc_data.tags:
+            add_rule(location, lambda state: can_kill_assassin(state, player))
+        if "kill_hunter" in loc_data.tags:
+            add_rule(location, lambda state: can_kill_hunter(state, player))
+        if "kill_warlock" in loc_data.tags:
+            add_rule(location, lambda state: can_kill_warlock(state, player))
+            
+        if "defeat_assassin" in loc_data.tags:
+            add_rule(location, lambda state: can_defeat_assassin(state, player))
+        if "defeat_hunter" in loc_data.tags:
+            add_rule(location, lambda state: can_defeat_hunter(state, player))
+        if "defeat_warlock" in loc_data.tags:
+            add_rule(location, lambda state: can_defeat_warlock(state, player))
+        
+        for tag, value in [(f"influence:{i}", i) for i in range(7)]:
+            if tag in loc_data.tags:
+                influence_rule = get_item_count_rule(player, "FactionInfluence", value)
+                add_rule(location, influence_rule)
     
     #------------------------------------------ Skulljack enemy kill rules --------------------------------------------#
     #------------------------------------------------------------------------------------------------------------------#

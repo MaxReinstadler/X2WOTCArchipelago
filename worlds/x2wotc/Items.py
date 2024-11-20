@@ -31,6 +31,7 @@ base_id = 2482748367
 
 tech_item_prefix = "[Tech] "
 shadow_tech_item_prefix = "[Tech] "
+chosen_hunt_item_prefix = "[Chosen Hunt] "
 resource_item_prefix = "[Resource] "
 weapon_mod_item_prefix = "[Upgrade] "
 staff_item_prefix = "[Staff] "
@@ -593,10 +594,64 @@ progressive_tech_items: Dict[str, X2WOTCItemData] = {
 }
 
 ########################################################################################################################
-##                                   FILLER ITEMS (RESOURCES / WEAPON MODS)                                           ##
+##                                         COVERT ACTION REWARD ITEMS                                                 ##
 ########################################################################################################################
 
-filler_base_id = tech_base_id + 54
+covert_action_base_id = tech_base_id + 54
+
+#=======================================================================================================================
+#                                              CHOSEN HUNT ITEMS
+#-----------------------------------------------------------------------------------------------------------------------
+
+chosen_hunt_items: Dict[str, X2WOTCItemData] = {
+    "FactionInfluence": X2WOTCItemData(
+        display_name = chosen_hunt_item_prefix + "Faction Influence",
+        id = covert_action_base_id,
+        classification = ItemClassification.progression,
+        type = "CovertActionReward",
+        tags = ["chosen_hunt"],
+        power = 35.0,
+        dlc = "WOTC"
+    ),
+    "AssassinStronghold": X2WOTCItemData(
+        display_name = chosen_hunt_item_prefix + "Assassin Stronghold",
+        id = covert_action_base_id + 1,
+        classification = ItemClassification.progression,
+        type = "CovertActionReward",
+        tags = ["chosen_hunt"],
+        power = 60.0,
+        dlc = "WOTC"
+    ),
+    "HunterStronghold": X2WOTCItemData(
+        display_name = chosen_hunt_item_prefix + "Hunter Stronghold",
+        id = covert_action_base_id + 2,
+        classification = ItemClassification.progression,
+        type = "CovertActionReward",
+        tags = ["chosen_hunt"],
+        power = 60.0,
+        dlc = "WOTC"
+    ),
+    "WarlockStronghold": X2WOTCItemData(
+        display_name = chosen_hunt_item_prefix + "Warlock Stronghold",
+        id = covert_action_base_id + 3,
+        classification = ItemClassification.progression,
+        type = "CovertActionReward",
+        tags = ["chosen_hunt"],
+        power = 60.0,
+        dlc = "WOTC"
+    ),
+    # Default reward for disabled chosen hunt locations (never add to itempool)
+    "DefaultChosenHuntReward": X2WOTCItemData(
+        display_name = "Regular Covert Action Reward",
+        type = "CovertActionReward"
+    )
+}
+
+########################################################################################################################
+##                                                FILLER ITEMS                                                        ##
+########################################################################################################################
+
+filler_base_id = covert_action_base_id + 4
 
 #=======================================================================================================================
 #                                                RESOURCE ITEMS
@@ -889,6 +944,10 @@ tech_item_table: Dict[str, X2WOTCItemData] = {
     **progressive_tech_items
 }
 
+covert_action_item_table: Dict[str, X2WOTCItemData] = {
+    **chosen_hunt_items
+}
+
 resource_item_table: Dict[str, X2WOTCItemData] = {
     **supplies_items,
     **intel_items,
@@ -921,6 +980,7 @@ trap_item_table: Dict[str, X2WOTCItemData] = {
 
 item_table: Dict[str, X2WOTCItemData] = {
     **tech_item_table,
+    **covert_action_item_table,
     **filler_item_table,
     **trap_item_table,
     **event_items
@@ -937,7 +997,7 @@ def init_item_vars(player: int):
     item_count[player] = {}
     num_items[player] = 0
     for item_name, item_data in item_table.items():
-        if item_data.normal_location is None:  # Progressive and filler/trap items
+        if item_data.normal_location is None:  # Progressive and filler/trap items (and DefaultChosenHuntReward)
             item_count[player][item_name] = 0
         else:
             item_count[player][item_name] = 1
@@ -982,6 +1042,12 @@ def enable_progressive_item(player: int, item_name: str) -> bool:
 
     set_item_count(player, item_name, len(stages), False)
     return True
+
+def enable_chosen_hunt_items(player: int):
+    set_item_count(player, "FactionInfluence", 6)
+    set_item_count(player, "AssassinStronghold", 1)
+    set_item_count(player, "HunterStronghold", 1)
+    set_item_count(player, "WarlockStronghold", 1)
 
 def add_filler_items(player: int, num_filler_items: int):
     num_names_pairs = [

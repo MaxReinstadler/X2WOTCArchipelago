@@ -3,7 +3,7 @@ from worlds.AutoWorld import WebWorld, World
 from worlds.LauncherComponents import Component, components, launch_subprocess, Type
 from .Items import X2WOTCItem, item_table, item_display_name_to_key
 from .Items import init_item_vars, get_item_count, get_num_items
-from .Items import disable_item, enable_progressive_item, add_filler_items
+from .Items import disable_item, enable_progressive_item, enable_chosen_hunt_items, add_filler_items
 from .Locations import location_table, init_location_vars, get_num_locations, disable_location
 from .Regions import init_region_vars, create_regions
 from .Rules import set_rules
@@ -88,6 +88,14 @@ class X2WOTCWorld(World):
         if "PsionicsTech" in self.options.progressive_items:
             if not self.enable_progressive_item("ProgressivePsionicsTechCompleted"):
                 print(f"X2WOTC: Failed to enable progressive psionics techs for player {self.player_name}")
+
+        # Enable/disable Chosen Hunt Sanity
+        if self.options.chosen_hunt_sanity:
+            enable_chosen_hunt_items(self.player)
+        else:
+            for loc_name, loc_data in location_table.items():
+                if "chosen_hunt" in loc_data.tags:
+                    self.disable_location(loc_name)
 
         # Add filler items
         num_filler_items = get_num_locations(self.player) - get_num_items(self.player)
