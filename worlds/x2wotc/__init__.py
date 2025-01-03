@@ -101,7 +101,7 @@ class X2WOTCWorld(World):
         num_filler_items = get_num_locations(self.player) - get_num_items(self.player)
         print(f"X2WOTC: Adding {num_filler_items} filler items for player {self.player_name}")
         add_filler_items(self.player, num_filler_items, self.options.weapon_mod_share / 100,
-                         self.options.staff_share / 100, self.options.trap_share / 100)
+                         self.options.staff_share / 100, self.options.trap_share / 100, self.random)
 
     def create_item(self, name: str) -> X2WOTCItem:
         item_name = item_display_name_to_key[name]

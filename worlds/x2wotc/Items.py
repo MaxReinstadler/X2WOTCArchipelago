@@ -1,6 +1,6 @@
 from BaseClasses import Item, ItemClassification
 from typing import List, Dict, NamedTuple, Optional
-import random
+from random import Random
 
 class X2WOTCItem(Item):
     game: str = "XCOM 2 War of the Chosen"
@@ -1049,7 +1049,8 @@ def enable_chosen_hunt_items(player: int):
     set_item_count(player, "HunterStronghold", 1)
     set_item_count(player, "WarlockStronghold", 1)
 
-def add_filler_items(player: int, num_filler_items: int, weapon_mod_share: float, staff_share: float, trap_share: float):
+def add_filler_items(player: int, num_filler_items: int, weapon_mod_share: float,
+                     staff_share: float, trap_share: float, random: Random):
     num_names_pairs = [
         (int(num_filler_items * weapon_mod_share), list(weapon_mod_item_table.keys())),
         (int(num_filler_items * staff_share), list(staff_item_table.keys())),
