@@ -89,6 +89,18 @@ class X2WOTCWorld(World):
             if not self.enable_progressive_item("ProgressivePsionicsTechCompleted"):
                 print(f"X2WOTC: Failed to enable progressive psionics techs for player {self.player_name}")
 
+        # Disable Enemy Sanity
+        if not self.options.enemy_sanity:
+            for loc_name, loc_data in location_table.items():
+                if loc_data.type == "EnemyKill":
+                    self.disable_location(loc_name)
+
+        # Disable Item Sanity
+        if not self.options.item_sanity:
+            for loc_name, loc_data in location_table.items():
+                if loc_data.type == "ItemUse":
+                    self.disable_location(loc_name)
+
         # Enable/disable Chosen Hunt Sanity
         if self.options.chosen_hunt_sanity:
             enable_chosen_hunt_items(self.player)

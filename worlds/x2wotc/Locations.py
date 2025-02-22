@@ -894,5 +894,6 @@ def get_num_locations(player: int) -> int:
     return num_locations[player]
 
 def disable_location(player: int, loc_name: str):
-    enabled[player][loc_name] = False
-    num_locations[player] -= 1
+    if enabled[player][loc_name]:
+        enabled[player][loc_name] = False
+        num_locations[player] -= 1

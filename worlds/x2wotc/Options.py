@@ -52,6 +52,16 @@ class ProgressiveItems(OptionSet):
     valid_keys = progressive_items
     default = progressive_items
 
+class EnemySanity(Toggle):
+    """Enable locations for the first kill of each enemy type."""
+    display_name = "Enemysanity"
+    default = True
+
+class ItemSanity(Toggle):
+    """Enable locations for the first use of each item type."""
+    display_name = "Itemsanity"
+    default = True
+
 class ChosenHuntSanity(Toggle):
     """Shuffle Chosen Hunt covert actions and their rewards, i.e. Resistance Faction influence and Chosen Stronghold missions."""
     display_name = "Chosen Hunt-Sanity"
@@ -84,6 +94,8 @@ class X2WOTCOptions(PerGameCommonOptions):
     disable_contact_techs: DisableContactTechs
     campaign_completion_requirements: CampaignCompletionRequirements
     progressive_items: ProgressiveItems
+    enemy_sanity: EnemySanity
+    item_sanity: ItemSanity
     chosen_hunt_sanity: ChosenHuntSanity
     weapon_mod_share: WeaponModShare
     staff_share: StaffShare

@@ -311,12 +311,14 @@ def set_rules(world: MultiWorld, player: int):
     #------------------------------------------ Skulljack enemy kill rules --------------------------------------------#
     #------------------------------------------------------------------------------------------------------------------#
     loc_name_kill_cyberus = location_table["KillCyberus"].display_name
-    add_rule(world.get_location(loc_name_kill_cyberus, player),
-             lambda state: can_skulljack_officer(state, player))
+    if is_enabled(player, "KillCyberus"):
+        add_rule(world.get_location(loc_name_kill_cyberus, player),
+                 lambda state: can_skulljack_officer(state, player))
     
     loc_name_kill_advent_psi_witch = location_table["KillAdventPsiWitch"].display_name
-    add_rule(world.get_location(loc_name_kill_advent_psi_witch, player),
-             lambda state: can_skulljack_codex(state, player))
+    if is_enabled(player, "KillAdventPsiWitch"):
+        add_rule(world.get_location(loc_name_kill_advent_psi_witch, player),
+                 lambda state: can_skulljack_codex(state, player))
     
     #------------------------------------------------------------------------------------------------------------------#
     #--------------------------------- See ./Regions.py for entrance access rules -------------------------------------#
