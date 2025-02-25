@@ -3,9 +3,9 @@ from worlds.generic.Rules import set_rule, add_rule
 from .Items import item_table, get_total_power
 from .Locations import location_table, is_enabled
 from .Options import X2WOTCOptions
-from typing import Callable
+from typing import Dict, Callable
 
-options: X2WOTCOptions
+options: Dict[int, X2WOTCOptions] = {}
 
 #======================================================================================================================#
 #                                                   GENERAL HELPERS                                                    #
@@ -47,11 +47,11 @@ def get_power_rule(player: int, location: str) -> Callable[[CollectionState], bo
 # Contact
 def can_make_contact(state: CollectionState, player: int) -> bool:
     return (state.has(item_table["ResistanceCommunicationsCompleted"].display_name, player)
-            or options.disable_contact_techs)
+            or options[player].disable_contact_techs)
 
 def has_radio_relays(state: CollectionState, player: int) -> bool:
     return (state.has(item_table["ResistanceRadioCompleted"].display_name, player)
-            or options.disable_contact_techs)
+            or options[player].disable_contact_techs)
 
 def can_make_more_contact(state: CollectionState, player: int) -> bool:
     return (can_make_contact(state, player)
@@ -78,19 +78,19 @@ def can_hunt_all_chosen(state: CollectionState, player: int) -> bool:
 def can_defeat_assassin(state: CollectionState, player: int) -> bool:
     return (state.has(item_table["AssassinStronghold"].display_name, player)
             and can_meet_all_chosen(state, player)
-            or (not options.chosen_hunt_sanity
+            or (not options[player].chosen_hunt_sanity
                 and can_hunt_all_chosen(state, player)))
 
 def can_defeat_hunter(state: CollectionState, player: int) -> bool:
     return (state.has(item_table["HunterStronghold"].display_name, player)
             and can_meet_all_chosen(state, player)
-            or (not options.chosen_hunt_sanity
+            or (not options[player].chosen_hunt_sanity
                 and can_hunt_all_chosen(state, player)))
 
 def can_defeat_warlock(state: CollectionState, player: int) -> bool:
     return (state.has(item_table["WarlockStronghold"].display_name, player)
             and can_meet_all_chosen(state, player)
-            or (not options.chosen_hunt_sanity
+            or (not options[player].chosen_hunt_sanity
                 and can_hunt_all_chosen(state, player)))
 
 def can_kill_assassin(state: CollectionState, player: int) -> bool:
@@ -184,9 +184,9 @@ def has_autopsy_avatar_objective(state: CollectionState, player: int) -> bool:
             or can_skulljack_codex(state, player))
 
 def can_finish_autopsy_avatar_objective(state: CollectionState, player: int) -> bool:
-    req_psi_gate_obj = "PsiGateObjective" in options.campaign_completion_requirements
-    req_stasis_suit_obj = "StasisSuitObjective" in options.campaign_completion_requirements
-    req_avatar_corpse_obj = "AvatarCorpseObjective" in options.campaign_completion_requirements
+    req_psi_gate_obj = "PsiGateObjective" in options[player].campaign_completion_requirements
+    req_stasis_suit_obj = "StasisSuitObjective" in options[player].campaign_completion_requirements
+    req_avatar_corpse_obj = "AvatarCorpseObjective" in options[player].campaign_completion_requirements
 
     psi_gate_condition = finished_psi_gate_objective(state, player) or not req_psi_gate_obj
     stasis_suit_condition = finished_forge_stasis_suit_objective(state, player) or not req_stasis_suit_obj
@@ -213,7 +213,7 @@ def has_won(state: CollectionState, player: int) -> bool:
 
 def set_rules(world: MultiWorld, player: int):
     global options
-    options = world.worlds[player].options
+    options[player] = world.worlds[player].options
 
     #------------------------------------------------ Power rules -----------------------------------------------------#
     #------------------------------------------------------------------------------------------------------------------#
