@@ -23,6 +23,7 @@ tech_location_prefix = "Research "
 shadow_tech_location_prefix = "Research "
 enemy_kill_location_prefix = "Kill "
 enemy_destroy_location_prefix = "Destroy "
+item_use_location_prefix = "Use "
 covert_action_location_prefix = "Complete "
 
 ########################################################################################################################
@@ -740,10 +741,232 @@ wotc_enemy_kills: Dict[str, X2WOTCLocationData] = {
 }
 
 ########################################################################################################################
+##                                             ITEM USE LOCATIONS                                                     ##
+########################################################################################################################
+
+item_use_base_id = kill_base_id + 29
+
+#=======================================================================================================================
+#                                                 BASE GAME
+#-----------------------------------------------------------------------------------------------------------------------
+
+vanilla_item_uses: Dict[str, X2WOTCLocationData] = {
+    "UseMedikit": X2WOTCLocationData(
+        display_name = item_use_location_prefix + "Medikit",
+        id = item_use_base_id,
+        layer = "Tactical",
+        type = "ItemUse",
+        tags = ["utility"],
+        difficulty = 0.0
+    ),
+    "UseNanoMedikit": X2WOTCLocationData(
+        display_name = item_use_location_prefix + "Nanomedikit",
+        id = item_use_base_id + 1,
+        layer = "Tactical",
+        type = "ItemUse",
+        tags = ["utility", "proving_ground", "req:AutopsyViperCompleted"],
+        difficulty = 20.0
+    ),
+    "UseSKULLJACK": X2WOTCLocationData(
+        display_name = item_use_location_prefix + "Skulljack",
+        id = item_use_base_id + 2,
+        layer = "Tactical",
+        type = "ItemUse",
+        tags = ["utility", "proving_ground"],
+        difficulty = 5.0
+    ),
+    "UseFragGrenade": X2WOTCLocationData(
+        display_name = item_use_location_prefix + "Frag Grenade",
+        id = item_use_base_id + 3,
+        layer = "Tactical",
+        type = "ItemUse",
+        tags = ["grenade"],
+        difficulty = 0.0
+    ),
+    "UseAlienGrenade": X2WOTCLocationData(
+        display_name = item_use_location_prefix + "Plasma Grenade",
+        id = item_use_base_id + 4,
+        layer = "Tactical",
+        type = "ItemUse",
+        tags = ["grenade", "proving_ground", "req:AutopsyMutonCompleted"],
+        difficulty = 10.0
+    ),
+    "UseProximityMine": X2WOTCLocationData(
+        display_name = item_use_location_prefix + "Proximity Mine",
+        id = item_use_base_id + 5,
+        layer = "Tactical",
+        type = "ItemUse",
+        tags = ["grenade", "req:AutopsyAndromedonCompleted"],
+        difficulty = 5.0
+    ),
+    "UseFlashbangGrenade": X2WOTCLocationData(
+        display_name = item_use_location_prefix + "Flashbang Grenade",
+        id = item_use_base_id + 6,
+        layer = "Tactical",
+        type = "ItemUse",
+        tags = ["grenade"],
+        difficulty = 0.0
+    ),
+    "UseEMPGrenade": X2WOTCLocationData(
+        display_name = item_use_location_prefix + "EMP Grenade",
+        id = item_use_base_id + 7,
+        layer = "Tactical",
+        type = "ItemUse",
+        tags = ["grenade", "proving_ground", "req:AutopsyAdventMECCompleted"],
+        difficulty = 10.0
+    ),
+    "UseEMPGrenadeMk2": X2WOTCLocationData(
+        display_name = item_use_location_prefix + "EMP Bomb",
+        id = item_use_base_id + 8,
+        layer = "Tactical",
+        type = "ItemUse",
+        tags = ["grenade", "proving_ground", "req:AutopsyAdventMECCompleted", "req:AutopsyMutonCompleted"],
+        difficulty = 30.0
+    ),
+    "UseSmokeGrenade": X2WOTCLocationData(
+        display_name = item_use_location_prefix + "Smoke Grenade",
+        id = item_use_base_id + 9,
+        layer = "Tactical",
+        type = "ItemUse",
+        tags = ["grenade"],
+        difficulty = 0.0
+    ),
+    "UseSmokeGrenadeMk2": X2WOTCLocationData(
+        display_name = item_use_location_prefix + "Smoke Bomb",
+        id = item_use_base_id + 10,
+        layer = "Tactical",
+        type = "ItemUse",
+        tags = ["grenade", "proving_ground", "req:AutopsyMutonCompleted"],
+        difficulty = 10.0
+    ),
+    "UseBattleScanner": X2WOTCLocationData(
+        display_name = item_use_location_prefix + "Battle Scanner",
+        id = item_use_base_id + 11,
+        layer = "Tactical",
+        type = "ItemUse",
+        tags = ["utility", "req:AutopsyAdventTrooperCompleted"],
+        difficulty = 0.0
+    ),
+    "UseMimicBeacon": X2WOTCLocationData(
+        display_name = item_use_location_prefix + "Mimic Beacon",
+        id = item_use_base_id + 12,
+        layer = "Tactical",
+        type = "ItemUse",
+        tags = ["utility", "req:AutopsyFacelessCompleted"],
+        difficulty = 15.0
+    ),
+    "UseCombatStims": X2WOTCLocationData(
+        display_name = item_use_location_prefix + "Overdrive Serum",
+        id = item_use_base_id + 13,
+        layer = "Tactical",
+        type = "ItemUse",
+        tags = ["utility", "req:AutopsyBerserkerCompleted"],
+        difficulty = 40.0
+    ),
+    "UseBluescreenRounds": X2WOTCLocationData(
+        display_name = item_use_location_prefix + "Bluescreen Rounds",
+        id = item_use_base_id + 14,
+        layer = "Tactical",
+        type = "ItemUse",
+        tags = ["ammo", "proving_ground", "req:AutopsyAdventMECCompleted"],
+        difficulty = 10.0
+    ),
+    "UseExperimentalAmmo": X2WOTCLocationData(
+        display_name = item_use_location_prefix + "Experimental Ammo",
+        id = item_use_base_id + 15,
+        layer = "Tactical",
+        type = "ItemUse",
+        tags = ["ammo", "proving_ground"],
+        difficulty = 10.0
+    ),
+    "UseExperimentalGrenade": X2WOTCLocationData(
+        display_name = item_use_location_prefix + "Experimental Grenade",
+        id = item_use_base_id + 16,
+        layer = "Tactical",
+        type = "ItemUse",
+        tags = ["grenade", "proving_ground"],
+        difficulty = 10.0
+    ),
+    "UseExperimentalGrenadeMk2": X2WOTCLocationData(
+        display_name = item_use_location_prefix + "Experimental Bomb",
+        id = item_use_base_id + 17,
+        layer = "Tactical",
+        type = "ItemUse",
+        tags = ["grenade", "proving_ground", "req:AutopsyMutonCompleted"],
+        difficulty = 40.0
+    ),
+    "UseRocketLauncher": X2WOTCLocationData(
+        display_name = item_use_location_prefix + "Rocket Launcher",
+        id = item_use_base_id + 18,
+        layer = "Tactical",
+        type = "ItemUse",
+        tags = ["weapon", "proving_ground", "req:PlatedArmorCompleted"],
+        difficulty = 20.0
+    ),
+    "UseExperimentalHeavyWeapon": X2WOTCLocationData(
+        display_name = item_use_location_prefix + "Experimental Heavy Weapon",
+        id = item_use_base_id + 19,
+        layer = "Tactical",
+        type = "ItemUse",
+        tags = ["weapon", "proving_ground", "req:PlatedArmorCompleted"],
+        difficulty = 40.0
+    ),
+    "UseExperimentalPoweredWeapon": X2WOTCLocationData(
+        display_name = item_use_location_prefix + "Experimental Powered Weapon",
+        id = item_use_base_id + 20,
+        layer = "Tactical",
+        type = "ItemUse",
+        tags = ["weapon", "proving_ground", "req:PoweredArmorCompleted"],
+        difficulty = 55.0
+    )
+}
+
+#=======================================================================================================================
+#                                               ALIEN HUNTERS
+#-----------------------------------------------------------------------------------------------------------------------
+
+alien_hunters_item_uses: Dict[str, X2WOTCLocationData] = {
+    "UseFrostbomb": X2WOTCLocationData(
+        display_name = item_use_location_prefix + "Frost Bomb",
+        id = item_use_base_id + 21,
+        layer = "Tactical",
+        type = "ItemUse",
+        tags = ["grenade", "proving_ground", "req:ExperimentalWeaponsCompleted"],
+        difficulty = 50.0,
+        dlc = "AH"
+    )
+}
+
+#=======================================================================================================================
+#                                             WAR OF THE CHOSEN
+#-----------------------------------------------------------------------------------------------------------------------
+
+wotc_item_uses: Dict[str, X2WOTCLocationData] = {
+    "UseUltrasonicLure": X2WOTCLocationData(
+        display_name = item_use_location_prefix + "Ultrasonic Lure",
+        id = item_use_base_id + 22,
+        layer = "Tactical",
+        type = "ItemUse",
+        tags = ["utility", "req:AutopsyTheLostCompleted"],
+        difficulty = 0.0,
+        dlc = "WOTC"
+    ),
+    "UseRefractionField": X2WOTCLocationData(
+        display_name = item_use_location_prefix + "Refraction Field",
+        id = item_use_base_id + 23,
+        layer = "Tactical",
+        type = "ItemUse",
+        tags = ["utility", "req:AutopsySpectreCompleted"],
+        difficulty = 40.0,
+        dlc = "WOTC"
+    )
+}
+
+########################################################################################################################
 ##                                          COVERT ACTION LOCATIONS                                                   ##
 ########################################################################################################################
 
-covert_action_base_id = kill_base_id + 29
+covert_action_base_id = item_use_base_id + 24
 
 #=======================================================================================================================
 #                                                 CHOSEN HUNT
@@ -866,6 +1089,12 @@ kill_location_table: Dict[str, X2WOTCLocationData] = {
     **wotc_enemy_kills
 }
 
+item_use_location_table: Dict[str, X2WOTCLocationData] = {
+    **vanilla_item_uses,
+    **alien_hunters_item_uses,
+    **wotc_item_uses
+}
+
 covert_action_location_table: Dict[str, X2WOTCLocationData] = {
     **chosen_hunt_covert_actions
 }
@@ -873,6 +1102,7 @@ covert_action_location_table: Dict[str, X2WOTCLocationData] = {
 location_table: Dict[str, X2WOTCLocationData] = {
     **tech_location_table,
     **kill_location_table,
+    **item_use_location_table,
     **covert_action_location_table,
     **event_locations
 }

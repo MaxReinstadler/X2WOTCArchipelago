@@ -479,7 +479,7 @@ wotc_autopsy_tech_items: Dict[str, X2WOTCItemData] = {
     "AutopsyTheLostCompleted": X2WOTCItemData(
         display_name = tech_item_prefix + "The Lost Autopsy",
         id = tech_base_id + 44,
-        classification = ItemClassification.useful,
+        classification = ItemClassification.progression,
         type = "TechCompleted",
         tags = ["utility"],
         power = 0.0,

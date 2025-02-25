@@ -330,5 +330,25 @@ def set_rules(world: MultiWorld, player: int):
         add_rule(world.get_location(loc_name_kill_advent_psi_witch, player),
                  lambda state: can_skulljack_codex(state, player))
     
+    #-------------------------------------------- Item requirement rules ----------------------------------------------#
+    #------------------------------------------------------------------------------------------------------------------#
+    for loc_name, loc_data in location_table.items():
+        if not is_enabled(player, loc_name):
+            continue
+
+        location = world.get_location(loc_data.display_name, player)
+
+        if "proving_ground" in loc_data.tags:
+            add_rule(location, lambda state: has_proving_ground(state, player))
+
+        # UseFrostbomb requires ExperimentalWeaponsCompleted except when Integrated DLC is off (and the check is disabled)
+        if loc_name == "UseFrostbomb" and not is_enabled(player, "ExperimentalWeapons"):
+            continue
+
+        for tag in loc_data.tags:
+            if tag.startswith("req:"):
+                requirement_rule = get_item_count_rule(player, tag[4:], 1)
+                add_rule(location, requirement_rule)
+    
     #------------------------------------------------------------------------------------------------------------------#
     #--------------------------------- See ./Regions.py for entrance access rules -------------------------------------#
