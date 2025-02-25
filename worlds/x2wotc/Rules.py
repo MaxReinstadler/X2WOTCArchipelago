@@ -11,8 +11,18 @@ options: Dict[int, X2WOTCOptions] = {}
 #                                                   GENERAL HELPERS                                                    #
 #----------------------------------------------------------------------------------------------------------------------#
 
+def get_item_count(state: CollectionState, player: int, item: str) -> int:
+    count = 0
+    for item_name, item_data in item_table.items():
+        delta_count = state.count(item_data.display_name, player)
+        if item_name == item:
+            count += delta_count
+        elif item_data.stages is not None:
+            count += item_data.stages[:delta_count].count(item)
+    return count
+
 def get_item_count_rule(player: int, item: str, count: int) -> Callable[[CollectionState], bool]:
-    return lambda state: state.count(item_table[item].display_name, player) >= count
+    return lambda state: get_item_count(state, player, item) >= count
 
 #======================================================================================================================#
 #                                                 POWER RULE HELPERS                                                   #
