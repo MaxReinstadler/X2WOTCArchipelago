@@ -64,6 +64,10 @@ def get_locations_info(checks: List[str]) -> LocationsInfo:
             logger.warning(f"Proxy: Location {loc_name} not found")
             continue
 
+        if loc_id in ctx.locations_checked:
+            logger.debug(f"Proxy: Location {loc_name} already checked")
+            continue
+
         if loc_id not in ctx.locations_scouted:
             logger.debug(f"Proxy: Location {loc_name} not scouted, will be treated as disabled")
             item_name = loc_data.normal_item  # Send internal key for disabled locations
@@ -165,8 +169,6 @@ def get_received_items(layer: str, number_received: int) -> ItemsInfo:
 
 async def handle_check(request: web.Request):
     checks = [check for check in request.match_info["tail"].split("/") if check != ""]
-    await send_checks(checks)
-    
     response_body = ""
 
     for loc_name, (item_name, network_item, slot_info) in get_locations_info(checks).items():
@@ -196,6 +198,7 @@ async def handle_check(request: web.Request):
             response_body += "Archipelago Item Sent\n"
             response_body += f"Sent {item_name} to no one..."
 
+    await send_checks(checks)
     return web.Response(text=response_body)
 
 # ----------------------------------------------------- TICK --------------------------------------------------------- #
