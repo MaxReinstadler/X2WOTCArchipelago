@@ -7,6 +7,7 @@
 - Completion of research and shadow projects
 - Completion of chosen hunt covert actions
 - First kill of each enemy type
+- First use of each item type
 
 ### Items
 
