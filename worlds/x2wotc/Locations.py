@@ -765,7 +765,7 @@ vanilla_item_uses: Dict[str, X2WOTCLocationData] = {
         layer = "Tactical",
         type = "ItemUse",
         tags = ["utility", "proving_ground", "req:AutopsyViperCompleted"],
-        difficulty = 20.0
+        difficulty = 25.0
     ),
     "UseSKULLJACK": X2WOTCLocationData(
         display_name = item_use_location_prefix + "Skulljack",
@@ -773,7 +773,7 @@ vanilla_item_uses: Dict[str, X2WOTCLocationData] = {
         layer = "Tactical",
         type = "ItemUse",
         tags = ["utility", "proving_ground"],
-        difficulty = 5.0
+        difficulty = 10.0
     ),
     "UseFragGrenade": X2WOTCLocationData(
         display_name = item_use_location_prefix + "Frag Grenade",
@@ -789,7 +789,7 @@ vanilla_item_uses: Dict[str, X2WOTCLocationData] = {
         layer = "Tactical",
         type = "ItemUse",
         tags = ["grenade", "proving_ground", "req:AutopsyMutonCompleted"],
-        difficulty = 10.0
+        difficulty = 15.0
     ),
     "UseProximityMine": X2WOTCLocationData(
         display_name = item_use_location_prefix + "Proximity Mine",
@@ -813,7 +813,7 @@ vanilla_item_uses: Dict[str, X2WOTCLocationData] = {
         layer = "Tactical",
         type = "ItemUse",
         tags = ["grenade", "proving_ground", "req:AutopsyAdventMECCompleted"],
-        difficulty = 10.0
+        difficulty = 15.0
     ),
     "UseEMPGrenadeMk2": X2WOTCLocationData(
         display_name = item_use_location_prefix + "EMP Bomb",
@@ -821,7 +821,7 @@ vanilla_item_uses: Dict[str, X2WOTCLocationData] = {
         layer = "Tactical",
         type = "ItemUse",
         tags = ["grenade", "proving_ground", "req:AutopsyAdventMECCompleted", "req:AutopsyMutonCompleted"],
-        difficulty = 30.0
+        difficulty = 35.0
     ),
     "UseSmokeGrenade": X2WOTCLocationData(
         display_name = item_use_location_prefix + "Smoke Grenade",
@@ -837,7 +837,7 @@ vanilla_item_uses: Dict[str, X2WOTCLocationData] = {
         layer = "Tactical",
         type = "ItemUse",
         tags = ["grenade", "proving_ground", "req:AutopsyMutonCompleted"],
-        difficulty = 10.0
+        difficulty = 15.0
     ),
     "UseBattleScanner": X2WOTCLocationData(
         display_name = item_use_location_prefix + "Battle Scanner",
@@ -869,7 +869,7 @@ vanilla_item_uses: Dict[str, X2WOTCLocationData] = {
         layer = "Tactical",
         type = "ItemUse",
         tags = ["ammo", "proving_ground", "req:AutopsyAdventMECCompleted"],
-        difficulty = 10.0
+        difficulty = 15.0
     ),
     "UseExperimentalAmmo": X2WOTCLocationData(
         display_name = item_use_location_prefix + "Experimental Ammo",
@@ -877,7 +877,7 @@ vanilla_item_uses: Dict[str, X2WOTCLocationData] = {
         layer = "Tactical",
         type = "ItemUse",
         tags = ["ammo", "proving_ground"],
-        difficulty = 10.0
+        difficulty = 15.0
     ),
     "UseExperimentalGrenade": X2WOTCLocationData(
         display_name = item_use_location_prefix + "Experimental Grenade",
@@ -885,7 +885,7 @@ vanilla_item_uses: Dict[str, X2WOTCLocationData] = {
         layer = "Tactical",
         type = "ItemUse",
         tags = ["grenade", "proving_ground"],
-        difficulty = 10.0
+        difficulty = 15.0
     ),
     "UseExperimentalGrenadeMk2": X2WOTCLocationData(
         display_name = item_use_location_prefix + "Experimental Bomb",
@@ -893,7 +893,7 @@ vanilla_item_uses: Dict[str, X2WOTCLocationData] = {
         layer = "Tactical",
         type = "ItemUse",
         tags = ["grenade", "proving_ground", "req:AutopsyMutonCompleted"],
-        difficulty = 40.0
+        difficulty = 45.0
     ),
     "UseRocketLauncher": X2WOTCLocationData(
         display_name = item_use_location_prefix + "Rocket Launcher",
@@ -901,7 +901,7 @@ vanilla_item_uses: Dict[str, X2WOTCLocationData] = {
         layer = "Tactical",
         type = "ItemUse",
         tags = ["weapon", "proving_ground", "req:PlatedArmorCompleted"],
-        difficulty = 20.0
+        difficulty = 25.0
     ),
     "UseExperimentalHeavyWeapon": X2WOTCLocationData(
         display_name = item_use_location_prefix + "Experimental Heavy Weapon",
@@ -909,7 +909,7 @@ vanilla_item_uses: Dict[str, X2WOTCLocationData] = {
         layer = "Tactical",
         type = "ItemUse",
         tags = ["weapon", "proving_ground", "req:PlatedArmorCompleted"],
-        difficulty = 40.0
+        difficulty = 45.0
     ),
     "UseExperimentalPoweredWeapon": X2WOTCLocationData(
         display_name = item_use_location_prefix + "Experimental Powered Weapon",
@@ -917,7 +917,7 @@ vanilla_item_uses: Dict[str, X2WOTCLocationData] = {
         layer = "Tactical",
         type = "ItemUse",
         tags = ["weapon", "proving_ground", "req:PoweredArmorCompleted"],
-        difficulty = 55.0
+        difficulty = 60.0
     )
 }
 
