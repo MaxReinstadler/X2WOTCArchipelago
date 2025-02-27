@@ -341,6 +341,10 @@ def set_rules(world: MultiWorld, player: int):
         if "proving_ground" in loc_data.tags:
             add_rule(location, lambda state: has_proving_ground(state, player))
 
+        # UseSKULLJACK depends on objectives
+        if loc_name == "UseSKULLJACK":
+            add_rule(location, lambda state: can_skulljack_officer(state, player))
+
         # UseFrostbomb requires ExperimentalWeaponsCompleted except when Integrated DLC is off (and the check is disabled)
         if loc_name == "UseFrostbomb" and not is_enabled(player, "ExperimentalWeapons"):
             continue
