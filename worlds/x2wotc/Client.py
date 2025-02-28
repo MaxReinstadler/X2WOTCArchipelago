@@ -46,6 +46,7 @@ class X2WOTCContext(SuperContext):
     command_processor = X2WOTCCommandProcessor
     game = "XCOM 2 War of the Chosen"
     items_handling = 0b111  # full remote
+    tags = {"AP"}
 
     connected = asyncio.Event()
     goal_location: str = ""
@@ -55,6 +56,8 @@ class X2WOTCContext(SuperContext):
 
     def __init__(self, server_address: Optional[str], password: Optional[str]):
         super().__init__(server_address, password)
+        self.locations_scouted = set()
+        self.locations_checked = set()
 
     async def server_auth(self, password_requested: bool = False):
         if password_requested and not self.password:
