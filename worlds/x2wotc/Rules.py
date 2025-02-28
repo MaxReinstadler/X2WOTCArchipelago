@@ -2,7 +2,7 @@ from BaseClasses import MultiWorld, CollectionState
 from worlds.generic.Rules import set_rule, add_rule
 from .Items import item_table, get_total_power
 from .Locations import location_table, is_enabled
-from .Options import X2WOTCOptions
+from .Options import X2WOTCOptions, Goal
 from typing import Dict, Callable
 
 options: Dict[int, X2WOTCOptions] = {}
@@ -102,6 +102,21 @@ def can_defeat_warlock(state: CollectionState, player: int) -> bool:
             and can_meet_all_chosen(state, player)
             or (not options[player].chosen_hunt_sanity
                 and can_hunt_all_chosen(state, player)))
+
+def can_defeat_one_chosen(state: CollectionState, player: int) -> bool:
+    return (can_defeat_assassin(state, player)
+            or can_defeat_hunter(state, player)
+            or can_defeat_warlock(state, player))
+
+def can_defeat_two_chosen(state: CollectionState, player: int) -> bool:
+    return ((can_defeat_assassin(state, player) and can_defeat_hunter(state, player))
+            or (can_defeat_assassin(state, player) and can_defeat_warlock(state, player))
+            or (can_defeat_hunter(state, player) and can_defeat_warlock(state, player)))
+
+def can_defeat_all_chosen(state: CollectionState, player: int) -> bool:
+    return (can_defeat_assassin(state, player)
+            and can_defeat_hunter(state, player)
+            and can_defeat_warlock(state, player))
 
 def can_kill_assassin(state: CollectionState, player: int) -> bool:
     return (can_meet_all_chosen(state, player)
@@ -215,7 +230,11 @@ def can_do_final_mission(state: CollectionState, player: int) -> bool:
 
 # Victory
 def has_won(state: CollectionState, player: int) -> bool:
-    return state.has(item_table["Victory"].display_name, player)
+    return ((options[player].goal == Goal.option_alien_fortress and state.has(item_table["Victory"].display_name, player))
+            or (options[player].goal == Goal.option_network_tower and state.has(item_table["Broadcast"].display_name, player))
+            or (options[player].goal == Goal.option_chosen_stronghold_1 and state.has(item_table["Stronghold1"].display_name, player))
+            or (options[player].goal == Goal.option_chosen_stronghold_2 and state.has(item_table["Stronghold2"].display_name, player))
+            or (options[player].goal == Goal.option_chosen_stronghold_3 and state.has(item_table["Stronghold3"].display_name, player)))
 
 #======================================================================================================================#
 #                                                     SET RULES                                                        #
@@ -272,6 +291,10 @@ def set_rules(world: MultiWorld, player: int):
                             and world.get_location(loc_name_psi_gate, player).can_reach(state)
                             and can_skulljack_codex(state, player)))
     
+    loc_name_broadcast = location_table["Broadcast"].display_name
+    add_rule(world.get_location(loc_name_broadcast, player),
+             lambda state: can_do_truth_mission(state, player))
+    
     loc_name_victory = location_table["Victory"].display_name
     add_rule(world.get_location(loc_name_victory, player),
              lambda state: can_do_final_mission(state, player))
@@ -317,6 +340,18 @@ def set_rules(world: MultiWorld, player: int):
             if tag in loc_data.tags:
                 influence_rule = get_item_count_rule(player, "FactionInfluence", value)
                 add_rule(location, influence_rule)
+
+    loc_name_stronghold1 = location_table["Stronghold1"].display_name
+    add_rule(world.get_location(loc_name_stronghold1, player),
+             lambda state: can_defeat_one_chosen(state, player))
+    
+    loc_name_stronghold2 = location_table["Stronghold2"].display_name
+    add_rule(world.get_location(loc_name_stronghold2, player),
+             lambda state: can_defeat_two_chosen(state, player))
+    
+    loc_name_stronghold3 = location_table["Stronghold3"].display_name
+    add_rule(world.get_location(loc_name_stronghold3, player),
+             lambda state: can_defeat_all_chosen(state, player))
     
     #------------------------------------------ Skulljack enemy kill rules --------------------------------------------#
     #------------------------------------------------------------------------------------------------------------------#

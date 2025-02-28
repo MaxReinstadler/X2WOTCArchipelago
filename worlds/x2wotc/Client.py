@@ -1,7 +1,7 @@
 import asyncio
 from CommonClient import ClientCommandProcessor
 from CommonClient import server_loop, get_base_parser
-from CommonClient import gui_enabled
+from CommonClient import gui_enabled, logger
 from .Proxy import run_proxy
 from .Version import client_version, recommended_mod_version
 from typing import Optional
@@ -48,6 +48,7 @@ class X2WOTCContext(SuperContext):
     items_handling = 0b111  # full remote
 
     connected = asyncio.Event()
+    goal_location: str = ""
 
     proxy_port = 24728
     proxy_task: Optional[asyncio.Task] = None
@@ -64,6 +65,15 @@ class X2WOTCContext(SuperContext):
     def on_package(self, cmd: str, args: dict):
         super().on_package(cmd, args)
         if cmd == "Connected":
+            if "slot_data" not in args:
+                logger.warning("X2WOTCClient: Connected package missing slot_data")
+                return
+            slot_data = args["slot_data"]
+            if "goal_location" not in slot_data:
+                logger.warning("X2WOTCClient: slot_data missing goal_location, falling back on Victory")
+                self.goal_location = "Victory"
+            else:
+                self.goal_location = slot_data["goal_location"]
             self.connected.set()
 
     def make_gui(self):

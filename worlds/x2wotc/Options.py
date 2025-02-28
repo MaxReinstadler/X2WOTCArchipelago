@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from Options import Choice, Toggle, OptionSet, Range, PerGameCommonOptions
+from typing import Dict
 
 class AlienHuntersDLC(Choice):
     """Set which locations and items from the Alien Hunters DLC are enabled.
@@ -20,6 +21,30 @@ class DisableContactTechs(Toggle):
     **RECOMMENDED** These techs are currently broken and may create near impossible playthroughs."""
     display_name = "Disable Contact Techs"
     default = True
+
+class Goal(Choice):
+    """Set the goal of the seed.
+    
+    alien_fortress:         Beat the Alien Fortress Assault mission. (final mission)
+    network_tower:          Beat the ADVENT Network Tower Assault mission. (second to last mission)
+    chosen_stronghold_1:    Beat any Chosen Stronghold Assault mission.
+    chosen_stronghold_2:    Beat any two Chosen Stronghold Assault missions.
+    chosen_stronghold_3:    Beat all three Chosen Stronghold Assault missions."""
+    display_name = "Goal"
+    option_alien_fortress = 0
+    option_network_tower = 1
+    option_chosen_stronghold_1 = 2
+    option_chosen_stronghold_2 = 3
+    option_chosen_stronghold_3 = 4
+    default = 0
+
+    value_to_location: Dict[int, str] = {
+        0: "Victory",
+        1: "Broadcast",
+        2: "Stronghold1",
+        3: "Stronghold2",
+        4: "Stronghold3"
+    }
 
 class CampaignCompletionRequirements(OptionSet):
     """Require these objectives to be completed for the final mission to be unlocked.
@@ -92,6 +117,7 @@ class TrapShare(Range):
 class X2WOTCOptions(PerGameCommonOptions):
     alien_hunters_dlc: AlienHuntersDLC
     disable_contact_techs: DisableContactTechs
+    goal: Goal
     campaign_completion_requirements: CampaignCompletionRequirements
     progressive_items: ProgressiveItems
     enemy_sanity: EnemySanity

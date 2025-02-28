@@ -925,6 +925,26 @@ event_items: Dict[str, X2WOTCItemData] = {
         display_name = "Victory",
         classification = ItemClassification.progression,
         normal_location = "Victory"
+    ),
+    "Broadcast": X2WOTCItemData(
+        display_name = "Broadcast",
+        classification = ItemClassification.progression,
+        normal_location = "Broadcast"
+    ),
+    "Stronghold1": X2WOTCItemData(
+        display_name = "Stronghold1",
+        classification = ItemClassification.progression,
+        normal_location = "Stronghold1"
+    ),
+    "Stronghold2": X2WOTCItemData(
+        display_name = "Stronghold2",
+        classification = ItemClassification.progression,
+        normal_location = "Stronghold2"
+    ),
+    "Stronghold3": X2WOTCItemData(
+        display_name = "Stronghold3",
+        classification = ItemClassification.progression,
+        normal_location = "Stronghold3"
     )
 }
 

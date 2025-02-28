@@ -7,7 +7,7 @@ from .Items import disable_item, enable_progressive_item, enable_chosen_hunt_ite
 from .Locations import location_table, init_location_vars, get_num_locations, disable_location
 from .Regions import init_region_vars, create_regions
 from .Rules import set_rules
-from .Options import X2WOTCOptions, AlienHuntersDLC
+from .Options import X2WOTCOptions, AlienHuntersDLC, Goal
 
 def launch_client():
     from .Client import launch
@@ -152,3 +152,8 @@ class X2WOTCWorld(World):
 
     def enable_progressive_item(self, item_name: str) -> bool:
         return enable_progressive_item(self.player, item_name)
+    
+    def fill_slot_data(self):
+        return {
+            "goal_location": Goal.value_to_location[self.options.goal.value],
+        }

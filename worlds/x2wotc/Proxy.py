@@ -64,6 +64,12 @@ def get_locations_info(checks: List[str]) -> LocationsInfo:
             logger.warning(f"Proxy: Location {loc_name} not found")
             continue
 
+        if loc_id == None:
+            logger.debug(f"Proxy: Location {loc_name} is event, checking for victory")
+            if not ctx.finished_game and loc_name == ctx.goal_location:
+                locations_info[loc_name] = ("Victory", None, None)
+            continue
+
         if loc_id in ctx.locations_checked:
             logger.debug(f"Proxy: Location {loc_name} already checked")
             continue
@@ -91,13 +97,6 @@ def get_locations_info(checks: List[str]) -> LocationsInfo:
 async def send_checks(checks: List[str]):
     for loc_name in checks:
 
-        if loc_name == "Victory":
-            await ctx.send_msgs([{
-                "cmd": "StatusUpdate",
-                "status": ClientStatus.CLIENT_GOAL
-            }])
-            continue
-
         try:
             loc_id = location_table[loc_name].id
         except KeyError:
@@ -105,7 +104,13 @@ async def send_checks(checks: List[str]):
             continue
 
         if loc_id == None:
-            logger.warning(f"Proxy: Location {loc_name} is event, can't be checked")
+            logger.debug(f"Proxy: Location {loc_name} is event, checking for victory")
+            if not ctx.finished_game and loc_name == ctx.goal_location:
+                await ctx.send_msgs([{
+                    "cmd": "StatusUpdate",
+                    "status": ClientStatus.CLIENT_GOAL
+                }])
+                ctx.finished_game = True
             continue
         
         if loc_id not in ctx.server_locations:
@@ -132,10 +137,6 @@ def get_received_items(layer: str, number_received: int) -> ItemsInfo:
     for network_item in ctx.items_received:
         item_name = item_id_to_key[network_item.item]
         item_data = item_table[item_name]
-
-        # Ignore event items
-        if item_data.type == "Event":
-            continue
 
         # Track progressive items
         stages = item_data.stages
@@ -179,6 +180,12 @@ async def handle_check(request: web.Request):
             logger.debug(f"Proxy: Location {loc_name} disabled, no regular item")
             response_body += "None\n"
             response_body += "None"
+
+        # Victory
+        elif item_name == "Victory":
+            logger.debug(f"Proxy: Goal has been reached")
+            response_body += "Victory!\n"
+            response_body += "Congratulations! You have reached your goal!"
 
         # For disabled locations, item_name is the internal key
         elif network_item == None:

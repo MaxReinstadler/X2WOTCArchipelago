@@ -1065,6 +1065,26 @@ event_locations: Dict[str, X2WOTCLocationData] = {
         display_name = "Victory",
         difficulty = 90.0,
         normal_item = "Victory"
+    ),
+    "Broadcast": X2WOTCLocationData(
+        display_name = "Broadcast",
+        difficulty = 80.0,
+        normal_item = "Broadcast"
+    ),
+    "Stronghold1": X2WOTCLocationData(
+        display_name = "Stronghold 1",
+        difficulty = 50.0,
+        normal_item = "Stronghold1"
+    ),
+    "Stronghold2": X2WOTCLocationData(
+        display_name = "Stronghold 2",
+        difficulty = 60.0,
+        normal_item = "Stronghold2"
+    ),
+    "Stronghold3": X2WOTCLocationData(
+        display_name = "Stronghold 3",
+        difficulty = 70.0,
+        normal_item = "Stronghold3"
     )
 }
 
