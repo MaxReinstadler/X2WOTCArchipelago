@@ -6,10 +6,8 @@ from .Proxy import run_proxy
 from .Version import client_version, recommended_mod_version
 from typing import Optional
 
-tracker_loaded = False
 try:
     from worlds.tracker.TrackerClient import TrackerGameContext as SuperContext  # type: ignore
-    tracker_loaded = True
 except ModuleNotFoundError:
     from CommonClient import CommonContext as SuperContext
 
@@ -95,8 +93,6 @@ def launch():
         ctx.server_task = asyncio.create_task(server_loop(ctx), name="server_loop")
         ctx.start_proxy()
 
-        if tracker_loaded:
-            ctx.run_generator()
         if gui_enabled:
             ctx.run_gui()
         ctx.run_cli()

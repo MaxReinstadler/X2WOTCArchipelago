@@ -1,4 +1,5 @@
 from BaseClasses import Tutorial
+from Options import PerGameCommonOptions
 from worlds.AutoWorld import WebWorld, World
 from worlds.LauncherComponents import Component, components, launch_subprocess, Type
 from .Items import X2WOTCItem, item_table, item_display_name_to_key
@@ -8,6 +9,7 @@ from .Locations import location_table, init_location_vars, get_num_locations, di
 from .Regions import init_region_vars, create_regions
 from .Rules import set_rules
 from .Options import X2WOTCOptions, AlienHuntersDLC, Goal
+import dataclasses
 
 def launch_client():
     from .Client import launch
@@ -43,8 +45,18 @@ class X2WOTCWorld(World):
     options_dataclass = X2WOTCOptions
     options: X2WOTCOptions
 
+    ut_can_gen_without_yaml = True
+
     def generate_early(self):
         self.init_vars()
+
+        # Set options for UT generation
+        if hasattr(self.multiworld, "re_gen_passthrough"):
+            if self.game in self.multiworld.re_gen_passthrough:
+                slot_data = self.multiworld.re_gen_passthrough[self.game]
+                for option_name in dataclasses.fields(self.options_dataclass):
+                    if option_name in slot_data:
+                        getattr(self.options, option_name).value = slot_data[option_name]
 
         # Set Alien Hunters Locations
         if self.options.alien_hunters_dlc == AlienHuntersDLC.option_no_integrated_dlc:
@@ -154,6 +166,12 @@ class X2WOTCWorld(World):
         return enable_progressive_item(self.player, item_name)
     
     def fill_slot_data(self):
-        return {
-            "goal_location": Goal.value_to_location[self.options.goal.value],
+        slot_data = {
+            "goal_location": Goal.value_to_location[self.options.goal.value]
         }
+
+        option_names = [attr.name for attr in dataclasses.fields(X2WOTCOptions)
+                        if attr not in dataclasses.fields(PerGameCommonOptions)]
+        slot_data |= self.options.as_dict(*option_names)
+
+        return slot_data
