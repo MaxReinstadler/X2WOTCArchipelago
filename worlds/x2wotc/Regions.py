@@ -22,10 +22,6 @@ def create_regions(world: MultiWorld, player: int):
 
         region_name = "Avenger"
 
-        if loc_data.type == "Event":
-            if loc_name == "Victory":
-                region_name = "Shadow Chamber"
-
         if loc_data.type == "Tech":
             if "shadow" in loc_data.tags:
                 region_name = "Shadow Chamber"
@@ -45,9 +41,9 @@ def create_regions(world: MultiWorld, player: int):
     world.get_region("Menu", player).connect(world.get_region("Avenger", player))
     world.get_region("Avenger", player).connect(world.get_region("Research Lab", player))
     world.get_region("Avenger", player).connect(world.get_region("Shadow Chamber", player),
-                                                lambda state: has_shadow_chamber(state, player))
+                                                rule = lambda state: has_shadow_chamber(state, player))
     world.get_region("Avenger", player).connect(world.get_region("Resistance Ring", player),
-                                                lambda state: has_resistance_ring(state, player))
+                                                rule = lambda state: has_resistance_ring(state, player))
 
 def create_region(world: MultiWorld, player: int, name: str) -> Region:
     region = Region(name, player, world)
