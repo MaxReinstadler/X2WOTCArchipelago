@@ -169,6 +169,9 @@ def get_received_items(layer: str, number_received: int) -> ItemsInfo:
 # ----------------------------------------------------- CHECK -------------------------------------------------------- #
 
 async def handle_check(request: web.Request):
+    if not ctx.connected.is_set():
+        return web.Response(status=503)
+
     checks = [check for check in request.match_info["tail"].split("/") if check != ""]
     response_body = ""
 
@@ -235,11 +238,17 @@ def handle_tick(layer: str, number_received: int) -> str:
     return response_body
 
 async def handle_tick_strategy(request: web.Request):
+    if not ctx.connected.is_set():
+        return web.Response(status=503)
+    
     number_received = int(request.match_info["tail"])
     response_body = handle_tick("Strategy", number_received)
     return web.Response(text=response_body)
 
 async def handle_tick_tactical(request: web.Request):
+    if not ctx.connected.is_set():
+        return web.Response(status=503)
+    
     number_received = int(request.match_info["tail"])
     response_body = handle_tick("Tactical", number_received)
     return web.Response(text=response_body)
