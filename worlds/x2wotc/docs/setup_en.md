@@ -4,6 +4,7 @@
 
 - [XCOM 2](https://store.steampowered.com/app/268500/XCOM_2/) with the [War of the Chosen DLC](https://store.steampowered.com/app/593380/XCOM_2_War_of_the_Chosen/) installed through Steam
 - [XCOM 2 WotC Archipelago Mod](https://steamcommunity.com/sharedfiles/filedetails/?id=3281191663)
+    - Files for [manual installation](https://github.com/MaxReinstadler/X2WOTCArchipelago/blob/main/worlds/x2wotc/docs/mod_manual_installation.md) available [here](https://github.com/MaxReinstadler/WOTCArchipelago/releases)
 - [Archipelago](https://github.com/ArchipelagoMW/Archipelago/releases)
 - [XCOM 2 WotC APWorld](https://github.com/MaxReinstadler/X2WOTCArchipelago/releases)
 
