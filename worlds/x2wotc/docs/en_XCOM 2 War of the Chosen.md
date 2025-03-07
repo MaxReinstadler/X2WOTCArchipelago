@@ -20,9 +20,9 @@
 
 ## What do location checks and items look like in this game?
 
-When reaching a location in the strategic layer, a pop-up appears to inform the player about the item they found and who it belongs to. No such pop-up will currently appear in the tactical layer.
+When reaching a location, a notification appears informing the player about the item they found and who it belongs to.
 
-Items are currently only received in the geoscape, including any the player sent to themself. When the game receives an item, a pop-up appears to inform the player about what they got and from whom.
+Items are currently only received in the geoscape, including any the player sent to themself. When the game receives an item, a notification appears informing the player about what they got and from whom.
 
 ## How was this game adapted to fit into Archipelago?
 
