@@ -1,6 +1,8 @@
 # Troubleshooting
 
-**LINUX USERS NOTE: The native Linux port of XCOM 2 WotC does not play nice with my mod. Use the Windows distribution through Proton instead.**
+### LINUX USERS NOTE
+
+**The native Linux port of XCOM 2 WotC does not play nice with my mod. Use the Windows distribution through Proton instead.**
 
 ## Nothing is happening
 
