@@ -54,8 +54,8 @@ class X2WOTCContext(SuperContext):
 
     def __init__(self, server_address: Optional[str], password: Optional[str]):
         super().__init__(server_address, password)
-        self.locations_scouted = set()
         self.locations_checked = set()
+        self.locations_scouted = set()
 
     async def server_auth(self, password_requested: bool = False):
         if password_requested and not self.password:
@@ -63,35 +63,42 @@ class X2WOTCContext(SuperContext):
         await self.get_username()
         await self.send_connect()
 
+    async def disconnect(self, allow_autoreconnect: bool = False):
+        await super().disconnect(allow_autoreconnect)
+        self.cancel_proxy()
+        self.locations_scouted = set()
+
     def on_package(self, cmd: str, args: dict):
         super().on_package(cmd, args)
         if cmd == "Connected":
-            if "slot_data" not in args:
-                logger.warning("X2WOTCClient: Connected package missing slot_data")
-                return
             slot_data = args["slot_data"]
             if "goal_location" not in slot_data:
                 logger.warning("X2WOTCClient: slot_data missing goal_location, falling back on Victory")
                 self.goal_location = "Victory"
             else:
                 self.goal_location = slot_data["goal_location"]
+
+            self.start_proxy()
             self.connected.set()
 
     def make_gui(self):
         ui = super().make_gui()
         ui.base_title = "Archipelago XCOM 2 War of the Chosen Client"
         return ui
+    
+    def cancel_proxy(self):
+        if self.proxy_task:
+            self.proxy_task.cancel()
+            self.proxy_task = None
 
     def start_proxy(self):
-        if self.proxy_task is not None:
-            self.proxy_task.cancel()
+        self.cancel_proxy()
         self.proxy_task = asyncio.create_task(run_proxy(self), name="proxy")
 
 def launch():
     async def main(args):
         ctx = X2WOTCContext(args.connect, args.password)
         ctx.server_task = asyncio.create_task(server_loop(ctx), name="server_loop")
-        ctx.start_proxy()
 
         if gui_enabled:
             ctx.run_gui()
