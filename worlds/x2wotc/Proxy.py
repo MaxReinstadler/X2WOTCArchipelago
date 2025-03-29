@@ -119,10 +119,11 @@ async def send_checks(checks: List[str]):
 
         ctx.locations_checked.add(loc_id)
 
-    if ctx.locations_checked:
+    new_locations = ctx.locations_checked & ctx.missing_locations
+    if new_locations:
         await ctx.send_msgs([{
             "cmd": "LocationChecks",
-            "locations": list(ctx.locations_checked)
+            "locations": list(new_locations)
         }])
 
     logger.debug("Proxy: Location checks sent")
