@@ -1,3 +1,4 @@
+import asyncio
 from aiohttp import web
 from typing import Optional, List, Dict, Tuple
 from CommonClient import CommonContext, NetworkItem, NetworkSlot, logger
@@ -38,20 +39,27 @@ def get_slot_info(slot: int) -> Optional[NetworkSlot]:
 
 # ----------------------------------------------------- SCOUT -------------------------------------------------------- #
 
-async def scout_locations():
-    await ctx.connected.wait()
+async def scout_loop():
+    try:
+        while True:
+            await ctx.scouted.wait_clear()
+            await ctx.connected.wait()
 
-    for loc_id in ctx.server_locations:  # If the server knows the location
-        if loc_id in loc_id_to_key.keys():  # If it's ours
-            ctx.locations_scouted.add(loc_id)  # Scout it
+            for loc_id in ctx.server_locations:  # If the server knows the location
+                if loc_id in loc_id_to_key.keys():  # If it's ours
+                    ctx.locations_scouted.add(loc_id)  # Scout it
 
-    if ctx.locations_scouted:
-        await ctx.send_msgs([{
-            "cmd": "LocationScouts",
-            "locations": list(ctx.locations_scouted)
-        }])
+            if ctx.locations_scouted:
+                await ctx.send_msgs([{
+                    "cmd": "LocationScouts",
+                    "locations": list(ctx.locations_scouted)
+                }])
 
-    logger.debug("Proxy: Locations scouted")
+            ctx.scouted.set()
+            logger.debug("Proxy: Locations scouted")
+
+    except asyncio.CancelledError:
+        logger.debug("Proxy: Scout loop cancelled")
 
 def get_locations_info(checks: List[str]) -> LocationsInfo:
     locations_info: LocationsInfo = {}
@@ -172,6 +180,7 @@ def get_received_items(layer: str, number_received: int) -> ItemsInfo:
 async def handle_check(request: web.Request):
     if not ctx.connected.is_set():
         return web.Response(status=503)
+    await ctx.scouted.wait()
 
     checks = [check for check in request.match_info["tail"].split("/") if check != ""]
     response_body = ""
@@ -241,6 +250,7 @@ def handle_tick(layer: str, number_received: int) -> str:
 async def handle_tick_strategy(request: web.Request):
     if not ctx.connected.is_set():
         return web.Response(status=503)
+    await ctx.scouted.wait()
     
     number_received = int(request.match_info["tail"])
     response_body = handle_tick("Strategy", number_received)
@@ -249,6 +259,7 @@ async def handle_tick_strategy(request: web.Request):
 async def handle_tick_tactical(request: web.Request):
     if not ctx.connected.is_set():
         return web.Response(status=503)
+    await ctx.scouted.wait()
     
     number_received = int(request.match_info["tail"])
     response_body = handle_tick("Tactical", number_received)
@@ -276,10 +287,13 @@ async def run_proxy(local_ctx: CommonContext):
 
     logger.info(f"Proxy: Server started at {address[0]}:{address[1]}")
 
-    await scout_locations()
+    scout_task = asyncio.create_task(scout_loop(), name="scout_loop")
 
     try:
         await ctx.exit_event.wait()
     finally:
+        await site.stop()
         await runner.cleanup()
+        scout_task.cancel()
+        await scout_task
         logger.info("Proxy: Server stopped")

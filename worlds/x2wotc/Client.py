@@ -20,21 +20,21 @@ class X2WOTCCommandProcessor(ClientCommandProcessor):
         if port == "":
             self.output(f"Current proxy port: {self.ctx.proxy_port}")
             return False
-        
+
         try:
             port = int(port)
         except ValueError:
             self.output("Invalid port number (not an integer).")
             return False
-        
+
         if port < 0 or port > 65535:
             self.output("Port number out of range (0 to 65535).")
             return False
-        
+
         self.ctx.proxy_port = port
         self.ctx.start_proxy()
         return True
-    
+
     def _cmd_version(self) -> bool:
         """Print the version of the client."""
         self.output(f"Client version: {client_version}\nRecommended mod version: {recommended_mod_version}")
@@ -46,7 +46,32 @@ class X2WOTCContext(SuperContext):
     items_handling = 0b111  # full remote
     tags = {"AP"}
 
-    connected = asyncio.Event()
+    class DualEvent:
+        def __init__(self):
+            self._set_event = asyncio.Event()
+            self._clear_event = asyncio.Event()
+            self._clear_event.set()
+
+        def set(self):
+            self._set_event.set()
+            self._clear_event.clear()
+
+        def clear(self):
+            self._set_event.clear()
+            self._clear_event.set()
+
+        def is_set(self):
+            return self._set_event.is_set()
+
+        def wait(self):
+            return self._set_event.wait()
+
+        def wait_clear(self):
+            return self._clear_event.wait()
+
+    connected = DualEvent()
+    scouted = DualEvent()
+
     goal_location: str = ""
 
     proxy_port = 24728
@@ -65,8 +90,9 @@ class X2WOTCContext(SuperContext):
 
     async def disconnect(self, allow_autoreconnect: bool = False):
         await super().disconnect(allow_autoreconnect)
-        self.cancel_proxy()
         self.locations_scouted = set()
+        self.connected.clear()
+        self.scouted.clear()
 
     def on_package(self, cmd: str, args: dict):
         super().on_package(cmd, args)
@@ -77,34 +103,30 @@ class X2WOTCContext(SuperContext):
                 self.goal_location = "Victory"
             else:
                 self.goal_location = slot_data["goal_location"]
-
-            self.start_proxy()
             self.connected.set()
 
     def make_gui(self):
         ui = super().make_gui()
         ui.base_title = "Archipelago XCOM 2 War of the Chosen Client"
         return ui
-    
-    def cancel_proxy(self):
-        if self.proxy_task:
-            self.proxy_task.cancel()
-            self.proxy_task = None
 
     def start_proxy(self):
-        self.cancel_proxy()
+        if self.proxy_task:
+            self.proxy_task.cancel()
         self.proxy_task = asyncio.create_task(run_proxy(self), name="proxy")
 
 def launch():
     async def main(args):
         ctx = X2WOTCContext(args.connect, args.password)
         ctx.server_task = asyncio.create_task(server_loop(ctx), name="server_loop")
+        ctx.start_proxy()
 
         if gui_enabled:
             ctx.run_gui()
         ctx.run_cli()
 
         await ctx.exit_event.wait()
+        await ctx.proxy_task
         await ctx.shutdown()
 
     import colorama
