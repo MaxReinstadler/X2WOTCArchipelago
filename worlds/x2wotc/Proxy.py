@@ -78,7 +78,7 @@ def get_locations_info(checks: List[str]) -> LocationsInfo:
                 locations_info[loc_name] = ("Victory", None, None)
             continue
 
-        if loc_id in ctx.checked_locations:
+        if loc_id in (ctx.checked_locations | ctx.locations_checked):
             logger.debug(f"Proxy: Location {loc_name} already checked")
             continue
 
