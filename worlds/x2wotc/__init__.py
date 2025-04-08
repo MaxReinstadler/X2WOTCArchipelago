@@ -2,7 +2,7 @@ from BaseClasses import Tutorial
 from Options import PerGameCommonOptions
 from worlds.AutoWorld import WebWorld, World
 from worlds.LauncherComponents import Component, components, launch_subprocess, Type
-from .Items import X2WOTCItem, item_table, item_display_name_to_key
+from .Items import X2WOTCItem, filler_item_table, item_table, item_display_name_to_key
 from .Items import init_item_vars, get_item_count, get_num_items
 from .Items import disable_item, enable_progressive_item, enable_chosen_hunt_items, add_filler_items
 from .Locations import location_table, init_location_vars, get_num_locations, disable_location
@@ -41,6 +41,8 @@ class X2WOTCWorld(World):
 
     item_name_to_id = {item_data.display_name: item_data.id for item_data in item_table.values()}
     location_name_to_id = {loc_data.display_name: loc_data.id for loc_data in location_table.values()}
+
+    filler_item_names = [item.display_name for item in filler_item_table.values()]
 
     options_dataclass = X2WOTCOptions
     options: X2WOTCOptions
@@ -150,6 +152,9 @@ class X2WOTCWorld(World):
 
     def set_rules(self):
         set_rules(self.multiworld, self.player)
+
+    def get_filler_item_name(self) -> str:
+        return self.random.choice(self.filler_item_names)
 
     def init_vars(self):
         init_item_vars(self.player)
