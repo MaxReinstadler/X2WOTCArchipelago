@@ -16,12 +16,6 @@ class AlienHuntersDLC(Choice):
     option_none = 3
     default = 0
 
-class DisableContactTechs(Toggle):
-    """Disable Resistance Communications and Resistance Radio locations.
-    **RECOMMENDED** These techs are currently broken and may create near impossible playthroughs."""
-    display_name = "Disable Contact Techs"
-    default = True
-
 class Goal(Choice):
     """Set the goal of the seed.
     
@@ -116,7 +110,6 @@ class TrapShare(Range):
 @dataclass
 class X2WOTCOptions(PerGameCommonOptions):
     alien_hunters_dlc: AlienHuntersDLC
-    disable_contact_techs: DisableContactTechs
     goal: Goal
     campaign_completion_requirements: CampaignCompletionRequirements
     progressive_items: ProgressiveItems

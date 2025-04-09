@@ -60,6 +60,14 @@ class X2WOTCWorld(World):
                     if option_name in slot_data:
                         getattr(self.options, option_name).value = slot_data[option_name]
 
+        # Disable Contact Techs
+        # This always happens for now, while I haven't committed to MCO'ing XComHQ
+        # (which currently seems like the only way to fix them)
+        self.disable_location("ResistanceCommunications")
+        self.disable_item("ResistanceCommunicationsCompleted")
+        self.disable_location("ResistanceRadio")
+        self.disable_item("ResistanceRadioCompleted")
+
         # Set Alien Hunters Locations
         if self.options.alien_hunters_dlc == AlienHuntersDLC.option_no_integrated_dlc:
             self.disable_location("ExperimentalWeapons")
@@ -78,13 +86,6 @@ class X2WOTCWorld(World):
             for item_name, item_data in item_table.items():
                 if item_data.dlc == "AH":
                     self.disable_item(item_name)
-
-        # Disable Contact Techs
-        if self.options.disable_contact_techs:
-            self.disable_location("ResistanceCommunications")
-            self.disable_item("ResistanceCommunicationsCompleted")
-            self.disable_location("ResistanceRadio")
-            self.disable_item("ResistanceRadioCompleted")
 
         # Enable progressive tech items
         if "RifleTech" in self.options.progressive_items:
