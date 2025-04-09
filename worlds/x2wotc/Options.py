@@ -71,6 +71,12 @@ class ProgressiveItems(OptionSet):
     valid_keys = progressive_items
     default = progressive_items
 
+class EarlyProvingGround(Toggle):
+    """Force the Proving Ground to be unlockable very early (sphere 1).
+    This ensures access to many powerful items but may significantly increase the amount of checks available."""
+    display_name = "Early Proving Ground"
+    default = False
+
 class EnemySanity(Toggle):
     """Enable locations for the first kill of each enemy type."""
     display_name = "Enemysanity"
@@ -113,6 +119,7 @@ class X2WOTCOptions(PerGameCommonOptions):
     goal: Goal
     campaign_completion_requirements: CampaignCompletionRequirements
     progressive_items: ProgressiveItems
+    early_proving_ground: EarlyProvingGround
     enemy_sanity: EnemySanity
     item_sanity: ItemSanity
     chosen_hunt_sanity: ChosenHuntSanity

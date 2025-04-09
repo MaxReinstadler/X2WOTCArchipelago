@@ -60,7 +60,7 @@ class X2WOTCWorld(World):
                     if option_name in slot_data:
                         getattr(self.options, option_name).value = slot_data[option_name]
 
-        # Disable Contact Techs
+        # Disable contact techs
         # This always happens for now, while I haven't committed to MCO'ing XComHQ
         # (which currently seems like the only way to fix them)
         self.disable_location("ResistanceCommunications")
@@ -68,7 +68,7 @@ class X2WOTCWorld(World):
         self.disable_location("ResistanceRadio")
         self.disable_item("ResistanceRadioCompleted")
 
-        # Set Alien Hunters Locations
+        # Set Alien Hunters locations
         if self.options.alien_hunters_dlc == AlienHuntersDLC.option_no_integrated_dlc:
             self.disable_location("ExperimentalWeapons")
             self.disable_item("ExperimentalWeaponsCompleted")
@@ -104,19 +104,23 @@ class X2WOTCWorld(World):
             if not self.enable_progressive_item("ProgressivePsionicsTechCompleted"):
                 print(f"X2WOTC: Failed to enable progressive psionics techs for player {self.player_name}")
 
-        # Disable Enemy Sanity
+        # Force early proving ground
+        if self.options.early_proving_ground:
+            self.multiworld.early_items[self.player]["[Tech] ADVENT Officer Autopsy"] = 1
+
+        # Disable Enemysanity
         if not self.options.enemy_sanity:
             for loc_name, loc_data in location_table.items():
                 if loc_data.type == "EnemyKill":
                     self.disable_location(loc_name)
 
-        # Disable Item Sanity
+        # Disable Itemsanity
         if not self.options.item_sanity:
             for loc_name, loc_data in location_table.items():
                 if loc_data.type == "ItemUse":
                     self.disable_location(loc_name)
 
-        # Enable/disable Chosen Hunt Sanity
+        # Enable/disable Chosen Hunt-Sanity
         if self.options.chosen_hunt_sanity:
             enable_chosen_hunt_items(self.player)
         else:
