@@ -2,6 +2,8 @@
 
 ## What are locations and items in this game?
 
+NOTE: Resistance Communications and Resistance Radio research projects are ignored by randomization, meaning they will have to be researched in-game before XCOM can begin contacting other regions and building radio relays.
+
 ### Locations
 
 - Completion of research and shadow projects
