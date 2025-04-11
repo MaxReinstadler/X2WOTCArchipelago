@@ -46,7 +46,7 @@ Each time an enemy dies, each soldier has the given fraction of a kill attribute
 
 - Default: 1
 
-Each time an enemy dies, the given number of additional corpses are added to the mission rewards. This means that the default setting is effectively a 2x corpse multiplier.
+Each time an enemy dies, the given number of additional corpses is added to the mission rewards. The default setting therefore represents a 100% increase in corpses gained.
 
 ## Campaign Completion Requirements
 
@@ -54,7 +54,7 @@ Each time an enemy dies, the given number of additional corpses are added to the
 
 - Default: Off
 
-If set, the final set of missions can only become available after the specified lines of objectives is completed. This has to match what you set for `Campaign Completion Requirements` in your yaml.
+If set, the final two missions can only be accessed after the specified line of objectives is completed. This has to match what you set for `Campaign Completion Requirements` in your options yaml.
 
 ## Miscellaneous
 
