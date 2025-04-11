@@ -200,7 +200,7 @@ vanilla_autopsy_techs: Dict[str, X2WOTCLocationData] = {
         id = tech_base_id + 19,
         type = "Tech",
         tags = ["autopsy"],
-        difficulty = 5.0,
+        difficulty = 3.0,
         normal_item = "AutopsyAdventTrooperCompleted"
     ),
     "AutopsyAdventStunLancer": X2WOTCLocationData(
@@ -267,7 +267,7 @@ vanilla_goldenpath_techs: Dict[str, X2WOTCLocationData] = {
         id = tech_base_id + 27,
         type = "Tech",
         tags = ["goldenpath", "autopsy"],
-        difficulty = 5.0,
+        difficulty = 2.0,
         normal_item = "AutopsyAdventOfficerCompleted"
     ),
     "AlienEncryption": X2WOTCLocationData(
