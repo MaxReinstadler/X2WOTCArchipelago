@@ -10,8 +10,9 @@
 
 ## Optional Software
 
-- **(Highly recommended)** Any dedicated XCOM 2 WotC Mod Launcher like the [Alternative Mod Launcher (AML)](https://github.com/X2CommunityCore/xcom2-launcher)
-- **(Highly recommended)** [Mod Config Menu for WotC](https://steamcommunity.com/sharedfiles/filedetails/?id=667104300)
+- **(Strongly recommended)** Any dedicated XCOM 2 WotC Mod Launcher like the [Alternative Mod Launcher (AML)](https://github.com/X2CommunityCore/xcom2-launcher)
+- **(Strongly recommended)** [Mod Config Menu for WotC](https://steamcommunity.com/sharedfiles/filedetails/?id=667104300)
+- **(Strongly recommended)** [Universal Tracker APWorld](https://github.com/FarisTheAncient/Archipelago/releases)
 - Alien Hunters and Shen's Last Gift DLCs are supported but not required.
 
 ## Setup
@@ -27,7 +28,8 @@
 
 1. Download and install the latest [Archipelago](https://github.com/ArchipelagoMW/Archipelago/releases) release.
 2. Download the latest release of the [XCOM 2 WotC APWorld](https://github.com/MaxReinstadler/X2WOTCArchipelago/releases). Double-click it to install automatically, or copy it to your Archipelago installation's `custom_worlds` folder manually.
-2. Launch the XCOM 2 War of the Chosen AP Client from the Archipelago Launcher.
+3. **(Optional)** Download the latest release of the [Universal Tracker APWorld](https://github.com/MaxReinstadler/X2WOTCArchipelago/releases). Double-click it to install automatically, or copy it to your Archipelago installation's `custom_worlds` folder manually.
+4. Launch the XCOM 2 War of the Chosen AP Client from the Archipelago Launcher.
 
 ## Generating a Multiworld
 
