@@ -84,13 +84,19 @@ class X2WOTCWorld(World):
                     if option_name in slot_data:
                         getattr(self.options, option_name).value = slot_data[option_name]
 
-        # Disable inactive mods
+        # Disable inactive mods...
         for mod_data in mods_data:
             if mod_data.name not in self.options.active_mods:
                 for item_name, item_data in mod_data.items.items():
                     self.disable_item(item_name)
                 for loc_name, loc_data in mod_data.locations.items():
                     self.disable_location(loc_name)
+            else:
+                # ...or add mod filler item names
+                self.filler_item_names += [
+                    item_data.display_name
+                    for item_data in mod_data.filler_items.values()
+                ]
 
         # Disable contact techs
         # This always happens for now, while I haven't committed to MCO'ing XComHQ

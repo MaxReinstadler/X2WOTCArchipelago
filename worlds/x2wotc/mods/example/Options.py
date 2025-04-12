@@ -6,6 +6,7 @@ class ExampleModOption(Toggle):
     display_name = "Example Mod Option"
     default = False
 
+
 options = [
     # ("example_mod_option", ExampleModOption)
 ]

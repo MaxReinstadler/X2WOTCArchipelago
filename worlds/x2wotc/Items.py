@@ -11,7 +11,7 @@ from .ItemData import (
     item_table
 )
 
-from .mods import mod_items
+from .mods import mod_items, mod_filler_items
 
 
 class X2WOTCItem(Item):
@@ -114,9 +114,11 @@ def add_filler_items(player: int, num_filler_items: int, weapon_mod_share: float
             if num_unfilled == 0:
                 return
 
-    # Fill the rest with resource items
+    # Fill the rest with resource or mod filler items
     resource_names = list(resource_item_table.keys())
+    mod_filler_names = list(mod_filler_items.keys())
+    possible_names = resource_names + mod_filler_names
     for _ in range(num_unfilled):
-        item_name = random.choice(resource_names)
+        item_name = random.choice(possible_names)
         old_count = item_count[player][item_name]
         set_item_count(player, item_name, old_count + 1)

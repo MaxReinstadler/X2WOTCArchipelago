@@ -17,6 +17,7 @@ class X2WOTCModData(NamedTuple):
     name: str
     rule_priority: float = 0.0
     items: dict[str, X2WOTCItemData] = {}
+    filler_items: dict[str, X2WOTCItemData] = {}
     locations: dict[str, X2WOTCLocationData] = {}
     set_rules: Callable[[MultiWorld, int], None] | None = None
     options: list[ModOption] = []
@@ -26,6 +27,7 @@ class X2WOTCModData(NamedTuple):
 mods_data: list[X2WOTCModData] = []
 
 mod_items: dict[str, X2WOTCItemData] = {}
+mod_filler_items: dict[str, X2WOTCItemData] = {}
 mod_locations: dict[str, X2WOTCLocationData] = {}
 mod_options: list[ModOption] = []
 
@@ -46,6 +48,7 @@ for directory in directories:
         name = module.name if hasattr(module, "name") else directory,
         rule_priority = module.rule_priority if hasattr(module, "rule_priority") else 0,
         items = module.items if hasattr(module, "items") else {},
+        filler_items = module.filler_items if hasattr(module, "filler_items") else {},
         locations = module.locations if hasattr(module, "locations") else {},
         set_rules = module.set_rules if hasattr(module, "set_rules") else None,
         options = module.options if hasattr(module, "options") else [],
@@ -62,6 +65,12 @@ for mod_data in mods_data:
             mod_items[item_name] = item_data
         else:
             print(f"X2WOTC: Duplicate item name {item_name} in mod {mod_data.name}")
+
+    for item_name, item_data in mod_data.filler_items.items():
+        if item_name not in mod_filler_items:
+            mod_filler_items[item_name] = item_data
+        else:
+            print(f"X2WOTC: Duplicate filler item name {item_name} in mod {mod_data.name}")
 
     for loc_name, loc_data in mod_data.locations.items():
         if loc_name not in mod_locations:
