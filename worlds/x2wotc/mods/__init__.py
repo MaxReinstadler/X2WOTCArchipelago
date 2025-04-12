@@ -26,6 +26,7 @@ class X2WOTCModData(NamedTuple):
 
 mods_data: list[X2WOTCModData] = []
 
+mod_names: list[str] = []
 mod_items: dict[str, X2WOTCItemData] = {}
 mod_filler_items: dict[str, X2WOTCItemData] = {}
 mod_locations: dict[str, X2WOTCLocationData] = {}
@@ -58,8 +59,13 @@ for directory in directories:
 # Sort mods by rule priority
 mods_data.sort(key=lambda x: x.rule_priority)
 
-# Aggregate mod items, locations and options
+# Flatten mod data and check for duplicates
 for mod_data in mods_data:
+    if mod_data.name not in mod_names:
+        mod_names.append(mod_data.name)
+    else:
+        print(f"X2WOTC: Duplicate mod name {mod_data.name}")
+
     for item_name, item_data in mod_data.items.items():
         if item_name not in mod_items:
             mod_items[item_name] = item_data
@@ -83,3 +89,6 @@ for mod_data in mods_data:
             mod_options.append(option)
         else:
             print(f"X2WOTC: Duplicate option name {option[0]} in mod {mod_data.name}")
+
+# Sort mod names alphabetically
+mod_names.sort()

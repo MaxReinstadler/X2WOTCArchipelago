@@ -15,10 +15,17 @@ except ModuleNotFoundError:
 from .Proxy import run_proxy
 from .Version import client_version, recommended_mod_version
 
+from .mods import mod_names
+
 
 class X2WOTCCommandProcessor(ClientCommandProcessor):
     def __init__(self, ctx: SuperContext):
         super().__init__(ctx)
+
+    def _cmd_version(self) -> bool:
+        """Print the version of the client."""
+        self.output(f"Client version: {client_version}\nRecommended mod version: {recommended_mod_version}")
+        return True
 
     def _cmd_proxy(self, port: str = "") -> bool:
         """Start the proxy server with a specific port number."""
@@ -39,10 +46,30 @@ class X2WOTCCommandProcessor(ClientCommandProcessor):
         self.ctx.proxy_port = port
         self.ctx.start_proxy()
         return True
+    
+    def _cmd_mods(self) -> bool:
+        """List all installed and active mods."""
+        if mod_names:
+            self.output("Installed mods:")
+            for mod_name in mod_names:
+                self.output(f"- {mod_name}")
+        else:
+            self.output("No installed mods found.")
 
-    def _cmd_version(self) -> bool:
-        """Print the version of the client."""
-        self.output(f"Client version: {client_version}\nRecommended mod version: {recommended_mod_version}")
+        if self.ctx.active_mods:
+            self.output("Active mods:")
+            for mod_name in self.ctx.active_mods:
+                self.output(f"- {mod_name}")
+
+            missing_mods = [mod_name for mod_name in self.ctx.active_mods if mod_name not in mod_names]
+            if missing_mods:
+                self.output("These mods are active but not installed:")
+                for mod_name in missing_mods:
+                    self.output(f"- {mod_name}")
+                self.output("Please use the same apworld that was used to generate the multiworld.")
+        else:
+            self.output("No active mods found.")
+
         return True
 
 
@@ -79,6 +106,7 @@ class X2WOTCContext(SuperContext):
     scouted = DualEvent()
 
     goal_location: str = ""
+    active_mods: list[str] = []
 
     proxy_port = 24728
     proxy_task: asyncio.Task | None = None
@@ -104,11 +132,19 @@ class X2WOTCContext(SuperContext):
         super().on_package(cmd, args)
         if cmd == "Connected":
             slot_data = args["slot_data"]
+
             if "goal_location" not in slot_data:
                 logger.warning("X2WOTCClient: slot_data missing goal_location, falling back on Victory")
                 self.goal_location = "Victory"
             else:
                 self.goal_location = slot_data["goal_location"]
+
+            if "active_mods" not in slot_data:
+                logger.warning("X2WOTCClient: slot_data missing active_mods, falling back on empty list")
+                self.active_mods = []
+            else:
+                self.active_mods = sorted(slot_data["active_mods"])
+
             self.connected.set()
 
     def make_gui(self):
