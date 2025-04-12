@@ -1,5 +1,6 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, make_dataclass
 from Options import Choice, Toggle, OptionSet, Range, PerGameCommonOptions
+from .mods import mod_options
 from typing import Dict
 
 class AlienHuntersDLC(Choice):
@@ -113,6 +114,11 @@ class TrapShare(Range):
     range_end = 100
     default = 20
 
+class ActiveMods(OptionSet):
+    """Activate these mods from the x2wotc/mods directory."""
+    display_name = "Active Mods"
+    default = frozenset()
+
 @dataclass
 class X2WOTCOptions(PerGameCommonOptions):
     alien_hunters_dlc: AlienHuntersDLC
@@ -126,3 +132,7 @@ class X2WOTCOptions(PerGameCommonOptions):
     weapon_mod_share: WeaponModShare
     staff_share: StaffShare
     trap_share: TrapShare
+    active_mods: ActiveMods
+
+# Add mod options
+X2WOTCOptions = make_dataclass("X2WOTCOptions", mod_options, bases=(X2WOTCOptions,))

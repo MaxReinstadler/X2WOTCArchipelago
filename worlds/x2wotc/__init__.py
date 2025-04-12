@@ -1,15 +1,16 @@
+import dataclasses
 from BaseClasses import Tutorial
 from Options import PerGameCommonOptions
 from worlds.AutoWorld import WebWorld, World
 from worlds.LauncherComponents import Component, components, launch_subprocess, Type
-from .Items import X2WOTCItem, filler_item_table, item_table, item_display_name_to_key
+from .Items import X2WOTCItem, item_table, filler_item_table, item_display_name_to_key
 from .Items import init_item_vars, get_item_count, get_num_items
 from .Items import disable_item, enable_progressive_item, enable_chosen_hunt_items, add_filler_items
-from .Locations import location_table, init_location_vars, get_num_locations, disable_location
+from .Locations import location_table, init_location_vars, get_num_locations, is_enabled, disable_location
 from .Regions import init_region_vars, create_regions
 from .Rules import set_rules
 from .Options import X2WOTCOptions, AlienHuntersDLC, Goal
-import dataclasses
+from .mods import mods_data
 
 def launch_client():
     from .Client import launch
@@ -59,6 +60,14 @@ class X2WOTCWorld(World):
                 for option_name in dataclasses.fields(self.options_dataclass):
                     if option_name in slot_data:
                         getattr(self.options, option_name).value = slot_data[option_name]
+
+        # Disable inactive mods
+        for mod_data in mods_data:
+            if mod_data.name not in self.options.active_mods:
+                for item_name, item_data in mod_data.items.items():
+                    self.disable_item(item_name)
+                for loc_name, loc_data in mod_data.locations.items():
+                    self.disable_location(loc_name)
 
         # Disable contact techs
         # This always happens for now, while I haven't committed to MCO'ing XComHQ
@@ -128,6 +137,11 @@ class X2WOTCWorld(World):
                 if "chosen_hunt" in loc_data.tags:
                     self.disable_location(loc_name)
 
+        # Handle mod options
+        for mod_data in mods_data:
+            if mod_data.generate_early and mod_data.name in self.options.active_mods:
+                mod_data.generate_early(self)
+
         # Add filler items
         num_filler_items = get_num_locations(self.player) - get_num_items(self.player)
         print(f"X2WOTC: Adding {num_filler_items} filler items for player {self.player_name}")
@@ -157,6 +171,10 @@ class X2WOTCWorld(World):
 
     def set_rules(self):
         set_rules(self.multiworld, self.player)
+        
+        for mod_data in mods_data:
+            if mod_data.set_rules and mod_data.name in self.options.active_mods:
+                mod_data.set_rules(self.multiworld, self.player, location_table, is_enabled)
 
     def get_filler_item_name(self) -> str:
         return self.random.choice(self.filler_item_names)
@@ -180,7 +198,7 @@ class X2WOTCWorld(World):
             "goal_location": Goal.value_to_location[self.options.goal.value]
         }
 
-        option_names = [attr.name for attr in dataclasses.fields(X2WOTCOptions)
+        option_names = [attr.name for attr in dataclasses.fields(self.options_dataclass)
                         if attr not in dataclasses.fields(PerGameCommonOptions)]
         slot_data |= self.options.as_dict(*option_names)
 
