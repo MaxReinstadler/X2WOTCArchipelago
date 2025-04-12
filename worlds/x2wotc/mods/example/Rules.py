@@ -1,7 +1,10 @@
-from BaseClasses import MultiWorld, CollectionState
-from ...LocationData import X2WOTCLocationData
-from worlds.generic.Rules import set_rule, add_rule
 from typing import Callable
+
+from BaseClasses import MultiWorld, CollectionState
+from worlds.generic.Rules import set_rule, add_rule
+
+from ...LocationData import X2WOTCLocationData
+
 
 def example_mod_rule(state: CollectionState, player: int) -> bool:
     return True

@@ -1,5 +1,7 @@
 from BaseClasses import ItemClassification
+
 from ...ItemData import X2WOTCItemData, base_id
+
 
 mod_base_id = base_id + 1000  # Make sure IDs are unique to each mod
 

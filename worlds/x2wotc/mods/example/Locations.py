@@ -1,5 +1,6 @@
 from ...LocationData import X2WOTCLocationData, base_id
 
+
 mod_base_id = base_id + 1000  # Make sure IDs are unique to each mod
 
 # For the full definition of X2WOTCLocationData, see worlds/x2wotc/Data.py

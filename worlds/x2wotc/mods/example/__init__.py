@@ -1,8 +1,10 @@
 from worlds.AutoWorld import World
+
 from .Items import items, filler_items
 from .Locations import locations
-from .Rules import set_rules
 from .Options import options
+from .Rules import set_rules
+
 
 name = "Example Mod"
 

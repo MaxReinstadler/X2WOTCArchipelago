@@ -1,9 +1,13 @@
 from BaseClasses import Location
+
 from .LocationData import location_table
+
 from .mods import mod_locations
+
 
 class X2WOTCLocation(Location):
     game: str = "XCOM 2 War of the Chosen"
+
 
 # Add mod locations
 for loc_name, loc_data in mod_locations.items():

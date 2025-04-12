@@ -1,5 +1,6 @@
 from typing import NamedTuple
 
+
 class X2WOTCLocationData(NamedTuple):
     display_name: str
     id: int | None = None
@@ -12,6 +13,7 @@ class X2WOTCLocationData(NamedTuple):
                             # "SLG": Shens Last Gift,
                             # "WOTC": War of the Chosen
     normal_item: str | None = None
+
 
 base_id = 2482748367
 

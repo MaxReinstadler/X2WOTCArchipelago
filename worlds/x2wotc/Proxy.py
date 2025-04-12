@@ -1,10 +1,12 @@
-import asyncio
 from aiohttp import web
+import asyncio
+
 from CommonClient import CommonContext, NetworkItem, NetworkSlot, logger
 from NetUtils import ClientStatus
 
 from .Items import item_table, item_id_to_key
 from .Locations import location_table, loc_id_to_key
+
 
 ctx: CommonContext
 

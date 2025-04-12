@@ -1,23 +1,45 @@
 import dataclasses
+
 from BaseClasses import Tutorial
 from Options import PerGameCommonOptions
 from worlds.AutoWorld import WebWorld, World
 from worlds.LauncherComponents import Component, components, launch_subprocess, Type
-from .Items import X2WOTCItem, item_table, filler_item_table, item_display_name_to_key
-from .Items import init_item_vars, get_item_count, get_num_items
-from .Items import disable_item, enable_progressive_item, enable_chosen_hunt_items, add_filler_items
-from .Locations import location_table, init_location_vars, get_num_locations, is_enabled, disable_location
+
+from .Items import (
+    X2WOTCItem,
+    item_table,
+    filler_item_table,
+    item_display_name_to_key,
+    init_item_vars,
+    get_item_count,
+    get_num_items,
+    disable_item,
+    enable_progressive_item,
+    enable_chosen_hunt_items,
+    add_filler_items
+)
+from .Locations import (
+    location_table,
+    init_location_vars,
+    get_num_locations,
+    is_enabled,
+    disable_location
+)
+from .Options import X2WOTCOptions, AlienHuntersDLC, Goal
 from .Regions import init_region_vars, create_regions
 from .Rules import set_rules
-from .Options import X2WOTCOptions, AlienHuntersDLC, Goal
+
 from .mods import mods_data
+
 
 def launch_client():
     from .Client import launch
+    
     launch_subprocess(launch, name="X2WOTCClient")
 
 components.append(Component("XCOM 2 War of the Chosen Client", "X2WOTCClient",
                             func=launch_client, component_type=Type.CLIENT))
+
 
 class X2WOTCWeb(WebWorld):
     theme = "partyTime"
@@ -29,6 +51,7 @@ class X2WOTCWeb(WebWorld):
         "setup/en",
         ["Snyax"]
     )]
+
 
 class X2WOTCWorld(World):
     """
@@ -86,7 +109,8 @@ class X2WOTCWorld(World):
             for loc_name, loc_data in location_table.items():
                 if "kill_ruler" in loc_data.tags:
                     self.disable_location(loc_name)
-                    self.disable_item(loc_data.normal_item) if loc_data.normal_item else None
+                    if loc_data.normal_item:
+                        self.disable_item(loc_data.normal_item)
 
         elif self.options.alien_hunters_dlc == AlienHuntersDLC.option_none:
             for loc_name, loc_data in location_table.items():

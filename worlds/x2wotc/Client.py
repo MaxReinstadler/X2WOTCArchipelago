@@ -1,14 +1,20 @@
 import asyncio
-from CommonClient import ClientCommandProcessor
-from CommonClient import server_loop, get_base_parser
-from CommonClient import gui_enabled, logger
-from .Proxy import run_proxy
-from .Version import client_version, recommended_mod_version
 
+from CommonClient import (
+    ClientCommandProcessor,
+    server_loop,
+    get_base_parser,
+    gui_enabled,
+    logger
+)
 try:
     from worlds.tracker.TrackerClient import TrackerGameContext as SuperContext  # type: ignore
 except ModuleNotFoundError:
     from CommonClient import CommonContext as SuperContext
+
+from .Proxy import run_proxy
+from .Version import client_version, recommended_mod_version
+
 
 class X2WOTCCommandProcessor(ClientCommandProcessor):
     def __init__(self, ctx: SuperContext):
@@ -38,6 +44,7 @@ class X2WOTCCommandProcessor(ClientCommandProcessor):
         """Print the version of the client."""
         self.output(f"Client version: {client_version}\nRecommended mod version: {recommended_mod_version}")
         return True
+
 
 class X2WOTCContext(SuperContext):
     command_processor = X2WOTCCommandProcessor
@@ -113,6 +120,7 @@ class X2WOTCContext(SuperContext):
         if self.proxy_task:
             self.proxy_task.cancel()
         self.proxy_task = asyncio.create_task(run_proxy(self), name="proxy")
+
 
 def launch():
     async def main(args):

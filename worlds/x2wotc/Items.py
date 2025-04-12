@@ -1,8 +1,18 @@
-from BaseClasses import Item
-from .ItemData import resource_item_table, weapon_mod_item_table, staff_item_table
-from .ItemData import trap_item_table, filler_item_table, item_table
-from .mods import mod_items
 from random import Random
+
+from BaseClasses import Item
+
+from .ItemData import (
+    resource_item_table,
+    weapon_mod_item_table,
+    staff_item_table,
+    trap_item_table,
+    filler_item_table,
+    item_table
+)
+
+from .mods import mod_items
+
 
 class X2WOTCItem(Item):
     game: str = "XCOM 2 War of the Chosen"
@@ -12,6 +22,7 @@ class X2WOTCItem(Item):
         super(X2WOTCItem, self).__init__(item_data.display_name,
                                          item_data.classification,
                                          item_data.id, player)
+
 
 # Add mod items
 for item_name, item_data in mod_items.items():

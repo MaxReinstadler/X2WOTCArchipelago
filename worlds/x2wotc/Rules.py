@@ -1,9 +1,12 @@
+from typing import Callable
+
 from BaseClasses import MultiWorld, CollectionState
 from worlds.generic.Rules import set_rule, add_rule
+
 from .Items import item_table, get_total_power
 from .Locations import location_table, is_enabled
 from .Options import X2WOTCOptions, Goal
-from typing import Callable
+
 
 options: dict[int, X2WOTCOptions] = {}
 

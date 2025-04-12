@@ -1,13 +1,17 @@
-import os
 import importlib
+import os
+from typing import NamedTuple, Callable
+
 from BaseClasses import MultiWorld
 from Options import Option
 from worlds.AutoWorld import World
+
 from ..ItemData import X2WOTCItemData
 from ..LocationData import X2WOTCLocationData
-from typing import NamedTuple, Callable
+
 
 ModOption = tuple[str, type[Option]]  # (option name, option class)
+
 
 class X2WOTCModData(NamedTuple):
     name: str
@@ -17,6 +21,7 @@ class X2WOTCModData(NamedTuple):
     set_rules: Callable[[MultiWorld, int], None] | None = None
     options: list[ModOption] = []
     generate_early: Callable[[World], None] | None = None
+
 
 mods_data: list[X2WOTCModData] = []
 

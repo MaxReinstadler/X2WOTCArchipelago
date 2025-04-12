@@ -1,5 +1,7 @@
 from typing import NamedTuple
+
 from BaseClasses import ItemClassification
+
 
 class X2WOTCItemData(NamedTuple):
     display_name: str
@@ -16,6 +18,7 @@ class X2WOTCItemData(NamedTuple):
                             # "WOTC": War of the Chosen
     normal_location: str | None = None
     stages: list[str] | None = None  # For progressive items
+
 
 base_id = 2482748367
 

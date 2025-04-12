@@ -1,6 +1,9 @@
 from dataclasses import dataclass, make_dataclass
+
 from Options import Choice, Toggle, OptionSet, Range, PerGameCommonOptions
+
 from .mods import mod_options
+
 
 class AlienHuntersDLC(Choice):
     """Set which locations and items from the Alien Hunters DLC are enabled.
@@ -15,6 +18,7 @@ class AlienHuntersDLC(Choice):
     option_no_alien_rulers = 2
     option_none = 3
     default = 0
+
 
 class Goal(Choice):
     """Set the goal of the seed.
@@ -40,6 +44,7 @@ class Goal(Choice):
         4: "Stronghold3"
     }
 
+
 class CampaignCompletionRequirements(OptionSet):
     """Require these objectives to be completed for the final mission to be unlocked.
     Set this if you wish to experience a more classical XCOM 2 story progression.
@@ -57,6 +62,7 @@ class CampaignCompletionRequirements(OptionSet):
     valid_keys = completion_requirements
     default = frozenset()
 
+
 class ProgressiveItems(OptionSet):
     """Force these items to be collected in order.
     Valid values: 'RifleTech', 'MeleeWeaponTech', 'ArmorTech', 'GREMLINTech', 'PsionicsTech'"""
@@ -71,26 +77,31 @@ class ProgressiveItems(OptionSet):
     valid_keys = progressive_items
     default = progressive_items
 
+
 class EarlyProvingGround(Toggle):
     """Force the Proving Ground to be unlockable very early (sphere 1).
     This ensures access to many powerful items but may significantly increase the amount of checks available."""
     display_name = "Early Proving Ground"
     default = False
 
+
 class EnemySanity(Toggle):
     """Enable locations for the first kill of each enemy type."""
     display_name = "Enemysanity"
     default = True
+
 
 class ItemSanity(Toggle):
     """Enable locations for the first use of each item type."""
     display_name = "Itemsanity"
     default = True
 
+
 class ChosenHuntSanity(Toggle):
     """Shuffle Chosen Hunt covert actions and their rewards, i.e. Resistance Faction influence and Chosen Stronghold missions."""
     display_name = "Chosen Hunt-Sanity"
     default = True
+
 
 class WeaponModShare(Range):
     """Set the share of filler items to be weapon upgrades."""
@@ -99,12 +110,14 @@ class WeaponModShare(Range):
     range_end = 100
     default = 15
 
+
 class StaffShare(Range):
     """Set the share of filler items to be staff."""
     display_name = "Staff Share"
     range_start = 0
     range_end = 100
     default = 20
+
 
 class TrapShare(Range):
     """Set the share of filler items to be traps."""
@@ -113,10 +126,12 @@ class TrapShare(Range):
     range_end = 100
     default = 20
 
+
 class ActiveMods(OptionSet):
     """Activate these mods from the x2wotc/mods directory."""
     display_name = "Active Mods"
     default = frozenset()
+
 
 @dataclass
 class X2WOTCOptions(PerGameCommonOptions):
@@ -132,6 +147,7 @@ class X2WOTCOptions(PerGameCommonOptions):
     staff_share: StaffShare
     trap_share: TrapShare
     active_mods: ActiveMods
+
 
 # Add mod options
 X2WOTCOptions = make_dataclass("X2WOTCOptions", mod_options, bases=(X2WOTCOptions,))

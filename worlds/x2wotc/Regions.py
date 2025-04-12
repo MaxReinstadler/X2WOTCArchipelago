@@ -1,6 +1,8 @@
 from BaseClasses import MultiWorld, Region
+
 from .Locations import X2WOTCLocation, location_table, is_enabled
 from .Rules import has_shadow_chamber, has_resistance_ring
+
 
 region_table: dict[int, dict[str, dict[str, int | None]]] = {}
 
