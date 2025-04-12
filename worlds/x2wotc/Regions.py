@@ -1,9 +1,8 @@
 from BaseClasses import MultiWorld, Region
 from .Locations import X2WOTCLocation, location_table, is_enabled
 from .Rules import has_shadow_chamber, has_resistance_ring
-from typing import Dict, Optional
 
-region_table: Dict[int, Dict[str, Dict[str, Optional[int]]]] = {}
+region_table: dict[int, dict[str, dict[str, int | None]]] = {}
 
 def init_region_vars(player: int):
     region_table[player] = {

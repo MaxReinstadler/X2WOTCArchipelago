@@ -1,17 +1,17 @@
-from typing import List, Dict, NamedTuple, Optional
+from typing import NamedTuple
 
 class X2WOTCLocationData(NamedTuple):
     display_name: str
-    id: Optional[int] = None
+    id: int | None = None
     layer: str = "Strategy"  # "Strategy" or "Tactical"
     type: str = "Event"
-    tags: List[str] = []
+    tags: list[str] = []
     difficulty: float = 0.0  # Relative to total power in percent (0 to 100)
-    dlc: Optional[str] = None  # None: Base Game,
-                               # "AH": Alien Hunters,
-                               # "SLG": Shens Last Gift,
-                               # "WOTC": War of the Chosen
-    normal_item: Optional[str] = None
+    dlc: str | None = None  # None: Base Game,
+                            # "AH": Alien Hunters,
+                            # "SLG": Shens Last Gift,
+                            # "WOTC": War of the Chosen
+    normal_item: str | None = None
 
 base_id = 2482748367
 
@@ -32,7 +32,7 @@ tech_base_id = base_id
 #                                                 BASE GAME
 #-----------------------------------------------------------------------------------------------------------------------
 
-vanilla_weapon_techs: Dict[str, X2WOTCLocationData] = {
+vanilla_weapon_techs: dict[str, X2WOTCLocationData] = {
     "ModularWeapons": X2WOTCLocationData(
         display_name = tech_location_prefix + "Modular Weapons",
         id = tech_base_id,
@@ -91,7 +91,7 @@ vanilla_weapon_techs: Dict[str, X2WOTCLocationData] = {
     )
 }
 
-vanilla_armor_techs: Dict[str, X2WOTCLocationData] = {
+vanilla_armor_techs: dict[str, X2WOTCLocationData] = {
     "HybridMaterials": X2WOTCLocationData(
         display_name = tech_location_prefix + "Hybrid Materials",
         id = tech_base_id + 7,
@@ -118,7 +118,7 @@ vanilla_armor_techs: Dict[str, X2WOTCLocationData] = {
     )
 }
 
-vanilla_autopsy_techs: Dict[str, X2WOTCLocationData] = {
+vanilla_autopsy_techs: dict[str, X2WOTCLocationData] = {
     "AutopsySectoid": X2WOTCLocationData(
         display_name = tech_location_prefix + "Sectoid Autopsy",
         id = tech_base_id + 10,
@@ -241,7 +241,7 @@ vanilla_autopsy_techs: Dict[str, X2WOTCLocationData] = {
     )
 }
 
-vanilla_goldenpath_techs: Dict[str, X2WOTCLocationData] = {
+vanilla_goldenpath_techs: dict[str, X2WOTCLocationData] = {
     "AlienBiotech": X2WOTCLocationData(
         display_name = tech_location_prefix + "Alien Biotech",
         id = tech_base_id + 25,
@@ -324,7 +324,7 @@ vanilla_goldenpath_techs: Dict[str, X2WOTCLocationData] = {
     )
 }
 
-vanilla_other_techs: Dict[str, X2WOTCLocationData] = {
+vanilla_other_techs: dict[str, X2WOTCLocationData] = {
     "ResistanceRadio": X2WOTCLocationData(
         display_name = tech_location_prefix + "Resistance Radio",
         id = tech_base_id + 35,
@@ -355,7 +355,7 @@ vanilla_other_techs: Dict[str, X2WOTCLocationData] = {
 #                                               ALIEN HUNTERS
 #-----------------------------------------------------------------------------------------------------------------------
 
-alien_hunters_techs: Dict[str, X2WOTCLocationData] = {
+alien_hunters_techs: dict[str, X2WOTCLocationData] = {
     "ExperimentalWeapons": X2WOTCLocationData(
         display_name = tech_location_prefix + "Experimental Weapons",
         id = tech_base_id + 38,
@@ -398,7 +398,7 @@ alien_hunters_techs: Dict[str, X2WOTCLocationData] = {
 #                                             WAR OF THE CHOSEN
 #-----------------------------------------------------------------------------------------------------------------------
 
-wotc_autopsy_techs: Dict[str, X2WOTCLocationData] = {
+wotc_autopsy_techs: dict[str, X2WOTCLocationData] = {
     "AutopsyAdventPurifier": X2WOTCLocationData(
         display_name = tech_location_prefix + "ADVENT Purifier Autopsy",
         id = tech_base_id + 42,
@@ -437,7 +437,7 @@ wotc_autopsy_techs: Dict[str, X2WOTCLocationData] = {
     )
 }
 
-wotc_chosen_weapon_techs: Dict[str, X2WOTCLocationData] = {
+wotc_chosen_weapon_techs: dict[str, X2WOTCLocationData] = {
     "ChosenAssassinWeapons": X2WOTCLocationData(
         display_name = tech_location_prefix + "Assassin Weapons",
         id = tech_base_id + 46,
@@ -477,7 +477,7 @@ kill_base_id = tech_base_id + 49
 #                                                 BASE GAME
 #-----------------------------------------------------------------------------------------------------------------------
 
-vanilla_enemy_kills: Dict[str, X2WOTCLocationData] = {
+vanilla_enemy_kills: dict[str, X2WOTCLocationData] = {
     "KillSectoid": X2WOTCLocationData(
         display_name = enemy_kill_location_prefix + "Sectoid",
         id = kill_base_id,
@@ -636,7 +636,7 @@ vanilla_enemy_kills: Dict[str, X2WOTCLocationData] = {
 #                                               ALIEN HUNTERS
 #-----------------------------------------------------------------------------------------------------------------------
 
-alien_hunters_enemy_kills: Dict[str, X2WOTCLocationData] = {
+alien_hunters_enemy_kills: dict[str, X2WOTCLocationData] = {
     "KillViperKing": X2WOTCLocationData(
         display_name = enemy_kill_location_prefix + "Viper King",
         id = kill_base_id + 19,
@@ -670,7 +670,7 @@ alien_hunters_enemy_kills: Dict[str, X2WOTCLocationData] = {
 #                                             WAR OF THE CHOSEN
 #-----------------------------------------------------------------------------------------------------------------------
 
-wotc_enemy_kills: Dict[str, X2WOTCLocationData] = {
+wotc_enemy_kills: dict[str, X2WOTCLocationData] = {
     "KillAdventPurifier": X2WOTCLocationData(
         display_name = enemy_kill_location_prefix + "ADVENT Purifier",
         id = kill_base_id + 22,
@@ -746,7 +746,7 @@ item_use_base_id = kill_base_id + 29
 #                                                 BASE GAME
 #-----------------------------------------------------------------------------------------------------------------------
 
-vanilla_item_uses: Dict[str, X2WOTCLocationData] = {
+vanilla_item_uses: dict[str, X2WOTCLocationData] = {
     "UseMedikit": X2WOTCLocationData(
         display_name = item_use_location_prefix + "Medikit",
         id = item_use_base_id,
@@ -921,7 +921,7 @@ vanilla_item_uses: Dict[str, X2WOTCLocationData] = {
 #                                               ALIEN HUNTERS
 #-----------------------------------------------------------------------------------------------------------------------
 
-alien_hunters_item_uses: Dict[str, X2WOTCLocationData] = {
+alien_hunters_item_uses: dict[str, X2WOTCLocationData] = {
     "UseFrostbomb": X2WOTCLocationData(
         display_name = item_use_location_prefix + "Frost Bomb",
         id = item_use_base_id + 21,
@@ -937,7 +937,7 @@ alien_hunters_item_uses: Dict[str, X2WOTCLocationData] = {
 #                                             WAR OF THE CHOSEN
 #-----------------------------------------------------------------------------------------------------------------------
 
-wotc_item_uses: Dict[str, X2WOTCLocationData] = {
+wotc_item_uses: dict[str, X2WOTCLocationData] = {
     "UseUltrasonicLure": X2WOTCLocationData(
         display_name = item_use_location_prefix + "Ultrasonic Lure",
         id = item_use_base_id + 22,
@@ -968,7 +968,7 @@ covert_action_base_id = item_use_base_id + 24
 #                                                 CHOSEN HUNT
 #-----------------------------------------------------------------------------------------------------------------------
 
-chosen_hunt_covert_actions: Dict[str, X2WOTCLocationData] = {
+chosen_hunt_covert_actions: dict[str, X2WOTCLocationData] = {
     "ChosenHuntPt1:1": X2WOTCLocationData(
         display_name = covert_action_location_prefix + "First Chosen Hunt 1/3",
         id = covert_action_base_id,
@@ -1056,7 +1056,7 @@ chosen_hunt_covert_actions: Dict[str, X2WOTCLocationData] = {
 ##                                              EVENT LOCATIONS                                                       ##
 ########################################################################################################################
 
-event_locations: Dict[str, X2WOTCLocationData] = {
+event_locations: dict[str, X2WOTCLocationData] = {
     "Victory": X2WOTCLocationData(
         display_name = "Victory",
         difficulty = 90.0,
@@ -1088,7 +1088,7 @@ event_locations: Dict[str, X2WOTCLocationData] = {
 ##                                              TOTAL LOCATIONS                                                       ##
 ########################################################################################################################
 
-tech_location_table: Dict[str, X2WOTCLocationData] = {
+tech_location_table: dict[str, X2WOTCLocationData] = {
     **vanilla_weapon_techs,
     **vanilla_armor_techs,
     **vanilla_autopsy_techs,
@@ -1099,23 +1099,23 @@ tech_location_table: Dict[str, X2WOTCLocationData] = {
     **wotc_chosen_weapon_techs
 }
 
-kill_location_table: Dict[str, X2WOTCLocationData] = {
+kill_location_table: dict[str, X2WOTCLocationData] = {
     **vanilla_enemy_kills,
     **alien_hunters_enemy_kills,
     **wotc_enemy_kills
 }
 
-item_use_location_table: Dict[str, X2WOTCLocationData] = {
+item_use_location_table: dict[str, X2WOTCLocationData] = {
     **vanilla_item_uses,
     **alien_hunters_item_uses,
     **wotc_item_uses
 }
 
-covert_action_location_table: Dict[str, X2WOTCLocationData] = {
+covert_action_location_table: dict[str, X2WOTCLocationData] = {
     **chosen_hunt_covert_actions
 }
 
-location_table: Dict[str, X2WOTCLocationData] = {
+location_table: dict[str, X2WOTCLocationData] = {
     **tech_location_table,
     **kill_location_table,
     **item_use_location_table,

@@ -4,7 +4,6 @@ from CommonClient import server_loop, get_base_parser
 from CommonClient import gui_enabled, logger
 from .Proxy import run_proxy
 from .Version import client_version, recommended_mod_version
-from typing import Optional
 
 try:
     from worlds.tracker.TrackerClient import TrackerGameContext as SuperContext  # type: ignore
@@ -75,9 +74,9 @@ class X2WOTCContext(SuperContext):
     goal_location: str = ""
 
     proxy_port = 24728
-    proxy_task: Optional[asyncio.Task] = None
+    proxy_task: asyncio.Task | None = None
 
-    def __init__(self, server_address: Optional[str], password: Optional[str]):
+    def __init__(self, server_address: str | None, password: str | None):
         super().__init__(server_address, password)
         self.locations_checked = set()
         self.locations_scouted = set()

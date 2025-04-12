@@ -1,7 +1,6 @@
 from BaseClasses import Location
 from .LocationData import location_table
 from .mods import mod_locations
-from typing import Dict
 
 class X2WOTCLocation(Location):
     game: str = "XCOM 2 War of the Chosen"
@@ -16,8 +15,8 @@ for loc_name, loc_data in mod_locations.items():
 loc_display_name_to_key = {loc_data.display_name: key for key, loc_data in location_table.items()}
 loc_id_to_key = {loc_data.id: key for key, loc_data in location_table.items() if loc_data.id}
 
-enabled: Dict[int, Dict[str, bool]] = {}
-num_locations: Dict[int, int] = {}
+enabled: dict[int, dict[str, bool]] = {}
+num_locations: dict[int, int] = {}
 
 def init_location_vars(player: int):
     enabled[player] = {loc_name: True for loc_name in location_table.keys()}

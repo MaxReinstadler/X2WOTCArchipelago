@@ -1,21 +1,21 @@
-from typing import List, Dict, NamedTuple, Optional
+from typing import NamedTuple
 from BaseClasses import ItemClassification
 
 class X2WOTCItemData(NamedTuple):
     display_name: str
-    id: Optional[int] = None
+    id: int | None = None
     classification: ItemClassification = ItemClassification.useful
     layer: str = "Strategy"  # "Strategy" or "Tactical"
     type: str = "Event"
-    tags: List[str] = []
+    tags: list[str] = []
     power: float = 0.0  # Relative to other values
                         # (For reference: Magnetic Weapons = 100.0)
-    dlc: Optional[str] = None  # None: Base Game,
-                               # "AH": Alien Hunters,
-                               # "SLG": Shens Last Gift,
-                               # "WOTC": War of the Chosen
-    normal_location: Optional[str] = None
-    stages: Optional[List[str]] = None  # For progressive items
+    dlc: str | None = None  # None: Base Game,
+                            # "AH": Alien Hunters,
+                            # "SLG": Shens Last Gift,
+                            # "WOTC": War of the Chosen
+    normal_location: str | None = None
+    stages: list[str] | None = None  # For progressive items
 
 base_id = 2482748367
 
@@ -37,7 +37,7 @@ tech_base_id = base_id
 #                                                 BASE GAME
 #-----------------------------------------------------------------------------------------------------------------------
 
-vanilla_weapon_tech_items: Dict[str, X2WOTCItemData] = {
+vanilla_weapon_tech_items: dict[str, X2WOTCItemData] = {
     "ModularWeaponsCompleted": X2WOTCItemData(
         display_name = tech_item_prefix + "Modular Weapons",
         id = tech_base_id,
@@ -103,7 +103,7 @@ vanilla_weapon_tech_items: Dict[str, X2WOTCItemData] = {
     )
 }
 
-vanilla_armor_tech_items: Dict[str, X2WOTCItemData] = {
+vanilla_armor_tech_items: dict[str, X2WOTCItemData] = {
     "HybridMaterialsCompleted": X2WOTCItemData(
         display_name = tech_item_prefix + "Hybrid Materials",
         id = tech_base_id + 7,
@@ -133,7 +133,7 @@ vanilla_armor_tech_items: Dict[str, X2WOTCItemData] = {
     )
 }
 
-vanilla_autopsy_tech_items: Dict[str, X2WOTCItemData] = {
+vanilla_autopsy_tech_items: dict[str, X2WOTCItemData] = {
     "AutopsySectoidCompleted": X2WOTCItemData(
         display_name = tech_item_prefix + "Sectoid Autopsy",
         id = tech_base_id + 10,
@@ -271,7 +271,7 @@ vanilla_autopsy_tech_items: Dict[str, X2WOTCItemData] = {
     )
 }
 
-vanilla_goldenpath_tech_items: Dict[str, X2WOTCItemData] = {
+vanilla_goldenpath_tech_items: dict[str, X2WOTCItemData] = {
     "AlienBiotechCompleted": X2WOTCItemData(
         display_name = tech_item_prefix + "Alien Biotech",
         id = tech_base_id + 25,
@@ -364,7 +364,7 @@ vanilla_goldenpath_tech_items: Dict[str, X2WOTCItemData] = {
     )
 }
 
-vanilla_other_tech_items: Dict[str, X2WOTCItemData] = {
+vanilla_other_tech_items: dict[str, X2WOTCItemData] = {
     "ResistanceRadioCompleted": X2WOTCItemData(
         display_name = tech_item_prefix + "Resistance Radio",
         id = tech_base_id + 35,
@@ -398,7 +398,7 @@ vanilla_other_tech_items: Dict[str, X2WOTCItemData] = {
 #                                               ALIEN HUNTERS
 #-----------------------------------------------------------------------------------------------------------------------
 
-alien_hunters_tech_items: Dict[str, X2WOTCItemData] = {
+alien_hunters_tech_items: dict[str, X2WOTCItemData] = {
     "ExperimentalWeaponsCompleted": X2WOTCItemData(
         display_name = tech_item_prefix + "Experimental Weapons",
         id = tech_base_id + 38,
@@ -445,7 +445,7 @@ alien_hunters_tech_items: Dict[str, X2WOTCItemData] = {
 #                                             WAR OF THE CHOSEN
 #-----------------------------------------------------------------------------------------------------------------------
 
-wotc_autopsy_tech_items: Dict[str, X2WOTCItemData] = {
+wotc_autopsy_tech_items: dict[str, X2WOTCItemData] = {
     "AutopsyAdventPurifierCompleted": X2WOTCItemData(
         display_name = tech_item_prefix + "ADVENT Purifier Autopsy",
         id = tech_base_id + 42,
@@ -488,7 +488,7 @@ wotc_autopsy_tech_items: Dict[str, X2WOTCItemData] = {
     )
 }
 
-wotc_chosen_weapon_tech_items: Dict[str, X2WOTCItemData] = {
+wotc_chosen_weapon_tech_items: dict[str, X2WOTCItemData] = {
     "ChosenAssassinWeaponsCompleted": X2WOTCItemData(
         display_name = tech_item_prefix + "Assassin Weapons",
         id = tech_base_id + 46,
@@ -525,7 +525,7 @@ wotc_chosen_weapon_tech_items: Dict[str, X2WOTCItemData] = {
 #                                            PROGRESSIVE TECH ITEMS
 #-----------------------------------------------------------------------------------------------------------------------
 
-progressive_tech_items: Dict[str, X2WOTCItemData] = {
+progressive_tech_items: dict[str, X2WOTCItemData] = {
     "ProgressiveRifleTechCompleted": X2WOTCItemData(
         display_name = tech_item_prefix + "Progressive Rifle",
         id = tech_base_id + 49,
@@ -593,7 +593,7 @@ covert_action_base_id = tech_base_id + 54
 #                                              CHOSEN HUNT ITEMS
 #-----------------------------------------------------------------------------------------------------------------------
 
-chosen_hunt_items: Dict[str, X2WOTCItemData] = {
+chosen_hunt_items: dict[str, X2WOTCItemData] = {
     "FactionInfluence": X2WOTCItemData(
         display_name = chosen_hunt_item_prefix + "Faction Influence",
         id = covert_action_base_id,
@@ -647,7 +647,7 @@ filler_base_id = covert_action_base_id + 4
 #                                                RESOURCE ITEMS
 #-----------------------------------------------------------------------------------------------------------------------
 
-supplies_items: Dict[str, X2WOTCItemData] = {
+supplies_items: dict[str, X2WOTCItemData] = {
     "Supplies:20": X2WOTCItemData(
         display_name = resource_item_prefix + "20 Supplies",
         id = filler_base_id,
@@ -668,7 +668,7 @@ supplies_items: Dict[str, X2WOTCItemData] = {
     )
 }
 
-intel_items: Dict[str, X2WOTCItemData] = {
+intel_items: dict[str, X2WOTCItemData] = {
     "Intel:10": X2WOTCItemData(
         display_name = resource_item_prefix + "10 Intel",
         id = filler_base_id + 3,
@@ -689,7 +689,7 @@ intel_items: Dict[str, X2WOTCItemData] = {
     )
 }
 
-alien_alloy_items: Dict[str, X2WOTCItemData] = {
+alien_alloy_items: dict[str, X2WOTCItemData] = {
     "AlienAlloy:5": X2WOTCItemData(
         display_name = resource_item_prefix + "5 Alien Alloys",
         id = filler_base_id + 6,
@@ -710,7 +710,7 @@ alien_alloy_items: Dict[str, X2WOTCItemData] = {
     )
 }
 
-elerium_dust_items: Dict[str, X2WOTCItemData] = {
+elerium_dust_items: dict[str, X2WOTCItemData] = {
     "EleriumDust:5": X2WOTCItemData(
         display_name = resource_item_prefix + "5 Elerium Crystals",
         id = filler_base_id + 9,
@@ -731,7 +731,7 @@ elerium_dust_items: Dict[str, X2WOTCItemData] = {
     )
 }
 
-elerium_core_items: Dict[str, X2WOTCItemData] = {
+elerium_core_items: dict[str, X2WOTCItemData] = {
     "EleriumCore:1": X2WOTCItemData(
         display_name = resource_item_prefix + "1 Elerium Core",
         id = filler_base_id + 12,
@@ -740,7 +740,7 @@ elerium_core_items: Dict[str, X2WOTCItemData] = {
     )
 }
 
-ability_point_items: Dict[str, X2WOTCItemData] = {
+ability_point_items: dict[str, X2WOTCItemData] = {
     "AbilityPoint:3": X2WOTCItemData(
         display_name = resource_item_prefix + "3 Ability Points",
         id = filler_base_id + 13,
@@ -768,7 +768,7 @@ ability_point_items: Dict[str, X2WOTCItemData] = {
 #                                               WEAPON MOD ITEMS
 #-----------------------------------------------------------------------------------------------------------------------
 
-advanced_weapon_mod_items: Dict[str, X2WOTCItemData] = {
+advanced_weapon_mod_items: dict[str, X2WOTCItemData] = {
     "AimUpgrade_Adv": X2WOTCItemData(
         display_name = weapon_mod_item_prefix + "Advanced Scope",
         id = filler_base_id + 16,
@@ -813,7 +813,7 @@ advanced_weapon_mod_items: Dict[str, X2WOTCItemData] = {
     ),
 }
 
-superior_weapon_mod_items: Dict[str, X2WOTCItemData] = {
+superior_weapon_mod_items: dict[str, X2WOTCItemData] = {
     "AimUpgrade_Sup": X2WOTCItemData(
         display_name = weapon_mod_item_prefix + "Superior Scope",
         id = filler_base_id + 23,
@@ -862,7 +862,7 @@ superior_weapon_mod_items: Dict[str, X2WOTCItemData] = {
 #                                                 STAFF ITEMS
 #-----------------------------------------------------------------------------------------------------------------------
 
-scientist_items: Dict[str, X2WOTCItemData] = {
+scientist_items: dict[str, X2WOTCItemData] = {
     "Scientist:1": X2WOTCItemData(
         display_name = staff_item_prefix + "1 Scientist",
         id = filler_base_id + 30,
@@ -871,7 +871,7 @@ scientist_items: Dict[str, X2WOTCItemData] = {
     )
 }
 
-engineer_items: Dict[str, X2WOTCItemData] = {
+engineer_items: dict[str, X2WOTCItemData] = {
     "Engineer:1": X2WOTCItemData(
         display_name = staff_item_prefix + "1 Engineer",
         id = filler_base_id + 31,
@@ -886,7 +886,7 @@ engineer_items: Dict[str, X2WOTCItemData] = {
 
 trap_base_id = filler_base_id + 32
 
-doom_items: Dict[str, X2WOTCItemData] = {
+doom_items: dict[str, X2WOTCItemData] = {
     "Doom:1": X2WOTCItemData(
         display_name = trap_item_prefix + "Avatar Project +1",
         id = trap_base_id,
@@ -896,7 +896,7 @@ doom_items: Dict[str, X2WOTCItemData] = {
     )
 }
 
-force_level_items: Dict[str, X2WOTCItemData] = {
+force_level_items: dict[str, X2WOTCItemData] = {
     "ForceLevel:1": X2WOTCItemData(
         display_name = trap_item_prefix + "Force Level +1",
         id = trap_base_id + 1,
@@ -910,7 +910,7 @@ force_level_items: Dict[str, X2WOTCItemData] = {
 ##                                                EVENT ITEMS                                                         ##
 ########################################################################################################################
 
-event_items: Dict[str, X2WOTCItemData] = {
+event_items: dict[str, X2WOTCItemData] = {
     "Victory": X2WOTCItemData(
         display_name = "Victory",
         classification = ItemClassification.progression,
@@ -942,7 +942,7 @@ event_items: Dict[str, X2WOTCItemData] = {
 ##                                                TOTAL ITEMS                                                         ##
 ########################################################################################################################
 
-tech_item_table: Dict[str, X2WOTCItemData] = {
+tech_item_table: dict[str, X2WOTCItemData] = {
     **vanilla_weapon_tech_items,
     **vanilla_armor_tech_items,
     **vanilla_autopsy_tech_items,
@@ -954,11 +954,11 @@ tech_item_table: Dict[str, X2WOTCItemData] = {
     **progressive_tech_items
 }
 
-covert_action_item_table: Dict[str, X2WOTCItemData] = {
+covert_action_item_table: dict[str, X2WOTCItemData] = {
     **chosen_hunt_items
 }
 
-resource_item_table: Dict[str, X2WOTCItemData] = {
+resource_item_table: dict[str, X2WOTCItemData] = {
     **supplies_items,
     **intel_items,
     **alien_alloy_items,
@@ -967,28 +967,28 @@ resource_item_table: Dict[str, X2WOTCItemData] = {
     **ability_point_items
 }
 
-weapon_mod_item_table: Dict[str, X2WOTCItemData] = {
+weapon_mod_item_table: dict[str, X2WOTCItemData] = {
     **advanced_weapon_mod_items,
     **superior_weapon_mod_items
 }
 
-staff_item_table: Dict[str, X2WOTCItemData] = {
+staff_item_table: dict[str, X2WOTCItemData] = {
     **scientist_items,
     **engineer_items
 }
 
-filler_item_table: Dict[str, X2WOTCItemData] = {
+filler_item_table: dict[str, X2WOTCItemData] = {
     **resource_item_table,
     **weapon_mod_item_table,
     **staff_item_table
 }
 
-trap_item_table: Dict[str, X2WOTCItemData] = {
+trap_item_table: dict[str, X2WOTCItemData] = {
     **doom_items,
     **force_level_items
 }
 
-item_table: Dict[str, X2WOTCItemData] = {
+item_table: dict[str, X2WOTCItemData] = {
     **tech_item_table,
     **covert_action_item_table,
     **filler_item_table,

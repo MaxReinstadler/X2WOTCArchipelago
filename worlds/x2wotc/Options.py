@@ -1,7 +1,6 @@
 from dataclasses import dataclass, make_dataclass
 from Options import Choice, Toggle, OptionSet, Range, PerGameCommonOptions
 from .mods import mod_options
-from typing import Dict
 
 class AlienHuntersDLC(Choice):
     """Set which locations and items from the Alien Hunters DLC are enabled.
@@ -33,7 +32,7 @@ class Goal(Choice):
     option_chosen_stronghold_3 = 4
     default = 0
 
-    value_to_location: Dict[int, str] = {
+    value_to_location: dict[int, str] = {
         0: "Victory",
         1: "Broadcast",
         2: "Stronghold1",

@@ -5,24 +5,24 @@ from Options import Option
 from worlds.AutoWorld import World
 from ..ItemData import X2WOTCItemData
 from ..LocationData import X2WOTCLocationData
-from typing import Optional, List, Dict, Tuple, NamedTuple, Callable
+from typing import NamedTuple, Callable
 
-ModOption = Tuple[str, type[Option]]  # (option name, option class)
+ModOption = tuple[str, type[Option]]  # (option name, option class)
 
 class X2WOTCModData(NamedTuple):
     name: str
     rule_priority: float = 0.0
-    items: Dict[str, X2WOTCItemData] = {}
-    locations: Dict[str, X2WOTCLocationData] = {}
-    set_rules: Optional[Callable[[MultiWorld, int], None]] = None
-    options: List[ModOption] = []
-    generate_early: Optional[Callable[[World], None]] = None
+    items: dict[str, X2WOTCItemData] = {}
+    locations: dict[str, X2WOTCLocationData] = {}
+    set_rules: Callable[[MultiWorld, int], None] | None = None
+    options: list[ModOption] = []
+    generate_early: Callable[[World], None] | None = None
 
-mods_data: List[X2WOTCModData] = []
+mods_data: list[X2WOTCModData] = []
 
-mod_items: Dict[str, X2WOTCItemData] = {}
-mod_locations: Dict[str, X2WOTCLocationData] = {}
-mod_options: List[ModOption] = []
+mod_items: dict[str, X2WOTCItemData] = {}
+mod_locations: dict[str, X2WOTCLocationData] = {}
+mod_options: list[ModOption] = []
 
 base_path = os.path.dirname(__file__)
 directories = [name for name in os.listdir(base_path)

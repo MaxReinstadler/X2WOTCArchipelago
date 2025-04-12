@@ -2,7 +2,6 @@ from BaseClasses import Item
 from .ItemData import resource_item_table, weapon_mod_item_table, staff_item_table
 from .ItemData import trap_item_table, filler_item_table, item_table
 from .mods import mod_items
-from typing import Dict
 from random import Random
 
 class X2WOTCItem(Item):
@@ -24,9 +23,9 @@ for item_name, item_data in mod_items.items():
 item_display_name_to_key = {item_data.display_name: key for key, item_data in item_table.items()}
 item_id_to_key = {item_data.id: key for key, item_data in item_table.items() if item_data.id}
 
-total_power: Dict[int, float] = {}
-item_count: Dict[int, Dict[str, int]] = {}
-num_items: Dict[int, int] = {}
+total_power: dict[int, float] = {}
+item_count: dict[int, dict[str, int]] = {}
+num_items: dict[int, int] = {}
 
 def init_item_vars(player: int):
     item_count[player] = {}

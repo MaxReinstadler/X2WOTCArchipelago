@@ -1,13 +1,13 @@
 from BaseClasses import MultiWorld, CollectionState
 from ...LocationData import X2WOTCLocationData
 from worlds.generic.Rules import set_rule, add_rule
-from typing import Dict, Callable
+from typing import Callable
 
 def example_mod_rule(state: CollectionState, player: int) -> bool:
     return True
 
 def set_rules(world: MultiWorld, player: int,
-              location_table: Dict[str, X2WOTCLocationData],
+              location_table: dict[str, X2WOTCLocationData],
               is_enabled: Callable[[int, str], bool]):
     
     # NOTE: set_rule overrides previously applied rules, e.g. the power rule

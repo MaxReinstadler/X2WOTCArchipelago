@@ -1,6 +1,5 @@
 import asyncio
 from aiohttp import web
-from typing import Optional, List, Dict, Tuple
 from CommonClient import CommonContext, NetworkItem, NetworkSlot, logger
 from NetUtils import ClientStatus
 
@@ -9,20 +8,20 @@ from .Locations import location_table, loc_id_to_key
 
 ctx: CommonContext
 
-LocationsInfo = Dict[
+LocationsInfo = dict[
     str,  # Location name (internal)
-    Tuple[
-        Optional[str],  # Item name (internal or external)
-        Optional[NetworkItem],
-        Optional[NetworkSlot]
+    tuple[
+        str | None,  # Item name (internal or external)
+        NetworkItem | None,
+        NetworkSlot | None
     ]
 ]
 
-ItemsInfo = List[
-    Tuple[
+ItemsInfo = list[
+    tuple[
         str,  # Item name (internal)
         NetworkItem,
-        Optional[NetworkSlot]
+        NetworkSlot | None
     ]
 ]
 
@@ -30,7 +29,7 @@ ItemsInfo = List[
 #                                                  HELPER FUNCTIONS                                                    #
 #----------------------------------------------------------------------------------------------------------------------#
 
-def get_slot_info(slot: int) -> Optional[NetworkSlot]:
+def get_slot_info(slot: int) -> NetworkSlot | None:
     try:
         return ctx.slot_info[slot]
     except KeyError:
@@ -61,7 +60,7 @@ async def scout_loop():
     except asyncio.CancelledError:
         logger.debug("Proxy: Scout loop cancelled")
 
-def get_locations_info(checks: List[str]) -> LocationsInfo:
+def get_locations_info(checks: list[str]) -> LocationsInfo:
     locations_info: LocationsInfo = {}
     for loc_name in checks:
 
@@ -102,7 +101,7 @@ def get_locations_info(checks: List[str]) -> LocationsInfo:
 
 # ----------------------------------------------------- CHECK -------------------------------------------------------- #
 
-async def send_checks(checks: List[str]):
+async def send_checks(checks: list[str]):
     for loc_name in checks:
 
         try:
@@ -140,7 +139,7 @@ async def send_checks(checks: List[str]):
 
 def get_received_items(layer: str, number_received: int) -> ItemsInfo:
     items_info: ItemsInfo = []
-    progressive_index: Dict[str, int] = {}
+    progressive_index: dict[str, int] = {}
     number = 0  # Number in sequence of received items (from 1)
 
     for network_item in ctx.items_received:
