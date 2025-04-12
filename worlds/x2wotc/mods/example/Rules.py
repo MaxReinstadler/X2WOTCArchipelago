@@ -18,6 +18,7 @@ def set_rules(world: MultiWorld, player: int,
     set_rule(world.get_location(loc_name_example, player),
              lambda state: example_mod_rule(state, player))
     
+    # Make sure not to edit rules for disabled locations
     loc_name_use_medikit = location_table["UseMedikit"].display_name
     if is_enabled(player, "UseMedikit"):
         add_rule(world.get_location(loc_name_use_medikit, player),

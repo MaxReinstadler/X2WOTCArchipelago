@@ -15,5 +15,6 @@ rule_priority = 0.0
 # Handle mod options here
 def generate_early(world: World):
     # if world.options.example_mod_option:
-        world.disable_location("ExampleModLocation")
-        world.disable_item("ExampleModItem")
+    #     world.disable_location("ExampleModLocation")
+    #     world.disable_item("ExampleModItem")
+    pass
