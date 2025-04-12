@@ -33,9 +33,11 @@ mod_locations: dict[str, X2WOTCLocationData] = {}
 mod_options: list[ModOption] = []
 
 base_path = os.path.dirname(__file__)
-directories = [name for name in os.listdir(base_path)
-               if os.path.isdir(os.path.join(base_path, name)) 
-               and not name.startswith("__")]
+directories = sorted([
+    name for name in os.listdir(base_path)
+    if os.path.isdir(os.path.join(base_path, name)) 
+    and not name.startswith("__")
+])
 
 # Collect mod data from directories
 for directory in directories:
