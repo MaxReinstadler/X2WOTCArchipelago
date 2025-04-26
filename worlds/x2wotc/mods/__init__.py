@@ -1,5 +1,5 @@
 import importlib
-import os
+import pkgutil
 from typing import NamedTuple, Callable
 
 from BaseClasses import MultiWorld
@@ -32,23 +32,16 @@ mod_filler_items: dict[str, X2WOTCItemData] = {}
 mod_locations: dict[str, X2WOTCLocationData] = {}
 mod_options: list[ModOption] = []
 
-base_path = os.path.dirname(__file__)
-directories = sorted([
-    name for name in os.listdir(base_path)
-    if os.path.isdir(os.path.join(base_path, name)) 
-    and not name.startswith("__")
-])
-
 # Collect mod data from directories
-for directory in directories:
+for loader, module_name, ispkg in pkgutil.iter_modules(__path__):
     try:
-        module = importlib.import_module(f".{directory}", __name__)
+        module = importlib.import_module(f".{module_name}", __name__)
     except ImportError:
-        print(f"X2WOTC: Failed to import module mods/{directory}")
+        print(f"X2WOTC: Failed to import module mods/{module_name}")
         continue
 
     mods_data.append(X2WOTCModData(
-        name = module.name if hasattr(module, "name") else directory,
+        name = module.name if hasattr(module, "name") else module_name,
         rule_priority = module.rule_priority if hasattr(module, "rule_priority") else 0,
         items = module.items if hasattr(module, "items") else {},
         filler_items = module.filler_items if hasattr(module, "filler_items") else {},
