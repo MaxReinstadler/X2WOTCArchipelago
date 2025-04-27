@@ -25,6 +25,7 @@ items: dict[str, X2WOTCItemData] = {
     )
 }
 
+# Electing not to add ammo checks because they require specific experimental ammo to build which involves RNG
 locations: dict[str, X2WOTCLocationData] = {
     "Autopsy_AshFlameViper": X2WOTCLocationData(
         display_name = tech_location_prefix + "Flame Viper Autopsy",
