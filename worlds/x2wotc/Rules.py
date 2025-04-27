@@ -3,7 +3,7 @@ from typing import Callable
 from BaseClasses import MultiWorld, CollectionState
 from worlds.generic.Rules import set_rule, add_rule
 
-from .Items import item_table, get_total_power
+from .Items import item_table, get_total_power, get_item_count as get_max_item_count
 from .Locations import location_table, is_enabled
 from .Options import X2WOTCOptions, Goal
 
@@ -24,8 +24,17 @@ def get_item_count(state: CollectionState, player: int, item: str) -> int:
             count += item_data.stages[:delta_count].count(item)
     return count
 
-def get_item_count_rule(player: int, item: str, count: int) -> Callable[[CollectionState], bool]:
-    return lambda state: get_item_count(state, player, item) >= count
+def get_item_count_rule(player: int, item: str, count: int, if_impossible: bool = True) -> Callable[[CollectionState], bool]:
+    return lambda state: (get_item_count(state, player, item) >= count
+                          or (if_impossible and get_max_item_count(player, item) < count))
+
+def can_reach_or_disabled(world: MultiWorld, state: CollectionState, player: int, loc_name: str) -> bool:
+    if not is_enabled(player, loc_name):
+        return True
+
+    loc_display_name = location_table[loc_name].display_name
+    location = world.get_location(loc_display_name, player)
+    return location.can_reach(state)
 
 #======================================================================================================================#
 #                                                 POWER RULE HELPERS                                                   #
@@ -247,150 +256,112 @@ def set_rules(world: MultiWorld, player: int):
     global options
     options[player] = world.worlds[player].options
 
-    #------------------------------------------------ Power rules -----------------------------------------------------#
-    #------------------------------------------------------------------------------------------------------------------#
-    for loc_name, loc_data in location_table.items():
-        if not is_enabled(player, loc_name):
-            continue
-
-        location = world.get_location(loc_data.display_name, player)
-        power_rule = get_power_rule(player, loc_name)
-        set_rule(location, power_rule)
-    
-    #---------------------------------------------- Completion rule ---------------------------------------------------#
-    #------------------------------------------------------------------------------------------------------------------#
     world.completion_condition[player] = lambda state: has_won(state, player)
 
-    #------------------------------------------------ Story rules -----------------------------------------------------#
-    #------------------------------------------------------------------------------------------------------------------#
-    loc_name_alien_encryption = location_table["AlienEncryption"].display_name
-    add_rule(world.get_location(loc_name_alien_encryption, player),
-             lambda state: (can_do_blacksite_mission(state, player)
-                            or can_skulljack_officer(state, player)))
-    
-    loc_name_codex_brain_pt1 = location_table["CodexBrainPt1"].display_name
-    add_rule(world.get_location(loc_name_codex_brain_pt1, player),
-             lambda state: can_skulljack_officer(state, player))
-    
-    loc_name_codex_brain_pt2 = location_table["CodexBrainPt2"].display_name
-    add_rule(world.get_location(loc_name_codex_brain_pt2, player),
-             lambda state: world.get_location(loc_name_codex_brain_pt1, player).can_reach(state))
-    
-    loc_name_blacksite_data = location_table["BlacksiteData"].display_name
-    add_rule(world.get_location(loc_name_blacksite_data, player),
-             lambda state: can_do_blacksite_mission(state, player))
-    
-    loc_name_forge_stasis_suit = location_table["ForgeStasisSuit"].display_name
-    add_rule(world.get_location(loc_name_forge_stasis_suit, player),
-             lambda state: can_do_forge_mission(state, player))
-    
-    loc_name_psi_gate = location_table["PsiGate"].display_name
-    add_rule(world.get_location(loc_name_psi_gate, player),
-             lambda state: can_do_psi_gate_mission(state, player))
-    
-    loc_name_autopsy_advent_psi_witch = location_table["AutopsyAdventPsiWitch"].display_name
-    add_rule(world.get_location(loc_name_autopsy_advent_psi_witch, player),
-             lambda state: (world.get_location(loc_name_forge_stasis_suit, player).can_reach(state)
-                            and world.get_location(loc_name_psi_gate, player).can_reach(state)
-                            and can_skulljack_codex(state, player)))
-    
-    loc_name_broadcast = location_table["Broadcast"].display_name
-    add_rule(world.get_location(loc_name_broadcast, player),
-             lambda state: can_do_truth_mission(state, player))
-    
-    loc_name_victory = location_table["Victory"].display_name
-    add_rule(world.get_location(loc_name_victory, player),
-             lambda state: can_do_final_mission(state, player))
-    
-    #---------------------------------------------- Alien Ruler rules -------------------------------------------------#
-    #------------------------------------------------------------------------------------------------------------------#
-    for loc_name, loc_data in location_table.items():
-        if not is_enabled(player, loc_name):
-            continue
-
-        if "kill_ruler" in loc_data.tags:
-            add_rule(world.get_location(loc_data.display_name, player),
-                     lambda state: can_do_facility_mission(state, player))
-    
-    #------------------------------------------------- Chosen rules ---------------------------------------------------#
-    #------------------------------------------------------------------------------------------------------------------#
     for loc_name, loc_data in location_table.items():
         if not is_enabled(player, loc_name):
             continue
 
         location = world.get_location(loc_data.display_name, player)
 
+        #-------------------------------------------- Power rules -----------------------------------------------------#
+        #--------------------------------------------------------------------------------------------------------------#
+        power_rule = get_power_rule(player, loc_name)
+        set_rule(location, power_rule)
+
+        #-------------------------------------------- Story rules -----------------------------------------------------#
+        #--------------------------------------------------------------------------------------------------------------#
+        if loc_name == "AlienEncryption":
+            add_rule(location, lambda state: (can_do_blacksite_mission(state, player)
+                                              or can_skulljack_officer(state, player)))
+
+        if loc_name == "CodexBrainPt1":
+            add_rule(location, lambda state: can_skulljack_officer(state, player))
+
+        if loc_name == "CodexBrainPt2":
+            add_rule(location, lambda state: can_reach_or_disabled(world, state, player, "CodexBrainPt1"))
+
+        if loc_name == "BlacksiteData":
+            add_rule(location, lambda state: can_do_blacksite_mission(state, player))
+
+        if loc_name == "ForgeStasisSuit":
+            add_rule(location, lambda state: can_do_forge_mission(state, player))
+
+        if loc_name == "PsiGate":
+            add_rule(location, lambda state: can_do_psi_gate_mission(state, player))
+
+        if loc_name == "AutopsyAdventPsiWitch":
+            add_rule(location, lambda state: (can_reach_or_disabled(world, state, player, "ForgeStasisSuit")
+                                              and can_reach_or_disabled(world, state, player, "PsiGate")
+                                              and can_skulljack_codex(state, player)))
+
+        if loc_name == "Broadcast":
+            add_rule(location, lambda state: can_do_truth_mission(state, player))
+
+        if loc_name == "Victory":
+            add_rule(location, lambda state: can_do_final_mission(state, player))
+
+        #------------------------------------------ Alien Ruler rules -------------------------------------------------#
+        #--------------------------------------------------------------------------------------------------------------#
+        if "kill_ruler" in loc_data.tags:
+            add_rule(location, lambda state: can_do_facility_mission(state, player))
+
+        #--------------------------------------------- Chosen rules ---------------------------------------------------#
+        #--------------------------------------------------------------------------------------------------------------#
         if "meet_first_chosen" in loc_data.tags:
             add_rule(location, lambda state: can_meet_first_chosen(state, player))
         if "meet_all_chosen" in loc_data.tags:
             add_rule(location, lambda state: can_meet_all_chosen(state, player))
-        
+
         if "kill_assassin" in loc_data.tags:
             add_rule(location, lambda state: can_kill_assassin(state, player))
         if "kill_hunter" in loc_data.tags:
             add_rule(location, lambda state: can_kill_hunter(state, player))
         if "kill_warlock" in loc_data.tags:
             add_rule(location, lambda state: can_kill_warlock(state, player))
-            
+
         if "defeat_assassin" in loc_data.tags:
             add_rule(location, lambda state: can_defeat_assassin(state, player))
         if "defeat_hunter" in loc_data.tags:
             add_rule(location, lambda state: can_defeat_hunter(state, player))
         if "defeat_warlock" in loc_data.tags:
             add_rule(location, lambda state: can_defeat_warlock(state, player))
-        
+
         for tag, value in [(f"influence:{i}", i) for i in range(7)]:
             if tag in loc_data.tags:
                 influence_rule = get_item_count_rule(player, "FactionInfluence", value)
                 add_rule(location, influence_rule)
 
-    loc_name_stronghold1 = location_table["Stronghold1"].display_name
-    add_rule(world.get_location(loc_name_stronghold1, player),
-             lambda state: can_defeat_one_chosen(state, player))
-    
-    loc_name_stronghold2 = location_table["Stronghold2"].display_name
-    add_rule(world.get_location(loc_name_stronghold2, player),
-             lambda state: can_defeat_two_chosen(state, player))
-    
-    loc_name_stronghold3 = location_table["Stronghold3"].display_name
-    add_rule(world.get_location(loc_name_stronghold3, player),
-             lambda state: can_defeat_all_chosen(state, player))
-    
-    #------------------------------------------ Skulljack enemy kill rules --------------------------------------------#
-    #------------------------------------------------------------------------------------------------------------------#
-    loc_name_kill_cyberus = location_table["KillCyberus"].display_name
-    if is_enabled(player, "KillCyberus"):
-        add_rule(world.get_location(loc_name_kill_cyberus, player),
-                 lambda state: can_skulljack_officer(state, player))
-    
-    loc_name_kill_advent_psi_witch = location_table["KillAdventPsiWitch"].display_name
-    if is_enabled(player, "KillAdventPsiWitch"):
-        add_rule(world.get_location(loc_name_kill_advent_psi_witch, player),
-                 lambda state: can_skulljack_codex(state, player))
-    
-    #-------------------------------------------- Item requirement rules ----------------------------------------------#
-    #------------------------------------------------------------------------------------------------------------------#
-    for loc_name, loc_data in location_table.items():
-        if not is_enabled(player, loc_name):
-            continue
+        if loc_name == "Stronghold1":
+            add_rule(location, lambda state: can_defeat_one_chosen(state, player))
 
-        location = world.get_location(loc_data.display_name, player)
+        if loc_name == "Stronghold2":
+            add_rule(location, lambda state: can_defeat_two_chosen(state, player))
 
-        if "proving_ground" in loc_data.tags:
-            add_rule(location, lambda state: has_proving_ground(state, player))
+        if loc_name == "Stronghold3":
+            add_rule(location, lambda state: can_defeat_all_chosen(state, player))
 
-        # UseSKULLJACK depends on objectives
-        if loc_name == "UseSKULLJACK":
+        #-------------------------------------- Skulljack enemy kill rules --------------------------------------------#
+        #--------------------------------------------------------------------------------------------------------------#
+        if loc_name == "KillCyberus":
             add_rule(location, lambda state: can_skulljack_officer(state, player))
 
-        # UseFrostbomb requires ExperimentalWeaponsCompleted except when Integrated DLC is off (and the check is disabled)
-        if loc_name == "UseFrostbomb" and not is_enabled(player, "ExperimentalWeapons"):
-            continue
+        if loc_name == "KillAdventPsiWitch":
+            add_rule(location, lambda state: can_skulljack_codex(state, player))
+
+        #---------------------------------------- Item requirement rules ----------------------------------------------#
+        #--------------------------------------------------------------------------------------------------------------#
+        if "proving_ground" in loc_data.tags:
+            add_rule(location, lambda state: has_proving_ground(state, player))
 
         for tag in loc_data.tags:
             if tag.startswith("req:"):
                 requirement_rule = get_item_count_rule(player, tag[4:], 1)
                 add_rule(location, requirement_rule)
-    
+
+        # UseSKULLJACK depends on objectives
+        if loc_name == "UseSKULLJACK":
+            add_rule(location, lambda state: can_skulljack_officer(state, player))
+
     #------------------------------------------------------------------------------------------------------------------#
     #--------------------------------- See ./Regions.py for entrance access rules -------------------------------------#
