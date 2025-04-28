@@ -1,6 +1,6 @@
 from BaseClasses import ItemClassification
 
-from ...ItemData import X2WOTCItemData, get_new_item_id
+from worlds.x2wotc.ItemData import X2WOTCItemData, get_new_item_id
 
 
 # For the full definition of X2WOTCItemData, see worlds/x2wotc/ItemData.py

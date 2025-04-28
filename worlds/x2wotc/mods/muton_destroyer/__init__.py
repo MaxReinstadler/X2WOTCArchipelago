@@ -1,7 +1,7 @@
 from BaseClasses import ItemClassification
 
-from ...ItemData import X2WOTCItemData, get_new_item_id, tech_item_prefix
-from ...LocationData import (
+from worlds.x2wotc.ItemData import X2WOTCItemData, get_new_item_id, tech_item_prefix
+from worlds.x2wotc.LocationData import (
     X2WOTCLocationData,
     get_new_location_id,
     tech_location_prefix,

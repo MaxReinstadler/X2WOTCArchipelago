@@ -1,4 +1,7 @@
-from worlds.AutoWorld import World
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from worlds.x2wotc import X2WOTCWorld
 
 from .Items import items, filler_items
 from .Locations import locations
@@ -13,8 +16,8 @@ name = "Example Mod"
 rule_priority = 0.0
 
 # Handle mod options here
-def generate_early(world: World):
+def generate_early(world: "X2WOTCWorld"):
     # if world.options.example_mod_option:
-    #     world.disable_location("ExampleModLocation")
-    #     world.disable_item("ExampleModItem")
+    #     world.loc_manager.disable_location("ExampleModLocation")
+    #     world.item_manager.disable_item("ExampleModItem")
     pass

@@ -1,16 +1,15 @@
 import importlib
 import pkgutil
-from typing import NamedTuple, Callable
+from typing import NamedTuple, Callable, TYPE_CHECKING
 
 from BaseClasses import MultiWorld
 from Options import Option
-from worlds.AutoWorld import World
 
-from ..ItemData import X2WOTCItemData
-from ..LocationData import X2WOTCLocationData
+if TYPE_CHECKING:
+    from worlds.x2wotc import X2WOTCWorld
 
-
-ModOption = tuple[str, type[Option]]  # (option name, option class)
+from worlds.x2wotc.ItemData import X2WOTCItemData
+from worlds.x2wotc.LocationData import X2WOTCLocationData
 
 
 class X2WOTCModData(NamedTuple):
@@ -20,8 +19,8 @@ class X2WOTCModData(NamedTuple):
     filler_items: dict[str, X2WOTCItemData] = {}
     locations: dict[str, X2WOTCLocationData] = {}
     set_rules: Callable[[MultiWorld, int], None] | None = None
-    options: list[ModOption] = []
-    generate_early: Callable[[World], None] | None = None
+    options: list[tuple[str, type[Option]]] = []
+    generate_early: Callable[["X2WOTCWorld"], None] | None = None
 
 
 mods_data: list[X2WOTCModData] = []
@@ -30,7 +29,7 @@ mod_names: list[str] = []
 mod_items: dict[str, X2WOTCItemData] = {}
 mod_filler_items: dict[str, X2WOTCItemData] = {}
 mod_locations: dict[str, X2WOTCLocationData] = {}
-mod_options: list[ModOption] = []
+mod_options: list[tuple[str, type[Option]]] = []
 
 # Collect mod data from directories
 for loader, module_name, ispkg in pkgutil.iter_modules(__path__):

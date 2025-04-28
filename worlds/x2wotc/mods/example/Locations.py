@@ -1,4 +1,4 @@
-from ...LocationData import X2WOTCLocationData, get_new_location_id
+from worlds.x2wotc.LocationData import X2WOTCLocationData, get_new_location_id
 
 
 # For the full definition of X2WOTCLocationData, see worlds/x2wotc/LocationData.py

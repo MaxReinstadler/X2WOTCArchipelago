@@ -31,94 +31,133 @@ for item_name, item_data in mod_items.items():
     else:
         print(f"X2WOTC: Duplicate item {item_name} in mods, skipping")
 
+# Lookup tables
+item_display_name_to_id = {item_data.display_name: item_data.id for item_data in item_table.values()}
 item_display_name_to_key = {item_data.display_name: key for key, item_data in item_table.items()}
 item_id_to_key = {item_data.id: key for key, item_data in item_table.items() if item_data.id}
 
-total_power: dict[int, float] = {}
-item_count: dict[int, dict[str, int]] = {}
-num_items: dict[int, int] = {}
 
-def init_item_vars(player: int):
-    item_count[player] = {}
-    num_items[player] = 0
-    for item_name, item_data in item_table.items():
-        if item_data.normal_location is None:  # Progressive and filler/trap items (and DefaultChosenHuntReward)
-            item_count[player][item_name] = 0
-        else:
-            item_count[player][item_name] = 1
-            num_items[player] += 1
+class ItemManager:
+    item_table = item_table
 
-    power_values = [item_data.power * item_count[player][item_name] for item_name, item_data in item_table.items()]
-    total_power[player] = sum(power_values)
+    item_display_name_to_id = item_display_name_to_id
+    item_display_name_to_key = item_display_name_to_key
+    item_id_to_key = item_id_to_key
 
-def get_total_power(player: int) -> float:
-    return total_power[player]
+    def __init__(self):
+        self.resource_item_table = resource_item_table
+        self.weapon_mod_item_table = weapon_mod_item_table
+        self.staff_item_table = staff_item_table
+        self.trap_item_table = trap_item_table
+        self.filler_item_table = filler_item_table
 
-def get_item_count(player: int, item_name: str) -> int:
-    return item_count[player][item_name]
+        self.filler_item_names = [item_data.display_name for item_data in filler_item_table.values()]
 
-def get_num_items(player: int) -> int:
-    return num_items[player]
+        self.item_count: dict[str, int] = {}
+        self.num_items: int = 0
 
-def set_item_count(player: int, item_name: str, new_count: int, adjust_total_power: bool = True):
-    old_count = item_count[player][item_name]
-    item_count[player][item_name] = new_count
-    num_items[player] += new_count - old_count
+        for item_name, item_data in self.item_table.items():
+            if item_data.normal_location is None:  # Progressive and filler/trap items (and DefaultChosenHuntReward)
+                self.item_count[item_name] = 0
+            else:
+                self.item_count[item_name] = 1
+                self.num_items += 1
 
-    if adjust_total_power:
-        item_data = item_table[item_name]
-        total_power[player] += item_data.power * (new_count - old_count)
+        power_values = [item_data.power * self.item_count[item_name] for item_name, item_data in self.item_table.items()]
+        self.total_power: int = sum(power_values)
 
-def disable_item(player: int, item_name: str):
-    set_item_count(player, item_name, 0)
+    def set_item_count(self, item_name: str, new_count: int, adjust_total_power: bool = True):
+        old_count = self.item_count[item_name]
+        self.item_count[item_name] = new_count
+        self.num_items += new_count - old_count
 
-def enable_progressive_item(player: int, item_name: str) -> bool:
-    item_data = item_table[item_name]
-    stages = item_data.stages
-    if stages is None:
-        return False
-    
-    for stage_name in stages:
-        if item_count[player][stage_name] != 1:
+        if adjust_total_power:
+            item_data = self.item_table[item_name]
+            self.total_power += item_data.power * (new_count - old_count)
+
+    def add_item(self, item_name: str, count: int = 1):
+        self.set_item_count(item_name, self.item_count[item_name] + count)
+
+    def disable_item(self, item_name: str):
+        self.set_item_count(item_name, 0)
+
+    def enable_progressive_item(self, item_name: str) -> bool:
+        item_data = self.item_table[item_name]
+        stages = item_data.stages
+        if stages is None:
             return False
         
-    for stage_name in stages:
-        set_item_count(player, stage_name, 0, False)
+        if self.item_count[item_name] != 0:
+            return False
+        for stage_name in stages:
+            if self.item_count[stage_name] != 1:
+                return False
+            
+        for stage_name in stages:
+            self.set_item_count(stage_name, 0, False)
 
-    set_item_count(player, item_name, len(stages), False)
-    return True
+        self.set_item_count(item_name, len(stages), False)
+        return True
+    
+    def disable_progressive_item(self, item_name: str):
+        item_data = self.item_table[item_name]
+        stages = item_data.stages
+        if stages is None:
+            return False
+        
+        if self.item_count[item_name] != 1:
+            return False
+        for stage_name in stages:
+            if self.item_count[stage_name] != 0:
+                return False
+        
+        for stage_name in stages:
+            self.set_item_count(stage_name, 1, False)
 
-def enable_chosen_hunt_items(player: int):
-    set_item_count(player, "FactionInfluence", 6)
-    set_item_count(player, "AssassinStronghold", 1)
-    set_item_count(player, "HunterStronghold", 1)
-    set_item_count(player, "WarlockStronghold", 1)
+        self.set_item_count(item_name, 0, False)
+        return True
 
-def add_filler_items(player: int, num_filler_items: int, weapon_mod_share: float,
-                     staff_share: float, trap_share: float, random: Random):
-    num_names_pairs = [
-        (int(num_filler_items * weapon_mod_share), list(weapon_mod_item_table.keys())),
-        (int(num_filler_items * staff_share), list(staff_item_table.keys())),
-        (int(num_filler_items * trap_share), list(trap_item_table.keys()))
-    ]
+    def enable_chosen_hunt_items(self):
+        self.set_item_count("FactionInfluence", 6)
+        self.set_item_count("AssassinStronghold", 1)
+        self.set_item_count("HunterStronghold", 1)
+        self.set_item_count("WarlockStronghold", 1)
 
-    num_unfilled = num_filler_items
-    # Add specified number of each type of filler/trap
-    for (num, names) in num_names_pairs:
-        for _ in range(num):
-            item_name = random.choice(names)
-            old_count = item_count[player][item_name]
-            set_item_count(player, item_name, old_count + 1)
+    def enable_mod_filler_item(self, item_name: str):
+        item_data = mod_filler_items[item_name]
+        self.resource_item_table[item_name] = item_data
+        self.filler_item_names.append(item_data.display_name)
 
-            num_unfilled -= 1
-            if num_unfilled == 0:
-                return
+    def add_filler_items(self, num_filler_items: int, weapon_mod_share: float,
+                         staff_share: float, trap_share: float, random: Random):
+        num_names_pairs = [
+            (
+                int(num_filler_items * weapon_mod_share),
+                list(self.weapon_mod_item_table.keys())
+             ),
+            (
+                int(num_filler_items * staff_share),
+                list(self.staff_item_table.keys())
+             ),
+            (
+                int(num_filler_items * trap_share),
+                list(self.trap_item_table.keys())
+            )
+        ]
 
-    # Fill the rest with resource or mod filler items
-    resource_names = list(resource_item_table.keys())
-    mod_filler_names = list(mod_filler_items.keys())
-    possible_names = resource_names + mod_filler_names
-    for _ in range(num_unfilled):
-        item_name = random.choice(possible_names)
-        old_count = item_count[player][item_name]
-        set_item_count(player, item_name, old_count + 1)
+        num_unfilled = num_filler_items
+        # Add specified number of each type of filler/trap
+        for (num, names) in num_names_pairs:
+            for _ in range(num):
+                item_name = random.choice(names)
+                self.add_item(item_name)
+
+                num_unfilled -= 1
+                if num_unfilled == 0:
+                    return
+
+        # Fill the rest with resource or mod filler items
+        possible_names = list(self.resource_item_table.keys())
+        for _ in range(num_unfilled):
+            item_name = random.choice(possible_names)
+            self.add_item(item_name)

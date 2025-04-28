@@ -16,23 +16,24 @@ for loc_name, loc_data in mod_locations.items():
     else:
         print(f"X2WOTC: Duplicate location {loc_name} in mods, skipping")
 
+# Lookup tables
+loc_display_name_to_id = {loc_data.display_name: loc_data.id for loc_data in location_table.values()}
 loc_display_name_to_key = {loc_data.display_name: key for key, loc_data in location_table.items()}
 loc_id_to_key = {loc_data.id: key for key, loc_data in location_table.items() if loc_data.id}
 
-enabled: dict[int, dict[str, bool]] = {}
-num_locations: dict[int, int] = {}
 
-def init_location_vars(player: int):
-    enabled[player] = {loc_name: True for loc_name in location_table.keys()}
-    num_locations[player] = len(location_table)
+class LocationManager:
+    location_table = location_table
 
-def is_enabled(player: int, loc_name: str) -> bool:
-    return enabled[player][loc_name]
+    loc_display_name_to_id = loc_display_name_to_id
+    loc_display_name_to_key = loc_display_name_to_key
+    loc_id_to_key = loc_id_to_key
 
-def get_num_locations(player: int) -> int:
-    return num_locations[player]
+    def __init__(self):
+        self.enabled: dict[str, bool] = {loc_name: True for loc_name in self.location_table.keys()}
+        self.num_locations: int = len(self.location_table)
 
-def disable_location(player: int, loc_name: str):
-    if enabled[player][loc_name]:
-        enabled[player][loc_name] = False
-        num_locations[player] -= 1
+    def disable_location(self, loc_name: str):
+        if self.enabled[loc_name]:
+            self.enabled[loc_name] = False
+            self.num_locations -= 1

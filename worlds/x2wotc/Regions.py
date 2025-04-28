@@ -1,52 +1,69 @@
+from typing import TYPE_CHECKING
+
 from BaseClasses import MultiWorld, Region
 
-from .Locations import X2WOTCLocation, location_table, is_enabled
-from .Rules import has_shadow_chamber, has_resistance_ring
+if TYPE_CHECKING:
+    from worlds.x2wotc import X2WOTCWorld
+
+from .Locations import X2WOTCLocation, LocationManager
+from .Rules import RuleManager
 
 
-region_table: dict[int, dict[str, dict[str, int | None]]] = {}
+class RegionManager:
+    def __init__(self, world: "X2WOTCWorld"):
+        self.region_table: dict[str, dict[str, int | None]] = {
+            "Menu": {},
+            "Avenger": {},
+            "Research Lab": {},
+            "Shadow Chamber": {},
+            "Resistance Ring": {}
+        }
 
-def init_region_vars(player: int):
-    region_table[player] = {
-        "Menu": {},
-        "Avenger": {},
-        "Research Lab": {},
-        "Shadow Chamber": {},
-        "Resistance Ring": {}
-    }
+        self.loc_manager: LocationManager = world.loc_manager
+        self.rule_manager: RuleManager = world.rule_manager
+        self.multiworld: MultiWorld = world.multiworld
+        self.player: int = world.player
 
-def create_regions(world: MultiWorld, player: int):
-    # Add locations
-    for loc_name, loc_data in location_table.items():
-        if not is_enabled(player, loc_name):
-            continue
+    def create_regions(self):
+        # Add locations
+        for loc_name, loc_data in self.loc_manager.location_table.items():
+            if not self.loc_manager.enabled[loc_name]:
+                continue
 
-        region_name = "Avenger"
+            region_name = "Avenger"
 
-        if loc_data.type == "Tech":
-            if "shadow" in loc_data.tags:
-                region_name = "Shadow Chamber"
-            else:
-                region_name = "Research Lab"
+            if loc_data.type == "Tech":
+                if "shadow" in loc_data.tags:
+                    region_name = "Shadow Chamber"
+                else:
+                    region_name = "Research Lab"
 
-        if loc_data.type == "CovertAction":
-            region_name = "Resistance Ring"
+            if loc_data.type == "CovertAction":
+                region_name = "Resistance Ring"
 
-        region_table[player][region_name][loc_data.display_name] = loc_data.id
+            self.region_table[region_name][loc_data.display_name] = loc_data.id
 
-    # Create regions
-    for region_name in region_table[player].keys():
-        world.regions.append(create_region(world, player, region_name))
+        # Create regions
+        for region_name in self.region_table.keys():
+            self.multiworld.regions.append(self.create_region(region_name))
 
-    # Connect regions
-    world.get_region("Menu", player).connect(world.get_region("Avenger", player))
-    world.get_region("Avenger", player).connect(world.get_region("Research Lab", player))
-    world.get_region("Avenger", player).connect(world.get_region("Shadow Chamber", player),
-                                                rule = lambda state: has_shadow_chamber(state, player))
-    world.get_region("Avenger", player).connect(world.get_region("Resistance Ring", player),
-                                                rule = lambda state: has_resistance_ring(state, player))
+        # Connect regions
+        self.multiworld.get_region("Menu", self.player).connect(
+            self.multiworld.get_region("Avenger", self.player)
+        )
+        self.multiworld.get_region("Avenger", self.player).connect(
+            self.multiworld.get_region("Research Lab", self.player)
+        )
+        self.multiworld.get_region("Avenger", self.player).connect(
+            self.multiworld.get_region("Shadow Chamber", self.player),
+            rule = lambda state: self.rule_manager.has_shadow_chamber(state)
+        )
+        self.multiworld.get_region("Avenger", self.player).connect(
+            self.multiworld.get_region("Resistance Ring", self.player),
+            rule = lambda state: self.rule_manager.has_resistance_ring(state)
+        )
 
-def create_region(world: MultiWorld, player: int, name: str) -> Region:
-    region = Region(name, player, world)
-    region.add_locations(region_table[player][name], X2WOTCLocation)
-    return region
+    def create_region(self, region_name: str) -> Region:
+        region = Region(region_name, self.player, self.multiworld)
+        region.add_locations(self.region_table[region_name], X2WOTCLocation)
+        return region
