@@ -32,11 +32,13 @@ class RuleManager:
             elif item_data.stages is not None:
                 count += item_data.stages[:delta_count].count(item)
         return count
+    
+    def has_item_or_impossible(self, state: CollectionState, item: str, count: int = 1) -> bool:
+        return (self.get_item_count(state, item) >= count
+                or self.item_manager.item_count[item] < count)
 
-    def get_item_count_rule(self, item: str, count: int,
-                            if_impossible: bool = True) -> Callable[[CollectionState], bool]:
-        return lambda state: (self.get_item_count(state, item) >= count
-                              or (if_impossible and self.item_manager.item_count[item] < count))
+    def get_item_count_rule(self, item: str, count: int = 1) -> Callable[[CollectionState], bool]:
+        return lambda state: self.has_item_or_impossible(state, item, count)
 
     def can_reach_or_disabled(self, state: CollectionState, loc_name: str) -> bool:
         if not self.loc_manager.enabled[loc_name]:
@@ -81,14 +83,10 @@ class RuleManager:
 
     # Contact
     def can_make_contact(self, state: CollectionState) -> bool:
-        display_name = self.item_manager.item_table["ResistanceCommunicationsCompleted"].display_name
-        return (state.has(display_name, self.player)
-                or True)  # Contact techs are always disabled
+        return self.has_item_or_impossible(state, "ResistanceCommunicationsCompleted")
 
     def has_radio_relays(self, state: CollectionState) -> bool:
-        display_name = self.item_manager.item_table["ResistanceRadioCompleted"].display_name
-        return (state.has(display_name, self.player)
-                or True)  # Contact techs are always disabled
+        return self.has_item_or_impossible(state, "ResistanceRadioCompleted")
 
     def can_make_more_contact(self, state: CollectionState) -> bool:
         return (self.can_make_contact(state)
@@ -113,22 +111,22 @@ class RuleManager:
                 and self.has_resistance_ring(state))
 
     def can_defeat_assassin(self, state: CollectionState) -> bool:
-        display_name = self.item_manager.item_table["AssassinStronghold"].display_name
-        return (state.has(display_name, self.player)
+        return (self.options.chosen_hunt_sanity
+                and self.has_item_or_impossible(state, "AssassinStronghold")
                 and self.can_meet_all_chosen(state)
                 or (not self.options.chosen_hunt_sanity
                     and self.can_hunt_all_chosen(state)))
 
     def can_defeat_hunter(self, state: CollectionState) -> bool:
-        display_name = self.item_manager.item_table["HunterStronghold"].display_name
-        return (state.has(display_name, self.player)
+        return (self.options.chosen_hunt_sanity
+                and self.has_item_or_impossible(state, "HunterStronghold")
                 and self.can_meet_all_chosen(state)
                 or (not self.options.chosen_hunt_sanity
                     and self.can_hunt_all_chosen(state)))
 
     def can_defeat_warlock(self, state: CollectionState) -> bool:
-        display_name = self.item_manager.item_table["WarlockStronghold"].display_name
-        return (state.has(display_name, self.player)
+        return (self.options.chosen_hunt_sanity
+                and self.has_item_or_impossible(state, "WarlockStronghold")
                 and self.can_meet_all_chosen(state)
                 or (not self.options.chosen_hunt_sanity
                     and self.can_hunt_all_chosen(state)))
@@ -162,8 +160,7 @@ class RuleManager:
 
     # Shadow Chamber
     def has_shadow_chamber(self, state: CollectionState) -> bool:
-        display_name = self.item_manager.item_table["AlienEncryptionCompleted"].display_name
-        return state.has(display_name, self.player)
+        return self.has_item_or_impossible(state, "AlienEncryptionCompleted")
 
     # Blacksite -> Blacksite Data -> Forge -> Forge Stasis Suit
     def can_do_blacksite_mission(self, state: CollectionState) -> bool:
@@ -174,8 +171,7 @@ class RuleManager:
                 and self.has_shadow_chamber(state))
 
     def can_do_forge_mission(self, state: CollectionState) -> bool:
-        display_name = self.item_manager.item_table["BlacksiteDataCompleted"].display_name
-        return (state.has(display_name, self.player)
+        return (self.has_item_or_impossible(state, "BlacksiteDataCompleted")
                 and self.has_blacksite_data_objective(state)
                 and self.can_make_more_contact(state))
 
@@ -183,26 +179,22 @@ class RuleManager:
         return self.can_do_forge_mission(state)
 
     def finished_forge_stasis_suit_objective(self, state: CollectionState) -> bool:
-        display_name = self.item_manager.item_table["ForgeStasisSuitCompleted"].display_name
-        return (state.has(display_name, self.player)
+        return (self.has_item_or_impossible(state, "ForgeStasisSuitCompleted")
                 and self.has_forge_stasis_suit_objective(state))
 
     # Skulljack
     def has_proving_ground(self, state: CollectionState) -> bool:
-        display_name = self.item_manager.item_table["AutopsyAdventOfficerCompleted"].display_name
-        return state.has(display_name, self.player)
+        return self.has_item_or_impossible(state, "AutopsyAdventOfficerCompleted")
 
     def has_skulljack(self, state: CollectionState) -> bool:
         return self.has_proving_ground(state)
 
     # Skulljack Officer -> Codex Brain -> Psi Gate
     def has_autopsy_officer_objective(self, state: CollectionState) -> bool:
-        display_name = self.item_manager.item_table["AlienBiotechCompleted"].display_name
-        return state.has(display_name, self.player)
+        return self.has_item_or_impossible(state, "AlienBiotechCompleted")
 
     def has_skulljack_officer_objective(self, state: CollectionState) -> bool:
-        display_name = self.item_manager.item_table["AutopsyAdventOfficerCompleted"].display_name
-        return (state.has(display_name, self.player)
+        return (self.has_item_or_impossible(state, "AutopsyAdventOfficerCompleted")
                 and self.has_autopsy_officer_objective(state))
 
     def can_skulljack_officer(self, state: CollectionState) -> bool:
@@ -214,8 +206,7 @@ class RuleManager:
                 and self.has_shadow_chamber(state))
 
     def can_do_psi_gate_mission(self, state: CollectionState) -> bool:
-        display_name = self.item_manager.item_table["CodexBrainPt1Completed"].display_name
-        return (state.has(display_name, self.player)
+        return (self.has_item_or_impossible(state, "CodexBrainPt1Completed")
                 and self.has_codex_brain_pt1_objective(state)
                 and self.can_make_more_contact(state))
 
@@ -223,19 +214,16 @@ class RuleManager:
         return self.can_do_psi_gate_mission(state)
 
     def finished_psi_gate_objective(self, state: CollectionState) -> bool:
-        display_name = self.item_manager.item_table["PsiGateCompleted"].display_name
-        return (state.has(display_name, self.player)
+        return (self.has_item_or_impossible(state, "PsiGateCompleted")
                 and self.has_psi_gate_objective(state))
 
     # Skulljack Codex -> Avatar Corpse
     def has_codex_brain_pt2_objective(self, state: CollectionState) -> bool:
-        display_name = self.item_manager.item_table["CodexBrainPt1Completed"].display_name
-        return (state.has(display_name, self.player)
+        return (self.has_item_or_impossible(state, "CodexBrainPt1Completed")
                 and self.has_codex_brain_pt1_objective(state))
 
     def has_skulljack_codex_objective(self, state: CollectionState) -> bool:
-        display_name = self.item_manager.item_table["CodexBrainPt2Completed"].display_name
-        return (state.has(display_name, self.player)
+        return (self.has_item_or_impossible(state, "CodexBrainPt2Completed")
                 and self.has_codex_brain_pt2_objective(state))
 
     def can_skulljack_codex(self, state: CollectionState) -> bool:
@@ -260,8 +248,7 @@ class RuleManager:
         return (psi_gate_condition and stasis_suit_condition and avatar_corpse_condition)
 
     def can_do_truth_mission(self, state: CollectionState) -> bool:
-        display_name = self.item_manager.item_table["AutopsyAdventPsiWitchCompleted"].display_name
-        return (state.has(display_name, self.player)
+        return (self.has_item_or_impossible(state, "AutopsyAdventPsiWitchCompleted")
                 and self.has_autopsy_avatar_objective(state)
                 and self.can_finish_autopsy_avatar_objective(state)
                 and self.has_shadow_chamber(state))
@@ -272,15 +259,15 @@ class RuleManager:
     # Victory
     def has_won(self, state: CollectionState) -> bool:
         return (   (self.options.goal == Goal.option_alien_fortress
-                    and state.has(self.item_manager.item_table["Victory"].display_name, self.player))
+                    and self.has_item_or_impossible(state, "Victory"))
                 or (self.options.goal == Goal.option_network_tower
-                    and state.has(self.item_manager.item_table["Broadcast"].display_name, self.player))
+                    and self.has_item_or_impossible(state, "Broadcast"))
                 or (self.options.goal == Goal.option_chosen_stronghold_1
-                    and state.has(self.item_manager.item_table["Stronghold1"].display_name, self.player))
+                    and self.has_item_or_impossible(state, "Stronghold1"))
                 or (self.options.goal == Goal.option_chosen_stronghold_2
-                    and state.has(self.item_manager.item_table["Stronghold2"].display_name, self.player))
+                    and self.has_item_or_impossible(state, "Stronghold2"))
                 or (self.options.goal == Goal.option_chosen_stronghold_3
-                    and state.has(self.item_manager.item_table["Stronghold3"].display_name, self.player)))
+                    and self.has_item_or_impossible(state, "Stronghold3")))
 
     #==================================================================================================================#
     #                                                 SET RULES                                                        #

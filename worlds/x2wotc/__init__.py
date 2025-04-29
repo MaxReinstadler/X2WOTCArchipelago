@@ -57,6 +57,8 @@ class X2WOTCWorld(World):
         super().__init__(multiworld, player)
         self.item_manager = ItemManager()
         self.loc_manager = LocationManager()
+        self.reg_manager: RegionManager = None
+        self.rule_manager: RuleManager = None
 
     def generate_early(self):
         # RegionManager requires RuleManager which requires options
@@ -79,7 +81,7 @@ class X2WOTCWorld(World):
                 for loc_name, loc_data in mod_data.locations.items():
                     self.loc_manager.disable_location(loc_name)
             else:
-                # ...or add mod filler item names
+                # ...or enable mod filler items
                 for item_name in mod_data.filler_items.keys():
                     self.item_manager.enable_mod_filler_item(item_name)
 
