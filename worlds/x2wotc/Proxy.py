@@ -225,7 +225,8 @@ async def handle_check(request: web.Request):
 # ----------------------------------------------------- TICK --------------------------------------------------------- #
 
 def handle_tick(layer: str, number_received: int) -> str:
-    response_body = ""
+    # Send state back for verification
+    response_body = f"{number_received}"
 
     for (item_name, network_item, slot_info) in get_received_items(layer, number_received):
         if response_body != "":
