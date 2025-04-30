@@ -114,7 +114,7 @@ vanilla_armor_tech_items: dict[str, X2WOTCItemData] = {
     "HybridMaterialsCompleted": X2WOTCItemData(
         display_name = tech_item_prefix + "Hybrid Materials",
         id = get_new_item_id(),
-        classification = ItemClassification.useful,
+        classification = ItemClassification.progression,
         type = "TechCompleted",
         tags = ["armor"],
         power = 0.0,
@@ -261,7 +261,7 @@ vanilla_autopsy_tech_items: dict[str, X2WOTCItemData] = {
     "AutopsyAdventTurretCompleted": X2WOTCItemData(
         display_name = tech_item_prefix + "ADVENT Turret Breakdown",
         id = get_new_item_id(),
-        classification = ItemClassification.useful,
+        classification = ItemClassification.progression,
         type = "TechCompleted",
         tags = ["facility"],
         power = 0.0,
@@ -466,7 +466,7 @@ wotc_autopsy_tech_items: dict[str, X2WOTCItemData] = {
     "AutopsyAdventPriestCompleted": X2WOTCItemData(
         display_name = tech_item_prefix + "ADVENT Priest Autopsy",
         id = get_new_item_id(),
-        classification = ItemClassification.useful,
+        classification = ItemClassification.progression,
         type = "TechCompleted",
         tags = ["utility"],
         power = 0.0,
