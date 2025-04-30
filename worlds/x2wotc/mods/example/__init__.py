@@ -21,3 +21,12 @@ def generate_early(world: "X2WOTCWorld"):
     #     world.loc_manager.disable_location("ExampleModLocation")
     #     world.item_manager.disable_item("ExampleModItem")
     pass
+
+# Insert config data here to define in-game behavior
+# See Config/XComWOTCArchipelago.ini in the game mod directory
+# for more information on the structure of the config file
+config: dict[str, str] = {
+    "X2Item_ResearchCompleted": "+CheckCompleteTechs=(TechName=ExampleLocation, CompletionItemName=ExampleItem)",
+    "X2EventListener_WOTCArchipelago": "+CheckKillDefaultCharacterGroups=ExampleCharacterGroup",
+    "X2Effect_ItemUseCheck": "+CheckUseItems=ExampleLocation"
+}

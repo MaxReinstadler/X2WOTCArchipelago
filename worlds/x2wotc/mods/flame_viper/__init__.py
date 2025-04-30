@@ -45,3 +45,8 @@ locations: dict[str, X2WOTCLocationData] = {
         difficulty = 25.0
     )
 }
+
+config: dict[str, str] = {
+    "X2Item_ResearchCompleted": "+CheckCompleteTechs=(TechName=Autopsy_AshFlameViper)",
+    "X2EventListener_WOTCArchipelago": "+CheckKillDefaultCharacterGroups=AshFlameViper"
+}

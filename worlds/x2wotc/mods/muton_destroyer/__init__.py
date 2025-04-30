@@ -53,3 +53,15 @@ locations: dict[str, X2WOTCLocationData] = {
         difficulty = 20.0,
     )
 }
+
+config: dict[str, str] = {
+    "X2Item_ResearchCompleted": "+CheckCompleteTechs=(TechName=Autopsy_AshMutonDestroyer)",
+    "X2EventListener_WOTCArchipelago": (
+        "+CheckKillCustomCharacterGroups=(GroupName=AshMutonDestroyer, "
+        "Members[0]=AshMutonDestroyerM1, "
+        "Members[1]=AshMutonDestroyerM2, "
+        "Members[2]=AshMutonDestroyerM3, "
+        "Members[3]=AshMutonDestroyerM4)"
+    ),
+    "X2Effect_ItemUseCheck": "+CheckUseItems=Weapon_AshConcussionGrenadeXCom"
+}

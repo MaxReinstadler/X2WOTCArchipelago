@@ -1,7 +1,9 @@
 import dataclasses
+from typing import ClassVar
 
 from BaseClasses import MultiWorld, Tutorial
 from Options import PerGameCommonOptions
+from settings import Group, UserFolderPath
 from worlds.AutoWorld import WebWorld, World
 from worlds.LauncherComponents import Component, Type, components, launch_subprocess
 
@@ -35,6 +37,15 @@ class X2WOTCWeb(WebWorld):
     )]
 
 
+class X2WOTCSettings(Group):
+    class GamePath(UserFolderPath):
+        """Path to your installation of XCOM 2, probably ending in `/XCOM 2`"""
+
+        description = "XCOM 2 installation folder"
+
+    game_path: GamePath = GamePath("C:/Program Files (x86)/Steam/steamapps/common/XCOM 2")
+
+
 class X2WOTCWorld(World):
     """
     XCOM 2 is the sequel to the acclaimed turn-based tactics game about defending earth from an alien invasion.
@@ -45,11 +56,12 @@ class X2WOTCWorld(World):
     game = "XCOM 2 War of the Chosen"
     web = X2WOTCWeb()
 
-    item_name_to_id = item_display_name_to_id
-    location_name_to_id = loc_display_name_to_id
-
+    settings: ClassVar[X2WOTCSettings]
     options_dataclass = X2WOTCOptions
     options: X2WOTCOptions
+
+    item_name_to_id = item_display_name_to_id
+    location_name_to_id = loc_display_name_to_id
 
     ut_can_gen_without_yaml = True
 

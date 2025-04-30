@@ -21,6 +21,7 @@ class X2WOTCModData(NamedTuple):
     set_rules: Callable[[MultiWorld, int], None] | None = None
     options: list[tuple[str, type[Option]]] = []
     generate_early: Callable[["X2WOTCWorld"], None] | None = None
+    config: dict[str, str] = {}
 
 
 mods_data: list[X2WOTCModData] = []
@@ -47,7 +48,8 @@ for loader, module_name, ispkg in pkgutil.iter_modules(__path__):
         locations = module.locations if hasattr(module, "locations") else {},
         set_rules = module.set_rules if hasattr(module, "set_rules") else None,
         options = module.options if hasattr(module, "options") else [],
-        generate_early = module.generate_early if hasattr(module, "generate_early") else None
+        generate_early = module.generate_early if hasattr(module, "generate_early") else None,
+        config = module.config if hasattr(module, "config") else {}
     ))
 
 # Sort mods by rule priority
