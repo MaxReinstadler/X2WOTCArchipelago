@@ -26,7 +26,7 @@ def generate_early(world: "X2WOTCWorld"):
 # See Config/XComWOTCArchipelago.ini in the game mod directory
 # for more information on the structure of the config file
 config: dict[str, str] = {
-    "X2Item_ResearchCompleted": "+CheckCompleteTechs=(TechName=ExampleLocation, CompletionItemName=ExampleItem)",
+    "X2Item_ResearchCompleted": "+CheckCompleteTechs=(TechName=ExampleTech)",
     "X2EventListener_WOTCArchipelago": "+CheckKillDefaultCharacterGroups=ExampleCharacterGroup",
-    "X2Effect_ItemUseCheck": "+CheckUseItems=ExampleLocation"
+    "X2Effect_ItemUseCheck": "+CheckUseItems=ExampleItem",
 }
