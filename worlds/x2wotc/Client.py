@@ -1,5 +1,6 @@
 import asyncio
 import os
+import zipfile
 
 from CommonClient import (
     ClientCommandProcessor,
@@ -9,6 +10,7 @@ from CommonClient import (
     logger
 )
 import settings
+from Utils import open_filename
 try:
     from worlds.tracker.TrackerClient import TrackerGameContext as SuperContext  # type: ignore
 except ModuleNotFoundError:
@@ -48,7 +50,7 @@ class X2WOTCCommandProcessor(ClientCommandProcessor):
         self.ctx.proxy_port = port
         self.ctx.start_proxy()
         return True
-    
+
     def _cmd_mods(self) -> bool:
         """List all installed and active mods."""
         if mod_names:
@@ -72,6 +74,32 @@ class X2WOTCCommandProcessor(ClientCommandProcessor):
         else:
             self.output("No active mods found.")
 
+        return True
+
+    def _cmd_install_mod(self) -> bool:
+        """Install a mod."""
+        mod_path = open_filename("Select mod file", [("x2wotc mod", [".py", ".zip"])])
+        if not mod_path:
+            self.output("No file selected.")
+            return False
+        
+        apworld_path = f"{__file__.split(".apworld")[0]}.apworld"
+        arcname = f"x2wotc/mods/{os.path.basename(mod_path)}"
+        with zipfile.ZipFile(apworld_path, "a") as apworld_file:
+
+            # If the mod is a .py file, add it directly to the archive
+            if mod_path.endswith(".py"):
+                apworld_file.write(mod_path, arcname=arcname)
+
+            # If the mod is a .zip file, extract its contents and add them to the archive
+            if mod_path.endswith(".zip"):
+                with zipfile.ZipFile(mod_path, "r") as mod_zip_file:
+                    for file_name in mod_zip_file.namelist():
+                        arcname = f"x2wotc/mods/{file_name}"
+                        with mod_zip_file.open(file_name) as file:
+                            apworld_file.writestr(arcname, file.read())
+
+        self.output("Mod installed. Please restart the client.")
         return True
 
 
