@@ -77,7 +77,7 @@ class X2WOTCCommandProcessor(ClientCommandProcessor):
         return True
 
     def _cmd_install_mod(self) -> bool:
-        """Install a mod."""
+        """Install a mod. Never install mods from untrusted sources and without prior inspection."""
         mod_path = open_filename("Select mod file", [("x2wotc mod", [".py", ".zip"])])
         if not mod_path:
             self.output("No file selected.")
