@@ -94,13 +94,13 @@ class EnemySanity(Toggle):
 class ItemSanity(Toggle):
     """Enable locations for the first use of each item type."""
     display_name = "Itemsanity"
-    default = True
+    default = False
 
 
 class ChosenHuntSanity(Toggle):
     """Shuffle Chosen Hunt covert actions and their rewards, i.e. Resistance Faction influence and Chosen Stronghold missions."""
     display_name = "Chosen Hunt-Sanity"
-    default = True
+    default = False
 
 
 class WeaponModShare(Range):
@@ -124,7 +124,7 @@ class TrapShare(Range):
     display_name = "Trap Share"
     range_start = 0
     range_end = 100
-    default = 20
+    default = 0
 
 
 class ActiveMods(OptionSet):
