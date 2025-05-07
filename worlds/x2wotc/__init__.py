@@ -7,8 +7,8 @@ from settings import Group, UserFolderPath
 from worlds.AutoWorld import WebWorld, World
 from worlds.LauncherComponents import Component, Type, components, launch_subprocess
 
-from .Items import X2WOTCItem, ItemManager, item_display_name_to_id
-from .Locations import LocationManager, loc_display_name_to_id
+from .Items import X2WOTCItem, ItemManager, item_display_name_to_id, item_groups
+from .Locations import LocationManager, loc_display_name_to_id, loc_groups
 from .Options import X2WOTCOptions, AlienHuntersDLC, Goal
 from .Regions import RegionManager
 from .Rules import RuleManager
@@ -62,6 +62,9 @@ class X2WOTCWorld(World):
 
     item_name_to_id = item_display_name_to_id
     location_name_to_id = loc_display_name_to_id
+
+    item_name_groups = item_groups
+    location_name_groups = loc_groups
 
     ut_can_gen_without_yaml = True
 

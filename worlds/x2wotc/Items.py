@@ -32,9 +32,34 @@ for item_name, item_data in mod_items.items():
         print(f"X2WOTC: Duplicate item {item_name} in mods, skipping")
 
 # Lookup tables
-item_display_name_to_id = {item_data.display_name: item_data.id for item_data in item_table.values()}
-item_display_name_to_key = {item_data.display_name: key for key, item_data in item_table.items()}
-item_id_to_key = {item_data.id: key for key, item_data in item_table.items() if item_data.id}
+item_display_name_to_id = {
+    item_data.display_name: item_data.id
+    for item_data in item_table.values()
+    if item_data.id
+}
+item_display_name_to_key = {
+    item_data.display_name: key
+    for key, item_data in item_table.items()
+}
+item_id_to_key = {
+    item_data.id: key
+    for key, item_data in item_table.items()
+    if item_data.id
+}
+
+# Groups
+item_types = {
+    item_data.type
+    for item_data in item_table.values()
+    if item_data.id
+}
+item_groups = {
+    item_type: {
+        item_data.display_name
+        for item_data in item_table.values()
+        if item_data.id and item_data.type == item_type
+    } for item_type in item_types
+}
 
 
 class ItemManager:
@@ -43,6 +68,9 @@ class ItemManager:
     item_display_name_to_id = item_display_name_to_id
     item_display_name_to_key = item_display_name_to_key
     item_id_to_key = item_id_to_key
+
+    item_types = item_types
+    item_groups = item_groups
 
     def __init__(self):
         self.resource_item_table = resource_item_table
