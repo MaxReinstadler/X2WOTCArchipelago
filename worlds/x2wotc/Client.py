@@ -110,7 +110,7 @@ class X2WOTCCommandProcessor(ClientCommandProcessor):
         with zipfile.ZipFile(apworld_path, "r") as apworld_file:
             with zipfile.ZipFile(temp_path, "w") as temp_file:
                 for file_name in apworld_file.namelist():
-                    if "mods/" not in file_name or file_name.endswith("mods/__init__.py"):
+                    if not file_name.startswith("x2wotc/mods/") or file_name == "x2wotc/mods/__init__.py":
                         with apworld_file.open(file_name) as file:
                             temp_file.writestr(file_name, file.read())
         os.replace(temp_path, apworld_path)
