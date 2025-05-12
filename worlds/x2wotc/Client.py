@@ -178,12 +178,10 @@ class X2WOTCContext(SuperContext):
         if not os.path.isfile(self.config_file):
             self.config_file = self.game_path.split("/common/")[0] + steam
         if not os.path.isfile(self.config_file):
-            error = (
+            raise FileNotFoundError(
                 "X2WOTCClient: Config file not found in game folder or Steam workshop folder. "
                 "Please check the game_path setting in your `host.yaml` and make sure the mod is installed."
             )
-            logger.error(error)
-            raise FileNotFoundError(error)
 
     async def server_auth(self, password_requested: bool = False):
         if password_requested and not self.password:
