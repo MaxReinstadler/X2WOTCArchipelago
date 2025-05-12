@@ -101,6 +101,22 @@ class X2WOTCCommandProcessor(ClientCommandProcessor):
 
         self.output("Mod installed. Please restart the client.")
         return True
+    
+    def _cmd_clear_mods(self) -> bool:
+        """Uninstall all mods."""
+        apworld_path = f"{__file__.split('.apworld')[0]}.apworld"
+        temp_path = f"{apworld_path}.temp"
+
+        with zipfile.ZipFile(apworld_path, "r") as apworld_file:
+            with zipfile.ZipFile(temp_path, "w") as temp_file:
+                for file_name in apworld_file.namelist():
+                    if "mods/" not in file_name or file_name.endswith("mods/__init__.py"):
+                        with apworld_file.open(file_name) as file:
+                            temp_file.writestr(file_name, file.read())
+        os.replace(temp_path, apworld_path)
+
+        self.output("All mods uninstalled. Please restart the client.")
+        return True
 
 
 class X2WOTCContext(SuperContext):
