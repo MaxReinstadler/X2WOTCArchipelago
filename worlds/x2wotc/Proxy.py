@@ -75,7 +75,7 @@ def get_locations_info(checks: list[str]) -> LocationsInfo:
 
         if loc_id == None:
             logger.debug(f"Proxy: Location {loc_name} is event, checking for victory")
-            if not ctx.finished_game and loc_name == ctx.goal_location:
+            if not ctx.finished_game and loc_name == ctx.slot_data["goal_location"]:
                 locations_info[loc_name] = ("Victory", None, None)
             continue
 
@@ -114,7 +114,7 @@ async def send_checks(checks: list[str]):
 
         if loc_id == None:
             logger.debug(f"Proxy: Location {loc_name} is event, checking for victory")
-            if not ctx.finished_game and loc_name == ctx.goal_location:
+            if not ctx.finished_game and loc_name == ctx.slot_data["goal_location"]:
                 await ctx.send_msgs([{
                     "cmd": "StatusUpdate",
                     "status": ClientStatus.CLIENT_GOAL

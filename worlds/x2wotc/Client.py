@@ -1,5 +1,6 @@
 import asyncio
 import os
+import re
 import zipfile
 
 from CommonClient import (
@@ -49,6 +50,7 @@ class X2WOTCCommandProcessor(ClientCommandProcessor):
 
         self.ctx.proxy_port = port
         self.ctx.start_proxy()
+        self.output("Config updated. Please restart your game if it is running.")
         return True
 
     def _cmd_mods(self) -> bool:
@@ -154,6 +156,9 @@ class X2WOTCContext(SuperContext):
     proxy_port: int
     proxy_task: asyncio.Task | None
 
+    slot_data: dict
+    active_mods: list[str]
+
     def __init__(self, server_address: str | None, password: str | None):
         super().__init__(server_address, password)
         self.locations_checked = set()
@@ -165,9 +170,8 @@ class X2WOTCContext(SuperContext):
         self.proxy_port = 24728
         self.proxy_task = None
 
-        # Retrieved from slot_data on connection
-        self.goal_location: str = "Victory"
-        self.active_mods: list[str] = []
+        self.slot_data = {}
+        self.active_mods = []
 
         self.game_path: str = settings.get_settings()["x2wotc_options"]["game_path"]
         # Check for the mod config file in the manual installation path first,
@@ -192,28 +196,24 @@ class X2WOTCContext(SuperContext):
     async def disconnect(self, allow_autoreconnect: bool = False):
         await super().disconnect(allow_autoreconnect)
         self.locations_scouted = set()
+        self.slot_data = {}
+        self.active_mods = []
         self.connected.clear()
         self.scouted.clear()
+        self.update_config({"DEF_AP_GEN_ID": ""})
 
     def on_package(self, cmd: str, args: dict):
         super().on_package(cmd, args)
         if cmd == "Connected":
-            slot_data = args["slot_data"]
-
-            if "goal_location" not in slot_data:
-                logger.warning("X2WOTCClient: slot_data missing goal_location, falling back on Victory")
-                self.goal_location = "Victory"
-            else:
-                self.goal_location = slot_data["goal_location"]
-
-            if "active_mods" not in slot_data:
-                logger.warning("X2WOTCClient: slot_data missing active_mods, falling back on empty list")
-                self.active_mods = []
-            else:
-                self.active_mods = sorted(slot_data["active_mods"])
-
+            self.slot_data = args["slot_data"]
+            self.active_mods = sorted(self.slot_data["active_mods"])
             self.connected.set()
             self.patch_config()
+            self.update_config()
+            logger.info(
+                "X2WOTCClient: Client connected and config updated. "
+                "Please restart your game if it is running."
+            )
 
     def make_gui(self):
         ui = super().make_gui()
@@ -224,6 +224,7 @@ class X2WOTCContext(SuperContext):
         if self.proxy_task:
             self.proxy_task.cancel()
         self.proxy_task = asyncio.create_task(run_proxy(self), name="proxy")
+        self.update_config({"ProxyPort": str(self.proxy_port)})
 
     def patch_config(self):
         CLASS_PREFIX = "[WOTCArchipelago."
@@ -259,6 +260,35 @@ class X2WOTCContext(SuperContext):
 
             if auto_code_end_index != -1:
                 config = config[:auto_code_begin_index] + value + config[auto_code_end_index:]
+
+        with open(self.config_file, "w") as file:
+            file.write(config)
+
+    def update_config(self, config_values: dict[str, str] = {}):
+        if not config_values:
+            config_values = {
+                "ProxyPort": str(self.proxy_port),
+                "bRequirePsiGate": str("PsiGateObjective" in self.slot_data["campaign_completion_requirements"]),
+                "bRequireStasisSuit": str("StasisSuitObjective" in self.slot_data["campaign_completion_requirements"]),
+                "bRequireAvatarCorpse": str("AvatarCorpseObjective" in self.slot_data["campaign_completion_requirements"]),
+                "DEF_AP_GEN_ID": str(self.slot_data["seed_name"]),
+                "DEF_SKIP_SUPPLY_RAIDS": str("SupplyRaid" in self.slot_data["skip_mission_types"]),
+                "DEF_SKIP_COUNCIL_MISSIONS": str("CouncilMission" in self.slot_data["skip_mission_types"]),
+                "DEF_SKIP_FACTION_MISSIONS": str("ResistanceOp" in self.slot_data["skip_mission_types"]),
+                "DEF_DISABLE_AMBUSH_RISK": str("Ambush" in self.slot_data["disable_covert_action_risks"]),
+                "DEF_DISABLE_CAPTURE_RISK": str("Capture" in self.slot_data["disable_covert_action_risks"]),
+                "DEF_SKIP_RAID_REWARD_MULT_BASE": str(float(self.slot_data["supply_raid_reward_base"]) / 100.0),
+                "DEF_SKIP_RAID_REWARD_MULT_ERR": str(float(self.slot_data["supply_raid_reward_error"]) / 100.0),
+                "DEF_EXTRA_XP_MULT": str(float(self.slot_data["extra_xp_gain"]) / 100.0),
+                "DEF_EXTRA_CORPSES": str(self.slot_data["extra_corpse_gain"]),
+                "DEF_NO_STARTING_TRAPS": str(self.slot_data["disable_day_one_traps"]),
+            }
+
+        with open(self.config_file, "r") as file:
+            config = file.read()
+
+        for key, value in config_values.items():
+            config = re.sub(rf"{re.escape(key)}=(\S*)", f"{key}={value}", config)
 
         with open(self.config_file, "w") as file:
             file.write(config)
