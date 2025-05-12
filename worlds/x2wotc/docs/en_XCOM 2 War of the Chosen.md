@@ -29,7 +29,3 @@ Items are currently only received in the geoscape, including any the player sent
 ## How was this game adapted to fit into Archipelago?
 
 Various features have been added to reduce the length of a full campaign (such as missions being skipped and soldiers gaining XP passively) and there are multiple options for alternate goals. Expect the game to be comfortably beatable in roughly 15 to 20 hours on default settings, and potentially much quicker if the goal is adjusted.
-
-## What if I want to play a vanilla campaign?
-
-Download [Mod Config Menu for WotC](https://steamcommunity.com/sharedfiles/filedetails/?id=667104300) and navigate to `Settings > Mod Settings > WOTCArchipelago`. Turn off all settings under "Reduced Campaign Duration" (also set sliders to 0). Turn on all settings under "Campaign Completion Requirements" (NOTE: you will also need to set the corresponding option correctly in your yaml for generation).
