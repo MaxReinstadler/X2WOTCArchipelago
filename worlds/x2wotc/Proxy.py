@@ -56,7 +56,15 @@ async def scout_loop():
                     "locations": list(ctx.locations_scouted)
                 }])
 
-            ctx.scouted.set()
+            await ctx.scouted.wait()
+            ctx.fill_spoiler([{
+                "location": loc_id_to_key[loc_id],
+                "item": ctx.item_names.lookup_in_slot(item.item, item.player),
+                "player": ctx.slot_info[item.player].name,
+                "game": ctx.slot_info[item.player].game,
+                "flags": item.flags
+            } for loc_id, item in ctx.locations_info.items()])
+
             logger.debug("Proxy: Locations scouted")
 
     except asyncio.CancelledError:

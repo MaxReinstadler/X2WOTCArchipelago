@@ -50,7 +50,7 @@ class X2WOTCCommandProcessor(ClientCommandProcessor):
 
         self.ctx.proxy_port = port
         self.ctx.start_proxy()
-        self.output("Config updated. Please restart your game if it is running.")
+        self.output("Config updated. Please restart your game if it is already running.")
         return True
 
     def _cmd_mods(self) -> bool:
@@ -84,7 +84,7 @@ class X2WOTCCommandProcessor(ClientCommandProcessor):
         if not mod_path:
             self.output("No file selected.")
             return False
-        
+
         apworld_path = f"{__file__.split(".apworld")[0]}.apworld"
         arcname = f"x2wotc/mods/{os.path.basename(mod_path)}"
         with zipfile.ZipFile(apworld_path, "a") as apworld_file:
@@ -103,10 +103,10 @@ class X2WOTCCommandProcessor(ClientCommandProcessor):
 
         self.output("Mod installed. Please restart the client.")
         return True
-    
+
     def _cmd_clear_mods(self) -> bool:
         """Uninstall all mods."""
-        apworld_path = f"{__file__.split('.apworld')[0]}.apworld"
+        apworld_path = f"{__file__.split(".apworld")[0]}.apworld"
         temp_path = f"{apworld_path}.temp"
 
         with zipfile.ZipFile(apworld_path, "r") as apworld_file:
@@ -186,6 +186,7 @@ class X2WOTCContext(SuperContext):
                 "X2WOTCClient: Config file not found in game folder or Steam workshop folder. "
                 "Please check the game_path setting in your `host.yaml` and make sure the mod is installed."
             )
+        self.spoiler_file: str = self.config_file.replace("XComWOTCArchipelago.ini", "XComWOTCArchipelago_Spoiler.ini")
 
     async def server_auth(self, password_requested: bool = False):
         if password_requested and not self.password:
@@ -200,10 +201,11 @@ class X2WOTCContext(SuperContext):
         self.active_mods = []
         self.connected.clear()
         self.scouted.clear()
-        self.update_config({"DEF_AP_GEN_ID": ""})
+        self.reset_config()
 
     def on_package(self, cmd: str, args: dict):
         super().on_package(cmd, args)
+
         if cmd == "Connected":
             self.slot_data = args["slot_data"]
             self.active_mods = sorted(self.slot_data["active_mods"])
@@ -212,8 +214,11 @@ class X2WOTCContext(SuperContext):
             self.update_config()
             logger.info(
                 "X2WOTCClient: Client connected and config updated. "
-                "Please restart your game if it is running."
+                "Please restart your game if it is already running."
             )
+
+        if cmd == "LocationInfo":
+            self.scouted.set()
 
     def make_gui(self):
         ui = super().make_gui()
@@ -267,6 +272,8 @@ class X2WOTCContext(SuperContext):
     def update_config(self, config_values: dict[str, str] = {}):
         if not config_values:
             config_values = {
+                "ClientVersion": client_version,
+                "RecModVersion": recommended_mod_version,
                 "ProxyPort": str(self.proxy_port),
                 "bRequirePsiGate": str("PsiGateObjective" in self.slot_data["campaign_completion_requirements"]),
                 "bRequireStasisSuit": str("StasisSuitObjective" in self.slot_data["campaign_completion_requirements"]),
@@ -293,6 +300,30 @@ class X2WOTCContext(SuperContext):
         with open(self.config_file, "w") as file:
             file.write(config)
 
+    def reset_config(self):
+        self.update_config({
+            "ClientVersion": "",
+            "RecModVersion": "",
+            "DEF_AP_GEN_ID": ""
+        })
+
+    def fill_spoiler(self, entries: list[dict]):
+        spoiler = "[WOTCArchipelago.WOTCArchipelago_Spoiler]\n"
+        for entry in entries:
+            spoiler += (
+                "+Spoiler="
+                f"(Location=\"{entry["location"]}\", "
+                f"Item=\"{entry["item"]}\", "
+                f"Player=\"{entry["player"]}\", "
+                f"Game=\"{entry["game"]}\", "
+                f"bProgression={bool(entry["flags"] & 0b001)}, "
+                f"bUseful={bool(entry["flags"] & 0b010)}, "
+                f"bTrap={bool(entry["flags"] & 0b100)})\n"
+            )
+
+        with open(self.spoiler_file, "w") as file:
+            file.write(spoiler)
+
 
 def launch():
     async def main(args):
@@ -306,6 +337,7 @@ def launch():
 
         await ctx.exit_event.wait()
         await ctx.proxy_task
+        ctx.reset_config()
         await ctx.shutdown()
 
     import colorama
