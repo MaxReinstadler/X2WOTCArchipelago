@@ -41,7 +41,7 @@
 ## Joining a Multiworld
 
 0. Upon launching the XCOM 2 WotC AP Client, the proxy server will be hosted locally (at port 24728 by default).
-    - If this doesn't work for you for whatever reason, the port can be changed using the `/proxy` command. If you do, you will also have to edit the corresponding in-game setting via the [Mod Config Menu](https://steamcommunity.com/sharedfiles/filedetails/?id=667104300) or by accessing the [user config file](https://www.reddit.com/r/xcom2mods/wiki/wotc_modding/folder_paths/#wiki_user_config) directly.
+    - If this doesn't work for you for whatever reason, the port can be changed using the `/proxy` client command.
 1. In the client, connect to the address the Multiworld is hosted at.
 2. Provide your slot name (the name you entered into your YAML).
 3. If asked, provide the room password that was set during generation.
