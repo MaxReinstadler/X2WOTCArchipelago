@@ -107,7 +107,7 @@ class X2WOTCCommandProcessor(ClientCommandProcessor):
     def _cmd_clear_mods(self) -> bool:
         """Uninstall all mods."""
         apworld_path = f"{__file__.split(".apworld")[0]}.apworld"
-        temp_path = f"{apworld_path}.temp"
+        temp_path = f"{apworld_path}.tmp"
 
         with zipfile.ZipFile(apworld_path, "r") as apworld_file:
             with zipfile.ZipFile(temp_path, "w") as temp_file:
@@ -212,10 +212,7 @@ class X2WOTCContext(SuperContext):
             self.connected.set()
             self.patch_config()
             self.update_config()
-            logger.info(
-                "X2WOTCClient: Client connected and config updated. "
-                "Please restart your game if it is already running."
-            )
+            logger.info("Client connected and config updated. Please restart your game if it is already running.")
 
         if cmd == "LocationInfo":
             self.scouted.set()
@@ -272,13 +269,13 @@ class X2WOTCContext(SuperContext):
     def update_config(self, config_values: dict[str, str] = {}):
         if not config_values:
             config_values = {
-                "ClientVersion": client_version,
-                "RecModVersion": recommended_mod_version,
+                "ClientVersion": "".join(client_version.split()),
+                "RecModVersion": "".join(recommended_mod_version.split()),
                 "ProxyPort": str(self.proxy_port),
                 "bRequirePsiGate": str("PsiGateObjective" in self.slot_data["campaign_completion_requirements"]),
                 "bRequireStasisSuit": str("StasisSuitObjective" in self.slot_data["campaign_completion_requirements"]),
                 "bRequireAvatarCorpse": str("AvatarCorpseObjective" in self.slot_data["campaign_completion_requirements"]),
-                "DEF_AP_GEN_ID": str(self.slot_data["seed_name"]),
+                "DEF_AP_GEN_ID": "".join(self.slot_data["seed_name"].split()),
                 "DEF_SKIP_SUPPLY_RAIDS": str("SupplyRaid" in self.slot_data["skip_mission_types"]),
                 "DEF_SKIP_COUNCIL_MISSIONS": str("CouncilMission" in self.slot_data["skip_mission_types"]),
                 "DEF_SKIP_FACTION_MISSIONS": str("ResistanceOp" in self.slot_data["skip_mission_types"]),
