@@ -230,6 +230,25 @@ async def handle_check(request: web.Request):
     await send_checks(checks)
     return web.Response(text=response_body)
 
+# ----------------------------------------------------- HINT --------------------------------------------------------- #
+
+async def handle_hint(request: web.Request):
+    if not ctx.connected.is_set():
+        return web.Response(status=503)
+    
+    hints = [hint for hint in request.match_info["tail"].split("/") if hint != ""]
+    await ctx.send_msgs([{
+        "cmd": "LocationScouts",
+        "locations": [
+            location_table[hint].id
+            for hint in hints
+            if hint in location_table
+        ],
+        "create_as_hint": 2
+    }])
+
+    return web.Response()
+
 # ----------------------------------------------------- TICK --------------------------------------------------------- #
 
 def handle_tick(layer: str, number_received: int) -> str:
@@ -260,7 +279,6 @@ def handle_tick(layer: str, number_received: int) -> str:
 async def handle_tick_strategy(request: web.Request):
     if not ctx.connected.is_set():
         return web.Response(status=503)
-    await ctx.scouted.wait()
     
     number_received = int(request.match_info["tail"])
     response_body = handle_tick("Strategy", number_received)
@@ -269,7 +287,6 @@ async def handle_tick_strategy(request: web.Request):
 async def handle_tick_tactical(request: web.Request):
     if not ctx.connected.is_set():
         return web.Response(status=503)
-    await ctx.scouted.wait()
     
     number_received = int(request.match_info["tail"])
     response_body = handle_tick("Tactical", number_received)
@@ -289,6 +306,7 @@ async def run_proxy(local_ctx: CommonContext):
     app.router.add_get("/Tick/Strategy/{tail:[0-9]+}", handle_tick_strategy)
     app.router.add_get("/Tick/Tactical/{tail:[0-9]+}", handle_tick_tactical)
     app.router.add_get("/Check/{tail:.*}", handle_check)
+    app.router.add_get("/Hint/{tail:.*}", handle_hint)
 
     runner = web.AppRunner(app)
     await runner.setup()
