@@ -1,6 +1,7 @@
 import asyncio
 import os
 import re
+from typing import Any
 import zipfile
 
 from CommonClient import (
@@ -156,7 +157,7 @@ class X2WOTCContext(SuperContext):
     proxy_port: int
     proxy_task: asyncio.Task | None
 
-    slot_data: dict
+    slot_data: dict[str, Any]
     active_mods: list[str]
 
     def __init__(self, server_address: str | None, password: str | None):
@@ -306,7 +307,7 @@ class X2WOTCContext(SuperContext):
             "DEF_AP_GEN_ID": ""
         })
 
-    def fill_spoiler(self, entries: list[dict]):
+    def fill_spoiler(self, entries: list[dict[str, str | int]]):
         spoiler = "[WOTCArchipelago.WOTCArchipelago_Spoiler]\n"
         for entry in entries:
             spoiler += (
