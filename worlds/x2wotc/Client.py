@@ -215,7 +215,9 @@ class X2WOTCContext(SuperContext):
             logger.info("Client connected and config updated. Please restart your game if it is already running.")
 
         if cmd == "LocationInfo":
-            self.scouted.set()
+            scouted_locations = set(item.location for item in args["locations"])
+            if self.locations_scouted == scouted_locations:
+                self.scouted.set()
 
     def make_gui(self):
         ui = super().make_gui()
