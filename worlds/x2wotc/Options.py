@@ -206,7 +206,8 @@ class DisableDayOneTraps(Toggle):
 
 
 class ActiveMods(OptionSet):
-    """Activate these mods from the x2wotc/mods directory."""
+    """Activate these mods from the x2wotc/mods directory.
+    This is only relevant when modding the apworld, leave empty if you're not sure what that means."""
     display_name = "Active Mods"
     valid_keys = frozenset(mod_names)
     default = frozenset()
