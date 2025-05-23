@@ -61,6 +61,18 @@ item_groups = {
     } for item_type in item_types
 }
 
+# Progressive groups
+for item_data in item_table.values():
+    if item_data.stages is not None:
+        item_groups[item_data.display_name] = {item_data.display_name}
+        for stage in item_data.stages:
+            stage_name = item_table[stage].display_name
+            item_groups[item_data.display_name].add(stage_name)
+
+            if stage_name not in item_groups:
+                item_groups[stage_name] = {stage_name}
+            item_groups[stage_name].add(item_data.display_name)
+
 
 class ItemManager:
     item_table = item_table
