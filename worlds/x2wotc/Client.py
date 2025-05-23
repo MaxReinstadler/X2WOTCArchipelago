@@ -175,19 +175,28 @@ class X2WOTCContext(SuperContext):
         self.active_mods = []
 
         self.game_path: str = settings.get_settings()["x2wotc_options"]["game_path"]
-        # Check for the mod config file in the manual installation path first,
+
+        # Check for the mod config file in the manual installation paths first,
         # then fall back to the Steam installation path if it doesn't exist
-        manual = "/XCom2-WarOfTheChosen/XComGame/Mods/WOTCArchipelago/Config/XComWOTCArchipelago.ini"
+        manuals = [
+            "/XCom2-WarOfTheChosen/XComGame/Mods/WOTCArchipelago/Config/XComWOTCArchipelago.ini",
+            "/XCom2-WarOfTheChosen/XComGame/Mods/3281191663/Config/XComWOTCArchipelago.ini"
+        ]
         steam = "/workshop/content/268500/3281191663/Config/XComWOTCArchipelago.ini"  # after /steamapps
-        self.config_file: str = self.game_path + manual
-        if not os.path.isfile(self.config_file):
+
+        for manual in manuals:
+            self.config_file = self.game_path + manual
+            if os.path.isfile(self.config_file):
+                break
+        else:
             self.config_file = self.game_path.split("/common/")[0] + steam
-        if not os.path.isfile(self.config_file):
+
+        self.spoiler_file = self.config_file.replace("XComWOTCArchipelago.ini", "XComWOTCArchipelago_Spoiler.ini")
+        if not os.path.isfile(self.config_file) or not os.path.isfile(self.spoiler_file):
             raise FileNotFoundError(
                 "X2WOTCClient: Config file not found in game folder or Steam workshop folder. "
                 "Please check the game_path setting in your `host.yaml` and make sure the mod is installed."
             )
-        self.spoiler_file: str = self.config_file.replace("XComWOTCArchipelago.ini", "XComWOTCArchipelago_Spoiler.ini")
 
     async def server_auth(self, password_requested: bool = False):
         if password_requested and not self.password:
