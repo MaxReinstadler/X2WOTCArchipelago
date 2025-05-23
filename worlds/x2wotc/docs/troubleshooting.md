@@ -13,7 +13,7 @@ Check if the mod is actually loaded by looking for the version text in the botto
 ### Request Timed Out
 
 1. Check if the XCOM 2 WotC AP Client (which is included in the [APWorld](https://github.com/MaxReinstadler/X2WOTCArchipelago/releases)) is running. Refer to the [Setup Guide](https://github.com/MaxReinstadler/X2WOTCArchipelago/blob/main/worlds/x2wotc/docs/setup_en.md) for further instructions.
-2. It may be that the proxy port settings in the client and in-game are mismatched or something else is wrong with the default port. Check the settings in-game via [MCM](https://steamcommunity.com/sharedfiles/filedetails/?id=667104300) and in the client via the `/proxy` command, and change them if necessary.
+2. It may be that the default proxy port doesn't work for you. Inspect or change the setting via the `/proxy` client command and restart your game.
 
 ### Client Disconnected
 
@@ -32,6 +32,8 @@ To unlock the final set of missions you need to complete the objective to do an 
 - Skulljack an officer and kill a codex -> Receive `[Tech] Codex Brain` -> Complete the Psi Gate mission -> Receive `[Tech] Psi Gate`
 - Skulljack an officer and kill a codex -> Receive `[Tech] Codex Brain` -> Receive `[Tech] Encrypted Codex Data` -> Skulljack a codex and kill an avatar
 
-## My problem isn't listed here
+## Reporting issues
 
-Let me know in the [Discord Thread](https://discord.com/channels/731205301247803413/1037751568700805141)! If the issue is in-game, there might be some useful info in the log file (`Documents/My Games/XCOM2 War of the Chosen/XComGame/Logs/Launch.log` by default on Windows).
+If you've encountered an issue that wasn't mentioned here, let me know in the [Discord Thread](https://discord.com/channels/731205301247803413/1037751568700805141)! Make sure to share the versions of the APWorld (as given by the `/version` client command) and mod (as seen in the bottom left corner of the main menu) you are using, as well as the following:
+- For client issues, try reproducing with the debug launcher (`ArchipelagoLauncherDebug.exe`) and attach the output. (Also read it first, it might answer your question.)
+- For in-game issues, attach the relevant log file (`Documents/My Games/XCOM2 War of the Chosen/XComGame/Logs/Launch.log` by default on Windows).
