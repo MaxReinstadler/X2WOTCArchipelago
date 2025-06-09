@@ -4,6 +4,10 @@
 
 **The native ports of XCOM 2 seemingly do not play nice with my mod. Use the Windows distribution instead (e.g. through Proton on Linux, Crossover or Whisky on MacOS).**
 
+## I can't launch the client
+
+It may be that you provided an invalid XCOM 2 installation path to the client. You can change it manually by editing the `host.yaml` in your Archipelago installation folder. If this doesn't seem to be the issue, try reproducing with the debug launcher (`ArchipelagoLauncherDebug.exe`) and consult any occuring error messages.
+
 ## Nothing is happening
 
 Check if the mod is actually loaded by looking for the version text in the bottom left corner of the main menu. If it's not there, try restarting the game and consider using [AML](https://github.com/X2CommunityCore/xcom2-launcher) if the problem persists.

@@ -39,7 +39,7 @@ class X2WOTCWeb(WebWorld):
 
 class X2WOTCSettings(Group):
     class GamePath(UserFolderPath):
-        """Path to your installation of XCOM 2, probably ending in `/XCOM 2`"""
+        """Path to your installation of XCOM 2, most likely ending in `/XCOM 2`"""
 
         description = "XCOM 2 installation folder"
 
