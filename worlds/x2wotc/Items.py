@@ -62,6 +62,7 @@ item_groups = {
 }
 
 # Progressive groups
+"""
 for item_data in item_table.values():
     if item_data.stages is not None:
         item_groups[item_data.display_name] = {item_data.display_name}
@@ -72,6 +73,7 @@ for item_data in item_table.values():
             if stage_name not in item_groups:
                 item_groups[stage_name] = {stage_name}
             item_groups[stage_name].add(item_data.display_name)
+"""
 
 
 class ItemManager:
