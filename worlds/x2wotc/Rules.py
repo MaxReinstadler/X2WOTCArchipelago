@@ -61,7 +61,7 @@ class RuleManager:
             else:
                 power += sum([
                     self.item_manager.item_table[item_data.stages[i]].power
-                    for i in range(count)
+                    for i in range(min(count, len(item_data.stages)))
                 ])
         return power
 
