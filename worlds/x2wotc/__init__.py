@@ -50,7 +50,7 @@ class X2WOTCWorld(World):
     """
     XCOM 2 is the sequel to the acclaimed turn-based tactics game about defending earth from an alien invasion.
     Outwit your enemy on the battlefield and beyond, hunt the powerful Chosen, and build up an unstoppable
-    resistance to save humanity from the occupation of the Elders!"
+    resistance to save humanity from the occupation of the Elders!
     """
 
     game = "XCOM 2 War of the Chosen"
