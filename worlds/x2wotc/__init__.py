@@ -2,14 +2,14 @@ import dataclasses
 from typing import ClassVar
 
 from BaseClasses import MultiWorld, Tutorial
-from Options import PerGameCommonOptions
+from Options import PerGameCommonOptions, OptionError
 from settings import Group, UserFolderPath
 from worlds.AutoWorld import WebWorld, World
 from worlds.LauncherComponents import Component, Type, components, launch_subprocess
 
 from .Items import X2WOTCItem, ItemManager, item_display_name_to_id, item_groups
 from .Locations import LocationManager, loc_display_name_to_id, loc_groups
-from .Options import X2WOTCOptions, AlienHuntersDLC, Goal
+from .Options import X2WOTCOptions, AlienHuntersDLC, Goal, ChosenWeaponFragments
 from .Regions import RegionManager
 from .Rules import RuleManager
 
@@ -145,6 +145,22 @@ class X2WOTCWorld(World):
             if not self.item_manager.enable_progressive_item("ProgressivePsionicsTechCompleted"):
                 print(f"X2WOTC: Failed to enable progressive psionics techs for player {self.player_name}")
 
+        # Enable tech fragment items
+        if self.options.chosen_weapon_fragments == ChosenWeaponFragments.option_two:
+            if not self.item_manager.enable_progressive_item("ChosenAssassinWeaponsFragment2"):
+                print(f"X2WOTC: Failed to enable Assassin weapon fragments (2) for player {self.player_name}")
+            if not self.item_manager.enable_progressive_item("ChosenHunterWeaponsFragment2"):
+                print(f"X2WOTC: Failed to enable Hunter weapon fragments (2) for player {self.player_name}")
+            if not self.item_manager.enable_progressive_item("ChosenWarlockWeaponsFragment2"):
+                print(f"X2WOTC: Failed to enable Warlock weapon fragments (2) for player {self.player_name}")
+        elif self.options.chosen_weapon_fragments == ChosenWeaponFragments.option_three:
+            if not self.item_manager.enable_progressive_item("ChosenAssassinWeaponsFragment3"):
+                print(f"X2WOTC: Failed to enable Assassin weapon fragments (3) for player {self.player_name}")
+            if not self.item_manager.enable_progressive_item("ChosenHunterWeaponsFragment3"):
+                print(f"X2WOTC: Failed to enable Hunter weapon fragments (3) for player {self.player_name}")
+            if not self.item_manager.enable_progressive_item("ChosenWarlockWeaponsFragment3"):
+                print(f"X2WOTC: Failed to enable Warlock weapon fragments (3) for player {self.player_name}")
+
         # Force early proving ground
         if self.options.early_proving_ground:
             self.multiworld.early_items[self.player][
@@ -176,8 +192,15 @@ class X2WOTCWorld(World):
             if mod_data.generate_early and mod_data.name in self.options.active_mods:
                 mod_data.generate_early(self)
 
-        # Add filler items
+        # Validate options
         num_filler_items = self.loc_manager.num_locations - self.item_manager.num_items
+        if num_filler_items < 0:
+            raise OptionError(
+                f"X2WOTC: Too many items for player {self.player_name}. "
+                f"Disable Chosen Weapon Fragments or enable at least {-num_filler_items} more location(s)."
+            )
+
+        # Add filler items
         print(f"X2WOTC: Adding {num_filler_items} filler items for player {self.player_name}")
         self.item_manager.add_filler_items(
             num_filler_items,

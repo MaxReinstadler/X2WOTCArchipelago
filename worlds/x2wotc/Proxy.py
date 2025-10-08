@@ -81,7 +81,7 @@ def get_locations_info(checks: list[str]) -> LocationsInfo:
             logger.warning(f"Proxy: Location {loc_name} not found")
             continue
 
-        if loc_id == None:
+        if loc_id is None:
             logger.debug(f"Proxy: Location {loc_name} is event, checking for victory")
             if not ctx.finished_game and loc_name == ctx.slot_data["goal_location"]:
                 locations_info[loc_name] = ("Victory", None, None)
@@ -120,7 +120,7 @@ async def send_checks(checks: list[str]):
             logger.warning(f"Proxy: Location {loc_name} not found")
             continue
 
-        if loc_id == None:
+        if loc_id is None:
             logger.debug(f"Proxy: Location {loc_name} is event, checking for victory")
             if not ctx.finished_game and loc_name == ctx.slot_data["goal_location"]:
                 await ctx.send_msgs([{
@@ -129,7 +129,7 @@ async def send_checks(checks: list[str]):
                 }])
                 ctx.finished_game = True
             continue
-        
+
         if loc_id not in ctx.server_locations:
             logger.debug(f"Proxy: Location {loc_name} is disabled")
             continue
@@ -169,11 +169,11 @@ def get_received_items(layer: str, number_received: int) -> ItemsInfo:
             continue
 
         # Translate progressive items
-        if stages is not None:
-            try:
-                item_name = stages[progressive_index[item_name]]
-            except IndexError:
-                logger.warning(f"Proxy: Too many instances of progressive item {item_name}")
+        index = progressive_index[item_name]
+        if stages is not None and index < len(stages):
+            stage = stages[index]
+            if stage is not None:
+                item_name = stage
 
         slot_info = get_slot_info(network_item.player)
         items_info.append((item_name, network_item, slot_info))
@@ -198,7 +198,7 @@ async def handle_check(request: web.Request):
         if response_body != "":
             response_body += "\n\n"
 
-        if item_name == None:
+        if item_name is None:
             logger.debug(f"Proxy: Location {loc_name} disabled, no regular item")
             response_body += "None\n"
             response_body += "None"
@@ -210,7 +210,7 @@ async def handle_check(request: web.Request):
             response_body += "Congratulations! You have reached your goal!"
 
         # For disabled locations, item_name is the internal key
-        elif network_item == None:
+        elif network_item is None:
             logger.debug(f"Proxy: Location {loc_name} disabled, regular item found")
             item_data = item_table[item_name]
             response_body += f"[{item_data.type}]{item_name}\n"
@@ -220,7 +220,7 @@ async def handle_check(request: web.Request):
         elif network_item.player == ctx.slot:
             response_body += "Archipelago Item Sent\n"
             response_body += f"Sent {item_name} to yourself!"
-        elif slot_info:
+        elif slot_info is not None:
             response_body += "Archipelago Item Sent\n"
             response_body += f"Sent {item_name} to {slot_info.name} ({slot_info.game})!"
         else:
@@ -256,18 +256,18 @@ def handle_tick(layer: str, number_received: int) -> str:
     response_body = f"{number_received}"
 
     for (item_name, network_item, slot_info) in get_received_items(layer, number_received):
-        if response_body != "":
-            response_body += "\n\n"
+        response_body += "\n\n"
 
         item_data = item_table[item_name]
 
         # Info for the game to process
-        response_body += f"[{item_data.type}]{item_name}\n"
+        if item_data.stages is None:
+            response_body += f"[{item_data.type}]{item_name}\n"
 
         if network_item.player == ctx.slot:
             response_body += "Archipelago Item Received\n"
             response_body += f"Received {item_data.display_name} from yourself!"
-        elif slot_info:
+        elif slot_info is not None:
             response_body += "Archipelago Item Received\n"
             response_body += f"Received {item_data.display_name} from {slot_info.name} ({slot_info.game})!"
         else:

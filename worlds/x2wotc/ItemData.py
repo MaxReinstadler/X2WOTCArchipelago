@@ -17,7 +17,7 @@ class X2WOTCItemData(NamedTuple):
                             # "SLG": Shens Last Gift,
                             # "WOTC": War of the Chosen
     normal_location: str | None = None
-    stages: list[str] | None = None  # For progressive items
+    stages: list[str | None] | None = None  # For progressive items
 
 
 next_item_id = 240223152003  # X2WOTC
@@ -590,6 +590,88 @@ progressive_tech_items: dict[str, X2WOTCItemData] = {
     )
 }
 
+#=======================================================================================================================
+#                                             TECH FRAGMENT ITEMS
+#-----------------------------------------------------------------------------------------------------------------------
+
+tech_fragment_items: dict[str, X2WOTCItemData] = {
+    "ChosenAssassinWeaponsFragment2": X2WOTCItemData(
+        display_name = tech_item_prefix + "Assassin Weapons Fragment (2)",
+        id = get_new_item_id(),
+        classification = ItemClassification.progression,
+        type = "TechCompleted",
+        tags = ["weapon", "fragment"],
+        dlc = "WOTC",
+        stages = [
+            None,
+            "ChosenAssassinWeaponsCompleted"
+        ]
+    ),
+    "ChosenHunterWeaponsFragment2": X2WOTCItemData(
+        display_name = tech_item_prefix + "Hunter Weapons Fragment (2)",
+        id = get_new_item_id(),
+        classification = ItemClassification.progression,
+        type = "TechCompleted",
+        tags = ["weapon", "fragment"],
+        dlc = "WOTC",
+        stages = [
+            None,
+            "ChosenHunterWeaponsCompleted"
+        ]
+    ),
+    "ChosenWarlockWeaponsFragment2": X2WOTCItemData(
+        display_name = tech_item_prefix + "Warlock Weapons Fragment (2)",
+        id = get_new_item_id(),
+        classification = ItemClassification.progression,
+        type = "TechCompleted",
+        tags = ["weapon", "fragment"],
+        dlc = "WOTC",
+        stages = [
+            None,
+            "ChosenWarlockWeaponsCompleted"
+        ]
+    ),
+    "ChosenAssassinWeaponsFragment3": X2WOTCItemData(
+        display_name = tech_item_prefix + "Assassin Weapons Fragment (3)",
+        id = get_new_item_id(),
+        classification = ItemClassification.progression,
+        type = "TechCompleted",
+        tags = ["weapon", "fragment"],
+        dlc = "WOTC",
+        stages = [
+            None,
+            None,
+            "ChosenAssassinWeaponsCompleted"
+        ]
+    ),
+    "ChosenHunterWeaponsFragment3": X2WOTCItemData(
+        display_name = tech_item_prefix + "Hunter Weapons Fragment (3)",
+        id = get_new_item_id(),
+        classification = ItemClassification.progression,
+        type = "TechCompleted",
+        tags = ["weapon", "fragment"],
+        dlc = "WOTC",
+        stages = [
+            None,
+            None,
+            "ChosenHunterWeaponsCompleted"
+        ]
+    ),
+    "ChosenWarlockWeaponsFragment3": X2WOTCItemData(
+        display_name = tech_item_prefix + "Warlock Weapons Fragment (3)",
+        id = get_new_item_id(),
+        classification = ItemClassification.progression,
+        type = "TechCompleted",
+        tags = ["weapon", "fragment"],
+        dlc = "WOTC",
+        stages = [
+            None,
+            None,
+            "ChosenWarlockWeaponsCompleted"
+        ]
+    )
+}
+
 ########################################################################################################################
 ##                                         COVERT ACTION REWARD ITEMS                                                 ##
 ########################################################################################################################
@@ -952,7 +1034,8 @@ tech_item_table: dict[str, X2WOTCItemData] = {
     **alien_hunters_tech_items,
     **wotc_autopsy_tech_items,
     **wotc_chosen_weapon_tech_items,
-    **progressive_tech_items
+    **progressive_tech_items,
+    **tech_fragment_items
 }
 
 covert_action_item_table: dict[str, X2WOTCItemData] = {

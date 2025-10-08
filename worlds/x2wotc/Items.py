@@ -128,33 +128,35 @@ class ItemManager:
         stages = item_data.stages
         if stages is None:
             return False
-        
+
         if self.item_count[item_name] != 0:
             return False
         for stage_name in stages:
-            if self.item_count[stage_name] != 1:
+            if stage_name is not None and self.item_count[stage_name] != 1:
                 return False
-            
+
         for stage_name in stages:
-            self.set_item_count(stage_name, 0, False)
+            if stage_name is not None:
+                self.set_item_count(stage_name, 0, False)
 
         self.set_item_count(item_name, len(stages), False)
         return True
-    
+
     def disable_progressive_item(self, item_name: str):
         item_data = self.item_table[item_name]
         stages = item_data.stages
         if stages is None:
             return False
-        
-        if self.item_count[item_name] != 1:
+
+        if self.item_count[item_name] != len(stages):
             return False
         for stage_name in stages:
-            if self.item_count[stage_name] != 0:
+            if stage_name is not None and self.item_count[stage_name] != 0:
                 return False
-        
+
         for stage_name in stages:
-            self.set_item_count(stage_name, 1, False)
+            if stage_name is not None:
+                self.set_item_count(stage_name, 1, False)
 
         self.set_item_count(item_name, 0, False)
         return True

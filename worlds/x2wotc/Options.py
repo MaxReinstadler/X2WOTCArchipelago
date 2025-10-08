@@ -95,9 +95,20 @@ class ProgressiveItems(OptionSet):
     default = progressive_items
 
 
+class ChosenWeaponFragments(Choice):
+    """Split Chosen weapons into two or three fragments each. Collect all fragments to unlock the corresponding tech.
+    This should decrease the likelihood of receiving Chosen weapons too early and trivializing the game.
+    NOTE: This option requires enabling additional vacant locations, e.g. through Enemysanity or Itemsanity."""
+    display_name = "Chosen Weapon Fragments"
+    option_off = 0
+    option_two = 1
+    option_three = 2
+    default = 0
+
+
 class EarlyProvingGround(Toggle):
     """Force the Proving Ground to be unlockable very early (sphere 1).
-    This ensures access to many powerful items but may significantly increase the amount of checks available."""
+    This ensures access to many powerful items but may significantly increase the amount of reachable locations."""
     display_name = "Early Proving Ground"
     default = False
 
@@ -229,6 +240,7 @@ class X2WOTCOptions(PerGameCommonOptions):
 
     # Item options
     progressive_items: ProgressiveItems
+    chosen_weapon_fragments: ChosenWeaponFragments
     early_proving_ground: EarlyProvingGround
 
     # Filler options
