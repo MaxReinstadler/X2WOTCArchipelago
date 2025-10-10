@@ -169,11 +169,12 @@ def get_received_items(layer: str, number_received: int) -> ItemsInfo:
             continue
 
         # Translate progressive items
-        index = progressive_index[item_name]
-        if stages is not None and index < len(stages):
-            stage = stages[index]
-            if stage is not None:
-                item_name = stage
+        if stages is not None:
+            index = progressive_index[item_name]
+            if index < len(stages):
+                stage = stages[index]
+                if stage is not None:
+                    item_name = stage
 
         slot_info = get_slot_info(network_item.player)
         items_info.append((item_name, network_item, slot_info))
