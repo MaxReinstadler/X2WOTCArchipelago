@@ -244,6 +244,7 @@ class X2WOTCWorld(World):
     def fill_slot_data(self):
         slot_data = {
             "seed_name": self.multiworld.seed_name,
+            "player": self.player,
             "goal_location": Goal.value_to_location[self.options.goal.value]
         }
 

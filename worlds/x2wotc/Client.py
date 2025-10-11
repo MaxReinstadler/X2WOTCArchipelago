@@ -288,7 +288,7 @@ class X2WOTCContext(SuperContext):
                 "bRequirePsiGate": str("PsiGateObjective" in self.slot_data["campaign_completion_requirements"]),
                 "bRequireStasisSuit": str("StasisSuitObjective" in self.slot_data["campaign_completion_requirements"]),
                 "bRequireAvatarCorpse": str("AvatarCorpseObjective" in self.slot_data["campaign_completion_requirements"]),
-                "DEF_AP_GEN_ID": "".join(self.slot_data["seed_name"].split()),
+                "DEF_AP_GEN_ID": "".join(self.slot_data["seed_name"].split()) + f"_{self.slot_data['player']}",
                 "DEF_HINT_TECH_LOC_PART": str(self.slot_data["hint_research_projects"] == HintResearchProjects.option_partial),
                 "DEF_HINT_TECH_LOC_FULL": str(self.slot_data["hint_research_projects"] == HintResearchProjects.option_full),
                 "DEF_SKIP_SUPPLY_RAIDS": str("SupplyRaid" in self.slot_data["skip_mission_types"]),
