@@ -323,11 +323,11 @@ class X2WOTCContext(SuperContext):
         spoiler = "[WOTCArchipelago.WOTCArchipelago_Spoiler]\n"
         for entry in entries:
             spoiler += (
-                "+Spoiler="
-                f"(Location=\"{entry["location"]}\", "
-                f"Item=\"{entry["item"]}\", "
-                f"Player=\"{entry["player"]}\", "
-                f"Game=\"{entry["game"]}\", "
+                "+Spoiler=("
+                f"Location=\"{entry["location"]}\", "
+                f"Item=\"{"".join(entry["item"].splitlines())}\", "
+                f"Player=\"{"".join(entry["player"].splitlines())}\", "
+                f"Game=\"{"".join(entry["game"].splitlines())}\", "
                 f"bProgression={bool(entry["flags"] & 0b001)}, "
                 f"bUseful={bool(entry["flags"] & 0b010)}, "
                 f"bTrap={bool(entry["flags"] & 0b100)})\n"
