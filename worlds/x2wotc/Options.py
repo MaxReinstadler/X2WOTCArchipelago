@@ -137,6 +137,20 @@ class TrapShare(Range):
     default = 0
 
 
+class HintResearchProjects(Choice):
+    """Enable research project hints in the Avenger laboratory and shadow chamber.
+    Can be changed in-game via Mod Config Menu.
+    
+    off:       Reveal no item info and don't create server hints.
+    partial:   Reveal item categories but don't create server hints.
+    full:      Reveal all item info and create server hints."""
+    display_name = "Hint Research Projects"
+    option_off = 0
+    option_partial = 1
+    option_full = 2
+    default = 0
+
+
 class SkipMissionTypes(OptionSet):
     """Automatically skip these mission types when they are spawned from a regular calendar event.
     Can be changed in-game via Mod Config Menu.
@@ -249,6 +263,7 @@ class X2WOTCOptions(PerGameCommonOptions):
     trap_share: TrapShare
 
     # Config options
+    hint_research_projects: HintResearchProjects
     skip_mission_types: SkipMissionTypes
     disable_covert_action_risks: DisableCovertActionRisks
     supply_raid_reward_base: SupplyRaidRewardBase
