@@ -76,7 +76,7 @@ class ItemSanity(Toggle):
 
 class ChosenHuntSanity(Toggle):
     """Shuffle Chosen Hunt covert actions and their rewards, i.e. Resistance Faction influence and Chosen Stronghold missions."""
-    display_name = "Chosen Hunt-Sanity"
+    display_name = "Chosen Huntsanity"
     default = False
 
 
