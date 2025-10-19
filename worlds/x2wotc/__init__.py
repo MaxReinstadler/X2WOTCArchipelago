@@ -1,5 +1,5 @@
 import dataclasses
-from typing import ClassVar
+from typing import Any, ClassVar
 
 from BaseClasses import MultiWorld, Tutorial
 from Options import PerGameCommonOptions, OptionError
@@ -60,6 +60,11 @@ class X2WOTCWorld(World):
     options_dataclass = X2WOTCOptions
     options: X2WOTCOptions
 
+    option_names = [
+        attr.name for attr in dataclasses.fields(options_dataclass)
+        if attr not in dataclasses.fields(PerGameCommonOptions)
+    ]
+
     item_name_to_id = item_display_name_to_id
     location_name_to_id = loc_display_name_to_id
 
@@ -80,13 +85,13 @@ class X2WOTCWorld(World):
         self.rule_manager = RuleManager(self)
         self.reg_manager = RegionManager(self)
 
-        # Set options for UT generation
-        if hasattr(self.multiworld, "re_gen_passthrough"):
-            if self.game in self.multiworld.re_gen_passthrough:
-                slot_data = self.multiworld.re_gen_passthrough[self.game]
-                for option_name in dataclasses.fields(self.options_dataclass):
-                    if option_name in slot_data:
-                        getattr(self.options, option_name).value = slot_data[option_name]
+        # Extract slot data for UT re-gen
+        re_gen_passthrough = getattr(self.multiworld, "re_gen_passthrough", {})
+        if re_gen_passthrough and self.game in re_gen_passthrough:
+            slot_data = re_gen_passthrough[self.game]
+            for option_name in self.option_names:
+                if option_name in slot_data:
+                    setattr(self.options, option_name, slot_data[option_name])
 
         # Disable inactive mods...
         for mod_data in mods_data:
@@ -101,7 +106,7 @@ class X2WOTCWorld(World):
                     self.item_manager.enable_mod_filler_item(item_name)
 
         # Disable contact techs
-        # This always happens for now, while I haven't committed to MCO'ing XComHQ
+        # This always happens for now, while I haven't committed to MCO-ing XComHQ
         # (which currently seems like the only way to fix them)
         self.loc_manager.disable_location("ResistanceCommunications")
         self.item_manager.disable_item("ResistanceCommunicationsCompleted")
@@ -248,8 +253,10 @@ class X2WOTCWorld(World):
             "goal_location": Goal.value_to_location[self.options.goal.value]
         }
 
-        option_names = [attr.name for attr in dataclasses.fields(self.options_dataclass)
-                        if attr not in dataclasses.fields(PerGameCommonOptions)]
-        slot_data |= self.options.as_dict(*option_names)
+        slot_data |= self.options.as_dict(*self.option_names)
+        return slot_data
 
+    # Trigger UT re-gen
+    @staticmethod
+    def interpret_slot_data(slot_data: dict[str, Any]) -> dict[str, Any]:
         return slot_data
