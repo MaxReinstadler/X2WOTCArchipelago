@@ -73,7 +73,6 @@ async def scout_loop():
 def get_locations_info(checks: list[str]) -> LocationsInfo:
     locations_info: LocationsInfo = {}
     for loc_name in checks:
-
         try:
             loc_data = location_table[loc_name]
             loc_id = loc_data.id
@@ -111,9 +110,8 @@ def get_locations_info(checks: list[str]) -> LocationsInfo:
 
 # ----------------------------------------------------- CHECK -------------------------------------------------------- #
 
-async def send_checks(checks: list[str]):
+async def send_checks(checks: list[str]) -> bool:
     for loc_name in checks:
-
         try:
             loc_id = location_table[loc_name].id
         except KeyError:
@@ -121,29 +119,28 @@ async def send_checks(checks: list[str]):
             continue
 
         if loc_id is None:
+            if not ctx.connected.is_set():
+                logger.debug(f"Proxy: Client not connected, cannot check for victory")
+                continue
+
             logger.debug(f"Proxy: Location {loc_name} is event, checking for victory")
             if not ctx.finished_game and loc_name == ctx.slot_data["goal_location"]:
+                ctx.finished_game = True
                 await ctx.send_msgs([{
                     "cmd": "StatusUpdate",
                     "status": ClientStatus.CLIENT_GOAL
                 }])
-                ctx.finished_game = True
-            continue
-
-        if loc_id not in ctx.server_locations:
-            logger.debug(f"Proxy: Location {loc_name} is disabled")
             continue
 
         ctx.locations_checked.add(loc_id)
 
-    new_locations = ctx.locations_checked & ctx.missing_locations
-    if new_locations:
-        await ctx.send_msgs([{
-            "cmd": "LocationChecks",
-            "locations": list(new_locations)
-        }])
+    if not ctx.connected.is_set():
+        logger.debug("Proxy: Client not connected, cannot send location checks")
+        return False
 
+    await ctx.check_locations(ctx.locations_checked)
     logger.debug("Proxy: Location checks sent")
+    return True
 
 # ---------------------------------------------------- RECEIVE ------------------------------------------------------- #
 
@@ -188,13 +185,13 @@ def get_received_items(layer: str, number_received: int) -> ItemsInfo:
 # ----------------------------------------------------- CHECK -------------------------------------------------------- #
 
 async def handle_check(request: web.Request):
-    if not ctx.connected.is_set():
+    checks = [check for check in request.match_info["tail"].split("/") if check != ""]
+
+    if not await send_checks(checks):
         return web.Response(status=503)
     await ctx.scouted.wait()
 
-    checks = [check for check in request.match_info["tail"].split("/") if check != ""]
     response_body = ""
-
     for loc_name, (item_name, network_item, slot_info) in get_locations_info(checks).items():
         if response_body != "":
             response_body += "\n\n"
@@ -228,7 +225,6 @@ async def handle_check(request: web.Request):
             response_body += "Archipelago Item Sent\n"
             response_body += f"Sent {item_name} to no one..."
 
-    await send_checks(checks)
     return web.Response(text=response_body)
 
 # ----------------------------------------------------- HINT --------------------------------------------------------- #
