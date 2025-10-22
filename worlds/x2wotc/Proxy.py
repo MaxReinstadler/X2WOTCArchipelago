@@ -110,7 +110,7 @@ def get_locations_info(checks: list[str]) -> LocationsInfo:
 
 # ----------------------------------------------------- CHECK -------------------------------------------------------- #
 
-async def send_checks(checks: list[str]) -> bool:
+async def send_checks(checks: list[str], connected: bool = True):
     for loc_name in checks:
         try:
             loc_id = location_table[loc_name].id
@@ -119,7 +119,7 @@ async def send_checks(checks: list[str]) -> bool:
             continue
 
         if loc_id is None:
-            if not ctx.connected.is_set():
+            if not connected:
                 logger.debug(f"Proxy: Client not connected, cannot check for victory")
                 continue
 
@@ -134,13 +134,12 @@ async def send_checks(checks: list[str]) -> bool:
 
         ctx.locations_checked.add(loc_id)
 
-    if not ctx.connected.is_set():
+    if not connected:
         logger.debug("Proxy: Client not connected, cannot send location checks")
-        return False
+        return
 
     await ctx.check_locations(ctx.locations_checked)
     logger.debug("Proxy: Location checks sent")
-    return True
 
 # ---------------------------------------------------- RECEIVE ------------------------------------------------------- #
 
@@ -187,7 +186,8 @@ def get_received_items(layer: str, number_received: int) -> ItemsInfo:
 async def handle_check(request: web.Request):
     checks = [check for check in request.match_info["tail"].split("/") if check != ""]
 
-    if not await send_checks(checks):
+    if not ctx.connected.is_set():
+        await send_checks(checks, connected=False)
         return web.Response(status=503)
     await ctx.scouted.wait()
 
@@ -225,6 +225,7 @@ async def handle_check(request: web.Request):
             response_body += "Archipelago Item Sent\n"
             response_body += f"Sent {item_name} to no one..."
 
+    await send_checks(checks)
     return web.Response(text=response_body)
 
 # ----------------------------------------------------- HINT --------------------------------------------------------- #
