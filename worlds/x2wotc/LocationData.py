@@ -539,7 +539,7 @@ vanilla_enemy_kills: dict[str, X2WOTCLocationData] = {
         difficulty = 65.0
     ),
     "KillAndromedonRobot": X2WOTCLocationData(
-        display_name = enemy_destroy_location_prefix + "Andromedon Suit",
+        display_name = enemy_destroy_location_prefix + "Andromedon Shell",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "EnemyKill",
