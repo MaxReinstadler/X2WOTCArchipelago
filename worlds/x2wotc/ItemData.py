@@ -544,15 +544,16 @@ progressive_tech_items: dict[str, X2WOTCItemData] = {
             "PlasmaRifleCompleted"
         ]
     ),
-    "ProgressiveMeleeTechCompleted": X2WOTCItemData(
-        display_name = tech_item_prefix + "Progressive Melee Weapon",
+    "ProgressiveRifleTechCompleted+": X2WOTCItemData(
+        display_name = tech_item_prefix + "Progressive Rifle+",
         id = get_new_item_id(),
         classification = ItemClassification.progression,
         type = "TechCompleted",
         tags = ["weapon", "progressive"],
         stages = [
-            "AutopsyAdventStunLancerCompleted",
-            "AutopsyArchonCompleted"
+            "ModularWeaponsCompleted",
+            "MagnetizedWeaponsCompleted",
+            "PlasmaRifleCompleted"
         ]
     ),
     "ProgressiveArmorTechCompleted": X2WOTCItemData(
@@ -564,6 +565,29 @@ progressive_tech_items: dict[str, X2WOTCItemData] = {
         stages = [
             "PlatedArmorCompleted",
             "PoweredArmorCompleted"
+        ]
+    ),
+    "ProgressiveArmorTechCompleted+": X2WOTCItemData(
+        display_name = tech_item_prefix + "Progressive Armor+",
+        id = get_new_item_id(),
+        classification = ItemClassification.progression,
+        type = "TechCompleted",
+        tags = ["armor", "progressive"],
+        stages = [
+            "HybridMaterialsCompleted",
+            "PlatedArmorCompleted",
+            "PoweredArmorCompleted"
+        ]
+    ),
+    "ProgressiveMeleeTechCompleted": X2WOTCItemData(
+        display_name = tech_item_prefix + "Progressive Melee Weapon",
+        id = get_new_item_id(),
+        classification = ItemClassification.progression,
+        type = "TechCompleted",
+        tags = ["weapon", "progressive"],
+        stages = [
+            "AutopsyAdventStunLancerCompleted",
+            "AutopsyArchonCompleted"
         ]
     ),
     "ProgressiveGREMLINTechCompleted": X2WOTCItemData(

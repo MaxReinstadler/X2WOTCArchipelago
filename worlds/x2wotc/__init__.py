@@ -139,20 +139,26 @@ class X2WOTCWorld(World):
 
         # Enable progressive tech items
         if "RifleTech" in self.options.progressive_items:
+            if not self.item_manager.enable_progressive_item("ProgressiveRifleTechCompleted+"):
+                print(f"X2WOTC: Failed to enable progressive rifle tech+ for player {self.player_name}")
+        elif "RifleTech" in self.options.progressive_items:
             if not self.item_manager.enable_progressive_item("ProgressiveRifleTechCompleted"):
-                print(f"X2WOTC: Failed to enable progressive rifle techs for player {self.player_name}")
+                print(f"X2WOTC: Failed to enable progressive rifle tech for player {self.player_name}")
+        if "ArmorTech+" in self.options.progressive_items:
+            if not self.item_manager.enable_progressive_item("ProgressiveArmorTechCompleted+"):
+                print(f"X2WOTC: Failed to enable progressive armor tech+ for player {self.player_name}")
+        elif "ArmorTech" in self.options.progressive_items:
+            if not self.item_manager.enable_progressive_item("ProgressiveArmorTechCompleted"):
+                print(f"X2WOTC: Failed to enable progressive armor tech for player {self.player_name}")
         if "MeleeWeaponTech" in self.options.progressive_items:
             if not self.item_manager.enable_progressive_item("ProgressiveMeleeTechCompleted"):
-                print(f"X2WOTC: Failed to enable progressive melee techs for player {self.player_name}")
-        if "ArmorTech" in self.options.progressive_items:
-            if not self.item_manager.enable_progressive_item("ProgressiveArmorTechCompleted"):
-                print(f"X2WOTC: Failed to enable progressive armor techs for player {self.player_name}")
+                print(f"X2WOTC: Failed to enable progressive melee tech for player {self.player_name}")
         if "GREMLINTech" in self.options.progressive_items:
             if not self.item_manager.enable_progressive_item("ProgressiveGREMLINTechCompleted"):
-                print(f"X2WOTC: Failed to enable progressive GREMLIN techs for player {self.player_name}")
+                print(f"X2WOTC: Failed to enable progressive GREMLIN tech for player {self.player_name}")
         if "PsionicsTech" in self.options.progressive_items:
             if not self.item_manager.enable_progressive_item("ProgressivePsionicsTechCompleted"):
-                print(f"X2WOTC: Failed to enable progressive psionics techs for player {self.player_name}")
+                print(f"X2WOTC: Failed to enable progressive psionics tech for player {self.player_name}")
 
         # Enable tech fragment items
         if self.options.chosen_weapon_fragments == ChosenWeaponFragments.option_two:

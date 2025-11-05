@@ -82,17 +82,26 @@ class ChosenHuntSanity(Toggle):
 
 class ProgressiveItems(OptionSet):
     """Force these items to be collected in order.
-    Valid values: 'RifleTech', 'MeleeWeaponTech', 'ArmorTech', 'GREMLINTech', 'PsionicsTech'"""
+    Valid values: 'RifleTech', 'RifleTech+' (includes [Tech] Modular Weapons),
+                  'ArmorTech', 'ArmorTech+' (includes [Tech] Hybrid Materials),
+                  'MeleeWeaponTech', 'GREMLINTech', 'PsionicsTech'"""
     display_name = "Progressive Items"
-    progressive_items = frozenset([
+    valid_keys = frozenset([
         "RifleTech",
-        "MeleeWeaponTech",
+        "RifleTech+",
         "ArmorTech",
+        "ArmorTech+",
+        "MeleeWeaponTech",
         "GREMLINTech",
         "PsionicsTech"
     ])
-    valid_keys = progressive_items
-    default = progressive_items
+    default = frozenset([
+        "RifleTech",
+        "ArmorTech",
+        "MeleeWeaponTech",
+        "GREMLINTech",
+        "PsionicsTech"
+    ])
 
 
 class ChosenWeaponFragments(Choice):
