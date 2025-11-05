@@ -22,7 +22,7 @@ items: dict[str, X2WOTCItemData] = {
         tags = ["armor", "weapon"],
         power = 25.0,
         normal_location = "Autopsy_AshFlameViper"
-    )
+    ),
 }
 
 # Electing not to add ammo checks because they require specific experimental ammo to build which involves RNG
@@ -43,10 +43,10 @@ locations: dict[str, X2WOTCLocationData] = {
         type = "EnemyKill",
         tags = [],
         difficulty = 25.0  # FL 6
-    )
+    ),
 }
 
 config: dict[str, str] = {
     "X2Item_ResearchCompleted": "+CheckCompleteTechs=(TechName=Autopsy_AshFlameViper)",
-    "X2EventListener_WOTCArchipelago": "+CheckKillDefaultCharacterGroups=AshFlameViper"
+    "X2EventListener_WOTCArchipelago": "+CheckKillDefaultCharacterGroups=AshFlameViper",
 }

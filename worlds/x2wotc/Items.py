@@ -8,7 +8,7 @@ from .ItemData import (
     staff_item_table,
     trap_item_table,
     filler_item_table,
-    item_table
+    item_table,
 )
 
 from .mods import mod_items, mod_filler_items
@@ -19,9 +19,12 @@ class X2WOTCItem(Item):
 
     def __init__(self, player: int, name: str):
         item_data = item_table[name]
-        super(X2WOTCItem, self).__init__(item_data.display_name,
-                                         item_data.classification,
-                                         item_data.id, player)
+        super(X2WOTCItem, self).__init__(
+            item_data.display_name,
+            item_data.classification,
+            item_data.id,
+            player
+        )
 
 
 # Add mod items
@@ -178,15 +181,15 @@ class ItemManager:
             (
                 int(num_filler_items * weapon_mod_share),
                 list(self.weapon_mod_item_table.keys())
-             ),
+            ),
             (
                 int(num_filler_items * staff_share),
                 list(self.staff_item_table.keys())
-             ),
+            ),
             (
                 int(num_filler_items * trap_share),
                 list(self.trap_item_table.keys())
-            )
+            ),
         ]
 
         num_unfilled = num_filler_items

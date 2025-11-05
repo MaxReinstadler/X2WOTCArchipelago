@@ -23,7 +23,7 @@ items: dict[str, X2WOTCItemData] = {
         tags = ["armor", "weapon"],
         power = 35.0,
         normal_location = "Autopsy_AshMutonDestroyer"
-    )
+    ),
 }
 
 locations: dict[str, X2WOTCLocationData] = {
@@ -51,7 +51,7 @@ locations: dict[str, X2WOTCLocationData] = {
         type = "ItemUse",
         tags = ["grenade", "proving_ground", "req:Autopsy_AshMutonDestroyerCompleted"],
         difficulty = 20.0,
-    )
+    ),
 }
 
 config: dict[str, str] = {
@@ -63,5 +63,5 @@ config: dict[str, str] = {
         "Members[2]=AshMutonDestroyerM3, "
         "Members[3]=AshMutonDestroyerM4)"
     ),
-    "X2Effect_ItemUseCheck": "+CheckUseItems=Weapon_AshConcussionGrenadeXCom"
+    "X2Effect_ItemUseCheck": "+CheckUseItems=Weapon_AshConcussionGrenadeXCom",
 }

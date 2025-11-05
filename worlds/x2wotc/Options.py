@@ -41,7 +41,7 @@ class Goal(Choice):
         1: "Broadcast",
         2: "Stronghold1",
         3: "Stronghold2",
-        4: "Stronghold3"
+        4: "Stronghold3",
     }
 
 
@@ -56,7 +56,7 @@ class CampaignCompletionRequirements(OptionSet):
     completion_requirements = frozenset([
         "PsiGateObjective",
         "StasisSuitObjective",
-        "AvatarCorpseObjective"
+        "AvatarCorpseObjective",
     ])
     valid_keys = completion_requirements
     default = frozenset()
@@ -93,14 +93,14 @@ class ProgressiveItems(OptionSet):
         "ArmorTech+",
         "MeleeWeaponTech",
         "GREMLINTech",
-        "PsionicsTech"
+        "PsionicsTech",
     ])
     default = frozenset([
         "RifleTech",
         "ArmorTech",
         "MeleeWeaponTech",
         "GREMLINTech",
-        "PsionicsTech"
+        "PsionicsTech",
     ])
 
 
@@ -174,7 +174,7 @@ class SkipMissionTypes(OptionSet):
     mission_types = frozenset([
         "SupplyRaid",
         "CouncilMission",
-        "ResistanceOp"
+        "ResistanceOp",
     ])
     valid_keys = mission_types
     default = mission_types
@@ -187,7 +187,7 @@ class DisableCovertActionRisks(OptionSet):
     display_name = "Disarm Covert Action Risks"
     covert_action_risks = frozenset([
         "Ambush",
-        "Capture"
+        "Capture",
     ])
     valid_keys = covert_action_risks
     default = covert_action_risks

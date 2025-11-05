@@ -11,9 +11,9 @@ example_mod_locations: dict[str, X2WOTCLocationData] = {
         tags = ["example_tag_1", "example_tag_2"],
         difficulty = 12.34,
         normal_item = "ExampleModItem"
-    )
+    ),
 }
 
 locations: dict[str, X2WOTCLocationData] = {
-    **example_mod_locations
+    **example_mod_locations,
 }

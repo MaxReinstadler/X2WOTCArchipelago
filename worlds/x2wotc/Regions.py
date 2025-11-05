@@ -16,7 +16,7 @@ class RegionManager:
             "Avenger": {},
             "Research Lab": {},
             "Shadow Chamber": {},
-            "Resistance Ring": {}
+            "Resistance Ring": {},
         }
 
         self.loc_manager: LocationManager = world.loc_manager

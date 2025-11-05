@@ -14,7 +14,7 @@ example_mod_items: dict[str, X2WOTCItemData] = {
         tags = ["example_tag_1", "example_tag_2"],
         power = 12.34,
         normal_location = "ExampleModLocation"
-    )
+    ),
 }
 
 example_mod_filler_items: dict[str, X2WOTCItemData] = {
@@ -24,16 +24,16 @@ example_mod_filler_items: dict[str, X2WOTCItemData] = {
         layer = "Strategy",  # Or "Tactical"
         type = "ExampleType",
         tags = ["example_tag_1", "example_tag_2"],
-    )
+    ),
 }
 
 # NOTE: items must include filler as well
 items: dict[str, X2WOTCItemData] = {
     **example_mod_items,
-    **example_mod_filler_items
+    **example_mod_filler_items,
 }
 
 # Mod filler items will be treated like resource items
 filler_items: dict[str, X2WOTCItemData] = {
-    **example_mod_filler_items
+    **example_mod_filler_items,
 }

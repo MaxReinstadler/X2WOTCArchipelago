@@ -184,7 +184,7 @@ class X2WOTCContext(SuperContext):
         # then fall back to the Steam installation path if it doesn't exist
         manuals = [
             "/XCom2-WarOfTheChosen/XComGame/Mods/WOTCArchipelago/Config/XComWOTCArchipelago.ini",
-            "/XCom2-WarOfTheChosen/XComGame/Mods/3281191663/Config/XComWOTCArchipelago.ini"
+            "/XCom2-WarOfTheChosen/XComGame/Mods/3281191663/Config/XComWOTCArchipelago.ini",
         ]
         steam = "/workshop/content/268500/3281191663/Config/XComWOTCArchipelago.ini"  # after /steamapps
 
@@ -325,7 +325,7 @@ class X2WOTCContext(SuperContext):
         self.update_config({
             "ClientVersion": "",
             "RecModVersion": "",
-            "DEF_AP_GEN_ID": ""
+            "DEF_AP_GEN_ID": "",
         })
 
     def patch_encounters(self):
