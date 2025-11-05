@@ -6,6 +6,7 @@ from worlds.generic.Rules import set_rule, add_rule
 if TYPE_CHECKING:
     from worlds.x2wotc import X2WOTCWorld
 
+from .EnemyRando import EnemyRandoManager
 from .Items import ItemManager
 from .Locations import LocationManager
 from .Options import X2WOTCOptions, Goal
@@ -15,6 +16,7 @@ class RuleManager:
     def __init__(self, world: "X2WOTCWorld"):
         self.item_manager: ItemManager = world.item_manager
         self.loc_manager: LocationManager = world.loc_manager
+        self.enemy_rando_manager: EnemyRandoManager = world.enemy_rando_manager
         self.options: X2WOTCOptions = world.options
         self.multiworld: MultiWorld = world.multiworld
         self.player: int = world.player
@@ -45,8 +47,10 @@ class RuleManager:
             return True
 
         loc_display_name = self.loc_manager.location_table[loc_name].display_name
-        location = self.multiworld.get_location(loc_display_name, self.player)
-        return location.can_reach(state)
+        return state.can_reach_location(loc_display_name, self.player)
+
+    def get_reachability_rule(self, loc_name: str) -> Callable[[CollectionState], bool]:
+        return lambda state: self.can_reach_or_disabled(state, loc_name)
 
     #==================================================================================================================#
     #                                             POWER RULE HELPERS                                                   #
@@ -70,7 +74,16 @@ class RuleManager:
         return self.get_current_power(state) >= power
 
     def can_reasonably_reach(self, state: CollectionState, location: str) -> bool:
-        difficulty = self.loc_manager.location_table[location].difficulty
+        loc_data = self.loc_manager.location_table[location]
+        base_difficulty = loc_data.difficulty
+
+        # Handle difficulty tags for Enemy Rando
+        diff_tag_enemies = [tag[5:] for tag in loc_data.tags if tag.startswith("diff:")]
+        diff_tag_difficulty = self.enemy_rando_manager.get_difficulty(diff_tag_enemies)
+        if "autopsy" in loc_data.tags:
+            diff_tag_difficulty += 2.0  # Autopsies take time
+
+        difficulty = max(base_difficulty, diff_tag_difficulty)
         total_power = self.item_manager.total_power
         req_power = difficulty * total_power / 100.0
         return self.has_power(state, req_power)
@@ -294,11 +307,7 @@ class RuleManager:
                 add_rule(location, lambda state: (self.can_do_blacksite_mission(state)
                                                   or self.can_skulljack_officer(state)))
 
-            if loc_name == "CodexBrainPt1":
-                add_rule(location, lambda state: self.can_skulljack_officer(state))
-
-            if loc_name == "CodexBrainPt2":
-                add_rule(location, lambda state: self.can_reach_or_disabled(state, "CodexBrainPt1"))
+            # CodexBrainPt1 and CodexBrainPt2 are handled by tags
 
             if loc_name == "BlacksiteData":
                 add_rule(location, lambda state: self.can_do_blacksite_mission(state))
@@ -309,10 +318,7 @@ class RuleManager:
             if loc_name == "PsiGate":
                 add_rule(location, lambda state: self.can_do_psi_gate_mission(state))
 
-            if loc_name == "AutopsyAdventPsiWitch":
-                add_rule(location, lambda state: (self.can_reach_or_disabled(state, "ForgeStasisSuit")
-                                                  and self.can_reach_or_disabled(state, "PsiGate")
-                                                  and self.can_skulljack_codex(state)))
+            # AutopsyAdventPsiWitch is handled by tags
 
             if loc_name == "Broadcast":
                 add_rule(location, lambda state: self.can_do_truth_mission(state))
@@ -360,13 +366,20 @@ class RuleManager:
             if loc_name == "Stronghold3":
                 add_rule(location, lambda state: self.can_defeat_all_chosen(state))
 
-            #---------------------------------- Skulljack enemy kill rules --------------------------------------------#
+            #---------------------------------------- Skulljack rules -------------------------------------------------#
             #----------------------------------------------------------------------------------------------------------#
-            if loc_name == "KillCyberus":
+            if "skulljack_officer" in loc_data.tags:
                 add_rule(location, lambda state: self.can_skulljack_officer(state))
 
-            if loc_name == "KillAdventPsiWitch":
+            if "skulljack_codex" in loc_data.tags:
                 add_rule(location, lambda state: self.can_skulljack_codex(state))
+
+            #---------------------------------------- Tech tree rules -------------------------------------------------#
+            #----------------------------------------------------------------------------------------------------------#
+            for tag in loc_data.tags:
+                if tag.startswith("tree:"):
+                    tree_rule = self.get_reachability_rule(tag[5:])
+                    add_rule(location, tree_rule)
 
             #------------------------------------ Item requirement rules ----------------------------------------------#
             #----------------------------------------------------------------------------------------------------------#
@@ -374,13 +387,9 @@ class RuleManager:
                 add_rule(location, lambda state: self.has_proving_ground(state))
 
             for tag in loc_data.tags:
-                if tag.startswith("req:"):
-                    requirement_rule = self.get_item_count_rule(tag[4:], 1)
+                if tag.startswith("item:"):
+                    requirement_rule = self.get_item_count_rule(tag[5:], 1)
                     add_rule(location, requirement_rule)
-
-            # UseSKULLJACK depends on objectives
-            if loc_name == "UseSKULLJACK":
-                add_rule(location, lambda state: self.can_skulljack_officer(state))
 
             #----------------------------------------------------------------------------------------------------------#
             #------------------------- See ./Regions.py for entrance access rules -------------------------------------#

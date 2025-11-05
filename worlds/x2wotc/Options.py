@@ -137,6 +137,12 @@ class TrapShare(Range):
     default = 0
 
 
+class EnemyRando(Toggle):
+    """Enable enemy shuffle, randomizing both scripted and procedural encounters."""
+    display_name = "Enemy Rando"
+    default = False
+
+
 class HintResearchProjects(Choice):
     """Enable research project hints in the Avenger laboratory and shadow chamber.
     Can be changed in-game via Mod Config Menu.
@@ -261,6 +267,9 @@ class X2WOTCOptions(PerGameCommonOptions):
     weapon_mod_share: WeaponModShare
     staff_share: StaffShare
     trap_share: TrapShare
+
+    # More randomization options
+    enemy_rando: EnemyRando
 
     # Config options
     hint_research_projects: HintResearchProjects

@@ -18,6 +18,7 @@ try:
 except ModuleNotFoundError:
     from CommonClient import CommonContext as SuperContext
 
+from .EnemyRando import EnemyRandoManager
 from .Options import HintResearchProjects
 from .Proxy import run_proxy
 from .Version import client_version, recommended_mod_version
@@ -175,6 +176,8 @@ class X2WOTCContext(SuperContext):
         self.slot_data = {}
         self.active_mods = []
 
+        self.enemy_rando_manager = EnemyRandoManager()
+
         self.game_path: str = settings.get_settings()["x2wotc_options"]["game_path"]
 
         # Check for the mod config file in the manual installation paths first,
@@ -193,7 +196,11 @@ class X2WOTCContext(SuperContext):
             self.config_file = self.game_path.split("/common/")[0] + steam
 
         self.spoiler_file = self.config_file.replace("XComWOTCArchipelago.ini", "XComWOTCArchipelago_Spoiler.ini")
-        if not os.path.isfile(self.config_file) or not os.path.isfile(self.spoiler_file):
+        self.encounters_file = self.config_file.replace("XComWOTCArchipelago.ini", "XComEncounters.ini")
+        self.encounter_lists_file = self.config_file.replace("XComWOTCArchipelago.ini", "XComEncounterLists.ini")
+
+        if (not os.path.isfile(self.config_file) or not os.path.isfile(self.spoiler_file)
+            or not os.path.isfile(self.encounters_file) or not os.path.isfile(self.encounter_lists_file)):
             raise FileNotFoundError(
                 "X2WOTCClient: Config file not found in game folder or Steam workshop folder. "
                 "Please check the game_path setting in your `host.yaml` and make sure the mod is installed."
@@ -220,9 +227,11 @@ class X2WOTCContext(SuperContext):
         if cmd == "Connected":
             self.slot_data = args["slot_data"]
             self.active_mods = sorted(self.slot_data["active_mods"])
+            self.enemy_rando_manager.set_enemy_shuffle(self.slot_data["enemy_shuffle"])
             self.connected.set()
             self.patch_config()
             self.update_config()
+            self.patch_encounters()
             logger.info("Client connected and config updated. Please restart your game if it is already running.")
 
         if cmd == "LocationInfo":
@@ -319,8 +328,32 @@ class X2WOTCContext(SuperContext):
             "DEF_AP_GEN_ID": ""
         })
 
+    def patch_encounters(self):
+        for file_path in [self.encounters_file, self.encounter_lists_file]:
+            with open(file_path, "r") as file:
+                old_lines = file.readlines()
+
+            new_text = ""
+            for old_line in old_lines:
+                if not old_line.startswith("+"):
+                    new_text += old_line
+
+                if old_line.startswith("-"):
+                    new_line = old_line.replace("-", "+", 1)
+                    for placement_index, placed_index in enumerate(self.enemy_rando_manager.enemy_shuffle):
+                        placement_enemy = self.enemy_rando_manager.enemy_names[placement_index]
+                        new_line = new_line.replace(f"\"{placement_enemy}\"", f"[enemy_{placed_index}]")
+                    for placed_index, placed_enemy in enumerate(self.enemy_rando_manager.enemy_names):
+                        new_line = new_line.replace(f"[enemy_{placed_index}]", f"\"{placed_enemy}\"")
+                    new_text += new_line
+
+            with open(file_path, "w") as file:
+                file.write(new_text)
+
     def fill_spoiler(self, entries: list[dict[str, str | int]]):
         spoiler = "[WOTCArchipelago.WOTCArchipelago_Spoiler]\n"
+
+        # Multiworld item placements
         for entry in entries:
             spoiler += (
                 "+Spoiler=("
@@ -332,6 +365,28 @@ class X2WOTCContext(SuperContext):
                 f"bUseful={bool(entry["flags"] & 0b010)}, "
                 f"bTrap={bool(entry["flags"] & 0b100)})\n"
             )
+
+        # Enemy Rando
+        if self.slot_data["enemy_rando"]:
+            for placed_enemy in self.enemy_rando_manager.enemy_names:
+                placement_enemy = self.enemy_rando_manager.get_placement_enemy(placed_enemy)
+                spoiler += (
+                    "+EnemyRando=("
+                    f"DefaultTemplateName=\"{placement_enemy}\", "
+                    f"OverrideTemplateName=\"{placed_enemy}\")\n"
+                )
+
+                # Stat changes
+                stat_changes = self.enemy_rando_manager.get_stat_changes(placed_enemy)
+                for stat_change in stat_changes:
+                    spoiler += (
+                        f"+CharStatChanges=("
+                        f"TemplateName=\"{placed_enemy}\", "
+                        f"StatType=\"{stat_change.type}\", "
+                        f"Delta={stat_change.delta}, "
+                        f"Minimum={stat_change.min}, "
+                        f"Maximum={stat_change.max})\n"
+                    )
 
         with open(self.spoiler_file, "w") as file:
             file.write(spoiler)

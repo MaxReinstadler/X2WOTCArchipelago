@@ -1,5 +1,5 @@
 import dataclasses
-from typing import Any, ClassVar
+from typing import Any, ClassVar, TextIO
 
 from BaseClasses import MultiWorld, Tutorial
 from Options import PerGameCommonOptions, OptionError
@@ -7,6 +7,7 @@ from settings import Group, UserFolderPath
 from worlds.AutoWorld import WebWorld, World
 from worlds.LauncherComponents import Component, Type, components, launch_subprocess
 
+from .EnemyRando import EnemyRandoManager
 from .Items import X2WOTCItem, ItemManager, item_display_name_to_id, item_groups
 from .Locations import LocationManager, loc_display_name_to_id, loc_groups
 from .Options import X2WOTCOptions, AlienHuntersDLC, Goal, ChosenWeaponFragments
@@ -77,6 +78,7 @@ class X2WOTCWorld(World):
         super().__init__(multiworld, player)
         self.item_manager = ItemManager()
         self.loc_manager = LocationManager()
+        self.enemy_rando_manager = EnemyRandoManager()
         self.reg_manager: RegionManager = None
         self.rule_manager: RuleManager = None
 
@@ -90,8 +92,10 @@ class X2WOTCWorld(World):
         if re_gen_passthrough and self.game in re_gen_passthrough:
             slot_data = re_gen_passthrough[self.game]
             for option_name in self.option_names:
-                if option_name in slot_data:
-                    setattr(self.options, option_name, slot_data[option_name])
+                setattr(self.options, option_name, slot_data[option_name])
+
+            # Enemy Rando
+            self.enemy_rando_manager.set_enemy_shuffle(slot_data["enemy_shuffle"])
 
         # Disable inactive mods...
         for mod_data in mods_data:
@@ -215,6 +219,10 @@ class X2WOTCWorld(World):
             self.random
         )
 
+        # Shuffle enemies
+        if self.options.enemy_rando:
+            self.enemy_rando_manager.shuffle_enemies(self.random)
+
     def create_item(self, name: str) -> X2WOTCItem:
         item_name = self.item_manager.item_display_name_to_key[name]
         return X2WOTCItem(self.player, item_name)
@@ -250,7 +258,8 @@ class X2WOTCWorld(World):
         slot_data = {
             "seed_name": self.multiworld.seed_name,
             "player": self.player,
-            "goal_location": Goal.value_to_location[self.options.goal.value]
+            "goal_location": Goal.value_to_location[self.options.goal.value],
+            "enemy_shuffle": self.enemy_rando_manager.enemy_shuffle,
         }
 
         slot_data |= self.options.as_dict(*self.option_names)
@@ -260,3 +269,12 @@ class X2WOTCWorld(World):
     @staticmethod
     def interpret_slot_data(slot_data: dict[str, Any]) -> dict[str, Any]:
         return slot_data
+
+    def write_spoiler(self, spoiler_handle: TextIO):
+        if self.options.enemy_rando:
+            spoiler_handle.write(f"\n\n=== Enemy Rando for player {self.player_name} ===\n")
+            for placement_index, placed_index in enumerate(self.enemy_rando_manager.enemy_shuffle):
+                spoiler_handle.write(
+                    f"{self.enemy_rando_manager.enemy_names[placement_index]} <- "
+                    f"{self.enemy_rando_manager.enemy_names[placed_index]}\n"
+                )

@@ -32,8 +32,8 @@ locations: dict[str, X2WOTCLocationData] = {
         id = get_new_location_id(),
         layer = "Strategy",
         type = "Tech",
-        tags = ["autopsy"],
-        difficulty = 25.0,
+        tags = ["autopsy", "tree:AlienBiotech"],
+        difficulty = 27.0,  # FL 6
         normal_item = "Autops_AshFlameViperCompleted"
     ),
     "KillAshFlameViper": X2WOTCLocationData(
@@ -42,7 +42,7 @@ locations: dict[str, X2WOTCLocationData] = {
         layer = "Tactical",
         type = "EnemyKill",
         tags = [],
-        difficulty = 25.0
+        difficulty = 25.0  # FL 6
     )
 }
 

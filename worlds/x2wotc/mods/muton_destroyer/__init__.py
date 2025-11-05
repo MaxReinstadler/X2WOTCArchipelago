@@ -32,8 +32,8 @@ locations: dict[str, X2WOTCLocationData] = {
         id = get_new_location_id(),
         layer = "Strategy",
         type = "Tech",
-        tags = ["autopsy"],
-        difficulty = 30.0,
+        tags = ["autopsy", "tree:AlienBiotech"],
+        difficulty = 31.0,  # FL 7
         normal_item = "Autopsy_AshMutonDestroyerCompleted"
     ),
     "KillAshMutonDestroyer": X2WOTCLocationData(
@@ -42,7 +42,7 @@ locations: dict[str, X2WOTCLocationData] = {
         layer = "Tactical",
         type = "EnemyKill",
         tags = [],
-        difficulty = 30.0
+        difficulty = 29.0  # FL 7
     ),
     "UseWeapon_AshConcussionGrenadeXCom": X2WOTCLocationData(
         display_name = item_use_location_prefix + "Concussion Grenade",
