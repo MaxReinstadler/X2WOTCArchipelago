@@ -94,7 +94,7 @@ vanilla_weapon_techs: dict[str, X2WOTCLocationData] = {
         tags = ["tree:PlasmaRifle"],
         difficulty = 55.0,
         normal_item = "AlloyCannonCompleted"
-    )
+    ),
 }
 
 vanilla_armor_techs: dict[str, X2WOTCLocationData] = {
@@ -121,7 +121,7 @@ vanilla_armor_techs: dict[str, X2WOTCLocationData] = {
         tags = ["tree:Tech_Elerium"],
         difficulty = 45.0,
         normal_item = "PoweredArmorCompleted"
-    )
+    ),
 }
 
 vanilla_autopsy_techs: dict[str, X2WOTCLocationData] = {
@@ -230,7 +230,7 @@ vanilla_autopsy_techs: dict[str, X2WOTCLocationData] = {
         type = "Tech",
         tags = ["autopsy", "tree:AlienBiotech", "diff:Sectopod"],
         normal_item = "AutopsySectopodCompleted"
-    )
+    ),
 }
 
 vanilla_goldenpath_techs: dict[str, X2WOTCLocationData] = {
@@ -313,7 +313,7 @@ vanilla_goldenpath_techs: dict[str, X2WOTCLocationData] = {
         tags = ["goldenpath", "autopsy", "shadow", "tree:ForgeStasisSuit", "tree:PsiGate", "skulljack_codex"],
         difficulty = 70.0,
         normal_item = "AutopsyAdventPsiWitchCompleted"
-    )
+    ),
 }
 
 vanilla_other_techs: dict[str, X2WOTCLocationData] = {
@@ -340,7 +340,7 @@ vanilla_other_techs: dict[str, X2WOTCLocationData] = {
         tags = ["tree:AutopsySectoid"],
         difficulty = 20.0,
         normal_item = "PsionicsCompleted"
-    )
+    ),
 }
 
 #=======================================================================================================================
@@ -383,7 +383,7 @@ alien_hunters_techs: dict[str, X2WOTCLocationData] = {
         difficulty = 75.0,
         dlc = "AH",
         normal_item = "AutopsyArchonKingCompleted"
-    )
+    ),
 }
 
 #=======================================================================================================================
@@ -423,7 +423,7 @@ wotc_autopsy_techs: dict[str, X2WOTCLocationData] = {
         tags = ["autopsy", "tree:AlienBiotech", "diff:SpectreM1", "diff:SpectreM2"],
         dlc = "WOTC",
         normal_item = "AutopsySpectreCompleted"
-    )
+    ),
 }
 
 wotc_chosen_weapon_techs: dict[str, X2WOTCLocationData] = {
@@ -453,7 +453,7 @@ wotc_chosen_weapon_techs: dict[str, X2WOTCLocationData] = {
         difficulty = 80.0,
         dlc = "WOTC",
         normal_item = "ChosenWarlockWeaponsCompleted"
-    )
+    ),
 }
 
 ########################################################################################################################
@@ -601,7 +601,7 @@ vanilla_enemy_kills: dict[str, X2WOTCLocationData] = {
         layer = "Tactical",
         type = "EnemyKill",
         tags = ["diff:Sectopod"]
-    )
+    ),
 }
 
 #=======================================================================================================================
@@ -635,7 +635,7 @@ alien_hunters_enemy_kills: dict[str, X2WOTCLocationData] = {
         tags = ["kill_ruler"],
         difficulty = 75.0,
         dlc = "AH"
-    )
+    ),
 }
 
 #=======================================================================================================================
@@ -702,7 +702,7 @@ wotc_enemy_kills: dict[str, X2WOTCLocationData] = {
         tags = ["kill_warlock"],
         difficulty = 80.0,
         dlc = "WOTC"
-    )
+    ),
 }
 
 ########################################################################################################################
@@ -886,7 +886,7 @@ vanilla_item_uses: dict[str, X2WOTCLocationData] = {
         type = "ItemUse",
         tags = ["weapon", "proving_ground", "item:PoweredArmorCompleted"],
         difficulty = 40.0  # 100 supplies, 2 cores, 10 alloys, 5 elerium (2 PG projects)
-    )
+    ),
 }
 
 #=======================================================================================================================
@@ -902,7 +902,7 @@ alien_hunters_item_uses: dict[str, X2WOTCLocationData] = {
         tags = ["grenade", "proving_ground", "item:ExperimentalWeaponsCompleted"],
         difficulty = 10.0,  # 35 supplies (1 PG project)
         dlc = "AH"
-    )
+    ),
 }
 
 #=======================================================================================================================
@@ -927,7 +927,7 @@ wotc_item_uses: dict[str, X2WOTCLocationData] = {
         tags = ["utility", "item:AutopsySpectreCompleted", "diff:SpectreM1", "diff:SpectreM2"],
         difficulty = 5.0,  # 50 supplies, 1 corpse
         dlc = "WOTC"
-    )
+    ),
 }
 
 ########################################################################################################################
@@ -1019,7 +1019,7 @@ chosen_hunt_covert_actions: dict[str, X2WOTCLocationData] = {
         difficulty = 80.0,
         dlc = "WOTC",
         normal_item = "DefaultChosenHuntReward"
-    )
+    ),
 }
 
 ########################################################################################################################
@@ -1051,7 +1051,7 @@ event_locations: dict[str, X2WOTCLocationData] = {
         display_name = "Stronghold 3",
         difficulty = 70.0,
         normal_item = "Stronghold3"
-    )
+    ),
 }
 
 ########################################################################################################################
@@ -1066,23 +1066,23 @@ tech_location_table: dict[str, X2WOTCLocationData] = {
     **vanilla_other_techs,
     **alien_hunters_techs,
     **wotc_autopsy_techs,
-    **wotc_chosen_weapon_techs
+    **wotc_chosen_weapon_techs,
 }
 
 kill_location_table: dict[str, X2WOTCLocationData] = {
     **vanilla_enemy_kills,
     **alien_hunters_enemy_kills,
-    **wotc_enemy_kills
+    **wotc_enemy_kills,
 }
 
 item_use_location_table: dict[str, X2WOTCLocationData] = {
     **vanilla_item_uses,
     **alien_hunters_item_uses,
-    **wotc_item_uses
+    **wotc_item_uses,
 }
 
 covert_action_location_table: dict[str, X2WOTCLocationData] = {
-    **chosen_hunt_covert_actions
+    **chosen_hunt_covert_actions,
 }
 
 location_table: dict[str, X2WOTCLocationData] = {
@@ -1090,5 +1090,5 @@ location_table: dict[str, X2WOTCLocationData] = {
     **kill_location_table,
     **item_use_location_table,
     **covert_action_location_table,
-    **event_locations
+    **event_locations,
 }

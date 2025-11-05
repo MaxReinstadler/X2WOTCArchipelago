@@ -107,7 +107,7 @@ vanilla_weapon_tech_items: dict[str, X2WOTCItemData] = {
         tags = ["weapon"],
         power = 160.0,
         normal_location = "AlloyCannon"
-    )
+    ),
 }
 
 vanilla_armor_tech_items: dict[str, X2WOTCItemData] = {
@@ -137,7 +137,7 @@ vanilla_armor_tech_items: dict[str, X2WOTCItemData] = {
         tags = ["armor"],
         power = 180.0,
         normal_location = "PoweredArmor"
-    )
+    ),
 }
 
 vanilla_autopsy_tech_items: dict[str, X2WOTCItemData] = {
@@ -275,7 +275,7 @@ vanilla_autopsy_tech_items: dict[str, X2WOTCItemData] = {
         tags = ["weapon", "utility"],
         power = 60.0,
         normal_location = "AutopsySectopod"
-    )
+    ),
 }
 
 vanilla_goldenpath_tech_items: dict[str, X2WOTCItemData] = {
@@ -368,7 +368,7 @@ vanilla_goldenpath_tech_items: dict[str, X2WOTCItemData] = {
         tags = ["mission"],
         power = 0.0,
         normal_location = "AutopsyAdventPsiWitch"
-    )
+    ),
 }
 
 vanilla_other_tech_items: dict[str, X2WOTCItemData] = {
@@ -398,7 +398,7 @@ vanilla_other_tech_items: dict[str, X2WOTCItemData] = {
         tags = ["facility", "weapon"],
         power = 140.0,
         normal_location = "Psionics"
-    )
+    ),
 }
 
 #=======================================================================================================================
@@ -445,7 +445,7 @@ alien_hunters_tech_items: dict[str, X2WOTCItemData] = {
         power = 130.0,
         dlc = "AH",
         normal_location = "AutopsyArchonKing"
-    )
+    ),
 }
 
 #=======================================================================================================================
@@ -492,7 +492,7 @@ wotc_autopsy_tech_items: dict[str, X2WOTCItemData] = {
         power = 10.0,
         dlc = "WOTC",
         normal_location = "AutopsySpectre"
-    )
+    ),
 }
 
 wotc_chosen_weapon_tech_items: dict[str, X2WOTCItemData] = {
@@ -525,7 +525,7 @@ wotc_chosen_weapon_tech_items: dict[str, X2WOTCItemData] = {
         power = 180.0,
         dlc = "WOTC",
         normal_location = "ChosenWarlockWeapons"
-    )
+    ),
 }
 
 #=======================================================================================================================
@@ -541,7 +541,7 @@ progressive_tech_items: dict[str, X2WOTCItemData] = {
         tags = ["weapon", "progressive"],
         stages = [
             "MagnetizedWeaponsCompleted",
-            "PlasmaRifleCompleted"
+            "PlasmaRifleCompleted",
         ]
     ),
     "ProgressiveRifleTechCompleted+": X2WOTCItemData(
@@ -553,7 +553,7 @@ progressive_tech_items: dict[str, X2WOTCItemData] = {
         stages = [
             "ModularWeaponsCompleted",
             "MagnetizedWeaponsCompleted",
-            "PlasmaRifleCompleted"
+            "PlasmaRifleCompleted",
         ]
     ),
     "ProgressiveArmorTechCompleted": X2WOTCItemData(
@@ -564,7 +564,7 @@ progressive_tech_items: dict[str, X2WOTCItemData] = {
         tags = ["armor", "progressive"],
         stages = [
             "PlatedArmorCompleted",
-            "PoweredArmorCompleted"
+            "PoweredArmorCompleted",
         ]
     ),
     "ProgressiveArmorTechCompleted+": X2WOTCItemData(
@@ -576,7 +576,7 @@ progressive_tech_items: dict[str, X2WOTCItemData] = {
         stages = [
             "HybridMaterialsCompleted",
             "PlatedArmorCompleted",
-            "PoweredArmorCompleted"
+            "PoweredArmorCompleted",
         ]
     ),
     "ProgressiveMeleeTechCompleted": X2WOTCItemData(
@@ -587,7 +587,7 @@ progressive_tech_items: dict[str, X2WOTCItemData] = {
         tags = ["weapon", "progressive"],
         stages = [
             "AutopsyAdventStunLancerCompleted",
-            "AutopsyArchonCompleted"
+            "AutopsyArchonCompleted",
         ]
     ),
     "ProgressiveGREMLINTechCompleted": X2WOTCItemData(
@@ -598,7 +598,7 @@ progressive_tech_items: dict[str, X2WOTCItemData] = {
         tags = ["utility", "weapon", "progressive"],
         stages = [
             "AutopsyAdventMECCompleted",
-            "AutopsySectopodCompleted"
+            "AutopsySectopodCompleted",
         ]
     ),
     "ProgressivePsionicsTechCompleted": X2WOTCItemData(
@@ -609,9 +609,9 @@ progressive_tech_items: dict[str, X2WOTCItemData] = {
         tags = ["facility", "weapon", "progressive"],
         stages = [
             "PsionicsCompleted",
-            "AutopsyGatekeeperCompleted"
+            "AutopsyGatekeeperCompleted",
         ]
-    )
+    ),
 }
 
 #=======================================================================================================================
@@ -628,7 +628,7 @@ tech_fragment_items: dict[str, X2WOTCItemData] = {
         dlc = "WOTC",
         stages = [
             None,
-            "ChosenAssassinWeaponsCompleted"
+            "ChosenAssassinWeaponsCompleted",
         ]
     ),
     "ChosenHunterWeaponsFragment2": X2WOTCItemData(
@@ -640,7 +640,7 @@ tech_fragment_items: dict[str, X2WOTCItemData] = {
         dlc = "WOTC",
         stages = [
             None,
-            "ChosenHunterWeaponsCompleted"
+            "ChosenHunterWeaponsCompleted",
         ]
     ),
     "ChosenWarlockWeaponsFragment2": X2WOTCItemData(
@@ -652,7 +652,7 @@ tech_fragment_items: dict[str, X2WOTCItemData] = {
         dlc = "WOTC",
         stages = [
             None,
-            "ChosenWarlockWeaponsCompleted"
+            "ChosenWarlockWeaponsCompleted",
         ]
     ),
     "ChosenAssassinWeaponsFragment3": X2WOTCItemData(
@@ -665,7 +665,7 @@ tech_fragment_items: dict[str, X2WOTCItemData] = {
         stages = [
             None,
             None,
-            "ChosenAssassinWeaponsCompleted"
+            "ChosenAssassinWeaponsCompleted",
         ]
     ),
     "ChosenHunterWeaponsFragment3": X2WOTCItemData(
@@ -678,7 +678,7 @@ tech_fragment_items: dict[str, X2WOTCItemData] = {
         stages = [
             None,
             None,
-            "ChosenHunterWeaponsCompleted"
+            "ChosenHunterWeaponsCompleted",
         ]
     ),
     "ChosenWarlockWeaponsFragment3": X2WOTCItemData(
@@ -691,9 +691,9 @@ tech_fragment_items: dict[str, X2WOTCItemData] = {
         stages = [
             None,
             None,
-            "ChosenWarlockWeaponsCompleted"
+            "ChosenWarlockWeaponsCompleted",
         ]
-    )
+    ),
 }
 
 ########################################################################################################################
@@ -745,7 +745,7 @@ chosen_hunt_items: dict[str, X2WOTCItemData] = {
     "DefaultChosenHuntReward": X2WOTCItemData(
         display_name = "Regular Covert Action Reward",
         type = "CovertActionReward"
-    )
+    ),
 }
 
 ########################################################################################################################
@@ -774,7 +774,7 @@ supplies_items: dict[str, X2WOTCItemData] = {
         id = get_new_item_id(),
         type = "Resource",
         tags = ["filler", "supplies"]
-    )
+    ),
 }
 
 intel_items: dict[str, X2WOTCItemData] = {
@@ -795,7 +795,7 @@ intel_items: dict[str, X2WOTCItemData] = {
         id = get_new_item_id(),
         type = "Resource",
         tags = ["filler", "intel"]
-    )
+    ),
 }
 
 alien_alloy_items: dict[str, X2WOTCItemData] = {
@@ -816,7 +816,7 @@ alien_alloy_items: dict[str, X2WOTCItemData] = {
         id = get_new_item_id(),
         type = "Resource",
         tags = ["filler", "alien_alloy"]
-    )
+    ),
 }
 
 elerium_dust_items: dict[str, X2WOTCItemData] = {
@@ -837,7 +837,7 @@ elerium_dust_items: dict[str, X2WOTCItemData] = {
         id = get_new_item_id(),
         type = "Resource",
         tags = ["filler", "elerium_dust"]
-    )
+    ),
 }
 
 elerium_core_items: dict[str, X2WOTCItemData] = {
@@ -846,7 +846,7 @@ elerium_core_items: dict[str, X2WOTCItemData] = {
         id = get_new_item_id(),
         type = "Resource",
         tags = ["filler", "elerium_core"]
-    )
+    ),
 }
 
 ability_point_items: dict[str, X2WOTCItemData] = {
@@ -870,7 +870,7 @@ ability_point_items: dict[str, X2WOTCItemData] = {
         type = "Resource",
         tags = ["filler", "ability_point"],
         dlc = "WOTC"
-    )
+    ),
 }
 
 #=======================================================================================================================
@@ -964,7 +964,7 @@ superior_weapon_mod_items: dict[str, X2WOTCItemData] = {
         id = get_new_item_id(),
         type = "WeaponMod",
         tags = ["filler", "expanded_magazine", "superior"]
-    )
+    ),
 }
 
 #=======================================================================================================================
@@ -977,7 +977,7 @@ scientist_items: dict[str, X2WOTCItemData] = {
         id = get_new_item_id(),
         type = "Staff",
         tags = ["filler", "scientist"]
-    )
+    ),
 }
 
 engineer_items: dict[str, X2WOTCItemData] = {
@@ -986,7 +986,7 @@ engineer_items: dict[str, X2WOTCItemData] = {
         id = get_new_item_id(),
         type = "Staff",
         tags = ["filler", "engineer"]
-    )
+    ),
 }
 
 ########################################################################################################################
@@ -1000,7 +1000,7 @@ doom_items: dict[str, X2WOTCItemData] = {
         classification = ItemClassification.trap,
         type = "Trap",
         tags = ["doom"]
-    )
+    ),
 }
 
 force_level_items: dict[str, X2WOTCItemData] = {
@@ -1010,7 +1010,7 @@ force_level_items: dict[str, X2WOTCItemData] = {
         classification = ItemClassification.trap,
         type = "Trap",
         tags = ["force_level"]
-    )
+    ),
 }
 
 ########################################################################################################################
@@ -1042,7 +1042,7 @@ event_items: dict[str, X2WOTCItemData] = {
         display_name = "Stronghold3",
         classification = ItemClassification.progression,
         normal_location = "Stronghold3"
-    )
+    ),
 }
 
 ########################################################################################################################
@@ -1059,11 +1059,11 @@ tech_item_table: dict[str, X2WOTCItemData] = {
     **wotc_autopsy_tech_items,
     **wotc_chosen_weapon_tech_items,
     **progressive_tech_items,
-    **tech_fragment_items
+    **tech_fragment_items,
 }
 
 covert_action_item_table: dict[str, X2WOTCItemData] = {
-    **chosen_hunt_items
+    **chosen_hunt_items,
 }
 
 resource_item_table: dict[str, X2WOTCItemData] = {
@@ -1072,28 +1072,28 @@ resource_item_table: dict[str, X2WOTCItemData] = {
     **alien_alloy_items,
     **elerium_dust_items,
     **elerium_core_items,
-    **ability_point_items
+    **ability_point_items,
 }
 
 weapon_mod_item_table: dict[str, X2WOTCItemData] = {
     **advanced_weapon_mod_items,
-    **superior_weapon_mod_items
+    **superior_weapon_mod_items,
 }
 
 staff_item_table: dict[str, X2WOTCItemData] = {
     **scientist_items,
-    **engineer_items
+    **engineer_items,
 }
 
 filler_item_table: dict[str, X2WOTCItemData] = {
     **resource_item_table,
     **weapon_mod_item_table,
-    **staff_item_table
+    **staff_item_table,
 }
 
 trap_item_table: dict[str, X2WOTCItemData] = {
     **doom_items,
-    **force_level_items
+    **force_level_items,
 }
 
 item_table: dict[str, X2WOTCItemData] = {
@@ -1101,5 +1101,5 @@ item_table: dict[str, X2WOTCItemData] = {
     **covert_action_item_table,
     **filler_item_table,
     **trap_item_table,
-    **event_items
+    **event_items,
 }
