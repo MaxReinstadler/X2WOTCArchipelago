@@ -622,7 +622,7 @@ tech_fragment_items: dict[str, X2WOTCItemData] = {
     "ChosenAssassinWeaponsFragment2": X2WOTCItemData(
         display_name = tech_item_prefix + "Assassin Weapons Fragment (2)",
         id = get_new_item_id(),
-        classification = IC.progression_skip_balancing | IC.useful,
+        classification = IC.progression_skip_balancing,
         type = "TechCompleted",
         tags = ["weapon", "fragment"],
         dlc = "WOTC",
@@ -634,7 +634,7 @@ tech_fragment_items: dict[str, X2WOTCItemData] = {
     "ChosenHunterWeaponsFragment2": X2WOTCItemData(
         display_name = tech_item_prefix + "Hunter Weapons Fragment (2)",
         id = get_new_item_id(),
-        classification = IC.progression_skip_balancing | IC.useful,
+        classification = IC.progression_skip_balancing,
         type = "TechCompleted",
         tags = ["weapon", "fragment"],
         dlc = "WOTC",
@@ -646,7 +646,7 @@ tech_fragment_items: dict[str, X2WOTCItemData] = {
     "ChosenWarlockWeaponsFragment2": X2WOTCItemData(
         display_name = tech_item_prefix + "Warlock Weapons Fragment (2)",
         id = get_new_item_id(),
-        classification = IC.progression_skip_balancing | IC.useful,
+        classification = IC.progression_skip_balancing,
         type = "TechCompleted",
         tags = ["weapon", "fragment"],
         dlc = "WOTC",
