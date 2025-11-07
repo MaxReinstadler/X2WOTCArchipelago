@@ -1,7 +1,7 @@
 import dataclasses
 from typing import Any, ClassVar, TextIO
 
-from BaseClasses import MultiWorld, Tutorial
+from BaseClasses import CollectionState, Item, MultiWorld, Tutorial
 from Options import PerGameCommonOptions, OptionError
 from settings import Group, UserFolderPath
 from worlds.AutoWorld import WebWorld, World
@@ -83,10 +83,6 @@ class X2WOTCWorld(World):
         self.rule_manager: RuleManager = None
 
     def generate_early(self):
-        # RegionManager requires RuleManager which requires options
-        self.rule_manager = RuleManager(self)
-        self.reg_manager = RegionManager(self)
-
         # Extract slot data for UT re-gen
         re_gen_passthrough = getattr(self.multiworld, "re_gen_passthrough", {})
         if re_gen_passthrough and self.game in re_gen_passthrough:
@@ -229,6 +225,10 @@ class X2WOTCWorld(World):
         if self.options.enemy_rando:
             self.enemy_rando_manager.shuffle_enemies(self.random)
 
+        # RegionManager requires RuleManager which needs to be initialized after generate_early
+        self.rule_manager = RuleManager(self)
+        self.reg_manager = RegionManager(self)
+
     def create_item(self, name: str) -> X2WOTCItem:
         item_name = self.item_manager.item_display_name_to_key[name]
         return X2WOTCItem(self.player, item_name)
@@ -252,13 +252,26 @@ class X2WOTCWorld(World):
 
     def set_rules(self):
         self.rule_manager.set_rules()
-        
+
         for mod_data in mods_data:
             if mod_data.set_rules and mod_data.name in self.options.active_mods:
                 mod_data.set_rules(self)
 
     def get_filler_item_name(self) -> str:
         return self.random.choice(self.item_manager.filler_item_names)
+
+    # Invalidate power cache on collect/remove
+    def collect(self, state: CollectionState, item: Item) -> bool:
+        change = super().collect(state, item)
+        if change and item.name in self.rule_manager.power_items:
+            state.x2wotc_power_stale[self.player] = True
+        return change
+
+    def remove(self, state: CollectionState, item: Item) -> bool:
+        change = super().remove(state, item)
+        if change and item.name in self.rule_manager.power_items:
+            state.x2wotc_power_stale[self.player] = True
+        return change
 
     def fill_slot_data(self):
         slot_data = {

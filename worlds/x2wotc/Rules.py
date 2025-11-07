@@ -1,8 +1,10 @@
+from collections import defaultdict
 from typing import Callable, TYPE_CHECKING
 
 from BaseClasses import MultiWorld, CollectionState
 from worlds.generic.Rules import set_rule, add_rule
 
+from worlds.AutoWorld import LogicMixin
 if TYPE_CHECKING:
     from worlds.x2wotc import X2WOTCWorld
 
@@ -10,6 +12,16 @@ from .EnemyRando import EnemyRandoManager
 from .Items import ItemManager
 from .Locations import LocationManager
 from .Options import X2WOTCOptions, Goal
+
+
+# Cache per-state current power values
+class X2WOTCState(LogicMixin):
+    x2wotc_power_stale: dict[int, bool]
+    x2wotc_power_cache: dict[int, float]
+
+    def init_mixin(self, _):
+        self.x2wotc_power_stale = defaultdict(lambda: True)
+        self.x2wotc_power_cache = defaultdict(lambda: 0.0)
 
 
 class RuleManager:
@@ -21,20 +33,44 @@ class RuleManager:
         self.multiworld: MultiWorld = world.multiworld
         self.player: int = world.player
 
+        # Precompute per-location required power values
+        self.req_power_lookup: dict[str, float] = {}
+        for loc_name, loc_data in self.loc_manager.location_table.items():
+            base_difficulty = loc_data.difficulty
+
+            # Handle difficulty tags for Enemy Rando
+            diff_tag_enemies = [tag[5:] for tag in loc_data.tags if tag.startswith("diff:")]
+            diff_tag_difficulty = self.enemy_rando_manager.get_difficulty(diff_tag_enemies)
+            if "autopsy" in loc_data.tags:
+                diff_tag_difficulty += 2.0  # Autopsies take time
+
+            difficulty = max(base_difficulty, diff_tag_difficulty)
+            total_power = self.item_manager.total_power
+            req_power = difficulty * total_power / 100.0
+            self.req_power_lookup[loc_name] = req_power
+
+        # Compile all items that could affect power
+        self.power_items: set[str] = {
+            item_data.display_name
+            for item_data in self.item_manager.item_table.values()
+            if item_data.power > 0.0 or item_data.stages is not None
+        }
+
     #==================================================================================================================#
     #                                               GENERAL HELPERS                                                    #
     #------------------------------------------------------------------------------------------------------------------#
 
     def get_item_count(self, state: CollectionState, item: str) -> int:
-        count = 0
-        for item_name, item_data in self.item_manager.item_table.items():
-            delta_count = state.count(item_data.display_name, self.player)
-            if item_name == item:
-                count += delta_count
+        total_count = 0
+        for display_name, count in state.prog_items[self.player].items():
+            item_key = self.item_manager.item_display_name_to_key[display_name]
+            item_data = self.item_manager.item_table[item_key]
+            if item_key == item:
+                total_count += count
             elif item_data.stages is not None:
-                count += item_data.stages[:delta_count].count(item)
-        return count
-    
+                total_count += item_data.stages[:count].count(item)
+        return total_count
+
     def has_item_or_impossible(self, state: CollectionState, item: str, count: int = 1) -> bool:
         return (self.get_item_count(state, item) >= count
                 or self.item_manager.item_count[item] < count)
@@ -49,44 +85,36 @@ class RuleManager:
         loc_display_name = self.loc_manager.location_table[loc_name].display_name
         return state.can_reach_location(loc_display_name, self.player)
 
-    def get_reachability_rule(self, loc_name: str) -> Callable[[CollectionState], bool]:
-        return lambda state: self.can_reach_or_disabled(state, loc_name)
+    def get_reachability_rule(self, loc_names: list[str]) -> Callable[[CollectionState], bool]:
+        return lambda state: all(self.can_reach_or_disabled(state, loc_name) for loc_name in loc_names)
 
     #==================================================================================================================#
     #                                             POWER RULE HELPERS                                                   #
     #------------------------------------------------------------------------------------------------------------------#
 
     def get_current_power(self, state: CollectionState) -> float:
-        power = 0.0
-        for item_data in self.item_manager.item_table.values():
-            count = state.count(item_data.display_name, self.player)
-            if item_data.stages is None:
-                power += item_data.power * count
-            else:
-                power += sum([
-                    self.item_manager.item_table[item_data.stages[i]].power
-                    for i in range(min(count, len(item_data.stages)))
-                    if item_data.stages[i] is not None
-                ])
-        return power
+        if state.x2wotc_power_stale[self.player]:
+            power = 0.0
+            for display_name, count in state.prog_items[self.player].items():
+                item_key = self.item_manager.item_display_name_to_key[display_name]
+                item_data = self.item_manager.item_table[item_key]
+                if item_data.stages is None:
+                    power += item_data.power * count
+                else:
+                    power += sum([
+                        self.item_manager.item_table[item_data.stages[i]].power
+                        for i in range(min(count, len(item_data.stages)))
+                        if item_data.stages[i] is not None
+                    ])
 
-    def has_power(self, state: CollectionState, power: float) -> bool:
-        return self.get_current_power(state) >= power
+            state.x2wotc_power_cache[self.player] = power
+            state.x2wotc_power_stale[self.player] = False
+
+        return state.x2wotc_power_cache[self.player]
 
     def can_reasonably_reach(self, state: CollectionState, location: str) -> bool:
-        loc_data = self.loc_manager.location_table[location]
-        base_difficulty = loc_data.difficulty
-
-        # Handle difficulty tags for Enemy Rando
-        diff_tag_enemies = [tag[5:] for tag in loc_data.tags if tag.startswith("diff:")]
-        diff_tag_difficulty = self.enemy_rando_manager.get_difficulty(diff_tag_enemies)
-        if "autopsy" in loc_data.tags:
-            diff_tag_difficulty += 2.0  # Autopsies take time
-
-        difficulty = max(base_difficulty, diff_tag_difficulty)
-        total_power = self.item_manager.total_power
-        req_power = difficulty * total_power / 100.0
-        return self.has_power(state, req_power)
+        req_power = self.req_power_lookup[location]
+        return self.get_current_power(state) >= req_power
 
     def get_power_rule(self, location: str) -> Callable[[CollectionState], bool]:
         return lambda state: self.can_reasonably_reach(state, location)
@@ -373,13 +401,6 @@ class RuleManager:
 
             if "skulljack_codex" in loc_data.tags:
                 add_rule(location, lambda state: self.can_skulljack_codex(state))
-
-            #---------------------------------------- Tech tree rules -------------------------------------------------#
-            #----------------------------------------------------------------------------------------------------------#
-            for tag in loc_data.tags:
-                if tag.startswith("tree:"):
-                    tree_rule = self.get_reachability_rule(tag[5:])
-                    add_rule(location, tree_rule)
 
             #------------------------------------ Item requirement rules ----------------------------------------------#
             #----------------------------------------------------------------------------------------------------------#
