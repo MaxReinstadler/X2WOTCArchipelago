@@ -35,15 +35,16 @@ class RegionManager:
 
             # For tech locations, check tree tags for location dependencies...
             if loc_data.type == "Tech":
-                region_name = ""
-                for tag in loc_data.tags:
-                    if tag.startswith("tree:"):
-                        loc_key = tag[5:]
-                        loc_display_name = self.loc_manager.location_table[loc_key].display_name
-
-                        if region_name != "":
-                            region_name += " & "
-                        region_name += f"{loc_display_name}"
+                tree_tag_techs = [
+                    tag[5:]
+                    for tag in loc_data.tags
+                    if tag.startswith("tree:")
+                ]
+                tree_display_names = [
+                    self.loc_manager.location_table[tech].display_name
+                    for tech in tree_tag_techs
+                ]
+                region_name = " & ".join(sorted(tree_display_names))
 
                 # ...then fall back to Research Lab (or Shadow Chamber for shadow projects)
                 if region_name == "":
