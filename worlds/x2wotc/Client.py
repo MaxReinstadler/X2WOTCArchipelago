@@ -236,7 +236,9 @@ class X2WOTCContext(SuperContext):
         if cmd == "Connected":
             self.slot_data = args["slot_data"]
             if not self.validate_versions():
+                asyncio.create_task(self.disconnect())
                 return
+
             self.active_mods = sorted(self.slot_data["active_mods"])
             self.enemy_rando_manager.set_enemy_shuffle(self.slot_data["enemy_shuffle"])
             self.connected.set()
@@ -255,7 +257,6 @@ class X2WOTCContext(SuperContext):
     def validate_versions(self) -> bool:
         world_version = self.slot_data["world_version"]
         minimum_client_version = self.slot_data["minimum_client_version"]
-
         if not is_version_valid(world_version, minimum_world_version):
             logger.error(
                 f"Client version {client_version} requires "
@@ -263,9 +264,7 @@ class X2WOTCContext(SuperContext):
                 f"but world was generated with version {world_version}. "
                 "Please revert to an older version of the client."
             )
-            asyncio.create_task(self.disconnect())
             return False
-
         if not is_version_valid(client_version, minimum_client_version):
             logger.error(
                 f"World version {world_version} requires "
@@ -273,9 +272,7 @@ class X2WOTCContext(SuperContext):
                 f"but client is version {client_version}. "
                 "Please update to a newer version of the client."
             )
-            asyncio.create_task(self.disconnect())
             return False
-
         return True
 
     def make_gui(self):
