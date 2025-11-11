@@ -261,7 +261,7 @@ class X2WOTCContext(SuperContext):
                 f"Client version {client_version} requires "
                 f"at least world version {minimum_world_version}, "
                 f"but world was generated with version {world_version}. "
-                "Please connect with an older version of the client."
+                "Please revert to an older version of the client."
             )
             asyncio.create_task(self.disconnect())
             return False
@@ -271,8 +271,7 @@ class X2WOTCContext(SuperContext):
                 f"World version {world_version} requires "
                 f"at least client version {minimum_client_version}, "
                 f"but client is version {client_version}. "
-                "Please update your client."
-
+                "Please update to a newer version of the client."
             )
             asyncio.create_task(self.disconnect())
             return False
