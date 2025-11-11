@@ -21,7 +21,12 @@ except ModuleNotFoundError:
 from .EnemyRando import EnemyRandoManager
 from .Options import HintResearchProjects
 from .Proxy import run_proxy
-from .Version import client_version, recommended_mod_version
+from .Version import (
+    client_version,
+    minimum_world_version,
+    minimum_mod_version,
+    is_version_valid
+)
 
 from .mods import mods_data, mod_names
 
@@ -31,8 +36,12 @@ class X2WOTCCommandProcessor(ClientCommandProcessor):
         super().__init__(ctx)
 
     def _cmd_version(self) -> bool:
-        """Print the version of the client."""
-        self.output(f"Client version: {client_version}\nRecommended mod version: {recommended_mod_version}")
+        """Print client version info."""
+        self.output(
+            f"Client version: {client_version}\n"
+            f"Minimum world version: {minimum_world_version}\n"
+            f"Minimum mod version: {minimum_mod_version}"
+        )
         return True
 
     def _cmd_proxy(self, port: str = "") -> bool:
@@ -226,6 +235,8 @@ class X2WOTCContext(SuperContext):
 
         if cmd == "Connected":
             self.slot_data = args["slot_data"]
+            if not self.validate_versions():
+                return
             self.active_mods = sorted(self.slot_data["active_mods"])
             self.enemy_rando_manager.set_enemy_shuffle(self.slot_data["enemy_shuffle"])
             self.connected.set()
@@ -238,6 +249,35 @@ class X2WOTCContext(SuperContext):
             scouted_locations = set(item.location for item in args["locations"])
             if self.locations_scouted == scouted_locations:
                 self.scouted.set()
+
+    # Client compares world and client versions,
+    # mod compares client and mod versions.
+    def validate_versions(self) -> bool:
+        world_version = self.slot_data["world_version"]
+        minimum_client_version = self.slot_data["minimum_client_version"]
+
+        if not is_version_valid(world_version, minimum_world_version):
+            logger.error(
+                f"Client version {client_version} requires "
+                f"at least world version {minimum_world_version}, "
+                f"but world was generated with version {world_version}. "
+                "Please connect with an older version of the client."
+            )
+            asyncio.create_task(self.disconnect())
+            return False
+
+        if not is_version_valid(client_version, minimum_client_version):
+            logger.error(
+                f"World version {world_version} requires "
+                f"at least client version {minimum_client_version}, "
+                f"but client is version {client_version}. "
+                "Please update your client."
+
+            )
+            asyncio.create_task(self.disconnect())
+            return False
+
+        return True
 
     def make_gui(self):
         ui = super().make_gui()
@@ -292,7 +332,7 @@ class X2WOTCContext(SuperContext):
         if not config_values:
             config_values = {
                 "ClientVersion": "".join(client_version.split()),
-                "RecModVersion": "".join(recommended_mod_version.split()),
+                "MinimumModVersion": "".join(minimum_mod_version.split()),
                 "ProxyPort": str(self.proxy_port),
                 "bRequirePsiGate": str("PsiGateObjective" in self.slot_data["campaign_completion_requirements"]),
                 "bRequireStasisSuit": str("StasisSuitObjective" in self.slot_data["campaign_completion_requirements"]),
@@ -316,7 +356,7 @@ class X2WOTCContext(SuperContext):
             config = file.read()
 
         for key, value in config_values.items():
-            config = re.sub(rf"{re.escape(key)}=(\S*)", f"{key}={value}", config)
+            config = re.sub(rf"{"\n"}{re.escape(key)}=(\S*)", f"\n{key}={value}", config)
 
         with open(self.config_file, "w") as file:
             file.write(config)
@@ -324,7 +364,7 @@ class X2WOTCContext(SuperContext):
     def reset_config(self):
         self.update_config({
             "ClientVersion": "",
-            "RecModVersion": "",
+            "MinimumModVersion": "",
             "DEF_AP_GEN_ID": "",
         })
 

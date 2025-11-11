@@ -13,6 +13,7 @@ from .Locations import LocationManager, loc_display_name_to_id, loc_groups
 from .Options import X2WOTCOptions, AlienHuntersDLC, Goal, ChosenWeaponFragments
 from .Regions import RegionManager
 from .Rules import RuleManager
+from .Version import minimum_client_version
 
 from .mods import mods_data
 
@@ -275,6 +276,8 @@ class X2WOTCWorld(World):
 
     def fill_slot_data(self):
         slot_data = {
+            "world_version": self.world_version.as_simple_string(),
+            "minimum_client_version": minimum_client_version,
             "seed_name": self.multiworld.seed_name,
             "player": self.player,
             "goal_location": Goal.value_to_location[self.options.goal.value],
