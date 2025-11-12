@@ -12,7 +12,7 @@ from CommonClient import (
     logger
 )
 import settings
-from Utils import open_filename
+from Utils import async_start, open_filename, tuplize_version
 try:
     from worlds.tracker.TrackerClient import TrackerGameContext as SuperContext  # type: ignore
 except ModuleNotFoundError:
@@ -24,8 +24,7 @@ from .Proxy import run_proxy
 from .Version import (
     client_version,
     minimum_world_version,
-    minimum_mod_version,
-    is_version_valid
+    minimum_mod_version
 )
 
 from .mods import mods_data, mod_names
@@ -236,7 +235,7 @@ class X2WOTCContext(SuperContext):
         if cmd == "Connected":
             self.slot_data = args["slot_data"]
             if not self.validate_versions():
-                asyncio.create_task(self.disconnect())
+                async_start(self.disconnect())
                 return
 
             self.active_mods = sorted(self.slot_data["active_mods"])
@@ -252,12 +251,13 @@ class X2WOTCContext(SuperContext):
             if self.locations_scouted == scouted_locations:
                 self.scouted.set()
 
-    # Client compares world and client versions,
-    # mod compares client and mod versions.
+    # Client only compares world and client versions;
+    # mod and client versions are compared by the mod.
     def validate_versions(self) -> bool:
         world_version = self.slot_data["world_version"]
         minimum_client_version = self.slot_data["minimum_client_version"]
-        if not is_version_valid(world_version, minimum_world_version):
+
+        if tuplize_version(world_version) < tuplize_version(minimum_world_version):
             logger.error(
                 f"Client version {client_version} requires "
                 f"at least world version {minimum_world_version}, "
@@ -265,7 +265,8 @@ class X2WOTCContext(SuperContext):
                 "Please revert to an older version of the client."
             )
             return False
-        if not is_version_valid(client_version, minimum_client_version):
+
+        if tuplize_version(client_version) < tuplize_version(minimum_client_version):
             logger.error(
                 f"World version {world_version} requires "
                 f"at least client version {minimum_client_version}, "
@@ -273,6 +274,7 @@ class X2WOTCContext(SuperContext):
                 "Please update to a newer version of the client."
             )
             return False
+
         return True
 
     def make_gui(self):
