@@ -135,7 +135,7 @@ class X2WOTCWorld(World):
                     self.item_manager.disable_item(item_name)
 
         # Enable progressive tech items
-        if "RifleTech" in self.options.progressive_items:
+        if "RifleTech+" in self.options.progressive_items:
             if not self.item_manager.enable_progressive_item("ProgressiveRifleTechCompleted+"):
                 print(f"X2WOTC: Failed to enable progressive rifle tech+ for player {self.player_name}")
         elif "RifleTech" in self.options.progressive_items:
