@@ -21,11 +21,7 @@ except ModuleNotFoundError:
 from .EnemyRando import EnemyRandoManager
 from .Options import HintResearchProjects
 from .Proxy import run_proxy
-from .Version import (
-    client_version,
-    minimum_world_version,
-    minimum_mod_version
-)
+from .Version import client_version, minimum_world_version, minimum_mod_version
 
 from .mods import mods_data, mod_names
 
