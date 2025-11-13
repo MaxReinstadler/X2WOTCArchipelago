@@ -248,7 +248,7 @@ class X2WOTCContext(SuperContext):
                 self.scouted.set()
 
     # Client only compares world and client versions;
-    # mod and client versions are compared by the mod.
+    # mod and client versions are compared by the mod
     def validate_versions(self) -> bool:
         world_version = self.slot_data["world_version"]
         minimum_client_version = self.slot_data["minimum_client_version"]
