@@ -238,7 +238,7 @@ class X2WOTCContext(SuperContext):
                 async_start(self.disconnect())
                 return
 
-            self.active_mods = sorted(self.slot_data["active_mods"])
+            self.active_mods = sorted(self.slot_data.get("active_mods", []))
             self.enemy_rando_manager.set_enemy_shuffle(self.slot_data["enemy_shuffle"])
             self.connected.set()
             self.patch_config()
@@ -328,26 +328,30 @@ class X2WOTCContext(SuperContext):
 
     def update_config(self, config_values: dict[str, str] = {}):
         if not config_values:
+            campaign_completion_requirements = self.slot_data.get("campaign_completion_requirements", [])
+            hint_research_projects = self.slot_data.get("hint_research_projects", HintResearchProjects.default)
+            skip_mission_types = self.slot_data.get("skip_mission_types", [])
+            disable_covert_action_risks = self.slot_data.get("disable_covert_action_risks", [])
             config_values = {
-                "ClientVersion": "".join(client_version.split()),
-                "MinimumModVersion": "".join(minimum_mod_version.split()),
+                "ClientVersion": client_version,
+                "MinimumModVersion": minimum_mod_version,
                 "ProxyPort": str(self.proxy_port),
-                "bRequirePsiGate": str("PsiGateObjective" in self.slot_data["campaign_completion_requirements"]),
-                "bRequireStasisSuit": str("StasisSuitObjective" in self.slot_data["campaign_completion_requirements"]),
-                "bRequireAvatarCorpse": str("AvatarCorpseObjective" in self.slot_data["campaign_completion_requirements"]),
-                "DEF_AP_GEN_ID": "".join(self.slot_data["seed_name"].split()) + f"_{self.slot_data['player']}",
-                "DEF_HINT_TECH_LOC_PART": str(self.slot_data["hint_research_projects"] == HintResearchProjects.option_partial),
-                "DEF_HINT_TECH_LOC_FULL": str(self.slot_data["hint_research_projects"] == HintResearchProjects.option_full),
-                "DEF_SKIP_SUPPLY_RAIDS": str("SupplyRaid" in self.slot_data["skip_mission_types"]),
-                "DEF_SKIP_COUNCIL_MISSIONS": str("CouncilMission" in self.slot_data["skip_mission_types"]),
-                "DEF_SKIP_FACTION_MISSIONS": str("ResistanceOp" in self.slot_data["skip_mission_types"]),
-                "DEF_DISABLE_AMBUSH_RISK": str("Ambush" in self.slot_data["disable_covert_action_risks"]),
-                "DEF_DISABLE_CAPTURE_RISK": str("Capture" in self.slot_data["disable_covert_action_risks"]),
-                "DEF_SKIP_RAID_REWARD_MULT_BASE": str(float(self.slot_data["supply_raid_reward_base"]) / 100.0),
-                "DEF_SKIP_RAID_REWARD_MULT_ERR": str(float(self.slot_data["supply_raid_reward_error"]) / 100.0),
-                "DEF_EXTRA_XP_MULT": str(float(self.slot_data["extra_xp_gain"]) / 100.0),
-                "DEF_EXTRA_CORPSES": str(self.slot_data["extra_corpse_gain"]),
-                "DEF_NO_STARTING_TRAPS": str(self.slot_data["disable_day_one_traps"]),
+                "bRequirePsiGate": str("PsiGateObjective" in campaign_completion_requirements),
+                "bRequireStasisSuit": str("StasisSuitObjective" in campaign_completion_requirements),
+                "bRequireAvatarCorpse": str("AvatarCorpseObjective" in campaign_completion_requirements),
+                "DEF_AP_GEN_ID": f"{"".join(self.slot_data["seed_name"].split())}_{self.slot_data["player"]}",
+                "DEF_HINT_TECH_LOC_PART": str(hint_research_projects == HintResearchProjects.option_partial),
+                "DEF_HINT_TECH_LOC_FULL": str(hint_research_projects == HintResearchProjects.option_full),
+                "DEF_SKIP_SUPPLY_RAIDS": str("SupplyRaid" in skip_mission_types),
+                "DEF_SKIP_COUNCIL_MISSIONS": str("CouncilMission" in skip_mission_types),
+                "DEF_SKIP_FACTION_MISSIONS": str("ResistanceOp" in skip_mission_types),
+                "DEF_DISABLE_AMBUSH_RISK": str("Ambush" in disable_covert_action_risks),
+                "DEF_DISABLE_CAPTURE_RISK": str("Capture" in disable_covert_action_risks),
+                "DEF_SKIP_RAID_REWARD_MULT_BASE": str(float(self.slot_data.get("supply_raid_reward_base", 0)) / 100.0),
+                "DEF_SKIP_RAID_REWARD_MULT_ERR": str(float(self.slot_data.get("supply_raid_reward_error", 0)) / 100.0),
+                "DEF_EXTRA_XP_MULT": str(float(self.slot_data.get("extra_xp_gain", 0)) / 100.0),
+                "DEF_EXTRA_CORPSES": str(self.slot_data.get("extra_corpse_gain", 0)),
+                "DEF_NO_STARTING_TRAPS": str(self.slot_data.get("disable_day_one_traps", False)),
             }
 
         with open(self.config_file, "r") as file:
