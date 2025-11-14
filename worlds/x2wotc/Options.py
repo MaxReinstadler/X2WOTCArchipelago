@@ -17,7 +17,7 @@ class AlienHuntersDLC(Choice):
     option_no_integrated_dlc = 1
     option_no_alien_rulers = 2
     option_none = 3
-    default = 0
+    default = 3
 
 
 class Goal(Choice):
