@@ -157,7 +157,7 @@ enemy_table: dict[str, EnemyData] = {
             # Constant: 2-4 damage
             # Default: 7 HP
             0: [
-                StatChange("eStat_HP", -4, 1),  # 3 HP
+                StatChange("eStat_HP", -3, 1),  # 4 HP
             ],
             2: [
                 StatChange("eStat_HP", 4),  # 11 HP
@@ -188,7 +188,7 @@ enemy_table: dict[str, EnemyData] = {
             # Constant: 5-7 damage
             # Default: 8 HP, 1 armor, 10 defense, 25 dodge
             0: [
-                StatChange("eStat_HP", -6, 1),  # 2 HP
+                StatChange("eStat_HP", -5, 1),  # 3 HP
                 StatChange("eStat_ArmorMitigation", -1),  # 0 armor
                 StatChange("eStat_Defense", -10),  # 0 defense
                 StatChange("eStat_Dodge", -25),  # 0 dodge
@@ -223,7 +223,7 @@ enemy_table: dict[str, EnemyData] = {
             # Constant: 8-10 damage
             # Default: 12 HP, 1 armor, 10 defense, 25 dodge
             0: [
-                StatChange("eStat_HP", -11, 1),  # 1 HP
+                StatChange("eStat_HP", -10, 1),  # 2 HP
                 StatChange("eStat_ArmorMitigation", -1),  # 0 armor
                 StatChange("eStat_Defense", -10),  # 0 defense
                 StatChange("eStat_Dodge", -25),  # 0 dodge
@@ -288,7 +288,7 @@ enemy_table: dict[str, EnemyData] = {
             # Constant: 6-7 damage
             # Default: 11 HP, 3 armor, 10 defense
             0: [
-                StatChange("eStat_HP", -9, 1),  # 2 HP
+                StatChange("eStat_HP", -8, 1),  # 3 HP
                 StatChange("eStat_ArmorMitigation", -3),  # 0 armor
                 StatChange("eStat_Defense", -10),  # 0 defense
             ],
@@ -354,7 +354,7 @@ enemy_table: dict[str, EnemyData] = {
             # Constant: 8-9 damage, 3-5 damage AOE
             # Default: 15 HP, 3 armor, 10 defense
             0: [
-                StatChange("eStat_HP", -14, 1),  # 1 HP
+                StatChange("eStat_HP", -13, 1),  # 2 HP
                 StatChange("eStat_ArmorMitigation", -3),  # 0 armor
                 StatChange("eStat_Defense", -10),  # 0 defense
             ],
@@ -447,7 +447,7 @@ enemy_table: dict[str, EnemyData] = {
             # Constant: 2+ damage, 5 damage AOE
             # Default: 12 HP, 2 armor
             0: [
-                StatChange("eStat_HP", -10, 1),  # 2 HP
+                StatChange("eStat_HP", -9, 1),  # 3 HP
                 StatChange("eStat_ArmorMitigation", -2),  # 0 armor
             ],
             1: [
@@ -481,7 +481,7 @@ enemy_table: dict[str, EnemyData] = {
             # Constant: 3 damage
             # Default: 8 HP
             0: [
-                StatChange("eStat_HP", -5, 1),  # 3 HP
+                StatChange("eStat_HP", -4, 1),  # 4 HP
             ],
             2: [
                 StatChange("eStat_HP", 4),  # 12 HP
@@ -512,7 +512,7 @@ enemy_table: dict[str, EnemyData] = {
             # Constant: 5 damage
             # Default: 12 HP
             0: [
-                StatChange("eStat_HP", -10, 1),  # 2 HP
+                StatChange("eStat_HP", -9, 1),  # 3 HP
             ],
             1: [
                 StatChange("eStat_HP", -5, 1),  # 7 HP
@@ -573,7 +573,7 @@ enemy_table: dict[str, EnemyData] = {
             # Constant: 3-4 damage
             # Default: 8 HP
             0: [
-                StatChange("eStat_HP", -5, 1),  # 3 HP
+                StatChange("eStat_HP", -4, 1),  # 4 HP
             ],
             2: [
                 StatChange("eStat_HP", 4),  # 12 HP
@@ -600,7 +600,7 @@ enemy_table: dict[str, EnemyData] = {
             # Constant: 3-5 damage
             # Default: 8 HP, 33 dodge
             0: [
-                StatChange("eStat_HP", -6, 1),  # 2 HP
+                StatChange("eStat_HP", -5, 1),  # 3 HP
             ],
             2: [
                 StatChange("eStat_HP", 3),  # 11 HP
@@ -714,11 +714,11 @@ enemy_table: dict[str, EnemyData] = {
             # Constant: 6-9 damage
             # Default: 20 HP, 25 defense, 25 dodge
             0: [
-                StatChange("eStat_HP", -19, 1),  # 1 HP
+                StatChange("eStat_HP", -18, 1),  # 2 HP
                 StatChange("eStat_Defense", -25),  # 0 defense
             ],
             1: [
-                StatChange("eStat_HP", -15, 1),  # 4 HP
+                StatChange("eStat_HP", -15, 1),  # 5 HP
                 StatChange("eStat_Defense", -25),  # 0 defense
             ],
             2: [
@@ -743,7 +743,7 @@ enemy_table: dict[str, EnemyData] = {
             # Constant: 5-6 damage, 1-3 damage poison, 20 dodge
             # Default: 10 HP, 1 armor, 10 defense
             0: [
-                StatChange("eStat_HP", -9, 1),  # 1 HP
+                StatChange("eStat_HP", -8, 1),  # 2 HP
                 StatChange("eStat_ArmorMitigation", -1),  # 0 armor
                 StatChange("eStat_Defense", -10),  # 0 defense
             ],
@@ -804,10 +804,10 @@ enemy_table: dict[str, EnemyData] = {
             # Constant: 7-10 damage
             # Default: 18 HP
             0: [
-                StatChange("eStat_HP", -17, 1),  # 1 HP
+                StatChange("eStat_HP", -16, 1),  # 2 HP
             ],
             1: [
-                StatChange("eStat_HP", -14, 1),  # 4 HP
+                StatChange("eStat_HP", -13, 1),  # 5 HP
             ],
             2: [
                 StatChange("eStat_HP", -10, 1),  # 8 HP
@@ -828,8 +828,7 @@ enemy_table: dict[str, EnemyData] = {
             # Constant: 10-11 damage, 7-9 damage AOE
             # Default: 32 HP, 5 armor
             0: [
-                StatChange("eStat_HP", -31, 1, 3),  # 1 HP
-                StatChange("eStat_ArmorMitigation", -5),  # 0 armor
+                StatChange("eStat_HP", -31, 1, 1),  # 1 HP
             ],
             1: [
                 StatChange("eStat_HP", -29, 1, 5),  # 3 HP
@@ -857,7 +856,6 @@ enemy_table: dict[str, EnemyData] = {
             # Default: 25 HP, 3 armor, 15 defense
             0: [
                 StatChange("eStat_HP", -24, 1, 1),  # 1 HP
-                StatChange("eStat_ArmorMitigation", -3),  # 0 armor
                 StatChange("eStat_Defense", -15),  # 0 defense
             ],
             1: [
@@ -917,7 +915,7 @@ enemy_table: dict[str, EnemyData] = {
             # Constant: 6-7 damage
             # Default: 22 HP, 25 dodge
             0: [
-                StatChange("eStat_HP", -20, 1),  # 2 HP
+                StatChange("eStat_HP", -19, 1),  # 3 HP
                 StatChange("eStat_Dodge", -25),  # 0 dodge
             ],
             1: [
