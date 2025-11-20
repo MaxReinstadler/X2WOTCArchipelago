@@ -104,7 +104,7 @@ class X2WOTCWorld(World):
                     self.loc_manager.disable_location(loc_name)
             else:
                 # ...or enable mod filler items
-                for item_name in mod_data.filler_items.keys():
+                for item_name in mod_data.filler_items:
                     self.item_manager.enable_mod_filler_item(item_name)
 
         # Disable contact techs

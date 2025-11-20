@@ -12,7 +12,7 @@ from .ItemData import (
     item_table,
 )
 
-from .mods import mod_items, mod_filler_items
+from .mods import mod_items
 
 
 class X2WOTCItem(Item):
@@ -186,7 +186,7 @@ class ItemManager:
 
     def enable_mod_filler_item(self, item_name: str):
         self.resource_items.append(item_name)
-        self.filler_item_names.append(mod_filler_items[item_name].display_name)
+        self.filler_item_names.append(self.item_table[item_name].display_name)
 
     def add_filler_items(
             self,

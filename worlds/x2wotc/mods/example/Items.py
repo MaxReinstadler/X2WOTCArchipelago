@@ -27,13 +27,10 @@ example_mod_filler_items: dict[str, X2WOTCItemData] = {
     ),
 }
 
-# NOTE: items must include filler as well
 items: dict[str, X2WOTCItemData] = {
     **example_mod_items,
     **example_mod_filler_items,
 }
 
 # Mod filler items will be treated like resource items
-filler_items: dict[str, X2WOTCItemData] = {
-    **example_mod_filler_items,
-}
+filler_items: list[str] = list(example_mod_filler_items.keys())
