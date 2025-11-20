@@ -214,7 +214,7 @@ async def handle_check(request: web.Request):
             response_body += f"[{item_data.type}]{item_name}\n"
             response_body += f"Regular Item Found\n"
             response_body += f"Found your {item_data.display_name}!"
-        
+
         elif network_item.player == ctx.slot:
             response_body += "Archipelago Item Sent\n"
             response_body += f"Sent {item_name} to yourself!"
