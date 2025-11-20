@@ -223,6 +223,10 @@ class X2WOTCWorld(World):
             self.random
         )
 
+        # Lock location and item managers
+        self.loc_manager.locked = True
+        self.item_manager.locked = True
+
         # Shuffle enemies
         if self.options.enemy_rando:
             self.enemy_rando_manager.shuffle_enemies(self.options.enemy_plando, self.random)

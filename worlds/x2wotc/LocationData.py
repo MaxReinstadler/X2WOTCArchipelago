@@ -14,6 +14,14 @@ class X2WOTCLocationData(NamedTuple):
                             # "WOTC": War of the Chosen
     normal_item: str | None = None
 
+    mutable_fields = {"tags", "difficulty"}
+
+    def replace(self, **kwargs) -> "X2WOTCLocationData":
+        immutable_fields = set(self._fields) & set(kwargs.keys()) - self.mutable_fields
+        if immutable_fields:
+            raise ValueError(f"Cannot replace immutable fields {immutable_fields}.")
+        return self._replace(**kwargs)
+
 
 next_location_id = 240223152003  # X2WOTC
 

@@ -1,3 +1,4 @@
+from copy import deepcopy
 from BaseClasses import Location
 
 from .LocationData import location_table
@@ -48,8 +49,6 @@ loc_groups = {
 
 
 class LocationManager:
-    location_table = location_table
-
     loc_display_name_to_id = loc_display_name_to_id
     loc_display_name_to_key = loc_display_name_to_key
     loc_id_to_key = loc_id_to_key
@@ -58,10 +57,23 @@ class LocationManager:
     loc_groups = loc_groups
 
     def __init__(self):
+        self.location_table = deepcopy(location_table)
+        self.locked: bool = False
+
         self.enabled: dict[str, bool] = {loc_name: True for loc_name in self.location_table.keys()}
         self.num_locations: int = len(self.location_table)
 
+    def replace(self, loc_name: str, **kwargs):
+        if self.locked:
+            raise RuntimeError("Cannot replace location data after location manager has been locked.")
+
+        loc_data = self.location_table[loc_name]
+        self.location_table[loc_name] = loc_data.replace(**kwargs)
+
     def disable_location(self, loc_name: str):
+        if self.locked:
+            raise RuntimeError("Cannot disable locations after location manager has been locked.")
+
         if self.enabled[loc_name]:
             self.enabled[loc_name] = False
             self.num_locations -= 1

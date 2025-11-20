@@ -19,6 +19,14 @@ class X2WOTCItemData(NamedTuple):
     normal_location: str | None = None
     stages: list[str | None] | None = None  # For progressive items
 
+    mutable_fields = {"classification", "tags", "power"}
+
+    def replace(self, **kwargs) -> "X2WOTCItemData":
+        immutable_fields = set(self._fields) & set(kwargs.keys()) - self.mutable_fields
+        if immutable_fields:
+            raise ValueError(f"Cannot replace immutable fields {immutable_fields}.")
+        return self._replace(**kwargs)
+
 
 next_item_id = 240223152003  # X2WOTC
 
