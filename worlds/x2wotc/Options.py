@@ -1,6 +1,7 @@
 from dataclasses import dataclass, make_dataclass
+from schema import And, Schema
 
-from Options import Choice, Toggle, OptionSet, Range, PerGameCommonOptions
+from Options import Choice, Toggle, OptionDict, OptionSet, Range, PerGameCommonOptions
 
 from .mods import mod_names, mod_options
 
@@ -152,6 +153,30 @@ class EnemyRando(Toggle):
     default = False
 
 
+class EnemyPlando(OptionDict):
+    """If enemy rando is enabled, constrain enemy placements.
+    Define explicit shuffle groups with the 'forced' key.
+    Exempt enemies from shuffling with the 'fixed' key.
+    
+    Example: {
+        'forced': [
+            [['Sectoid', 'Muton'], ['Viper', 'Archon']],
+            [['Adv'], ['Adv']]
+        ],
+        'fixed': ['Gatekeeper', 'Sectopod']
+    }
+    Sectoids and Mutons will be replaced by Vipers and Archons randomly.
+    All ADVENT enemies will be replaced by random ADVENT enemies.
+    Gatekeepers and Sectopods will not be shuffled.
+    All other enemies will be shuffled among each other."""
+    display_name = "Enemy Plando"
+    schema = Schema({
+        "forced": [And([[str]], lambda l: len(l) == 2)],
+        "fixed": [str],
+    })
+    default = {"forced": [], "fixed": []}
+
+
 class HintResearchProjects(Choice):
     """Enable research project hints in the Avenger laboratory and shadow chamber.
     Can be changed in-game via Mod Config Menu.
@@ -280,6 +305,7 @@ class X2WOTCOptions(PerGameCommonOptions):
 
     # More randomization options
     enemy_rando: EnemyRando
+    enemy_plando: EnemyPlando
 
     # Config options
     hint_research_projects: HintResearchProjects

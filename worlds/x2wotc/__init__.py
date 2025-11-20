@@ -2,15 +2,15 @@ import dataclasses
 from typing import Any, ClassVar, TextIO
 
 from BaseClasses import CollectionState, Item, MultiWorld, Tutorial
-from Options import PerGameCommonOptions, OptionError
+from Options import OptionError, PerGameCommonOptions
 from settings import Group, UserFolderPath
 from worlds.AutoWorld import WebWorld, World
 from worlds.LauncherComponents import Component, Type, components, launch_subprocess
 
 from .EnemyRando import EnemyRandoManager
-from .Items import X2WOTCItem, ItemManager, item_display_name_to_id, item_groups
+from .Items import ItemManager, X2WOTCItem, item_display_name_to_id, item_groups
 from .Locations import LocationManager, loc_display_name_to_id, loc_groups
-from .Options import X2WOTCOptions, AlienHuntersDLC, Goal, ChosenWeaponFragments
+from .Options import AlienHuntersDLC, ChosenWeaponFragments, Goal, X2WOTCOptions
 from .Regions import RegionManager
 from .Rules import RuleManager
 from .Version import minimum_client_version
@@ -225,24 +225,11 @@ class X2WOTCWorld(World):
 
         # Shuffle enemies
         if self.options.enemy_rando:
-            self.enemy_rando_manager.shuffle_enemies(self.random)
-
-        # RegionManager requires RuleManager which needs to be initialized after generate_early
-        self.rule_manager = RuleManager(self)
-        self.reg_manager = RegionManager(self)
-
-    def create_item(self, name: str) -> X2WOTCItem:
-        item_name = self.item_manager.item_display_name_to_key[name]
-        return X2WOTCItem(self.player, item_name)
-    
-    def create_items(self):
-        for item_name, item_data in self.item_manager.item_table.items():
-            if item_data.type != "Event":
-                for i in range(self.item_manager.item_count[item_name]):
-                    item = self.create_item(item_data.display_name)
-                    self.multiworld.itempool.append(item)
+            self.enemy_rando_manager.shuffle_enemies(self.options.enemy_plando, self.random)
 
     def create_regions(self):
+        self.rule_manager = RuleManager(self)
+        self.reg_manager = RegionManager(self)
         self.reg_manager.create_regions()
 
         # Place event items
@@ -251,6 +238,17 @@ class X2WOTCWorld(World):
                 item_data = self.item_manager.item_table[loc_data.normal_item]
                 location = self.multiworld.get_location(loc_data.display_name, self.player)
                 location.place_locked_item(self.create_item(item_data.display_name))
+
+    def create_item(self, name: str) -> X2WOTCItem:
+        item_name = self.item_manager.item_display_name_to_key[name]
+        return X2WOTCItem(self.player, item_name)
+
+    def create_items(self):
+        for item_name, item_data in self.item_manager.item_table.items():
+            if item_data.type != "Event":
+                for i in range(self.item_manager.item_count[item_name]):
+                    item = self.create_item(item_data.display_name)
+                    self.multiworld.itempool.append(item)
 
     def set_rules(self):
         self.rule_manager.set_rules()

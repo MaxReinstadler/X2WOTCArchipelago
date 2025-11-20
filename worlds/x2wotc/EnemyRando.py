@@ -1,6 +1,10 @@
 from random import Random
 from typing import NamedTuple
 
+from Options import OptionError
+
+from .Options import EnemyPlando
+
 
 class StatChange(NamedTuple):
     type: str
@@ -952,24 +956,99 @@ class EnemyRandoManager:
         if self.has_base_enemies_loop():
             raise Exception("EnemyRando: base_enemies loop detected in unshuffled enemy table")
 
-    def shuffle_enemies(self, random: Random):
-        if not self.is_shuffled:
-            for _ in range(100):
-                random.shuffle(self.enemy_shuffle)
+    def shuffle_enemies(self, enemy_plando: EnemyPlando, random: Random):
+        if self.is_shuffled:
+            return
+        self.is_shuffled = True
 
-                # As long as the shuffle is invalid, simply shuffle again
-                if not self.has_base_enemies_loop():
-                    break
+        shuffle_groups = self.interpret_enemy_plando(enemy_plando)
+        for _ in range(100):
 
-            # Chances of this failing are astronomically small
-            else:
-                raise Exception("EnemyRando: unable to create enemy shuffle without base_enemies loop")
+            # Shuffle enemies within each group
+            for group in shuffle_groups:
+                placement_indices = list(group[0])
+                placed_indices = list(group[1])
+                random.shuffle(placed_indices)
+                for placement_index, placed_index in zip(placement_indices, placed_indices):
+                    self.enemy_shuffle[placement_index] = placed_index
 
-            self.is_shuffled = True
+            # As long as the shuffle is invalid, simply shuffle again
+            if not self.has_base_enemies_loop():
+                break
+
+        # Failure is virtually always due to impossible enemy plando
+        else:
+            raise OptionError(
+                "X2WOTC: Unable to create enemy shuffle without base_enemies loop. "
+                "Check your Enemy Plando for impossible constraints."
+            )
 
     def set_enemy_shuffle(self, enemy_shuffle: list[int]):
         self.enemy_shuffle = enemy_shuffle
         self.is_shuffled = True
+
+    # Translate EnemyPlando into shuffle groups of placement and placed enemy indices
+    def interpret_enemy_plando(self, enemy_plando: EnemyPlando) -> set[tuple[frozenset[int], frozenset[int]]]:
+        shuffle_groups = set()
+        used_placement_indices: set[int] = set()
+        used_placed_indices: set[int] = set()
+
+        # Evaluate fixed placements
+        filter: str
+        for filter in enemy_plando["fixed"]:
+            for enemy_index, enemy_name in enumerate(self.enemy_names):
+                if self.evaluate_enemy_filter(filter, enemy_name):
+                    shuffle_groups.add((frozenset({enemy_index}), frozenset({enemy_index})))
+                    used_placement_indices.add(enemy_index)
+                    used_placed_indices.add(enemy_index)
+
+        # Evaluate forced groups
+        group: list[list[str]]  # len(group) == 2
+        for group_index, group in enumerate(enemy_plando["forced"]):
+
+            # Collect placement enemies
+            placement_indices: set[int] = set()
+            for filter in group[0]:
+                for enemy_index, enemy_name in enumerate(self.enemy_names):
+                    if self.evaluate_enemy_filter(filter, enemy_name):
+                        placement_indices.add(enemy_index)
+
+            # Collect placed enemies
+            placed_indices: set[int] = set()
+            for filter in group[1]:
+                for enemy_index, enemy_name in enumerate(self.enemy_names):
+                    if self.evaluate_enemy_filter(filter, enemy_name):
+                        placed_indices.add(enemy_index)
+
+            # Validate group
+            if len(placement_indices) != len(placed_indices):
+                raise OptionError(
+                    f"X2WOTC: Mismatched enemy counts in Enemy Plando forced group {group_index}: "
+                    f"cannot place {len(placed_indices)} enemies into {len(placement_indices)} slots."
+                )
+            if used_placement_indices & placement_indices or used_placed_indices & placed_indices:
+                raise OptionError(
+                    "X2WOTC: Conflict in Enemy Plando forced groups or fixed placements. "
+                    "Make sure no enemy matches multiple placement or placed filters."
+                )
+
+            shuffle_groups.add((frozenset(placement_indices), frozenset(placed_indices)))
+            used_placement_indices.update(placement_indices)
+            used_placed_indices.update(placed_indices)
+
+        # Place remaining enemies into one group
+        shuffle_groups.add((
+            frozenset(set(range(len(self.enemy_names))) - used_placement_indices),
+            frozenset(set(range(len(self.enemy_names))) - used_placed_indices),
+        ))
+
+        return shuffle_groups
+
+    # Check for exact match or fall back to substring match
+    def evaluate_enemy_filter(self, filter: str, enemy_name: str) -> bool:
+        if filter in self.enemy_names:
+            return filter == enemy_name
+        return filter in enemy_name
 
     # Check for loops in base enemy dependencies due to the shuffle
     def has_base_enemies_loop(self) -> bool:

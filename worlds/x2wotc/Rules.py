@@ -1,17 +1,16 @@
 from collections import defaultdict
 from typing import Callable, TYPE_CHECKING
 
-from BaseClasses import MultiWorld, CollectionState
-from worlds.generic.Rules import set_rule, add_rule
+from BaseClasses import CollectionState, MultiWorld
+from worlds.generic.Rules import add_rule, set_rule
 
 from worlds.AutoWorld import LogicMixin
 if TYPE_CHECKING:
     from worlds.x2wotc import X2WOTCWorld
 
-from .EnemyRando import EnemyRandoManager
 from .Items import ItemManager
 from .Locations import LocationManager
-from .Options import X2WOTCOptions, Goal
+from .Options import Goal, X2WOTCOptions
 
 
 # Cache per-state current power values
@@ -28,7 +27,6 @@ class RuleManager:
     def __init__(self, world: "X2WOTCWorld"):
         self.item_manager: ItemManager = world.item_manager
         self.loc_manager: LocationManager = world.loc_manager
-        self.enemy_rando_manager: EnemyRandoManager = world.enemy_rando_manager
         self.options: X2WOTCOptions = world.options
         self.multiworld: MultiWorld = world.multiworld
         self.player: int = world.player
@@ -40,7 +38,7 @@ class RuleManager:
 
             # Handle difficulty tags for Enemy Rando
             diff_tag_enemies = [tag[5:] for tag in loc_data.tags if tag.startswith("diff:")]
-            diff_tag_difficulty = self.enemy_rando_manager.get_difficulty(diff_tag_enemies)
+            diff_tag_difficulty = world.enemy_rando_manager.get_difficulty(diff_tag_enemies)
             if "autopsy" in loc_data.tags:
                 diff_tag_difficulty += 2.0  # Autopsies take time
 
