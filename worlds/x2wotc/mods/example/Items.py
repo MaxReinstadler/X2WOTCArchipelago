@@ -11,7 +11,7 @@ example_mod_items: dict[str, X2WOTCItemData] = {
         classification = ItemClassification.progression,
         layer = "Strategy",  # Or "Tactical"
         type = "ExampleType",
-        tags = ["example_tag_1", "example_tag_2"],
+        tags = {"example_tag_1", "example_tag_2"},
         power = 12.34,
         normal_location = "ExampleModLocation"
     ),
@@ -23,7 +23,7 @@ example_mod_filler_items: dict[str, X2WOTCItemData] = {
         id = get_new_item_id(),
         layer = "Strategy",  # Or "Tactical"
         type = "ExampleType",
-        tags = ["example_tag_1", "example_tag_2"],
+        tags = {"example_tag_1", "example_tag_2"},
     ),
 }
 
@@ -32,4 +32,5 @@ items: dict[str, X2WOTCItemData] = {
     **example_mod_filler_items,
 }
 
+# Manually add these keys to the filler item pool in generate_early
 resource_items = set(example_mod_filler_items.keys())

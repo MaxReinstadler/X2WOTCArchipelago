@@ -19,7 +19,7 @@ items: dict[str, X2WOTCItemData] = {
         classification = ItemClassification.progression,
         layer = "Strategy",
         type = "TechCompleted",
-        tags = ["armor", "weapon"],
+        tags = {"armor", "weapon"},
         power = 25.0,
         normal_location = "Autopsy_AshFlameViper"
     ),
@@ -32,7 +32,7 @@ locations: dict[str, X2WOTCLocationData] = {
         id = get_new_location_id(),
         layer = "Strategy",
         type = "Tech",
-        tags = ["autopsy", "tree:AlienBiotech"],
+        tags = {"autopsy", "tree:AlienBiotech"},
         difficulty = 27.0,  # FL 6
         normal_item = "Autops_AshFlameViperCompleted"
     ),
@@ -41,7 +41,6 @@ locations: dict[str, X2WOTCLocationData] = {
         id = get_new_location_id(),
         layer = "Tactical",
         type = "EnemyKill",
-        tags = [],
         difficulty = 25.0  # FL 6
     ),
 }

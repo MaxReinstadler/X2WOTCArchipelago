@@ -20,7 +20,7 @@ items: dict[str, X2WOTCItemData] = {
         classification = ItemClassification.progression,
         layer = "Strategy",
         type = "TechCompleted",
-        tags = ["armor", "weapon"],
+        tags = {"armor", "weapon"},
         power = 35.0,
         normal_location = "Autopsy_AshMutonDestroyer"
     ),
@@ -32,7 +32,7 @@ locations: dict[str, X2WOTCLocationData] = {
         id = get_new_location_id(),
         layer = "Strategy",
         type = "Tech",
-        tags = ["autopsy", "tree:AlienBiotech"],
+        tags = {"autopsy", "tree:AlienBiotech"},
         difficulty = 31.0,  # FL 7
         normal_item = "Autopsy_AshMutonDestroyerCompleted"
     ),
@@ -41,7 +41,6 @@ locations: dict[str, X2WOTCLocationData] = {
         id = get_new_location_id(),
         layer = "Tactical",
         type = "EnemyKill",
-        tags = [],
         difficulty = 29.0  # FL 7
     ),
     "UseWeapon_AshConcussionGrenadeXCom": X2WOTCLocationData(
@@ -49,7 +48,7 @@ locations: dict[str, X2WOTCLocationData] = {
         id = get_new_location_id(),
         layer = "Tactical",
         type = "ItemUse",
-        tags = ["grenade", "proving_ground", "req:Autopsy_AshMutonDestroyerCompleted"],
+        tags = {"grenade", "proving_ground", "req:Autopsy_AshMutonDestroyerCompleted"},
         difficulty = 20.0,
     ),
 }

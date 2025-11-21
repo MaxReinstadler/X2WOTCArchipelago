@@ -8,7 +8,7 @@ example_mod_locations: dict[str, X2WOTCLocationData] = {
         id = get_new_location_id(),
         layer = "Strategy",  # Or "Tactical"
         type = "ExampleType",
-        tags = ["example_tag_1", "example_tag_2"],
+        tags = {"example_tag_1", "example_tag_2"},
         difficulty = 12.34,
         normal_item = "ExampleModItem"
     ),
