@@ -4,6 +4,7 @@ from random import Random
 from BaseClasses import Item
 
 from .ItemData import (
+    X2WOTCItemData,
     resource_item_table,
     weapon_mod_item_table,
     staff_item_table,
@@ -18,8 +19,7 @@ from .mods import mod_items
 class X2WOTCItem(Item):
     game: str = "XCOM 2 War of the Chosen"
 
-    def __init__(self, player: int, name: str):
-        item_data = item_table[name]
+    def __init__(self, player: int, item_data: X2WOTCItemData):
         super(X2WOTCItem, self).__init__(
             item_data.display_name,
             item_data.classification,
@@ -89,7 +89,7 @@ class ItemManager:
     item_groups = item_groups
 
     def __init__(self):
-        self.item_table = deepcopy(item_table)
+        self.item_table: dict[str, X2WOTCItemData] = deepcopy(item_table)
         self.locked: bool = False
 
         self.resource_items = list(resource_item_table.keys())

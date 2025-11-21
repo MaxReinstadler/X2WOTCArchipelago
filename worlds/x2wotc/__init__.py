@@ -245,7 +245,8 @@ class X2WOTCWorld(World):
 
     def create_item(self, name: str) -> X2WOTCItem:
         item_name = self.item_manager.item_display_name_to_key[name]
-        return X2WOTCItem(self.player, item_name)
+        item_data = self.item_manager.item_table[item_name]
+        return X2WOTCItem(self.player, item_data)
 
     def create_items(self):
         for item_name, item_data in self.item_manager.item_table.items():

@@ -1,7 +1,7 @@
 from copy import deepcopy
 from BaseClasses import Location
 
-from .LocationData import location_table
+from .LocationData import X2WOTCLocationData, location_table
 
 from .mods import mod_locations
 
@@ -57,7 +57,7 @@ class LocationManager:
     loc_groups = loc_groups
 
     def __init__(self):
-        self.location_table = deepcopy(location_table)
+        self.location_table: dict[str, X2WOTCLocationData] = deepcopy(location_table)
         self.locked: bool = False
 
         self.enabled: dict[str, bool] = {loc_name: True for loc_name in self.location_table.keys()}
