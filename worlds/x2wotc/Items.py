@@ -112,9 +112,6 @@ class ItemManager:
                 self.item_count[item_name] = 1
                 self.num_items += 1
 
-        power_values = [item_data.power * self.item_count[item_name] for item_name, item_data in self.item_table.items()]
-        self.total_power: int = sum(power_values)
-
     def replace(self, item_name: str, **kwargs):
         if self.locked:
             raise RuntimeError("Cannot replace item data after item manager has been locked.")
@@ -122,17 +119,13 @@ class ItemManager:
         item_data = self.item_table[item_name]
         self.item_table[item_name] = item_data.replace(**kwargs)
 
-    def set_item_count(self, item_name: str, new_count: int, adjust_total_power: bool = True):
+    def set_item_count(self, item_name: str, new_count: int):
         if self.locked:
             raise RuntimeError("Cannot set item counts after item manager has been locked.")
 
         old_count = self.item_count[item_name]
         self.item_count[item_name] = new_count
         self.num_items += new_count - old_count
-
-        if adjust_total_power:
-            item_data = self.item_table[item_name]
-            self.total_power += item_data.power * (new_count - old_count)
 
     def add_item(self, item_name: str, count: int = 1):
         self.set_item_count(item_name, self.item_count[item_name] + count)
@@ -154,9 +147,9 @@ class ItemManager:
 
         for stage_name in stages:
             if stage_name is not None:
-                self.set_item_count(stage_name, 0, False)
+                self.set_item_count(stage_name, 0)
 
-        self.set_item_count(item_name, len(stages), False)
+        self.set_item_count(item_name, len(stages))
         return True
 
     def disable_progressive_item(self, item_name: str):
@@ -173,9 +166,9 @@ class ItemManager:
 
         for stage_name in stages:
             if stage_name is not None:
-                self.set_item_count(stage_name, 1, False)
+                self.set_item_count(stage_name, 1)
 
-        self.set_item_count(item_name, 0, False)
+        self.set_item_count(item_name, 0)
         return True
 
     def enable_chosen_hunt_items(self):

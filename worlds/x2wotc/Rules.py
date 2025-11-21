@@ -43,7 +43,8 @@ class RuleManager:
                 diff_tag_difficulty += 2.0  # Autopsies take time
 
             difficulty = max(base_difficulty, diff_tag_difficulty)
-            total_power = self.item_manager.total_power
+            all_state = self.multiworld.get_all_state(allow_partial_entrances=True)
+            total_power = self.get_current_power(all_state)
             req_power = difficulty * total_power / 100.0
             self.req_power_lookup[loc_name] = req_power
 
