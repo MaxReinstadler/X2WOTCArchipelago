@@ -77,8 +77,8 @@ class X2WOTCWorld(World):
 
     def __init__(self, multiworld: MultiWorld, player: int):
         super().__init__(multiworld, player)
-        self.item_manager = ItemManager()
-        self.loc_manager = LocationManager()
+        self.item_manager: ItemManager = ItemManager()
+        self.loc_manager: LocationManager = LocationManager()
         self.enemy_rando_manager = EnemyRandoManager()
         self.reg_manager: RegionManager = None
         self.rule_manager: RuleManager = None
