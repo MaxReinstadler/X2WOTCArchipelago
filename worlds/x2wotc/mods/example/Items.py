@@ -32,5 +32,4 @@ items: dict[str, X2WOTCItemData] = {
     **example_mod_filler_items,
 }
 
-# Mod filler items will be treated like resource items
-filler_items: list[str] = list(example_mod_filler_items.keys())
+resource_items = set(example_mod_filler_items.keys())

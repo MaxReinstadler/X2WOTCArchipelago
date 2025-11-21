@@ -102,10 +102,6 @@ class X2WOTCWorld(World):
                     self.item_manager.disable_item(item_name)
                 for loc_name, loc_data in mod_data.locations.items():
                     self.loc_manager.disable_location(loc_name)
-            else:
-                # ...or enable mod filler items
-                for item_name in mod_data.filler_items:
-                    self.item_manager.enable_mod_filler_item(item_name)
 
         # Disable contact techs
         # This always happens for now, while I haven't committed to MCO-ing XComHQ
@@ -263,7 +259,7 @@ class X2WOTCWorld(World):
                 mod_data.set_rules(self)
 
     def get_filler_item_name(self) -> str:
-        return self.random.choice(self.item_manager.filler_item_names)
+        return self.item_manager.get_filler_item_name(self.random)
 
     # Invalidate power cache on collect/remove
     def collect(self, state: CollectionState, item: Item) -> bool:

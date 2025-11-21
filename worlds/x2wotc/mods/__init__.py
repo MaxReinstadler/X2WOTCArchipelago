@@ -16,7 +16,6 @@ class X2WOTCModData(NamedTuple):
     name: str
     rule_priority: float = 0.0
     items: dict[str, X2WOTCItemData] = {}
-    filler_items: list[str] = []
     locations: dict[str, X2WOTCLocationData] = {}
     set_rules: Callable[[MultiWorld, int], None] | None = None
     options: list[tuple[str, type[Option]]] = []
@@ -43,7 +42,6 @@ for loader, module_name, ispkg in pkgutil.iter_modules(__path__):
         name = module.name if hasattr(module, "name") else module_name,
         rule_priority = module.rule_priority if hasattr(module, "rule_priority") else 0,
         items = module.items if hasattr(module, "items") else {},
-        filler_items = module.filler_items if hasattr(module, "filler_items") else [],
         locations = module.locations if hasattr(module, "locations") else {},
         set_rules = module.set_rules if hasattr(module, "set_rules") else None,
         options = module.options if hasattr(module, "options") else [],

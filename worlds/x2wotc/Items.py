@@ -9,7 +9,6 @@ from .ItemData import (
     weapon_mod_item_table,
     staff_item_table,
     trap_item_table,
-    filler_item_table,
     item_table,
 )
 
@@ -92,15 +91,10 @@ class ItemManager:
         self.item_table: dict[str, X2WOTCItemData] = deepcopy(item_table)
         self.locked: bool = False
 
-        self.resource_items = list(resource_item_table.keys())
-        self.weapon_mod_items = list(weapon_mod_item_table.keys())
-        self.staff_items = list(staff_item_table.keys())
-        self.trap_items = list(trap_item_table.keys())
-
-        self.filler_item_names = [
-            item_data.display_name
-            for item_data in filler_item_table.values()
-        ]
+        self.resource_items = set(resource_item_table.keys())
+        self.weapon_mod_items = set(weapon_mod_item_table.keys())
+        self.staff_items = set(staff_item_table.keys())
+        self.trap_items = set(trap_item_table.keys())
 
         self.item_count: dict[str, int] = {}
         self.num_items: int = 0
@@ -177,9 +171,15 @@ class ItemManager:
         self.set_item_count("HunterStronghold", 1)
         self.set_item_count("WarlockStronghold", 1)
 
-    def enable_mod_filler_item(self, item_name: str):
-        self.resource_items.append(item_name)
-        self.filler_item_names.append(self.item_table[item_name].display_name)
+    def get_filler_item_name(self, random: Random) -> str:
+        filler_items = list(
+            self.resource_items |
+            self.weapon_mod_items |
+            self.staff_items
+        )
+
+        filler_item = random.choice(filler_items)
+        return self.item_table[filler_item].display_name
 
     def add_filler_items(
             self,
@@ -190,18 +190,9 @@ class ItemManager:
             random: Random
         ):
         num_names_pairs = [
-            (
-                int(num_filler_items * weapon_mod_share),
-                list(self.weapon_mod_items)
-            ),
-            (
-                int(num_filler_items * staff_share),
-                list(self.staff_items)
-            ),
-            (
-                int(num_filler_items * trap_share),
-                list(self.trap_items)
-            ),
+            (int(num_filler_items * weapon_mod_share), list(self.weapon_mod_items)),
+            (int(num_filler_items * staff_share), list(self.staff_items)),
+            (int(num_filler_items * trap_share), list(self.trap_items)),
         ]
 
         # Add specified number of each type of filler/trap
@@ -215,7 +206,7 @@ class ItemManager:
                 if num_unfilled == 0:
                     return
 
-        # Fill the rest with resource or mod filler items
+        # Fill the rest with resource filler items
         possible_names = list(self.resource_items)
         for _ in range(num_unfilled):
             item_name = random.choice(possible_names)
