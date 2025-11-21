@@ -32,6 +32,7 @@ class RuleManager:
         self.player: int = world.player
 
         # Precompute per-location required power values
+        self.total_power: float = self.item_manager.get_total_power()
         self.req_power_lookup: dict[str, float] = {}
         for loc_name, loc_data in self.loc_manager.location_table.items():
             base_difficulty = loc_data.difficulty
@@ -43,9 +44,7 @@ class RuleManager:
                 diff_tag_difficulty += 2.0  # Autopsies take time
 
             difficulty = max(base_difficulty, diff_tag_difficulty)
-            all_state = self.multiworld.get_all_state(allow_partial_entrances=True)
-            total_power = self.get_current_power(all_state)
-            req_power = difficulty * total_power / 100.0
+            req_power = difficulty * self.total_power / 100.0
             self.req_power_lookup[loc_name] = req_power
 
         # Compile all items that could affect power
@@ -93,20 +92,10 @@ class RuleManager:
 
     def get_current_power(self, state: CollectionState) -> float:
         if state.x2wotc_power_stale[self.player]:
-            power = 0.0
-            for display_name, count in state.prog_items[self.player].items():
-                item_key = self.item_manager.item_display_name_to_key[display_name]
-                item_data = self.item_manager.item_table[item_key]
-                if item_data.stages is None:
-                    power += item_data.power * count
-                else:
-                    power += sum([
-                        self.item_manager.item_table[item_data.stages[i]].power
-                        for i in range(min(count, len(item_data.stages)))
-                        if item_data.stages[i] is not None
-                    ])
-
-            state.x2wotc_power_cache[self.player] = power
+            state.x2wotc_power_cache[self.player] = sum([
+                self.item_manager.get_item_power(self.item_manager.item_display_name_to_key[display_name], count)
+                for display_name, count in state.prog_items[self.player].items()
+            ])
             state.x2wotc_power_stale[self.player] = False
 
         return state.x2wotc_power_cache[self.player]

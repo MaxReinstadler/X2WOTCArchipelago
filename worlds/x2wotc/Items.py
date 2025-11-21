@@ -113,6 +113,23 @@ class ItemManager:
         item_data = self.item_table[item_name]
         self.item_table[item_name] = item_data.replace(**kwargs)
 
+    def get_item_power(self, item_name: str, count: int) -> float:
+        item_data = self.item_table[item_name]
+        if item_data.stages is None:
+            return item_data.power * count
+        else:
+            return sum([
+                self.item_table[item_data.stages[i]].power
+                for i in range(min(count, len(item_data.stages)))
+                if item_data.stages[i] is not None
+            ])
+
+    def get_total_power(self) -> float:
+        return sum([
+            self.get_item_power(item_name, count)
+            for item_name, count in self.item_count.items()
+        ])
+
     def set_item_count(self, item_name: str, new_count: int):
         if self.locked:
             raise RuntimeError("Cannot set item counts after item manager has been locked.")
