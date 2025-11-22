@@ -157,7 +157,7 @@ def get_received_items(layer: str, number_received: int) -> ItemsInfo:
         if stages is not None:
             progressive_index[item_name] = progressive_index.get(item_name, -1) + 1
 
-        if item_data.layer != layer:
+        if item_data.layer != layer or item_data.type == "Nothing":
             continue
 
         number += 1

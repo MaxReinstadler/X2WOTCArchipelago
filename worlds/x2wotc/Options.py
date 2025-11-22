@@ -123,6 +123,14 @@ class EarlyProvingGround(Toggle):
     default = False
 
 
+class ResourceShare(Range):
+    """Set the share of filler items to be resources."""
+    display_name = "Resource Share"
+    range_start = 0
+    range_end = 100
+    default = 65
+
+
 class WeaponModShare(Range):
     """Set the share of filler items to be weapon upgrades."""
     display_name = "Weapon Mod Share"
@@ -307,6 +315,7 @@ class X2WOTCOptions(PerGameCommonOptions):
     early_proving_ground: EarlyProvingGround
 
     # Filler options
+    resource_share: ResourceShare
     weapon_mod_share: WeaponModShare
     pcs_share: PCSShare
     staff_share: StaffShare

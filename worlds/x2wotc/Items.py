@@ -10,6 +10,7 @@ from .ItemData import (
     pcs_item_table,
     staff_item_table,
     trap_item_table,
+    nothing_items,
     item_table,
 )
 
@@ -97,6 +98,7 @@ class ItemManager:
         self.pcs_items = set(pcs_item_table.keys())
         self.staff_items = set(staff_item_table.keys())
         self.trap_items = set(trap_item_table.keys())
+        self.nothing_items = set(nothing_items.keys())
 
         self.item_count: dict[str, int] = {}
         self.num_items: int = 0
@@ -203,6 +205,7 @@ class ItemManager:
     def add_filler_items(
             self,
             num_filler_items: int,
+            resource_share: float,
             weapon_mod_share: float,
             pcs_share: float,
             staff_share: float,
@@ -210,6 +213,7 @@ class ItemManager:
             random: Random
         ):
         num_names_pairs = [
+            (int(num_filler_items * resource_share), list(self.resource_items)),
             (int(num_filler_items * weapon_mod_share), list(self.weapon_mod_items)),
             (int(num_filler_items * pcs_share), list(self.pcs_items)),
             (int(num_filler_items * staff_share), list(self.staff_items)),
@@ -227,8 +231,8 @@ class ItemManager:
                 if num_unfilled == 0:
                     return
 
-        # Fill the rest with resource filler items
-        possible_names = list(self.resource_items)
+        # Fill the rest with nothing items
+        possible_names = list(self.nothing_items)
         for _ in range(num_unfilled):
             item_name = random.choice(possible_names)
             self.add_item(item_name)

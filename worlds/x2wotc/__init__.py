@@ -213,6 +213,7 @@ class X2WOTCWorld(World):
         print(f"X2WOTC: Adding {num_filler_items} filler items for player {self.player_name}")
         self.item_manager.add_filler_items(
             num_filler_items,
+            self.options.resource_share / 100,
             self.options.weapon_mod_share / 100,
             self.options.pcs_share / 100,
             self.options.staff_share / 100,
