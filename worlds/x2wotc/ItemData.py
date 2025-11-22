@@ -889,98 +889,98 @@ ability_point_items: dict[str, X2WOTCItemData] = {
 #-----------------------------------------------------------------------------------------------------------------------
 
 advanced_weapon_mod_items: dict[str, X2WOTCItemData] = {
-    "AimUpgrade_Adv": X2WOTCItemData(
+    "AimUpgrade_Adv:1": X2WOTCItemData(
         display_name = weapon_mod_item_prefix + "Advanced Scope",
         id = get_new_item_id(),
-        type = "WeaponMod",
+        type = "Resource",
         tags = {"filler", "scope", "advanced"}
     ),
-    "CritUpgrade_Adv": X2WOTCItemData(
+    "CritUpgrade_Adv:1": X2WOTCItemData(
         display_name = weapon_mod_item_prefix + "Advanced Laser Sight",
         id = get_new_item_id(),
-        type = "WeaponMod",
+        type = "Resource",
         tags = {"filler", "laser_sight", "advanced"}
     ),
-    "ReloadUpgrade_Adv": X2WOTCItemData(
+    "ReloadUpgrade_Adv:1": X2WOTCItemData(
         display_name = weapon_mod_item_prefix + "Advanced Auto-Loader",
         id = get_new_item_id(),
-        type = "WeaponMod",
+        type = "Resource",
         tags = {"filler", "auto_loader", "advanced"}
     ),
-    "FreeKillUpgrade_Adv": X2WOTCItemData(
+    "FreeKillUpgrade_Adv:1": X2WOTCItemData(
         display_name = weapon_mod_item_prefix + "Advanced Repeater",
         id = get_new_item_id(),
-        type = "WeaponMod",
+        type = "Resource",
         tags = {"filler", "repeater", "advanced"}
     ),
-    "MissDamageUpgrade_Adv": X2WOTCItemData(
+    "MissDamageUpgrade_Adv:1": X2WOTCItemData(
         display_name = weapon_mod_item_prefix + "Advanced Stock",
         id = get_new_item_id(),
-        type = "WeaponMod",
+        type = "Resource",
         tags = {"filler", "stock", "advanced"}
     ),
-    "FreeFireUpgrade_Adv": X2WOTCItemData(
+    "FreeFireUpgrade_Adv:1": X2WOTCItemData(
         display_name = weapon_mod_item_prefix + "Advanced Hair Trigger",
         id = get_new_item_id(),
-        type = "WeaponMod",
+        type = "Resource",
         tags = {"filler", "hair_trigger", "advanced"}
     ),
-    "ClipSizeUpgrade_Adv": X2WOTCItemData(
+    "ClipSizeUpgrade_Adv:1": X2WOTCItemData(
         display_name = weapon_mod_item_prefix + "Advanced Expanded Magazine",
         id = get_new_item_id(),
-        type = "WeaponMod",
+        type = "Resource",
         tags = {"filler", "expanded_magazine", "advanced"}
     ),
 }
 
 superior_weapon_mod_items: dict[str, X2WOTCItemData] = {
-    "AimUpgrade_Sup": X2WOTCItemData(
+    "AimUpgrade_Sup:1": X2WOTCItemData(
         display_name = weapon_mod_item_prefix + "Superior Scope",
         id = get_new_item_id(),
         classification = IC.useful,
-        type = "WeaponMod",
+        type = "Resource",
         tags = {"filler", "scope", "superior"}
     ),
-    "CritUpgrade_Sup": X2WOTCItemData(
+    "CritUpgrade_Sup:1": X2WOTCItemData(
         display_name = weapon_mod_item_prefix + "Superior Laser Sight",
         id = get_new_item_id(),
         classification = IC.useful,
-        type = "WeaponMod",
+        type = "Resource",
         tags = {"filler", "laser_sight", "superior"}
     ),
-    "ReloadUpgrade_Sup": X2WOTCItemData(
+    "ReloadUpgrade_Sup:1": X2WOTCItemData(
         display_name = weapon_mod_item_prefix + "Superior Auto-Loader",
         id = get_new_item_id(),
         classification = IC.useful,
-        type = "WeaponMod",
+        type = "Resource",
         tags = {"filler", "auto_loader", "superior"}
     ),
-    "FreeKillUpgrade_Sup": X2WOTCItemData(
+    "FreeKillUpgrade_Sup:1": X2WOTCItemData(
         display_name = weapon_mod_item_prefix + "Superior Repeater",
         id = get_new_item_id(),
         classification = IC.useful,
-        type = "WeaponMod",
+        type = "Resource",
         tags = {"filler", "repeater", "superior"}
     ),
-    "MissDamageUpgrade_Sup": X2WOTCItemData(
+    "MissDamageUpgrade_Sup:1": X2WOTCItemData(
         display_name = weapon_mod_item_prefix + "Superior Stock",
         id = get_new_item_id(),
         classification = IC.useful,
-        type = "WeaponMod",
+        type = "Resource",
         tags = {"filler", "stock", "superior"}
     ),
-    "FreeFireUpgrade_Sup": X2WOTCItemData(
+    "FreeFireUpgrade_Sup:1": X2WOTCItemData(
         display_name = weapon_mod_item_prefix + "Superior Hair Trigger",
         id = get_new_item_id(),
         classification = IC.useful,
-        type = "WeaponMod",
+        type = "Resource",
         tags = {"filler", "hair_trigger", "superior"}
     ),
-    "ClipSizeUpgrade_Sup": X2WOTCItemData(
+    "ClipSizeUpgrade_Sup:1": X2WOTCItemData(
         display_name = weapon_mod_item_prefix + "Superior Expanded Magazine",
         id = get_new_item_id(),
         classification = IC.useful,
-        type = "WeaponMod",
+        type = "Resource",
         tags = {"filler", "expanded_magazine", "superior"}
     ),
 }
