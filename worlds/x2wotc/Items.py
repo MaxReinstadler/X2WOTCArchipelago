@@ -213,11 +213,11 @@ class ItemManager:
             random: Random
         ):
         num_names_pairs = [
-            (int(num_filler_items * resource_share), list(self.resource_items)),
-            (int(num_filler_items * weapon_mod_share), list(self.weapon_mod_items)),
-            (int(num_filler_items * pcs_share), list(self.pcs_items)),
-            (int(num_filler_items * staff_share), list(self.staff_items)),
-            (int(num_filler_items * trap_share), list(self.trap_items)),
+            (round(num_filler_items * resource_share), list(self.resource_items)),
+            (round(num_filler_items * weapon_mod_share), list(self.weapon_mod_items)),
+            (round(num_filler_items * pcs_share), list(self.pcs_items)),
+            (round(num_filler_items * staff_share), list(self.staff_items)),
+            (round(num_filler_items * trap_share), list(self.trap_items)),
         ]
 
         # Add specified number of each type of filler/trap
