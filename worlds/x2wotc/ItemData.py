@@ -41,6 +41,7 @@ shadow_tech_item_prefix = "[Tech] "
 chosen_hunt_item_prefix = "[Chosen Hunt] "
 resource_item_prefix = "[Resource] "
 weapon_mod_item_prefix = "[Upgrade] "
+pcs_item_prefix = "[PCS] "
 staff_item_prefix = "[Staff] "
 trap_item_prefix = "[Trap] "
 
@@ -888,48 +889,93 @@ ability_point_items: dict[str, X2WOTCItemData] = {
 #                                               WEAPON MOD ITEMS
 #-----------------------------------------------------------------------------------------------------------------------
 
+basic_weapon_mod_items: dict[str, X2WOTCItemData] = {
+    "AimUpgrade_Bsc:1": X2WOTCItemData(
+        display_name = weapon_mod_item_prefix + "Basic Scope",
+        id = get_new_item_id(),
+        type = "Resource",
+        tags = {"filler", "weapon_mod", "scope", "basic"}
+    ),
+    "CritUpgrade_Bsc:1": X2WOTCItemData(
+        display_name = weapon_mod_item_prefix + "Basic Laser Sight",
+        id = get_new_item_id(),
+        type = "Resource",
+        tags = {"filler", "weapon_mod", "laser_sight", "basic"}
+    ),
+    "ReloadUpgrade_Bsc:1": X2WOTCItemData(
+        display_name = weapon_mod_item_prefix + "Basic Auto-Loader",
+        id = get_new_item_id(),
+        type = "Resource",
+        tags = {"filler", "weapon_mod", "auto_loader", "basic"}
+    ),
+    "FreeKillUpgrade_Bsc:1": X2WOTCItemData(
+        display_name = weapon_mod_item_prefix + "Basic Repeater",
+        id = get_new_item_id(),
+        type = "Resource",
+        tags = {"filler", "weapon_mod", "repeater", "basic"}
+    ),
+    "MissDamageUpgrade_Bsc:1": X2WOTCItemData(
+        display_name = weapon_mod_item_prefix + "Basic Stock",
+        id = get_new_item_id(),
+        type = "Resource",
+        tags = {"filler", "weapon_mod", "stock", "basic"}
+    ),
+    "FreeFireUpgrade_Bsc:1": X2WOTCItemData(
+        display_name = weapon_mod_item_prefix + "Basic Hair Trigger",
+        id = get_new_item_id(),
+        type = "Resource",
+        tags = {"filler", "weapon_mod", "hair_trigger", "basic"}
+    ),
+    "ClipSizeUpgrade_Bsc:1": X2WOTCItemData(
+        display_name = weapon_mod_item_prefix + "Basic Expanded Magazine",
+        id = get_new_item_id(),
+        type = "Resource",
+        tags = {"filler", "weapon_mod", "expanded_magazine", "basic"}
+    ),
+}
+
 advanced_weapon_mod_items: dict[str, X2WOTCItemData] = {
     "AimUpgrade_Adv:1": X2WOTCItemData(
         display_name = weapon_mod_item_prefix + "Advanced Scope",
         id = get_new_item_id(),
         type = "Resource",
-        tags = {"filler", "scope", "advanced"}
+        tags = {"filler", "weapon_mod", "scope", "advanced"}
     ),
     "CritUpgrade_Adv:1": X2WOTCItemData(
         display_name = weapon_mod_item_prefix + "Advanced Laser Sight",
         id = get_new_item_id(),
         type = "Resource",
-        tags = {"filler", "laser_sight", "advanced"}
+        tags = {"filler", "weapon_mod", "laser_sight", "advanced"}
     ),
     "ReloadUpgrade_Adv:1": X2WOTCItemData(
         display_name = weapon_mod_item_prefix + "Advanced Auto-Loader",
         id = get_new_item_id(),
         type = "Resource",
-        tags = {"filler", "auto_loader", "advanced"}
+        tags = {"filler", "weapon_mod", "auto_loader", "advanced"}
     ),
     "FreeKillUpgrade_Adv:1": X2WOTCItemData(
         display_name = weapon_mod_item_prefix + "Advanced Repeater",
         id = get_new_item_id(),
         type = "Resource",
-        tags = {"filler", "repeater", "advanced"}
+        tags = {"filler", "weapon_mod", "repeater", "advanced"}
     ),
     "MissDamageUpgrade_Adv:1": X2WOTCItemData(
         display_name = weapon_mod_item_prefix + "Advanced Stock",
         id = get_new_item_id(),
         type = "Resource",
-        tags = {"filler", "stock", "advanced"}
+        tags = {"filler", "weapon_mod", "stock", "advanced"}
     ),
     "FreeFireUpgrade_Adv:1": X2WOTCItemData(
         display_name = weapon_mod_item_prefix + "Advanced Hair Trigger",
         id = get_new_item_id(),
         type = "Resource",
-        tags = {"filler", "hair_trigger", "advanced"}
+        tags = {"filler", "weapon_mod", "hair_trigger", "advanced"}
     ),
     "ClipSizeUpgrade_Adv:1": X2WOTCItemData(
         display_name = weapon_mod_item_prefix + "Advanced Expanded Magazine",
         id = get_new_item_id(),
         type = "Resource",
-        tags = {"filler", "expanded_magazine", "advanced"}
+        tags = {"filler", "weapon_mod", "expanded_magazine", "advanced"}
     ),
 }
 
@@ -939,49 +985,157 @@ superior_weapon_mod_items: dict[str, X2WOTCItemData] = {
         id = get_new_item_id(),
         classification = IC.useful,
         type = "Resource",
-        tags = {"filler", "scope", "superior"}
+        tags = {"filler", "weapon_mod", "scope", "superior"}
     ),
     "CritUpgrade_Sup:1": X2WOTCItemData(
         display_name = weapon_mod_item_prefix + "Superior Laser Sight",
         id = get_new_item_id(),
         classification = IC.useful,
         type = "Resource",
-        tags = {"filler", "laser_sight", "superior"}
+        tags = {"filler", "weapon_mod", "laser_sight", "superior"}
     ),
     "ReloadUpgrade_Sup:1": X2WOTCItemData(
         display_name = weapon_mod_item_prefix + "Superior Auto-Loader",
         id = get_new_item_id(),
         classification = IC.useful,
         type = "Resource",
-        tags = {"filler", "auto_loader", "superior"}
+        tags = {"filler", "weapon_mod", "auto_loader", "superior"}
     ),
     "FreeKillUpgrade_Sup:1": X2WOTCItemData(
         display_name = weapon_mod_item_prefix + "Superior Repeater",
         id = get_new_item_id(),
         classification = IC.useful,
         type = "Resource",
-        tags = {"filler", "repeater", "superior"}
+        tags = {"filler", "weapon_mod", "repeater", "superior"}
     ),
     "MissDamageUpgrade_Sup:1": X2WOTCItemData(
         display_name = weapon_mod_item_prefix + "Superior Stock",
         id = get_new_item_id(),
         classification = IC.useful,
         type = "Resource",
-        tags = {"filler", "stock", "superior"}
+        tags = {"filler", "weapon_mod", "stock", "superior"}
     ),
     "FreeFireUpgrade_Sup:1": X2WOTCItemData(
         display_name = weapon_mod_item_prefix + "Superior Hair Trigger",
         id = get_new_item_id(),
         classification = IC.useful,
         type = "Resource",
-        tags = {"filler", "hair_trigger", "superior"}
+        tags = {"filler", "weapon_mod", "hair_trigger", "superior"}
     ),
     "ClipSizeUpgrade_Sup:1": X2WOTCItemData(
         display_name = weapon_mod_item_prefix + "Superior Expanded Magazine",
         id = get_new_item_id(),
         classification = IC.useful,
         type = "Resource",
-        tags = {"filler", "expanded_magazine", "superior"}
+        tags = {"filler", "weapon_mod", "expanded_magazine", "superior"}
+    ),
+}
+
+#=======================================================================================================================
+#                                                  PCS ITEMS
+#-----------------------------------------------------------------------------------------------------------------------
+
+basic_pcs_items: dict[str, X2WOTCItemData] = {
+    "CommonPCSSpeed:1": X2WOTCItemData(
+        display_name = pcs_item_prefix + "Basic Speed",
+        id = get_new_item_id(),
+        type = "Resource",
+        tags = {"filler", "pcs", "speed", "basic"}
+    ),
+    "CommonPCSConditioning:1": X2WOTCItemData(
+        display_name = pcs_item_prefix + "Basic Conditioning",
+        id = get_new_item_id(),
+        type = "Resource",
+        tags = {"filler", "pcs", "conditioning", "basic"}
+    ),
+    "CommonPCSFocus:1": X2WOTCItemData(
+        display_name = pcs_item_prefix + "Basic Focus",
+        id = get_new_item_id(),
+        type = "Resource",
+        tags = {"filler", "pcs", "focus", "basic"}
+    ),
+    "CommonPCSPerception:1": X2WOTCItemData(
+        display_name = pcs_item_prefix + "Basic Perception",
+        id = get_new_item_id(),
+        type = "Resource",
+        tags = {"filler", "pcs", "perception", "basic"}
+    ),
+    "CommonPCSAgility:1": X2WOTCItemData(
+        display_name = pcs_item_prefix + "Basic Agility",
+        id = get_new_item_id(),
+        type = "Resource",
+        tags = {"filler", "pcs", "agility", "basic"}
+    ),
+}
+
+advanced_pcs_items: dict[str, X2WOTCItemData] = {
+    "RarePCSSpeed:1": X2WOTCItemData(
+        display_name = pcs_item_prefix + "Advanced Speed",
+        id = get_new_item_id(),
+        type = "Resource",
+        tags = {"filler", "pcs", "speed", "advanced"}
+    ),
+    "RarePCSConditioning:1": X2WOTCItemData(
+        display_name = pcs_item_prefix + "Advanced Conditioning",
+        id = get_new_item_id(),
+        type = "Resource",
+        tags = {"filler", "pcs", "conditioning", "advanced"}
+    ),
+    "RarePCSFocus:1": X2WOTCItemData(
+        display_name = pcs_item_prefix + "Advanced Focus",
+        id = get_new_item_id(),
+        type = "Resource",
+        tags = {"filler", "pcs", "focus", "advanced"}
+    ),
+    "RarePCSPerception:1": X2WOTCItemData(
+        display_name = pcs_item_prefix + "Advanced Perception",
+        id = get_new_item_id(),
+        type = "Resource",
+        tags = {"filler", "pcs", "perception", "advanced"}
+    ),
+    "RarePCSAgility:1": X2WOTCItemData(
+        display_name = pcs_item_prefix + "Advanced Agility",
+        id = get_new_item_id(),
+        type = "Resource",
+        tags = {"filler", "pcs", "agility", "advanced"}
+    ),
+}
+
+superior_pcs_items: dict[str, X2WOTCItemData] = {
+    "EpicPCSSpeed:1": X2WOTCItemData(
+        display_name = pcs_item_prefix + "Superior Speed",
+        id = get_new_item_id(),
+        classification = IC.useful,
+        type = "Resource",
+        tags = {"filler", "pcs", "speed", "superior"}
+    ),
+    "EpicPCSConditioning:1": X2WOTCItemData(
+        display_name = pcs_item_prefix + "Superior Conditioning",
+        id = get_new_item_id(),
+        classification = IC.useful,
+        type = "Resource",
+        tags = {"filler", "pcs", "conditioning", "superior"}
+    ),
+    "EpicPCSFocus:1": X2WOTCItemData(
+        display_name = pcs_item_prefix + "Superior Focus",
+        id = get_new_item_id(),
+        classification = IC.useful,
+        type = "Resource",
+        tags = {"filler", "pcs", "focus", "superior"}
+    ),
+    "EpicPCSPerception:1": X2WOTCItemData(
+        display_name = pcs_item_prefix + "Superior Perception",
+        id = get_new_item_id(),
+        classification = IC.useful,
+        type = "Resource",
+        tags = {"filler", "pcs", "perception", "superior"}
+    ),
+    "EpicPCSAgility:1": X2WOTCItemData(
+        display_name = pcs_item_prefix + "Superior Agility",
+        id = get_new_item_id(),
+        classification = IC.useful,
+        type = "Resource",
+        tags = {"filler", "pcs", "agility", "superior"}
     ),
 }
 
@@ -1096,8 +1250,15 @@ resource_item_table: dict[str, X2WOTCItemData] = {
 }
 
 weapon_mod_item_table: dict[str, X2WOTCItemData] = {
+    **basic_weapon_mod_items,
     **advanced_weapon_mod_items,
     **superior_weapon_mod_items,
+}
+
+pcs_item_table: dict[str, X2WOTCItemData] = {
+    **basic_pcs_items,
+    **advanced_pcs_items,
+    **superior_pcs_items,
 }
 
 staff_item_table: dict[str, X2WOTCItemData] = {
@@ -1108,6 +1269,7 @@ staff_item_table: dict[str, X2WOTCItemData] = {
 filler_item_table: dict[str, X2WOTCItemData] = {
     **resource_item_table,
     **weapon_mod_item_table,
+    **pcs_item_table,
     **staff_item_table,
 }
 

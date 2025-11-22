@@ -7,6 +7,7 @@ from .ItemData import (
     X2WOTCItemData,
     resource_item_table,
     weapon_mod_item_table,
+    pcs_item_table,
     staff_item_table,
     trap_item_table,
     item_table,
@@ -93,6 +94,7 @@ class ItemManager:
 
         self.resource_items = set(resource_item_table.keys())
         self.weapon_mod_items = set(weapon_mod_item_table.keys())
+        self.pcs_items = set(pcs_item_table.keys())
         self.staff_items = set(staff_item_table.keys())
         self.trap_items = set(trap_item_table.keys())
 
@@ -202,12 +204,14 @@ class ItemManager:
             self,
             num_filler_items: int,
             weapon_mod_share: float,
+            pcs_share: float,
             staff_share: float,
             trap_share: float,
             random: Random
         ):
         num_names_pairs = [
             (int(num_filler_items * weapon_mod_share), list(self.weapon_mod_items)),
+            (int(num_filler_items * pcs_share), list(self.pcs_items)),
             (int(num_filler_items * staff_share), list(self.staff_items)),
             (int(num_filler_items * trap_share), list(self.trap_items)),
         ]

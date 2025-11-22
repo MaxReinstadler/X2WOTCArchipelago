@@ -214,6 +214,7 @@ class X2WOTCWorld(World):
         self.item_manager.add_filler_items(
             num_filler_items,
             self.options.weapon_mod_share / 100,
+            self.options.pcs_share / 100,
             self.options.staff_share / 100,
             self.options.trap_share / 100,
             self.random

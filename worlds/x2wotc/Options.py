@@ -131,12 +131,20 @@ class WeaponModShare(Range):
     default = 15
 
 
+class PCSShare(Range):
+    """Set the share of filler items to be PCSs."""
+    display_name = "PCS Share"
+    range_start = 0
+    range_end = 100
+    default = 10
+
+
 class StaffShare(Range):
     """Set the share of filler items to be staff."""
     display_name = "Staff Share"
     range_start = 0
     range_end = 100
-    default = 20
+    default = 10
 
 
 class TrapShare(Range):
@@ -300,6 +308,7 @@ class X2WOTCOptions(PerGameCommonOptions):
 
     # Filler options
     weapon_mod_share: WeaponModShare
+    pcs_share: PCSShare
     staff_share: StaffShare
     trap_share: TrapShare
 
