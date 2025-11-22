@@ -430,7 +430,7 @@ class X2WOTCContext(SuperContext):
             file.write(spoiler)
 
 
-def launch():
+def launch(*args):
     async def main(args):
         ctx = X2WOTCContext(args.connect, args.password)
         ctx.server_task = asyncio.create_task(server_loop(ctx), name="server_loop")
@@ -448,8 +448,8 @@ def launch():
     import colorama
 
     parser = get_base_parser()
-    args = parser.parse_args()
+    parsed_args = parser.parse_args(args)
 
     colorama.init()
-    asyncio.run(main(args))
+    asyncio.run(main(parsed_args))
     colorama.deinit()

@@ -5,7 +5,7 @@ from BaseClasses import CollectionState, Item, MultiWorld, Tutorial
 from Options import OptionError, PerGameCommonOptions
 from settings import Group, UserFolderPath
 from worlds.AutoWorld import WebWorld, World
-from worlds.LauncherComponents import Component, Type, components, launch_subprocess
+from worlds.LauncherComponents import Component, Type, components, launch as launch_component
 
 from .EnemyRando import EnemyRandoManager
 from .Items import ItemManager, X2WOTCItem, item_display_name_to_id, item_groups
@@ -18,13 +18,12 @@ from .Version import minimum_client_version
 from .mods import mods_data
 
 
-def launch_client():
+def launch_client(*args):
     from .Client import launch
-    
-    launch_subprocess(launch, name="X2WOTCClient")
 
-components.append(Component("XCOM 2 War of the Chosen Client", "X2WOTCClient",
-                            func=launch_client, component_type=Type.CLIENT))
+    launch_component(launch, name="XCOM 2 War of the Chosen Client", args=args)
+
+components.append(Component("XCOM 2 War of the Chosen Client", func=launch_client, component_type=Type.CLIENT))
 
 
 class X2WOTCWeb(WebWorld):
