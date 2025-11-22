@@ -450,6 +450,6 @@ def launch(*args):
     parser = get_base_parser()
     parsed_args = parser.parse_args(args)
 
-    colorama.init()
+    colorama.just_fix_windows_console()
     asyncio.run(main(parsed_args))
     colorama.deinit()
