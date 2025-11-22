@@ -16,7 +16,7 @@ NOTE: Resistance Communications and Resistance Radio research projects are ignor
 - Research/shadow project unlocks (including story progress)
 - Chosen hunt covert action unlocks, i.e. faction influence, chosen strongholds
 - Resources, i.e. supplies, intel, elerium cores, etc.
-- Weapon upgrades
+- Weapon upgrades, PCSs
 - Staff, i.e. scientists, engineers
 - Traps, i.e. avatar project progress, force level increases
 
