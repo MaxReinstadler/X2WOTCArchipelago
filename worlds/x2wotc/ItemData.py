@@ -625,7 +625,7 @@ progressive_tech_items: dict[str, X2WOTCItemData] = {
 
 tech_fragment_items: dict[str, X2WOTCItemData] = {
     "ChosenAssassinWeaponsFragment2": X2WOTCItemData(
-        display_name = tech_item_prefix + "Assassin Weapons Fragment (2)",
+        display_name = tech_item_prefix + "Assassin Weapons Fragment (1/2)",
         id = get_new_item_id(),
         classification = IC.progression_skip_balancing,
         type = "TechCompleted",
@@ -637,7 +637,7 @@ tech_fragment_items: dict[str, X2WOTCItemData] = {
         ]
     ),
     "ChosenHunterWeaponsFragment2": X2WOTCItemData(
-        display_name = tech_item_prefix + "Hunter Weapons Fragment (2)",
+        display_name = tech_item_prefix + "Hunter Weapons Fragment (1/2)",
         id = get_new_item_id(),
         classification = IC.progression_skip_balancing,
         type = "TechCompleted",
@@ -649,7 +649,7 @@ tech_fragment_items: dict[str, X2WOTCItemData] = {
         ]
     ),
     "ChosenWarlockWeaponsFragment2": X2WOTCItemData(
-        display_name = tech_item_prefix + "Warlock Weapons Fragment (2)",
+        display_name = tech_item_prefix + "Warlock Weapons Fragment (1/2)",
         id = get_new_item_id(),
         classification = IC.progression_skip_balancing,
         type = "TechCompleted",
@@ -661,7 +661,7 @@ tech_fragment_items: dict[str, X2WOTCItemData] = {
         ]
     ),
     "ChosenAssassinWeaponsFragment3": X2WOTCItemData(
-        display_name = tech_item_prefix + "Assassin Weapons Fragment (3)",
+        display_name = tech_item_prefix + "Assassin Weapons Fragment (1/3)",
         id = get_new_item_id(),
         classification = IC.progression_skip_balancing,
         type = "TechCompleted",
@@ -674,7 +674,7 @@ tech_fragment_items: dict[str, X2WOTCItemData] = {
         ]
     ),
     "ChosenHunterWeaponsFragment3": X2WOTCItemData(
-        display_name = tech_item_prefix + "Hunter Weapons Fragment (3)",
+        display_name = tech_item_prefix + "Hunter Weapons Fragment (1/3)",
         id = get_new_item_id(),
         classification = IC.progression_skip_balancing,
         type = "TechCompleted",
@@ -687,7 +687,7 @@ tech_fragment_items: dict[str, X2WOTCItemData] = {
         ]
     ),
     "ChosenWarlockWeaponsFragment3": X2WOTCItemData(
-        display_name = tech_item_prefix + "Warlock Weapons Fragment (3)",
+        display_name = tech_item_prefix + "Warlock Weapons Fragment (1/3)",
         id = get_new_item_id(),
         classification = IC.progression_skip_balancing,
         type = "TechCompleted",
