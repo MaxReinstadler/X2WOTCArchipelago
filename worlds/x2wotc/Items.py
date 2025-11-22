@@ -116,7 +116,7 @@ class ItemManager:
     def get_item_power(self, item_name: str, count: int) -> float:
         item_data = self.item_table[item_name]
         if item_data.stages is None:
-            return item_data.power * count
+            return item_data.power * min(count, self.item_count[item_name])
         else:
             return sum([
                 self.item_table[item_data.stages[i]].power
