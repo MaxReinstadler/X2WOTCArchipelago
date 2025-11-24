@@ -1,4 +1,5 @@
 import dataclasses
+from logging import info, warning
 from typing import Any, ClassVar, TextIO
 
 from BaseClasses import CollectionState, Item, MultiWorld, Tutorial
@@ -133,41 +134,41 @@ class X2WOTCWorld(World):
         # Enable progressive tech items
         if "RifleTech+" in self.options.progressive_items:
             if not self.item_manager.enable_progressive_item("ProgressiveRifleTechCompleted+"):
-                print(f"X2WOTC: Failed to enable progressive rifle tech+ for player {self.player_name}")
+                warning(f"X2WOTC: Failed to enable progressive rifle tech+ for player {self.player_name}")
         elif "RifleTech" in self.options.progressive_items:
             if not self.item_manager.enable_progressive_item("ProgressiveRifleTechCompleted"):
-                print(f"X2WOTC: Failed to enable progressive rifle tech for player {self.player_name}")
+                warning(f"X2WOTC: Failed to enable progressive rifle tech for player {self.player_name}")
         if "ArmorTech+" in self.options.progressive_items:
             if not self.item_manager.enable_progressive_item("ProgressiveArmorTechCompleted+"):
-                print(f"X2WOTC: Failed to enable progressive armor tech+ for player {self.player_name}")
+                warning(f"X2WOTC: Failed to enable progressive armor tech+ for player {self.player_name}")
         elif "ArmorTech" in self.options.progressive_items:
             if not self.item_manager.enable_progressive_item("ProgressiveArmorTechCompleted"):
-                print(f"X2WOTC: Failed to enable progressive armor tech for player {self.player_name}")
+                warning(f"X2WOTC: Failed to enable progressive armor tech for player {self.player_name}")
         if "MeleeWeaponTech" in self.options.progressive_items:
             if not self.item_manager.enable_progressive_item("ProgressiveMeleeTechCompleted"):
-                print(f"X2WOTC: Failed to enable progressive melee tech for player {self.player_name}")
+                warning(f"X2WOTC: Failed to enable progressive melee tech for player {self.player_name}")
         if "GREMLINTech" in self.options.progressive_items:
             if not self.item_manager.enable_progressive_item("ProgressiveGREMLINTechCompleted"):
-                print(f"X2WOTC: Failed to enable progressive GREMLIN tech for player {self.player_name}")
+                warning(f"X2WOTC: Failed to enable progressive GREMLIN tech for player {self.player_name}")
         if "PsionicsTech" in self.options.progressive_items:
             if not self.item_manager.enable_progressive_item("ProgressivePsionicsTechCompleted"):
-                print(f"X2WOTC: Failed to enable progressive psionics tech for player {self.player_name}")
+                warning(f"X2WOTC: Failed to enable progressive psionics tech for player {self.player_name}")
 
         # Enable tech fragment items
         if self.options.chosen_weapon_fragments == ChosenWeaponFragments.option_two:
             if not self.item_manager.enable_progressive_item("ChosenAssassinWeaponsFragment2"):
-                print(f"X2WOTC: Failed to enable Assassin weapon fragments (2) for player {self.player_name}")
+                warning(f"X2WOTC: Failed to enable Assassin weapon fragments (2) for player {self.player_name}")
             if not self.item_manager.enable_progressive_item("ChosenHunterWeaponsFragment2"):
-                print(f"X2WOTC: Failed to enable Hunter weapon fragments (2) for player {self.player_name}")
+                warning(f"X2WOTC: Failed to enable Hunter weapon fragments (2) for player {self.player_name}")
             if not self.item_manager.enable_progressive_item("ChosenWarlockWeaponsFragment2"):
-                print(f"X2WOTC: Failed to enable Warlock weapon fragments (2) for player {self.player_name}")
+                warning(f"X2WOTC: Failed to enable Warlock weapon fragments (2) for player {self.player_name}")
         elif self.options.chosen_weapon_fragments == ChosenWeaponFragments.option_three:
             if not self.item_manager.enable_progressive_item("ChosenAssassinWeaponsFragment3"):
-                print(f"X2WOTC: Failed to enable Assassin weapon fragments (3) for player {self.player_name}")
+                warning(f"X2WOTC: Failed to enable Assassin weapon fragments (3) for player {self.player_name}")
             if not self.item_manager.enable_progressive_item("ChosenHunterWeaponsFragment3"):
-                print(f"X2WOTC: Failed to enable Hunter weapon fragments (3) for player {self.player_name}")
+                warning(f"X2WOTC: Failed to enable Hunter weapon fragments (3) for player {self.player_name}")
             if not self.item_manager.enable_progressive_item("ChosenWarlockWeaponsFragment3"):
-                print(f"X2WOTC: Failed to enable Warlock weapon fragments (3) for player {self.player_name}")
+                warning(f"X2WOTC: Failed to enable Warlock weapon fragments (3) for player {self.player_name}")
 
         # Force early proving ground
         if self.options.early_proving_ground:
@@ -209,7 +210,7 @@ class X2WOTCWorld(World):
             )
 
         # Add filler items
-        print(f"X2WOTC: Adding {num_filler_items} filler items for player {self.player_name}")
+        info(f"X2WOTC: Adding {num_filler_items} filler items for player {self.player_name}")
         self.item_manager.add_filler_items(
             num_filler_items,
             self.options.resource_share / 100,

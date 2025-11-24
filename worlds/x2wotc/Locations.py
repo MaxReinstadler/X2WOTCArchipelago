@@ -1,4 +1,6 @@
 from copy import deepcopy
+from logging import warning
+
 from BaseClasses import Location
 
 from .LocationData import X2WOTCLocationData, location_table
@@ -15,7 +17,7 @@ for loc_name, loc_data in mod_locations.items():
     if loc_name not in location_table:
         location_table[loc_name] = loc_data
     else:
-        print(f"X2WOTC: Duplicate location {loc_name} in mods, skipping")
+        warning(f"X2WOTC: Duplicate location {loc_name} in mods, skipping")
 
 # Lookup tables
 loc_display_name_to_id = {

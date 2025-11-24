@@ -1,4 +1,5 @@
 import importlib
+from logging import warning
 import pkgutil
 from typing import NamedTuple, Callable, TYPE_CHECKING
 
@@ -35,7 +36,7 @@ for loader, module_name, ispkg in pkgutil.iter_modules(__path__):
     try:
         module = importlib.import_module(f".{module_name}", __name__)
     except ImportError:
-        print(f"X2WOTC: Failed to import module mods/{module_name}")
+        warning(f"X2WOTC: Failed to import module mods/{module_name}")
         continue
 
     mods_data.append(X2WOTCModData(
@@ -57,25 +58,25 @@ for mod_data in mods_data:
     if mod_data.name not in mod_names:
         mod_names.append(mod_data.name)
     else:
-        print(f"X2WOTC: Duplicate mod name {mod_data.name}")
+        warning(f"X2WOTC: Duplicate mod name {mod_data.name}")
 
     for item_name, item_data in mod_data.items.items():
         if item_name not in mod_items:
             mod_items[item_name] = item_data
         else:
-            print(f"X2WOTC: Duplicate item name {item_name} in mod {mod_data.name}")
+            warning(f"X2WOTC: Duplicate item name {item_name} in mod {mod_data.name}")
 
     for loc_name, loc_data in mod_data.locations.items():
         if loc_name not in mod_locations:
             mod_locations[loc_name] = loc_data
         else:
-            print(f"X2WOTC: Duplicate location name {loc_name} in mod {mod_data.name}")
+            warning(f"X2WOTC: Duplicate location name {loc_name} in mod {mod_data.name}")
 
     for option in mod_data.options:
         if option[0] not in [mod_option[0] for mod_option in mod_options]:
             mod_options.append(option)
         else:
-            print(f"X2WOTC: Duplicate option name {option[0]} in mod {mod_data.name}")
+            warning(f"X2WOTC: Duplicate option name {option[0]} in mod {mod_data.name}")
 
 # Sort mod names alphabetically
 mod_names.sort()

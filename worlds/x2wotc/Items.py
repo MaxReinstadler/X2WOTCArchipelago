@@ -1,4 +1,5 @@
 from copy import deepcopy
+from logging import warning
 from random import Random
 
 from BaseClasses import Item
@@ -34,7 +35,7 @@ for item_name, item_data in mod_items.items():
     if item_name not in item_table:
         item_table[item_name] = item_data
     else:
-        print(f"X2WOTC: Duplicate item {item_name} in mods, skipping")
+        warning(f"X2WOTC: Duplicate item {item_name} in mods, skipping")
 
 # Lookup tables
 item_display_name_to_id = {
