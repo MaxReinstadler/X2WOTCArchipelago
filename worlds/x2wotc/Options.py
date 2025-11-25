@@ -163,6 +163,14 @@ class TrapShare(Range):
     default = 0
 
 
+class NothingShare(Range):
+    """Set the share of filler items to be nothing."""
+    display_name = "Nothing Share"
+    range_start = 0
+    range_end = 100
+    default = 0
+
+
 class EnemyRando(Toggle):
     """Enable enemy shuffle, randomizing both scripted and procedural encounters."""
     display_name = "Enemy Rando"
@@ -320,6 +328,7 @@ class X2WOTCOptions(PerGameCommonOptions):
     pcs_share: PCSShare
     staff_share: StaffShare
     trap_share: TrapShare
+    nothing_share: NothingShare
 
     # More randomization options
     enemy_rando: EnemyRando

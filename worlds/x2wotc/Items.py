@@ -206,34 +206,41 @@ class ItemManager:
     def add_filler_items(
             self,
             num_filler_items: int,
-            resource_share: float,
-            weapon_mod_share: float,
-            pcs_share: float,
-            staff_share: float,
-            trap_share: float,
+            resource_share: int,
+            weapon_mod_share: int,
+            pcs_share: int,
+            staff_share: int,
+            trap_share: int,
+            nothing_share: int,
             random: Random
         ):
+        total_share = sum([
+            resource_share,
+            weapon_mod_share,
+            pcs_share,
+            staff_share,
+            trap_share,
+            nothing_share,
+        ])
         num_names_pairs = [
-            (round(num_filler_items * resource_share), list(self.resource_items)),
-            (round(num_filler_items * weapon_mod_share), list(self.weapon_mod_items)),
-            (round(num_filler_items * pcs_share), list(self.pcs_items)),
-            (round(num_filler_items * staff_share), list(self.staff_items)),
-            (round(num_filler_items * trap_share), list(self.trap_items)),
+            (round((num_filler_items / total_share) * resource_share), list(self.resource_items)),
+            (round((num_filler_items / total_share) * weapon_mod_share), list(self.weapon_mod_items)),
+            (round((num_filler_items / total_share) * pcs_share), list(self.pcs_items)),
+            (round((num_filler_items / total_share) * staff_share), list(self.staff_items)),
+            (round((num_filler_items / total_share) * trap_share), list(self.trap_items)),
+            (round((num_filler_items / total_share) * nothing_share), list(self.nothing_items)),
         ]
 
+        # Adjust largest share to fill any rounding errors
+        for index, (num, names) in enumerate(num_names_pairs):
+            max_num = max([n for n, _ in num_names_pairs])
+            if num == max_num:
+                num += num_filler_items - sum([n for n, _ in num_names_pairs])
+                num_names_pairs[index] = (num, names)
+                break
+
         # Add specified number of each type of filler/trap
-        num_unfilled = num_filler_items
         for (num, names) in num_names_pairs:
             for _ in range(num):
                 item_name = random.choice(names)
                 self.add_item(item_name)
-
-                num_unfilled -= 1
-                if num_unfilled == 0:
-                    return
-
-        # Fill the rest with nothing items
-        possible_names = list(self.nothing_items)
-        for _ in range(num_unfilled):
-            item_name = random.choice(possible_names)
-            self.add_item(item_name)
