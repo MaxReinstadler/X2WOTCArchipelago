@@ -80,6 +80,28 @@ lwotc_items: dict[str, X2WOTCItemData] = {
             "AdvancedCoilgunsCompleted",
         ]
     ),
+    "ProgressiveHeavyArmorTechLwotcCompleted": X2WOTCItemData(
+        display_name = tech_item_prefix + "Progressive Heavy Armor (LWOTC)",
+        id = get_new_item_id(),
+        classification = IC.progression | IC.useful,
+        type = "TechCompleted",
+        tags = {"armor", "progressive"},
+        stages = [
+            "EXOSuitCompleted",
+            "WARSuitCompleted",
+        ]
+    ),
+    "ProgressiveLightArmorTechLwotcCompleted": X2WOTCItemData(
+        display_name = tech_item_prefix + "Progressive Light Armor (LWOTC)",
+        id = get_new_item_id(),
+        classification = IC.progression | IC.useful,
+        type = "TechCompleted",
+        tags = {"armor", "progressive"},
+        stages = [
+            "SpiderSuitCompleted",
+            "WraithSuitCompleted",
+        ]
+    ),
     "AutopsyDroneCompleted": X2WOTCItemData(
         display_name = tech_item_prefix + "ADVENT Robotics",
         id = get_new_item_id(),

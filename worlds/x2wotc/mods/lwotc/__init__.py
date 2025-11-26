@@ -39,6 +39,13 @@ def generate_early(world: "X2WOTCWorld"):
         if not world.item_manager.enable_progressive_item("ProgressiveGREMLINTechLwotcCompleted"):
             print(f"X2WOTC: Failed to enable progressive LWOTC GREMLIN tech for player {world.player_name}")
 
+    # Light and Heavy Armor are researches, not PG projects
+    if "ArmorTech" in world.options.progressive_items:
+        if not world.item_manager.enable_progressive_item("ProgressiveLightArmorTechLwotcCompleted"):
+            print(f"X2WOTC: Failed to enable progressive LWOTC light armor tech for player {world.player_name}")
+        if not world.item_manager.enable_progressive_item("ProgressiveHeavyArmorTechLwotcCompleted"):
+            print(f"X2WOTC: Failed to enable progressive LWOTC heavy armor tech for player {world.player_name}")
+
     # Handle option to force early proving ground
     if world.options.early_proving_ground:
         del world.multiworld.early_items[world.player][
