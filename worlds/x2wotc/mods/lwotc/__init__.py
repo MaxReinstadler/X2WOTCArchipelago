@@ -314,7 +314,7 @@ config: dict[str, str] = {
         +CheckKillCustomCharacterGroups=(GroupName=AdvVanguard, Members[0]=AdvVanguard)
 
         +CheckKillCustomCharacterGroups=(GroupName=LWDrone, \\
-            Members[0]=LWDrone, \\
+            Members[0]=LWDroneM1, \\
             Members[1]=LWDroneM2 \\
         )
         +CheckKillCustomCharacterGroups=(GroupName=AdvMECArcher, \\
