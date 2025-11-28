@@ -18,6 +18,13 @@ rule_priority = 0.0
 # Handle mod options here
 def generate_early(world: "X2WOTCWorld"):
 
+    # Enemy rando not supported
+    for key, value in world.loc_manager.location_table.items():
+        world.loc_manager.replace(key, tags={tag for tag in value.tags if not tag.startswith("diff:")})
+    if world.options.enemy_rando:
+        world.enemy_rando_manager.is_shuffled = True
+        warning(f"X2WOTC: Ignoring enemy rando of player {world.player_name} because the mod 'Long War of the Chosen' is enabled")
+
     # Weapons have 5 tiers
     world.item_manager.disable_progressive_item("ProgressiveRifleTechCompleted")
     world.item_manager.disable_progressive_item("ProgressiveRifleTechCompleted+")

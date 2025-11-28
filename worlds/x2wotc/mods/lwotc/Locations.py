@@ -306,7 +306,7 @@ lwotc_enemy_kills: dict[str, X2WOTCLocationData] = {
         id = get_new_location_id(),
         layer = "Tactical",
         type = "EnemyKill",
-        tags = {},
+        tags = set(),
         difficulty = 0.0
     ),
     "KillAdvGunner": X2WOTCLocationData(
@@ -314,7 +314,7 @@ lwotc_enemy_kills: dict[str, X2WOTCLocationData] = {
         id = get_new_location_id(),
         layer = "Tactical",
         type = "EnemyKill",
-        tags = {},
+        tags = set(),
         difficulty = 0.0
     ),
     "KillAdvSentry": X2WOTCLocationData(
@@ -322,7 +322,7 @@ lwotc_enemy_kills: dict[str, X2WOTCLocationData] = {
         id = get_new_location_id(),
         layer = "Tactical",
         type = "EnemyKill",
-        tags = {},
+        tags = set(),
         difficulty = 0.0
     ),
     "KillAdvRocketeer": X2WOTCLocationData(
@@ -330,7 +330,7 @@ lwotc_enemy_kills: dict[str, X2WOTCLocationData] = {
         id = get_new_location_id(),
         layer = "Tactical",
         type = "EnemyKill",
-        tags = {},
+        tags = set(),
         difficulty = fl_to_diff(4)
     ),
     "KillAdvScout": X2WOTCLocationData(
@@ -338,7 +338,7 @@ lwotc_enemy_kills: dict[str, X2WOTCLocationData] = {
         id = get_new_location_id(),
         layer = "Tactical",
         type = "EnemyKill",
-        tags = {},
+        tags = set(),
         difficulty = fl_to_diff(5)
     ),
     "KillAdvSergeant": X2WOTCLocationData(
@@ -346,7 +346,7 @@ lwotc_enemy_kills: dict[str, X2WOTCLocationData] = {
         id = get_new_location_id(),
         layer = "Tactical",
         type = "EnemyKill",
-        tags = {},
+        tags = set(),
         difficulty = fl_to_diff(6)
     ),
     "KillAdvGrenadier": X2WOTCLocationData(
@@ -354,7 +354,7 @@ lwotc_enemy_kills: dict[str, X2WOTCLocationData] = {
         id = get_new_location_id(),
         layer = "Tactical",
         type = "EnemyKill",
-        tags = {},
+        tags = set(),
         difficulty = fl_to_diff(7)
     ),
     "KillAdvGeneral_LW": X2WOTCLocationData(
@@ -362,7 +362,7 @@ lwotc_enemy_kills: dict[str, X2WOTCLocationData] = {
         id = get_new_location_id(),
         layer = "Tactical",
         type = "EnemyKill",
-        tags = {},
+        tags = set(),
         difficulty = fl_to_diff(10)
     ),
     "KillAdvShockTroop": X2WOTCLocationData(
@@ -370,7 +370,7 @@ lwotc_enemy_kills: dict[str, X2WOTCLocationData] = {
         id = get_new_location_id(),
         layer = "Tactical",
         type = "EnemyKill",
-        tags = {},
+        tags = set(),
         difficulty = fl_to_diff(14)
     ),
     "KillAdvVanguard": X2WOTCLocationData(
@@ -378,7 +378,7 @@ lwotc_enemy_kills: dict[str, X2WOTCLocationData] = {
         id = get_new_location_id(),
         layer = "Tactical",
         type = "EnemyKill",
-        tags = {},
+        tags = set(),
         difficulty = fl_to_diff(14)
     ),
     "KillLWDrone": X2WOTCLocationData(
@@ -386,7 +386,7 @@ lwotc_enemy_kills: dict[str, X2WOTCLocationData] = {
         id = get_new_location_id(),
         layer = "Tactical",
         type = "EnemyKill",
-        tags = {},
+        tags = set(),
         difficulty = 0.0
     ),
     "KillAdvMECArcher": X2WOTCLocationData(
@@ -394,7 +394,7 @@ lwotc_enemy_kills: dict[str, X2WOTCLocationData] = {
         id = get_new_location_id(),
         layer = "Tactical",
         type = "EnemyKill",
-        tags = {},
+        tags = set(),
         difficulty = fl_to_diff(8)
     ),
     "KillSidewinder": X2WOTCLocationData(
@@ -402,7 +402,7 @@ lwotc_enemy_kills: dict[str, X2WOTCLocationData] = {
         id = get_new_location_id(),
         layer = "Tactical",
         type = "EnemyKill",
-        tags = {},
+        tags = set(),
         difficulty = fl_to_diff(4)
     ),
     "KillNaja": X2WOTCLocationData(
@@ -410,7 +410,7 @@ lwotc_enemy_kills: dict[str, X2WOTCLocationData] = {
         id = get_new_location_id(),
         layer = "Tactical",
         type = "EnemyKill",
-        tags = {},
+        tags = set(),
         difficulty = fl_to_diff(5)
     ),
     "KillMutonM2_LW": X2WOTCLocationData(
@@ -418,7 +418,7 @@ lwotc_enemy_kills: dict[str, X2WOTCLocationData] = {
         id = get_new_location_id(),
         layer = "Tactical",
         type = "EnemyKill",
-        tags = {},
+        tags = set(),
         difficulty = fl_to_diff(9)
     ),
     "KillMutonM3_LW": X2WOTCLocationData(
@@ -426,7 +426,7 @@ lwotc_enemy_kills: dict[str, X2WOTCLocationData] = {
         id = get_new_location_id(),
         layer = "Tactical",
         type = "EnemyKill",
-        tags = {},
+        tags = set(),
         difficulty = fl_to_diff(13)
     ),
     "KillChryssalidSoldier": X2WOTCLocationData(
@@ -434,7 +434,7 @@ lwotc_enemy_kills: dict[str, X2WOTCLocationData] = {
         id = get_new_location_id(),
         layer = "Tactical",
         type = "EnemyKill",
-        tags = {},
+        tags = set(),
         difficulty = fl_to_diff(14)
     ),
     "KillHiveQueen": X2WOTCLocationData(
@@ -442,7 +442,7 @@ lwotc_enemy_kills: dict[str, X2WOTCLocationData] = {
         id = get_new_location_id(),
         layer = "Tactical",
         type = "EnemyKill",
-        tags = {},
+        tags = set(),
         difficulty = fl_to_diff(17)
     ),
 }
