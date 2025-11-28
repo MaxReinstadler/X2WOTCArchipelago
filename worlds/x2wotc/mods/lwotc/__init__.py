@@ -241,40 +241,6 @@ config: dict[str, str] = {
     ),
     "X2EventListener_WOTCArchipelago": dedent(
         r"""
-        +CheckKillIgnoreDefaultGroup=AdvGrenadierM1
-        +CheckKillIgnoreDefaultGroup=AdvHeavyEngineer
-        +CheckKillIgnoreDefaultGroup=AdvGunnerM1
-        +CheckKillIgnoreDefaultGroup=AdvGunnerM2
-        +CheckKillIgnoreDefaultGroup=AdvGunnerM3
-        +CheckKillIgnoreDefaultGroup=AdvSentryM1
-        +CheckKillIgnoreDefaultGroup=AdvSentryM2
-        +CheckKillIgnoreDefaultGroup=AdvSentryM3
-        +CheckKillIgnoreDefaultGroup=AdvRocketeerM1
-        +CheckKillIgnoreDefaultGroup=AdvRocketeerM2
-        +CheckKillIgnoreDefaultGroup=AdvRocketeerM3
-        +CheckKillIgnoreDefaultGroup=AdvScout
-        +CheckKillIgnoreDefaultGroup=AdvCommando
-        +CheckKillIgnoreDefaultGroup=AdvSergeantM1
-        +CheckKillIgnoreDefaultGroup=AdvSergeantM2
-        +CheckKillIgnoreDefaultGroup=AdvGrenadierM2
-        +CheckKillIgnoreDefaultGroup=AdvGrenadierM3
-        +CheckKillIgnoreDefaultGroup=AdvGeneralM1_LW
-        +CheckKillIgnoreDefaultGroup=AdvGeneralM2_LW
-        +CheckKillIgnoreDefaultGroup=AdvShockTroop
-        +CheckKillIgnoreDefaultGroup=AdvVanguard
-        +CheckKillIgnoreDefaultGroup=AdvMECArcherM1
-        +CheckKillIgnoreDefaultGroup=AdvMECArcherM2
-        +CheckKillIgnoreDefaultGroup=SidewinderM1
-        +CheckKillIgnoreDefaultGroup=SidewinderM2
-        +CheckKillIgnoreDefaultGroup=SidewinderM3
-        +CheckKillIgnoreDefaultGroup=NajaM1
-        +CheckKillIgnoreDefaultGroup=NajaM2
-        +CheckKillIgnoreDefaultGroup=NajaM3
-        +CheckKillIgnoreDefaultGroup=MutonM2_LW
-        +CheckKillIgnoreDefaultGroup=MutonM3_LW
-        +CheckKillIgnoreDefaultGroup=ChryssalidSoldier
-        +CheckKillIgnoreDefaultGroup=HiveQueen
-
         +CheckKillCustomCharacterGroups=(GroupName=AdvEngineer, \\
             Members[0]=AdvGrenadierM1, \\
             Members[1]=AdvHeavyEngineer \\
