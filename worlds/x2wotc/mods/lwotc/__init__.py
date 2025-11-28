@@ -1,3 +1,4 @@
+from logging import warning
 from textwrap import dedent
 
 from typing import TYPE_CHECKING
@@ -22,27 +23,27 @@ def generate_early(world: "X2WOTCWorld"):
     world.item_manager.disable_progressive_item("ProgressiveRifleTechCompleted+")
     if "RifleTech+" in world.options.progressive_items:
         if not world.item_manager.enable_progressive_item("ProgressiveRifleTechLwotcCompleted+"):
-            print(f"X2WOTC: Failed to enable progressive LWOTC rifle tech+ for player {world.player_name}")
+            warning(f"X2WOTC: Failed to enable progressive LWOTC rifle tech+ for player {world.player_name}")
         if not world.item_manager.enable_progressive_item("ProgressiveAdvancedWeaponTechLwotcCompleted"):
-            print(f"X2WOTC: Failed to enable progressive LWOTC advanced weapon tech for player {world.player_name}")
+            warning(f"X2WOTC: Failed to enable progressive LWOTC advanced weapon tech for player {world.player_name}")
     elif "RifleTech" in world.options.progressive_items:
         if not world.item_manager.enable_progressive_item("ProgressiveRifleTechLwotcCompleted"):
-            print(f"X2WOTC: Failed to enable progressive LWOTC rifle tech for player {world.player_name}")
+            warning(f"X2WOTC: Failed to enable progressive LWOTC rifle tech for player {world.player_name}")
         if not world.item_manager.enable_progressive_item("ProgressiveAdvancedWeaponTechLwotcCompleted"):
-            print(f"X2WOTC: Failed to enable progressive LWOTC advanced weapon tech for player {world.player_name}")
+            warning(f"X2WOTC: Failed to enable progressive LWOTC advanced weapon tech for player {world.player_name}")
 
     # GREMLINs are upgraded from ADVENT Robotics
     world.item_manager.disable_progressive_item("ProgressiveGREMLINTechCompleted")
     if "GREMLINTech" in world.options.progressive_items:
         if not world.item_manager.enable_progressive_item("ProgressiveGREMLINTechLwotcCompleted"):
-            print(f"X2WOTC: Failed to enable progressive LWOTC GREMLIN tech for player {world.player_name}")
+            warning(f"X2WOTC: Failed to enable progressive LWOTC GREMLIN tech for player {world.player_name}")
 
     # Light and Heavy Armor are researches, not PG projects
     if "ArmorTech" in world.options.progressive_items:
         if not world.item_manager.enable_progressive_item("ProgressiveLightArmorTechLwotcCompleted"):
-            print(f"X2WOTC: Failed to enable progressive LWOTC light armor tech for player {world.player_name}")
+            warning(f"X2WOTC: Failed to enable progressive LWOTC light armor tech for player {world.player_name}")
         if not world.item_manager.enable_progressive_item("ProgressiveHeavyArmorTechLwotcCompleted"):
-            print(f"X2WOTC: Failed to enable progressive LWOTC heavy armor tech for player {world.player_name}")
+            warning(f"X2WOTC: Failed to enable progressive LWOTC heavy armor tech for player {world.player_name}")
 
     # Handle option to force early proving ground
     if world.options.early_proving_ground:
