@@ -1,7 +1,5 @@
 from textwrap import dedent
 
-from worlds.AutoWorld import World
-
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from worlds.x2wotc import X2WOTCWorld
@@ -60,6 +58,7 @@ def generate_early(world: "X2WOTCWorld"):
 
     # Lost corpses are unobtainable
     world.loc_manager.disable_location("AutopsyTheLost")
+    world.item_manager.disable_item("AutopsyTheLostCompleted")
     world.loc_manager.disable_location("UseUltrasonicLure")
 
     # Ammo, heavy weapons and grenades are deterministic

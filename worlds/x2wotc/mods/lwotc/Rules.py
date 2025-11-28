@@ -4,15 +4,8 @@ if TYPE_CHECKING:
     from worlds.x2wotc import X2WOTCWorld
 from ...Rules import RuleManager
 
-from BaseClasses import MultiWorld, CollectionState
-from worlds.generic.Rules import set_rule, add_rule
+from BaseClasses import CollectionState
 
-
-from ...LocationData import X2WOTCLocationData
-
-
-def example_mod_rule(state: CollectionState, player: int) -> bool:
-    return True
 
 class RuleManager_LW(RuleManager):
     # Facility Assault: Balancing omitted from first draft
