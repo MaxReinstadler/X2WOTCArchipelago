@@ -58,6 +58,7 @@ def generate_early(world: "X2WOTCWorld"):
 
     # Lost corpses are unobtainable
     world.loc_manager.disable_location("AutopsyTheLost")
+    world.item_manager.disable_item("AutopsyTheLostCompleted")
     world.loc_manager.disable_location("UseUltrasonicLure")
 
     # Ammo, heavy weapons and grenades are deterministic
