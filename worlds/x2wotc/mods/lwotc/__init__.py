@@ -1,7 +1,5 @@
 from textwrap import dedent
 
-from worlds.AutoWorld import World
-
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from worlds.x2wotc import X2WOTCWorld
