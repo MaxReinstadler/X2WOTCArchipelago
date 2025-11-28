@@ -7,9 +7,6 @@ from ...Rules import RuleManager
 from BaseClasses import CollectionState
 
 
-def example_mod_rule(state: CollectionState, player: int) -> bool:
-    return True
-
 class RuleManager_LW(RuleManager):
     # Facility Assault: Balancing omitted from first draft
     # def can_do_facility_mission(self, state):
