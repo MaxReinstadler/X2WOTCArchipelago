@@ -6,7 +6,7 @@ if TYPE_CHECKING:
     from worlds.x2wotc import X2WOTCWorld
 
 from .Locations import locations, fl_to_diff, fl_to_diff_autopsy, fl_to_diff_pg, PG_GRENADE, PG_GRENADE_M2
-from .Items import items
+from .Items import items, lwotc_filler_items
 
 
 name = "Long War of the Chosen"
@@ -78,6 +78,9 @@ def generate_early(world: "X2WOTCWorld"):
 
     # Force Level increases by off-world reinforcements which requires special handling
     world.item_manager.disable_item("ForceLevel:1")
+
+    # Patch LWOTC fillers into item pool
+    world.item_manager.pcs_items.update(set(lwotc_filler_items.keys()))
 
     for loc, tag in [
         ("MagnetizedWeapons", {"tree:HybridMaterials", "tree:AutopsyAdventOfficer"}),

@@ -286,13 +286,7 @@ lwotc_filler_items: dict[str, X2WOTCItemData] = {
     ),
 }
 
-# NOTE: items must include filler as well
 items: dict[str, X2WOTCItemData] = {
     **lwotc_items,
-    **lwotc_filler_items
-}
-
-# Mod filler items will be treated like resource items
-filler_items: dict[str, X2WOTCItemData] = {
     **lwotc_filler_items
 }
