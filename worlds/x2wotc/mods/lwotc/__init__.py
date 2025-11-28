@@ -319,11 +319,20 @@ config: dict[str, str] = {
     "X2Effect_ItemUseCheck": dedent(
         r"""
         +CheckUseItems=ShapedCharge
-        +CheckUseItems=GasGrenade
+        +CheckUseItemCategories=(CategoryName=GasGrenade, \\
+            Members[0]=GasGrenade, \\
+            Members[1]=GasGrenadeMk2 \\
+        )
+        +CheckUseItemCategories=(CategoryName=Firebomb, \\
+            Members[0]=Firebomb, \\
+            Members[1]=FirebombMk2 \\
+        )
+        +CheckUseItemCategories=(CategoryName=AcidGrenade, \\
+            Members[0]=AcidGrenade, \\
+            Members[1]=AcidGrenadeMk2 \\
+        )
         +CheckUseItems=GasGrenadeMk2
-        +CheckUseItems=Firebomb
         +CheckUseItems=FirebombMk2
-        +CheckUseItems=AcidGrenade
         +CheckUseItems=AcidGrenadeMk2
         +CheckUseItems=PrototypePlasmaBlaster
         +CheckUseItems=PlasmaBlaster
