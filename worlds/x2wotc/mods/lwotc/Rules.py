@@ -4,11 +4,7 @@ if TYPE_CHECKING:
     from worlds.x2wotc import X2WOTCWorld
 from ...Rules import RuleManager
 
-from BaseClasses import MultiWorld, CollectionState
-from worlds.generic.Rules import set_rule, add_rule
-
-
-from ...LocationData import X2WOTCLocationData
+from BaseClasses import CollectionState
 
 
 def example_mod_rule(state: CollectionState, player: int) -> bool:
