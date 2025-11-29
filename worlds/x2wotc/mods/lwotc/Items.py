@@ -253,7 +253,7 @@ lwotc_filler_items: dict[str, X2WOTCItemData] = {
         tags = {"filler", "pcs", "advanced", "defense"},
     ),
     "EpicPCSDefense:1": X2WOTCItemData(
-        display_name = pcs_item_prefix + "Advanced Defense",
+        display_name = pcs_item_prefix + "Superior Defense",
         id = get_new_item_id(),
         type = "Resource",
         classification = IC.useful,
@@ -272,7 +272,7 @@ lwotc_filler_items: dict[str, X2WOTCItemData] = {
         tags = {"filler", "pcs", "advanced", "psi"},
     ),
     "EpicPCSPsi:1": X2WOTCItemData(
-        display_name = pcs_item_prefix + "Advanced Psi",
+        display_name = pcs_item_prefix + "Superior Psi",
         id = get_new_item_id(),
         type = "Resource",
         classification = IC.useful,
@@ -291,7 +291,7 @@ lwotc_filler_items: dict[str, X2WOTCItemData] = {
         tags = {"filler", "pcs", "advanced", "hacking"},
     ),
     "EpicPCSHacking:1": X2WOTCItemData(
-        display_name = pcs_item_prefix + "Advanced Hacking",
+        display_name = pcs_item_prefix + "Superior Hacking",
         id = get_new_item_id(),
         type = "Resource",
         classification = IC.useful,
