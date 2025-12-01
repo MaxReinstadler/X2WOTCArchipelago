@@ -5,6 +5,8 @@ from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from worlds.x2wotc import X2WOTCWorld
 
+from BaseClasses import ItemClassification as IC
+
 from .Locations import locations, fl_to_diff, fl_to_diff_autopsy, fl_to_diff_pg, PG_GRENADE, PG_GRENADE_M2
 from .Items import items, lwotc_filler_items
 
@@ -81,6 +83,12 @@ def generate_early(world: "X2WOTCWorld"):
 
     # Patch LWOTC fillers into item pool
     world.item_manager.pcs_items.update(set(lwotc_filler_items.keys()))
+
+    for item, cat in [
+        ("ModularWeaponsCompleted", IC.progression | IC.useful),
+        ("HybridMaterialsCompleted", IC.progression | IC.useful),
+    ]:
+        world.item_manager.replace(item, classification=cat)
 
     for loc, tag in [
         ("MagnetizedWeapons", {"tree:HybridMaterials", "tree:AutopsyAdventOfficer"}),
