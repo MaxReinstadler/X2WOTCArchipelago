@@ -213,12 +213,12 @@ class X2WOTCWorld(World):
         info(f"X2WOTC: Adding {num_filler_items} filler items for player {self.player_name}")
         self.item_manager.add_filler_items(
             num_filler_items,
-            self.options.resource_share.value,
-            self.options.weapon_mod_share.value,
-            self.options.pcs_share.value,
-            self.options.staff_share.value,
-            self.options.trap_share.value,
-            self.options.nothing_share.value,
+            self.options.resource_share,
+            self.options.weapon_mod_share,
+            self.options.pcs_share,
+            self.options.staff_share,
+            self.options.trap_share,
+            self.options.nothing_share,
             self.random
         )
 
