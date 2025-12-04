@@ -11,7 +11,7 @@ from worlds.LauncherComponents import Component, Type, components, launch as lau
 from .EnemyRando import EnemyRandoManager
 from .Items import ItemManager, X2WOTCItem, item_display_name_to_id, item_groups
 from .Locations import LocationManager, loc_display_name_to_id, loc_groups
-from .Options import AlienHuntersDLC, ChosenWeaponFragments, Goal, X2WOTCOptions
+from .Options import AlienHuntersDLC, ChosenWeaponFragments, Goal, X2WOTCOptions, x2wotc_option_groups
 from .Regions import RegionManager
 from .Rules import RuleManager
 from .Version import minimum_client_version
@@ -29,6 +29,7 @@ components.append(Component("XCOM 2 War of the Chosen Client", func=launch_clien
 
 class X2WOTCWeb(WebWorld):
     theme = "partyTime"
+    option_groups = x2wotc_option_groups
     tutorials = [Tutorial(
         "Multiworld Setup Guide",
         "A guide to setting up the XCOM 2: War of the Chosen Archipelago mod.",

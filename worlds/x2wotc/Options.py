@@ -4,6 +4,7 @@ from schema import And, Schema
 from Options import (
     Choice,
     OptionDict,
+    OptionGroup,
     OptionSet,
     PerGameCommonOptions,
     Range,
@@ -342,7 +343,7 @@ class X2WOTCOptions(PerGameCommonOptions):
     trap_share: TrapShare
     nothing_share: NothingShare
 
-    # More randomization options
+    # Randomization options
     enemy_rando: EnemyRando
     enemy_plando: EnemyPlando
 
@@ -362,3 +363,76 @@ class X2WOTCOptions(PerGameCommonOptions):
 
 # Add mod options
 X2WOTCOptions = make_dataclass("X2WOTCOptions", mod_options, bases=(X2WOTCOptions,))
+
+# Define option groups
+x2wotc_option_groups: list[OptionGroup] = [
+    OptionGroup(
+        "DLC Options",
+        [
+            AlienHuntersDLC,
+        ]
+    ),
+    OptionGroup(
+        "Goal Options",
+        [
+            Goal,
+            CampaignCompletionRequirements,
+        ]
+    ),
+    OptionGroup(
+        "Location Options",
+        [
+            EnemySanity,
+            ItemSanity,
+            ChosenHuntSanity,
+        ]
+    ),
+    OptionGroup(
+        "Item Options",
+        [
+            ProgressiveItems,
+            ChosenWeaponFragments,
+            EarlyProvingGround,
+        ]
+    ),
+    OptionGroup(
+        "Filler Options",
+        [
+            ResourceShare,
+            WeaponModShare,
+            PCSShare,
+            StaffShare,
+            TrapShare,
+            NothingShare,
+        ]
+    ),
+    OptionGroup(
+        "Randomization Options",
+        [
+            EnemyRando,
+            EnemyPlando,
+        ]
+    ),
+    OptionGroup(
+        "Config Options",
+        [
+            HintResearchProjects,
+            SkipMissionTypes,
+            DisableCovertActionRisks,
+            SupplyRaidRewardBase,
+            SupplyRaidRewardError,
+            ExtraXPGain,
+            ExtraCorpseGain,
+            DisableDayOneTraps,
+        ]
+    ),
+    OptionGroup(
+        "Mod Options",
+        [
+            ActiveMods,
+        ] + [
+            mod_option[1]
+            for mod_option in mod_options
+        ]
+    ),
+]
