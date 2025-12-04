@@ -1,7 +1,15 @@
 from dataclasses import dataclass, make_dataclass
 from schema import And, Schema
 
-from Options import Choice, Toggle, OptionDict, OptionSet, Range, PerGameCommonOptions
+from Options import (
+    Choice,
+    OptionDict,
+    OptionSet,
+    PerGameCommonOptions,
+    Range,
+    StartInventoryPool,
+    Toggle
+)
 
 from .mods import mod_names, mod_options
 
@@ -305,6 +313,10 @@ class ActiveMods(OptionSet):
 
 @dataclass
 class X2WOTCOptions(PerGameCommonOptions):
+
+    # Generic options
+    start_inventory_from_pool: StartInventoryPool
+
     # DLC options
     alien_hunters_dlc: AlienHuntersDLC
 
