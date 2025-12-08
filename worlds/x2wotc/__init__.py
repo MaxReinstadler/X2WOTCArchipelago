@@ -288,7 +288,7 @@ class X2WOTCWorld(World):
             "enemy_shuffle": self.enemy_rando_manager.enemy_shuffle,
         }
 
-        slot_data |= self.options.as_dict(*self.option_names)
+        slot_data |= self.options.as_dict(*self.option_names, toggles_as_bools=True)
         return slot_data
 
     # Trigger UT re-gen
