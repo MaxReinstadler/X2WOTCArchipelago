@@ -7,14 +7,17 @@ from ...LocationData import (
     item_use_location_prefix
 )
 
+def clamp(x, min_, max_):
+    return max(min(x, max_), min_)
+
 def fl_to_diff(fl: int):
-    return min(4.0 * fl, 100.0)
+    return clamp(4.0 * (fl-1), 0.0, 100.0)
 
 def fl_to_diff_autopsy(fl: int):
-    return min(5.0 * fl, 100.0)
+    return clamp(4.0 * (fl+1), 0.0, 100.0)
 
 def fl_to_diff_pg(fl: int):
-    return min(7.5 * fl, 100.0)
+    return clamp(4.0 * (fl+2), 0.0, 100.0)
 
 PG_GRENADE = {
     "grenade",
