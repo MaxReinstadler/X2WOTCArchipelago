@@ -347,6 +347,7 @@ class X2WOTCContext(SuperContext):
                 "DEF_SKIP_RAID_REWARD_MULT_ERR": str(float(self.slot_data.get("supply_raid_reward_error", 0)) / 100.0),
                 "DEF_EXTRA_XP_MULT": str(float(self.slot_data.get("extra_xp_gain", 0)) / 100.0),
                 "DEF_EXTRA_CORPSES": str(self.slot_data.get("extra_corpse_gain", 0)),
+                "DEF_INSTANT_ROOKIE_TRAINING": str(self.slot_data.get("instant_rookie_training", False)),
                 "DEF_NO_STARTING_TRAPS": str(self.slot_data.get("disable_day_one_traps", False)),
             }
 

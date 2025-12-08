@@ -295,6 +295,13 @@ class ExtraCorpseGain(Range):
     default = 1
 
 
+class InstantRookieTraining(Toggle):
+    """Make training rookies in the GTS instant.
+    Can be changed in-game via Mod Config Menu."""
+    display_name = "Instant Rookie Training"
+    default = False
+
+
 class DisableDayOneTraps(Toggle):
     """Disable traps when they are received during the first day of a campaign.
     One use for this is if you wish to retire traps received during previous runs after a restart.
@@ -355,6 +362,7 @@ class X2WOTCOptions(PerGameCommonOptions):
     supply_raid_reward_error: SupplyRaidRewardError
     extra_xp_gain: ExtraXPGain
     extra_corpse_gain: ExtraCorpseGain
+    instant_rookie_training: InstantRookieTraining
     disable_day_one_traps: DisableDayOneTraps
 
     # Mod options
@@ -423,6 +431,7 @@ x2wotc_option_groups: list[OptionGroup] = [
             SupplyRaidRewardError,
             ExtraXPGain,
             ExtraCorpseGain,
+            InstantRookieTraining,
             DisableDayOneTraps,
         ]
     ),
