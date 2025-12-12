@@ -79,7 +79,7 @@ def generate_early(world: "X2WOTCWorld"):
     world.loc_manager.disable_location("UseExperimentalPoweredWeapon")
 
     # Force Level increases by off-world reinforcements which requires special handling
-    world.item_manager.disable_item("ForceLevel:1")
+    world.item_manager.trap_items.discard("ForceLevel:1")
 
     # Patch LWOTC fillers into item pool
     world.item_manager.pcs_items.update(set(lwotc_filler_items.keys()))
