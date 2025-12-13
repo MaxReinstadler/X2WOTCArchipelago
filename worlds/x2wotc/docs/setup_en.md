@@ -45,4 +45,6 @@
 2. Provide your slot name (the name you entered into your YAML).
 3. If asked, provide the room password that was set during generation.
 4. The client will tell you that you're connected. Start playing!
-    - **NOTE:** You must connect to the server before you launch the game. If the game was already running, restart it.
+
+> [!WARNING]
+> You must connect to the server before you launch the game. If the game was already running, restart it.
