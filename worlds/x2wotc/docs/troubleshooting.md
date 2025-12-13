@@ -1,7 +1,7 @@
 # Troubleshooting
 
 > [!IMPORTANT]
-> The native Linux/Mac ports of XCOM 2 seemingly do not play nice with my mod. Use the Windows distribution instead (e.g. through Proton on Linux, Crossover or Whisky on MacOS).**
+> The native Linux/Mac ports of XCOM 2 seemingly do not play nice with my mod. Use the Windows distribution instead (e.g. through Proton on Linux, Crossover or Whisky on MacOS).
 
 ## I can't launch the client
 
