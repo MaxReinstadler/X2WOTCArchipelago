@@ -45,8 +45,14 @@ class X2WOTCSettings(Group):
         """Path to your installation of XCOM 2, most likely ending in `/XCOM 2`"""
 
         description = "XCOM 2 installation folder"
+    
+    class WorkshopPath(UserFolderPath):
+        """Path to your Steam workshop folder, most likely ending in `/steamapps/workshop`"""
+
+        description = "Steam workshop folder"
 
     game_path: GamePath = GamePath("C:/Program Files (x86)/Steam/steamapps/common/XCOM 2")
+    workshop_path: WorkshopPath = WorkshopPath("C:/Program Files (x86)/Steam/steamapps/workshop")
 
 
 class X2WOTCWorld(World):

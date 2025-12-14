@@ -182,32 +182,49 @@ class X2WOTCContext(SuperContext):
 
         self.enemy_rando_manager = EnemyRandoManager()
 
-        self.game_path: str = settings.get_settings()["x2wotc_options"]["game_path"]
+        self.set_config_paths()
 
-        # Check for the mod config file in the manual installation paths first,
-        # then fall back to the Steam installation path if it doesn't exist
-        manuals = [
-            "/XCom2-WarOfTheChosen/XComGame/Mods/WOTCArchipelago/Config/XComWOTCArchipelago.ini",
-            "/XCom2-WarOfTheChosen/XComGame/Mods/3281191663/Config/XComWOTCArchipelago.ini",
+    def set_config_paths(self):
+        manual_folders = ["WOTCArchipelago", "3281191663"]
+        manual_exts = [
+            f"/XCom2-WarOfTheChosen/XComGame/Mods/{manual_folder}/Config/XComWOTCArchipelago.ini"
+            for manual_folder in manual_folders
         ]
-        steam = "/workshop/content/268500/3281191663/Config/XComWOTCArchipelago.ini"  # after /steamapps
+        workshop_ext = "/content/268500/3281191663/Config/XComWOTCArchipelago.ini"  # after /steamapps/workshop
 
-        for manual in manuals:
-            self.config_file = self.game_path + manual
+        # Check for the mod config file in possible manual installation locations first,
+        # then fall back to the default Steam workshop installation path if it doesn't exist
+        self.game_path: str = settings.get_settings()["x2wotc_options"]["game_path"]
+        for manual_ext in manual_exts:
+            self.config_file = self.game_path + manual_ext
             if os.path.isfile(self.config_file):
                 break
         else:
-            self.config_file = self.game_path.split("/common/")[0] + steam
+            self.workshop_path = self.game_path.split("/common/")[0] + "/workshop"
+            self.config_file = self.workshop_path + workshop_ext
+
+        # If this also fails, ask for a potential foreign Steam workshop path
+        if not os.path.isfile(self.config_file):
+            self.workshop_path: str = settings.get_settings()["x2wotc_options"]["workshop_path"]
+            self.config_file = self.workshop_path + workshop_ext
+
+        # If this STILL fails, raise an error
+        if not os.path.isfile(self.config_file):
+            raise FileNotFoundError(
+                "X2WOTCClient: Config file not found in game folder or Steam workshop folder. "
+                "Please check the game_path setting in your host.yaml and make sure the mod is installed."
+            )
 
         self.spoiler_file = self.config_file.replace("XComWOTCArchipelago.ini", "XComWOTCArchipelago_Spoiler.ini")
         self.encounters_file = self.config_file.replace("XComWOTCArchipelago.ini", "XComEncounters.ini")
         self.encounter_lists_file = self.config_file.replace("XComWOTCArchipelago.ini", "XComEncounterLists.ini")
 
-        if (not os.path.isfile(self.config_file) or not os.path.isfile(self.spoiler_file)
-            or not os.path.isfile(self.encounters_file) or not os.path.isfile(self.encounter_lists_file)):
+        if (not os.path.isfile(self.spoiler_file) or
+            not os.path.isfile(self.encounters_file) or
+            not os.path.isfile(self.encounter_lists_file)):
             raise FileNotFoundError(
-                "X2WOTCClient: Config file not found in game folder or Steam workshop folder. "
-                "Please check the game_path setting in your `host.yaml` and make sure the mod is installed."
+                "X2WOTCClient: Some but not all config files found. This is most likely due to a version mismatch. "
+                "Please install the required mod version as indicated by the /version client command."
             )
 
     async def server_auth(self, password_requested: bool = False):
