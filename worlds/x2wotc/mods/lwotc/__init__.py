@@ -20,6 +20,11 @@ rule_priority = 0.0
 # Handle mod options here
 def generate_early(world: "X2WOTCWorld"):
 
+    # Missions skips not supported
+    if world.options.skip_mission_types.value:
+        world.options.skip_mission_types.value = set()
+        warning(f"X2WOTC: Ignoring mission skips for player {world.player_name} because the mod 'Long War of the Chosen' is enabled")
+
     # Enemy rando not supported
     for key, value in world.loc_manager.location_table.items():
         world.loc_manager.replace(key, tags={tag for tag in value.tags if not tag.startswith("diff:")})
