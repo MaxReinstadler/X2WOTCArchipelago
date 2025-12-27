@@ -302,6 +302,22 @@ class X2WOTCWorld(World):
     def interpret_slot_data(slot_data: dict[str, Any]) -> dict[str, Any]:
         return slot_data
 
+    def extend_hint_information(self, hint_data: dict[int, dict[int, str]]):
+        hint_data[self.player] = {}
+
+        # Enemy Rando hint data
+        if self.options.enemy_rando:
+            for loc_data in self.loc_manager.location_table.values():
+                diff_tag_enemies = [tag[5:] for tag in loc_data.tags if tag.startswith("diff:")]
+                if loc_data.id is None or not diff_tag_enemies:
+                    continue
+
+                placement_enemies = sorted([
+                    self.enemy_rando_manager.get_placement_enemy(diff_tag_enemy)
+                    for diff_tag_enemy in diff_tag_enemies
+                ])
+                hint_data[self.player][loc_data.id] = ", ".join(placement_enemies)
+
     def write_spoiler(self, spoiler_handle: TextIO):
         if self.options.enemy_rando:
             spoiler_handle.write(f"\n\n=== Enemy Rando for player {self.player_name} ===\n")
