@@ -398,7 +398,7 @@ class X2WOTCContext(SuperContext):
                     new_line = old_line.replace("-", "+", 1)
                     for placement_index, placed_index in enumerate(self.enemy_rando_manager.enemy_shuffle):
                         placement_enemy = self.enemy_rando_manager.enemy_names[placement_index]
-                        new_line = new_line.replace(f"\"{placement_enemy}\"", f"[enemy_{placed_index}]")
+                        new_line = re.sub(f'"{re.escape(placement_enemy)}"', f"[enemy_{placed_index}]", new_line, flags=re.IGNORECASE)
                     for placed_index, placed_enemy in enumerate(self.enemy_rando_manager.enemy_names):
                         new_line = new_line.replace(f"[enemy_{placed_index}]", f"\"{placed_enemy}\"")
                     new_text += new_line
