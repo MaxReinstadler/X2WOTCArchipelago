@@ -21,7 +21,7 @@ rule_priority = 0.0
 def generate_early(world: "X2WOTCWorld"):
 
     # Missions skips not supported
-    if world.options.skip_mission_types.value:
+    if world.options.skip_mission_types:
         world.options.skip_mission_types.value = set()
         warning(f"X2WOTC: Ignoring mission skips for player {world.player_name} because the mod 'Long War of the Chosen' is enabled")
 

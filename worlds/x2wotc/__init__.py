@@ -97,7 +97,7 @@ class X2WOTCWorld(World):
             slot_data = re_gen_passthrough[self.game]
             for option_name in self.option_names:
                 if option_name in slot_data:
-                    setattr(self.options, option_name, slot_data[option_name])
+                    getattr(self.options, option_name).value = slot_data[option_name]
 
             # Enemy Rando
             self.enemy_rando_manager.set_enemy_shuffle(slot_data["enemy_shuffle"])
