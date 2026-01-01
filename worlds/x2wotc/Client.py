@@ -372,7 +372,7 @@ class X2WOTCContext(SuperContext):
             config = file.read()
 
         for key, value in config_values.items():
-            config = re.sub(rf"{"\n"}{re.escape(key)}=(\S*)", f"\n{key}={value}", config)
+            config = re.sub(f"\n{re.escape(key)}=(\S*)", f"\n{key}={value}", config)
 
         with open(self.config_file, "w") as file:
             file.write(config)
@@ -400,7 +400,7 @@ class X2WOTCContext(SuperContext):
                         placement_enemy = self.enemy_rando_manager.enemy_names[placement_index]
                         new_line = re.sub(f'"{re.escape(placement_enemy)}"', f"[enemy_{placed_index}]", new_line, flags=re.IGNORECASE)
                     for placed_index, placed_enemy in enumerate(self.enemy_rando_manager.enemy_names):
-                        new_line = new_line.replace(f"[enemy_{placed_index}]", f"\"{placed_enemy}\"")
+                        new_line = new_line.replace(f"[enemy_{placed_index}]", f'"{placed_enemy}"')
                     new_text += new_line
 
             with open(file_path, "w") as file:
@@ -413,10 +413,10 @@ class X2WOTCContext(SuperContext):
         for entry in entries:
             spoiler += (
                 "+Spoiler=("
-                f"Location=\"{entry["location"]}\", "
-                f"Item=\"{"".join(entry["item"].splitlines())}\", "
-                f"Player=\"{"".join(entry["player"].splitlines())}\", "
-                f"Game=\"{"".join(entry["game"].splitlines())}\", "
+                f'Location="{entry["location"]}", '
+                f'Item="{"".join(entry["item"].splitlines())}", '
+                f'Player="{"".join(entry["player"].splitlines())}", '
+                f'Game="{"".join(entry["game"].splitlines())}", '
                 f"bProgression={bool(entry["flags"] & 0b001)}, "
                 f"bUseful={bool(entry["flags"] & 0b010)}, "
                 f"bTrap={bool(entry["flags"] & 0b100)})\n"
@@ -428,8 +428,8 @@ class X2WOTCContext(SuperContext):
                 placement_enemy = self.enemy_rando_manager.get_placement_enemy(placed_enemy)
                 spoiler += (
                     "+EnemyRando=("
-                    f"DefaultTemplateName=\"{placement_enemy}\", "
-                    f"OverrideTemplateName=\"{placed_enemy}\")\n"
+                    f'DefaultTemplateName="{placement_enemy}", '
+                    f'OverrideTemplateName="{placed_enemy}")\n'
                 )
 
                 # Stat changes
@@ -437,8 +437,8 @@ class X2WOTCContext(SuperContext):
                 for stat_change in stat_changes:
                     spoiler += (
                         f"+CharStatChanges=("
-                        f"TemplateName=\"{placed_enemy}\", "
-                        f"StatType=\"{stat_change.type}\", "
+                        f'TemplateName="{placed_enemy}", '
+                        f'StatType="{stat_change.type}", '
                         f"Delta={stat_change.delta}, "
                         f"Minimum={stat_change.min}, "
                         f"Maximum={stat_change.max})\n"
