@@ -102,13 +102,16 @@ class ItemManager:
         self.nothing_items = set(nothing_items.keys())
 
         self.item_count: dict[str, int] = {}
+        self.real_count: dict[str, int] = {}
         self.num_items: int = 0
 
         for item_name, item_data in self.item_table.items():
             if item_data.normal_location is None:  # Progressive and filler/trap items (and DefaultChosenHuntReward)
                 self.item_count[item_name] = 0
+                self.real_count[item_name] = 0
             else:
                 self.item_count[item_name] = 1
+                self.real_count[item_name] = 1
                 self.num_items += 1
 
     def replace(self, item_name: str, **kwargs):
@@ -142,6 +145,15 @@ class ItemManager:
         old_count = self.item_count[item_name]
         self.item_count[item_name] = new_count
         self.num_items += new_count - old_count
+
+        # For real_count, progressive items aren't counted but their stages are
+        item_data = self.item_table[item_name]
+        if item_data.stages is None:
+            self.real_count[item_name] += new_count - old_count
+        else:
+            for stage in item_data.stages[min(old_count, new_count):max(old_count, new_count)]:
+                if stage is not None:
+                    self.real_count[stage] += 1 if new_count > old_count else -1
 
     def add_item(self, item_name: str, count: int = 1):
         self.set_item_count(item_name, self.item_count[item_name] + count)

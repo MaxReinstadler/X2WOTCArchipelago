@@ -71,7 +71,7 @@ class RuleManager:
 
     def has_item_or_impossible(self, state: CollectionState, item: str, count: int = 1) -> bool:
         return (self.get_item_count(state, item) >= count
-                or self.item_manager.item_count[item] < count)
+                or self.item_manager.real_count[item] < count)
 
     def get_item_count_rule(self, item: str, count: int = 1) -> Callable[[CollectionState], bool]:
         return lambda state: self.has_item_or_impossible(state, item, count)
