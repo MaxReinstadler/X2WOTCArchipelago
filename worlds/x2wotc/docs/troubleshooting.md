@@ -31,7 +31,7 @@ To build the skulljack, all you need is `[Tech] ADVENT Officer Autopsy` which un
 ### I can't unlock the final mission
 
 To unlock the final set of missions you need to complete the objective to do an avatar autopsy, this requires `[Tech] Avatar Autopsy` and `[Tech] Alien Encryption` (for the shadow chamber) as well as completing any one of the following questlines (unless some or all are required in your options, in which case you have to do those specific ones):
-- Complete the Blacksite mission -> Receive `[Tech] Blacksite Data` -> Complete the ADVENT Forge mission -> Receive `[Tech] Forge Stasis Suit`
+- Complete the Blacksite mission -> Receive `[Tech] Blacksite Vial` -> Complete the ADVENT Forge mission -> Receive `[Tech] Recovered ADVENT Stasis Suit`
 - Skulljack an officer and kill a codex -> Receive `[Tech] Codex Brain` -> Complete the Psi Gate mission -> Receive `[Tech] Psi Gate`
 - Skulljack an officer and kill a codex -> Receive `[Tech] Codex Brain` -> Receive `[Tech] Encrypted Codex Data` -> Skulljack a codex and kill an avatar
 
