@@ -221,7 +221,7 @@ class RuleManager:
 
     # Skulljack Officer -> Codex Brain -> Psi Gate
     def has_autopsy_officer_objective(self, state: CollectionState) -> bool:
-        return self.has_item_or_impossible(state, "AlienBiotechCompleted")
+        return True  # Immediately active as of mod version 0.10.3
 
     def has_skulljack_officer_objective(self, state: CollectionState) -> bool:
         return (self.has_item_or_impossible(state, "AutopsyAdventOfficerCompleted")
