@@ -352,6 +352,7 @@ class X2WOTCContext(SuperContext):
                 "bRequirePsiGate": str("PsiGateObjective" in campaign_completion_requirements),
                 "bRequireStasisSuit": str("StasisSuitObjective" in campaign_completion_requirements),
                 "bRequireAvatarCorpse": str("AvatarCorpseObjective" in campaign_completion_requirements),
+                "bRemoveCorpseCosts": str(self.slot_data.get("remove_corpse_costs", False)),
                 "DEF_AP_GEN_ID": f"{"".join(self.slot_data["seed_name"].split())}_{self.slot_data["player"]}",
                 "DEF_HINT_TECH_LOC_PART": str(hint_research_projects == HintResearchProjects.option_partial),
                 "DEF_HINT_TECH_LOC_FULL": str(hint_research_projects == HintResearchProjects.option_full),

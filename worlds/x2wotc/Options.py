@@ -310,6 +310,12 @@ class DisableDayOneTraps(Toggle):
     default = False
 
 
+class RemoveCorpseCosts(Toggle):
+    """Remove corpse costs from all items."""
+    display_name = "Remove Corpse Costs"
+    default = False
+
+
 class ActiveMods(OptionSet):
     """Activate these mods from the x2wotc/mods directory.
     This is only relevant when modding *the APWorld* (NOT the game), leave empty if you're unsure what that means.
@@ -364,6 +370,7 @@ class X2WOTCOptions(PerGameCommonOptions):
     extra_corpse_gain: ExtraCorpseGain
     instant_rookie_training: InstantRookieTraining
     disable_day_one_traps: DisableDayOneTraps
+    remove_corpse_costs: RemoveCorpseCosts
 
     # Mod options
     active_mods: ActiveMods
@@ -433,6 +440,7 @@ x2wotc_option_groups: list[OptionGroup] = [
             ExtraCorpseGain,
             InstantRookieTraining,
             DisableDayOneTraps,
+            RemoveCorpseCosts,
         ]
     ),
     OptionGroup(
