@@ -15,17 +15,17 @@ To play with any of these mods, simply add its name (from the list above) to the
 
 ### Long War of the Chosen
 
-The most notable currently available APWorld mod is for Long War of the Chosen, courtesy of @copyrite. It adds new items and locations for research projects, expands Enemysanity and Itemsanity locations, includes more weapon mod and PCS filler items, and comes with a complete logic overhaul to accomodate LWOTC changes. Some additional compatibility considerations:
+The most notable currently available APWorld mod is for Long War of the Chosen, courtesy of [@copyrite](https://github.com/copyrite). It adds new items and locations for research projects, expands Enemysanity and Itemsanity locations, includes more weapon mod and PCS filler items, and comes with a complete logic overhaul to accomodate LWOTC changes. Some additional compatibility considerations:
 
 - Enemy rando is *not* supported
 - Mission skips are *not* supported
 - Force Level traps are *disabled*
 
-\+ more info and advice that can be found in the pins of the Discord thread [here.](https://discord.com/channels/731205301247803413/1037751568700805141/1449901527685923009)
+\+ more info and advice that can be found in the pins of the Discord thread [here](https://discord.com/channels/731205301247803413/1037751568700805141/1449901527685923009).
 
 ## Adding Mods
 
-Creating a new APWorld mod involves writing APWorld code and requires Python fundamentals, a rough familiarity with the structure of an APWorld, and, ultimately, a more intimate familiarity with the structure of this particular APWorld. To get started on the last point, check out the entire APWorld code [here!](https://github.com/MaxReinstadler/X2WOTCArchipelago/tree/main/worlds/x2wotc)
+Creating a new APWorld mod involves writing APWorld code and requires Python fundamentals, a rough familiarity with the structure of an APWorld, and, ultimately, a more intimate familiarity with the structure of this particular APWorld. To get started on the last point, check out the entire APWorld code [here](https://github.com/MaxReinstadler/X2WOTCArchipelago/tree/main/worlds/x2wotc)!
 
 The `mods` folder contains code for the three functional APWorld mods listed above, as well as a lightly commented blueprint in `mods/example`. See the Flame Viper and Muton Destroyer implementations for minimal working examples, then check out LWOTC for some more advanced ideas.
 
