@@ -237,9 +237,11 @@ class X2WOTCWorld(World):
         if self.options.enemy_rando:
             self.enemy_rando_manager.shuffle_enemies(self.options.enemy_plando, self.random)
 
-    def create_regions(self):
+        # Rule manager needs to exist for collect/remove, but requires options being resolved
         self.rule_manager = RuleManager(self)
-        self.reg_manager = RegionManager(self)
+        self.reg_manager = RegionManager(self)  # Region manager requires rule manager
+
+    def create_regions(self):
         self.reg_manager.create_regions()
 
         # Place event items
