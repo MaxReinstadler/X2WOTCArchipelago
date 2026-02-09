@@ -1,6 +1,6 @@
 {
     "game": "XCOM 2 War of the Chosen",
     "authors": ["Snyax", "copyrite"],
-    "world_version": "0.10.9",
+    "world_version": "0.10.10",
     "minimum_ap_version": "0.6.4"
 }
