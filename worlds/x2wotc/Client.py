@@ -372,6 +372,13 @@ class X2WOTCContext(SuperContext):
         with open(self.config_file, "r") as file:
             config = file.read()
 
+        if "DEF_AP_GEN_ID" not in config:
+            logger.error(
+                "X2WOTCClient: Config file missing required key, most likely due to a corrupted mod installation. "
+                "Please reinstall the XCOM 2 WotC Archipelago Multiworld mod."
+            )
+            return
+
         for key, value in config_values.items():
             config = re.sub(f"\n{re.escape(key)}=(\S*)", f"\n{key}={value}", config)
 
