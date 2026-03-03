@@ -35,19 +35,38 @@ loc_id_to_key = {
     if loc_data.id
 }
 
-# Groups
-loc_types = {
-    loc_data.type
-    for loc_data in location_table.values()
-    if loc_data.id
-}
-loc_groups = {
-    loc_type: {
+# Location groups
+loc_groups: dict[str, set[str]] = {}
+
+# Location type groups
+loc_types = set()
+for loc_data in location_table.values():
+    if loc_data.id and "example" not in loc_data.type.lower():
+        loc_types.add(loc_data.type)
+for loc_type in loc_types:
+    loc_groups[loc_type] = {
         loc_data.display_name
         for loc_data in location_table.values()
         if loc_data.id and loc_data.type == loc_type
-    } for loc_type in loc_types
-}
+    }
+
+# Location tag groups
+loc_tags = set()
+for loc_data in location_table.values():
+    if loc_data.id:
+        loc_tags.update({
+            tag
+            for tag in loc_data.tags
+            if all(x not in tag.lower() for x in ["example", ":"])
+        })
+for loc_tag in loc_tags:
+    loc_groups[
+        "".join(word.capitalize() for word in loc_tag.split("_"))  # convert snake_case tag to PascalCase
+    ] = {
+        loc_data.display_name
+        for loc_data in location_table.values()
+        if loc_data.id and loc_tag in loc_data.tags
+    }
 
 
 class LocationManager:
