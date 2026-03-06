@@ -91,10 +91,13 @@ class LocationManager:
         loc_data = self.location_table[loc_name]
         self.location_table[loc_name] = loc_data.replace(**kwargs)
 
-    def disable_location(self, loc_name: str):
+    def disable_location(self, loc_name: str) -> bool:
         if self.locked:
             raise RuntimeError("Cannot disable locations after location manager has been locked.")
 
-        if self.enabled[loc_name]:
-            self.enabled[loc_name] = False
-            self.num_locations -= 1
+        if not self.enabled[loc_name]:
+            return False
+
+        self.enabled[loc_name] = False
+        self.num_locations -= 1
+        return True
