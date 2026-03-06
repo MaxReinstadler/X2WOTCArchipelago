@@ -3,6 +3,7 @@ from logging import warning
 from random import Random
 
 from BaseClasses import Item
+from BaseClasses import ItemClassification as IC
 
 from .ItemData import (
     X2WOTCItemData,
@@ -244,6 +245,7 @@ class ItemManager:
     def add_filler_items(
             self,
             num_filler_items: int,
+            max_useful_filler: int,
             resource_share: int,
             weapon_mod_share: int,
             pcs_share: int,
@@ -281,4 +283,8 @@ class ItemManager:
         for (num, names) in num_names_pairs:
             for _ in range(num):
                 item_name = random.choice(names)
+                if self.item_table[item_name].classification & IC.useful:
+                    max_useful_filler -= 1
+                    if max_useful_filler < 0:
+                        item_name = random.choice(list(self.nothing_items))
                 self.add_item(item_name)

@@ -1,8 +1,13 @@
 from copy import deepcopy
 from logging import warning
+from typing import TYPE_CHECKING
 
 from BaseClasses import Location
 
+if TYPE_CHECKING:
+    from worlds.x2wotc import X2WOTCWorld
+
+from .EnemyRando import EnemyRandoManager
 from .LocationData import X2WOTCLocationData, location_table
 
 from .mods import mod_locations
@@ -77,7 +82,9 @@ class LocationManager:
     loc_types = loc_types
     loc_groups = loc_groups
 
-    def __init__(self):
+    def __init__(self, world: "X2WOTCWorld"):
+        self.enemy_rando_manager: EnemyRandoManager = world.enemy_rando_manager
+
         self.location_table: dict[str, X2WOTCLocationData] = deepcopy(location_table)
         self.locked: bool = False
 
@@ -90,6 +97,18 @@ class LocationManager:
 
         loc_data = self.location_table[loc_name]
         self.location_table[loc_name] = loc_data.replace(**kwargs)
+
+    def get_location_difficulty(self, loc_name: str) -> float:
+        loc_data = self.location_table[loc_name]
+        base_difficulty = loc_data.difficulty
+
+        # Handle difficulty tags for enemy rando
+        diff_tag_enemies = [tag[5:] for tag in loc_data.tags if tag.startswith("diff:")]
+        diff_tag_difficulty = self.enemy_rando_manager.get_difficulty(diff_tag_enemies)
+        if "autopsy" in loc_data.tags:
+            diff_tag_difficulty += 2.0  # Autopsies take time
+
+        return max(base_difficulty, diff_tag_difficulty)
 
     def disable_location(self, loc_name: str) -> bool:
         if self.locked:

@@ -2,9 +2,9 @@ from collections import defaultdict
 from typing import Callable, TYPE_CHECKING
 
 from BaseClasses import CollectionState, MultiWorld
+from worlds.AutoWorld import LogicMixin
 from worlds.generic.Rules import add_rule, set_rule
 
-from worlds.AutoWorld import LogicMixin
 if TYPE_CHECKING:
     from worlds.x2wotc import X2WOTCWorld
 
@@ -32,20 +32,11 @@ class RuleManager:
         self.player: int = world.player
 
         # Precompute per-location required power values
-        self.total_power: float = self.item_manager.get_total_power()
-        self.req_power_lookup: dict[str, float] = {}
-        for loc_name, loc_data in self.loc_manager.location_table.items():
-            base_difficulty = loc_data.difficulty
-
-            # Handle difficulty tags for Enemy Rando
-            diff_tag_enemies = [tag[5:] for tag in loc_data.tags if tag.startswith("diff:")]
-            diff_tag_difficulty = world.enemy_rando_manager.get_difficulty(diff_tag_enemies)
-            if "autopsy" in loc_data.tags:
-                diff_tag_difficulty += 2.0  # Autopsies take time
-
-            difficulty = max(base_difficulty, diff_tag_difficulty)
-            req_power = difficulty * self.total_power / 100.0
-            self.req_power_lookup[loc_name] = req_power
+        total_power = self.item_manager.get_total_power()
+        self.req_power_lookup: dict[str, float] = {
+            loc_name: self.loc_manager.get_location_difficulty(loc_name) * total_power / 100.0
+            for loc_name in self.loc_manager.location_table.keys()
+        }
 
         # Compile all items that could affect power
         self.power_items: set[str] = {

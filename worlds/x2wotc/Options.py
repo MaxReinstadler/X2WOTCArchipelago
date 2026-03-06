@@ -72,6 +72,15 @@ class CampaignCompletionRequirements(OptionSet):
     default = frozenset()
 
 
+class ExcludePostGoalLocations(Toggle):
+    """Exclude locations that are considered more difficult than the selected goal event.
+    Excluded locations can only contain filler or traps, never progression or useful items.
+    NOTE: This option is likely to cause generation failures if an early goal is selected,
+    unless enough additional vacant locations are enabled, e.g. through Enemysanity or Itemsanity."""
+    display_name = "Exclude Post-Goal Locations"
+    default = False
+
+
 class EnemySanity(Toggle):
     """Enable locations for the first kill of each enemy type."""
     display_name = "Enemysanity"
@@ -337,6 +346,7 @@ class X2WOTCOptions(PerGameCommonOptions):
     # Goal options
     goal: Goal
     campaign_completion_requirements: CampaignCompletionRequirements
+    exclude_post_goal_locations: ExcludePostGoalLocations
 
     # Location options
     enemy_sanity: EnemySanity
@@ -392,6 +402,7 @@ x2wotc_option_groups: list[OptionGroup] = [
         [
             Goal,
             CampaignCompletionRequirements,
+            ExcludePostGoalLocations,
         ]
     ),
     OptionGroup(

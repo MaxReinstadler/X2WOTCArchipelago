@@ -6,7 +6,8 @@ from BaseClasses import CollectionState, Item, MultiWorld, Tutorial
 from Options import OptionError, PerGameCommonOptions
 from settings import Group, UserFolderPath
 from worlds.AutoWorld import WebWorld, World
-from worlds.LauncherComponents import Component, Type, components, launch as launch_component
+from worlds.LauncherComponents import Component, Type, components
+from worlds.LauncherComponents import launch as launch_component
 
 from .EnemyRando import EnemyRandoManager
 from .Items import ItemManager, X2WOTCItem, item_display_name_to_id, item_groups
@@ -84,11 +85,11 @@ class X2WOTCWorld(World):
 
     def __init__(self, multiworld: MultiWorld, player: int):
         super().__init__(multiworld, player)
-        self.item_manager = ItemManager()
-        self.loc_manager = LocationManager()
-        self.enemy_rando_manager = EnemyRandoManager()
-        self.reg_manager: RegionManager = None
-        self.rule_manager: RuleManager = None
+        self.enemy_rando_manager: EnemyRandoManager = EnemyRandoManager()
+        self.item_manager: ItemManager = ItemManager()
+        self.loc_manager: LocationManager = LocationManager(self)  # Location manager requires enemy rando manager
+        self.rule_manager: RuleManager = None  # Rule manager is initialized in generate_early
+        self.reg_manager: RegionManager = None  # Region manager requires rule manager
 
     def generate_early(self):
         # Extract slot data for UT re-gen
@@ -208,18 +209,39 @@ class X2WOTCWorld(World):
             if mod_data.generate_early and mod_data.name in self.options.active_mods:
                 mod_data.generate_early(self)
 
-        # Validate options
+        # Shuffle enemies (after mod options, since LWOTC needs to disable it; this means that mods
+        # can't read enemy placements, which is kind of sad and might be worth changing in the future)
+        if self.options.enemy_rando:
+            self.enemy_rando_manager.shuffle_enemies(self.options.enemy_plando, self.random)
+
+        # Exclude post-goal locations (after enemy shuffle, since it affects location difficulties)
+        if self.options.exclude_post_goal_locations:
+            goal_difficulty = self.loc_manager.get_location_difficulty(Goal.value_to_location[self.options.goal.value])
+            for loc_name, loc_data in self.loc_manager.location_table.items():
+                if not loc_data.id or not self.loc_manager.enabled[loc_name]:
+                    continue
+                if self.loc_manager.get_location_difficulty(loc_name) > goal_difficulty:
+                    self.options.exclude_locations.value.add(loc_data.display_name)
+
+        # Validate location and item counts
         num_filler_items = self.loc_manager.num_locations - self.item_manager.num_items
         if num_filler_items < 0:
             raise OptionError(
                 f"X2WOTC: Too many items for player {self.player_name}. "
                 f"Disable Chosen Weapon Fragments or enable at least {-num_filler_items} more location(s)."
             )
+        max_useful_filler = num_filler_items - len(self.options.exclude_locations.value)
+        if self.options.exclude_post_goal_locations and max_useful_filler < 0:
+            raise OptionError(
+                f"X2WOTC: Too many excluded locations for player {self.player_name}. "
+                "Consider enabling more locations or disabling Exclude Post-Goal Locations."
+            )
 
         # Add filler items
         info(f"X2WOTC: Adding {num_filler_items} filler items for player {self.player_name}")
         self.item_manager.add_filler_items(
             num_filler_items,
+            max_useful_filler,
             self.options.resource_share,
             self.options.weapon_mod_share,
             self.options.pcs_share,
@@ -229,13 +251,9 @@ class X2WOTCWorld(World):
             self.random
         )
 
-        # Lock location and item managers
-        self.loc_manager.locked = True
+        # Lock item and location managers
         self.item_manager.locked = True
-
-        # Shuffle enemies
-        if self.options.enemy_rando:
-            self.enemy_rando_manager.shuffle_enemies(self.options.enemy_plando, self.random)
+        self.loc_manager.locked = True
 
         # Rule manager needs to exist for collect/remove, but requires options being resolved
         self.rule_manager = RuleManager(self)
