@@ -685,7 +685,7 @@ wotc_enemy_kills: dict[str, X2WOTCLocationData] = {
         layer = "Tactical",
         type = "EnemyKill",
         tags = {"kill_assassin"},
-        difficulty = 80.0,
+        difficulty = 70.0,
         dlc = "WOTC"
     ),
     "KillChosenSniper": X2WOTCLocationData(
@@ -694,7 +694,7 @@ wotc_enemy_kills: dict[str, X2WOTCLocationData] = {
         layer = "Tactical",
         type = "EnemyKill",
         tags = {"kill_hunter"},
-        difficulty = 80.0,
+        difficulty = 70.0,
         dlc = "WOTC"
     ),
     "KillChosenWarlock": X2WOTCLocationData(
@@ -703,7 +703,7 @@ wotc_enemy_kills: dict[str, X2WOTCLocationData] = {
         layer = "Tactical",
         type = "EnemyKill",
         tags = {"kill_warlock"},
-        difficulty = 80.0,
+        difficulty = 70.0,
         dlc = "WOTC"
     ),
 }
@@ -956,7 +956,7 @@ chosen_hunt_covert_actions: dict[str, X2WOTCLocationData] = {
         id = get_new_location_id(),
         type = "CovertAction",
         tags = {"chosen_hunt", "meet_all_chosen", "influence:0"},
-        difficulty = 40.0,
+        difficulty = 35.0,
         dlc = "WOTC",
         normal_item = "DefaultChosenHuntReward"
     ),
@@ -965,7 +965,7 @@ chosen_hunt_covert_actions: dict[str, X2WOTCLocationData] = {
         id = get_new_location_id(),
         type = "CovertAction",
         tags = {"chosen_hunt", "meet_all_chosen", "influence:0"},
-        difficulty = 60.0,
+        difficulty = 50.0,
         dlc = "WOTC",
         normal_item = "DefaultChosenHuntReward"
     ),
@@ -974,7 +974,7 @@ chosen_hunt_covert_actions: dict[str, X2WOTCLocationData] = {
         id = get_new_location_id(),
         type = "CovertAction",
         tags = {"chosen_hunt", "meet_first_chosen", "influence:1"},
-        difficulty = 40.0,
+        difficulty = 30.0,
         dlc = "WOTC",
         normal_item = "DefaultChosenHuntReward"
     ),
@@ -983,7 +983,7 @@ chosen_hunt_covert_actions: dict[str, X2WOTCLocationData] = {
         id = get_new_location_id(),
         type = "CovertAction",
         tags = {"chosen_hunt", "meet_all_chosen", "influence:3"},
-        difficulty = 55.0,
+        difficulty = 45.0,
         dlc = "WOTC",
         normal_item = "DefaultChosenHuntReward"
     ),
@@ -992,7 +992,7 @@ chosen_hunt_covert_actions: dict[str, X2WOTCLocationData] = {
         id = get_new_location_id(),
         type = "CovertAction",
         tags = {"chosen_hunt", "meet_all_chosen", "influence:5"},
-        difficulty = 70.0,
+        difficulty = 60.0,
         dlc = "WOTC",
         normal_item = "DefaultChosenHuntReward"
     ),
@@ -1001,7 +1001,7 @@ chosen_hunt_covert_actions: dict[str, X2WOTCLocationData] = {
         id = get_new_location_id(),
         type = "CovertAction",
         tags = {"chosen_hunt", "meet_first_chosen", "influence:2"},
-        difficulty = 60.0,
+        difficulty = 40.0,
         dlc = "WOTC",
         normal_item = "DefaultChosenHuntReward"
     ),
@@ -1010,7 +1010,7 @@ chosen_hunt_covert_actions: dict[str, X2WOTCLocationData] = {
         id = get_new_location_id(),
         type = "CovertAction",
         tags = {"chosen_hunt", "meet_all_chosen", "influence:4"},
-        difficulty = 70.0,
+        difficulty = 55.0,
         dlc = "WOTC",
         normal_item = "DefaultChosenHuntReward"
     ),
@@ -1019,7 +1019,7 @@ chosen_hunt_covert_actions: dict[str, X2WOTCLocationData] = {
         id = get_new_location_id(),
         type = "CovertAction",
         tags = {"chosen_hunt", "meet_all_chosen", "influence:6"},
-        difficulty = 80.0,
+        difficulty = 70.0,
         dlc = "WOTC",
         normal_item = "DefaultChosenHuntReward"
     ),
@@ -1042,12 +1042,12 @@ event_locations: dict[str, X2WOTCLocationData] = {
     ),
     "Stronghold1": X2WOTCLocationData(
         display_name = "Stronghold 1",
-        difficulty = 50.0,
+        difficulty = 40.0,
         normal_item = "Stronghold1"
     ),
     "Stronghold2": X2WOTCLocationData(
         display_name = "Stronghold 2",
-        difficulty = 60.0,
+        difficulty = 55.0,
         normal_item = "Stronghold2"
     ),
     "Stronghold3": X2WOTCLocationData(

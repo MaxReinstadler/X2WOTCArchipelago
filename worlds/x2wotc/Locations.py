@@ -84,6 +84,7 @@ class LocationManager:
 
     def __init__(self, world: "X2WOTCWorld"):
         self.enemy_rando_manager: EnemyRandoManager = world.enemy_rando_manager
+        self.autopsy_difficulty: float = 3.0
 
         self.location_table: dict[str, X2WOTCLocationData] = deepcopy(location_table)
         self.locked: bool = False
@@ -106,7 +107,7 @@ class LocationManager:
         diff_tag_enemies = [tag[5:] for tag in loc_data.tags if tag.startswith("diff:")]
         diff_tag_difficulty = self.enemy_rando_manager.get_difficulty(diff_tag_enemies)
         if "autopsy" in loc_data.tags:
-            diff_tag_difficulty += 2.0  # Autopsies take time
+            diff_tag_difficulty += self.autopsy_difficulty  # Autopsies take time
 
         return max(base_difficulty, diff_tag_difficulty)
 
