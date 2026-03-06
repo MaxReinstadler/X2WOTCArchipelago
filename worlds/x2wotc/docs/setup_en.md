@@ -30,6 +30,7 @@
 2. Download the latest release of the [XCOM 2 WotC APWorld](https://github.com/MaxReinstadler/X2WOTCArchipelago/releases). Double-click it to install automatically, or copy it to your Archipelago installation's `custom_worlds` folder manually.
 3. **(Optional)** Download the latest release of the [Universal Tracker APWorld](https://github.com/FarisTheAncient/Archipelago/releases). Double-click it to install automatically, or copy it to your Archipelago installation's `custom_worlds` folder manually.
 4. Launch the XCOM 2 War of the Chosen AP Client from the Archipelago Launcher.
+    - Upon first launch, you will be prompted to provide your XCOM 2 installation path. See more info under [Joining a Multiworld](#joining-a-multiworld).
 
 ## Generating a Multiworld
 
