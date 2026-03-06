@@ -177,6 +177,13 @@ class ItemManager:
     def add_item(self, item_name: str, count: int = 1):
         self.set_item_count(item_name, self.item_count[item_name] + count)
 
+    def remove_item(self, item_name: str, count: int = 1) -> bool:
+        if self.item_count[item_name] < count:
+            return False
+
+        self.set_item_count(item_name, self.item_count[item_name] - count)
+        return True
+
     def disable_item(self, item_name: str):
         self.set_item_count(item_name, 0)
 
