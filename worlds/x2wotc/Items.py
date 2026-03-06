@@ -199,7 +199,7 @@ class ItemManager:
         self.set_item_count(item_name, len(stages))
         return True
 
-    def disable_progressive_item(self, item_name: str):
+    def disable_progressive_item(self, item_name: str) -> bool:
         item_data = self.item_table[item_name]
         stages = item_data.stages
         if stages is None:
