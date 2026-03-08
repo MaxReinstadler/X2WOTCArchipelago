@@ -30,6 +30,7 @@ def generate_early(world: "X2WOTCWorld"):
         world.loc_manager.replace(key, tags={tag for tag in value.tags if not tag.startswith("diff:")})
     if world.options.enemy_rando:
         world.options.enemy_rando.value = world.options.enemy_rando.option_false
+        world.enemy_rando_manager.enemy_shuffle.sort()
         warning(f"X2WOTC: Ignoring enemy rando for player {world.player_name} because the mod 'Long War of the Chosen' is enabled")
 
     # Weapons have 5 tiers

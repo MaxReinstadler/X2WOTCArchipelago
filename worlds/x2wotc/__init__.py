@@ -103,7 +103,7 @@ class X2WOTCWorld(World):
             # Enemy Rando
             self.enemy_rando_manager.set_enemy_shuffle(slot_data["enemy_shuffle"])
 
-        # Disable inactive mods...
+        # Disable inactive mods
         for mod_data in mods_data:
             if mod_data.name not in self.options.active_mods:
                 for item_name, item_data in mod_data.items.items():
@@ -204,13 +204,16 @@ class X2WOTCWorld(World):
                 if "chosen_hunt" in loc_data.tags:
                     self.loc_manager.disable_location(loc_name)
 
+        # Shuffle enemies
+        if self.options.enemy_rando:
+            self.enemy_rando_manager.shuffle_enemies(self.options.enemy_plando, self.random)
+
         # Handle mod options
         for mod_data in mods_data:
             if mod_data.generate_early and mod_data.name in self.options.active_mods:
                 mod_data.generate_early(self)
 
-        # Adjust logic for corpse cost removal (after mod options, since mods may add diff tags;
-        # LWOTC already removes all of them anyway, so this won't have any effect if it's active)
+        # Remove corpse cost logic (after mod options, in case mods add corpse costs)
         if self.options.remove_corpse_costs:
             for loc_name, loc_data in self.loc_manager.location_table.items():
                 if loc_data.type == "ItemUse":
@@ -219,12 +222,10 @@ class X2WOTCWorld(World):
                         if not tag.startswith("diff:")
                     })
 
-        # Shuffle enemies (after mod options, since LWOTC needs to disable it; this means that mods
-        # can't read enemy placements, which is kind of sad and might be worth changing in the future)
-        if self.options.enemy_rando:
-            self.enemy_rando_manager.shuffle_enemies(self.options.enemy_plando, self.random)
+        # Lock location manager
+        self.loc_manager.locked = True
 
-        # Exclude post-goal locations (after corpse cost logic and enemy shuffle, since they affect difficulties)
+        # Exclude post-goal locations (after location data becomes immutable)
         if self.options.exclude_post_goal_locations:
             goal_difficulty = self.loc_manager.get_location_difficulty(Goal.value_to_location[self.options.goal.value])
             for loc_name, loc_data in self.loc_manager.location_table.items():
@@ -261,9 +262,8 @@ class X2WOTCWorld(World):
             self.random
         )
 
-        # Lock item and location managers
+        # Lock item manager
         self.item_manager.locked = True
-        self.loc_manager.locked = True
 
         # Rule manager needs to exist for collect/remove, but requires options being resolved
         self.rule_manager = RuleManager(self)
