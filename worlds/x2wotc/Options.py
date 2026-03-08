@@ -93,10 +93,13 @@ class ItemSanity(Toggle):
     default = False
 
 
-class ChosenHuntSanity(Toggle):
+class ChosenHuntSanity(Choice):
     """Shuffle Chosen Hunt covert actions and their rewards, i.e. Resistance Faction influence and Chosen Stronghold missions."""
     display_name = "Chosen Huntsanity"
-    default = False
+    option_off = 0
+    option_separate = 1
+    option_progressive = 2
+    default = 0
 
 
 class ProgressiveItems(OptionSet):

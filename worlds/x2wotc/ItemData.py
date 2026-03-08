@@ -747,6 +747,45 @@ chosen_hunt_items: dict[str, X2WOTCItemData] = {
         power = 80.0,
         dlc = "WOTC"
     ),
+    "ProgressiveAssassinChosenHunt": X2WOTCItemData(
+        display_name = chosen_hunt_item_prefix + "Progressive Assassin",
+        id = get_new_item_id(),
+        classification = IC.progression | IC.useful,
+        type = "CovertActionReward",
+        tags = {"chosen_hunt"},
+        dlc = "WOTC",
+        stages = [
+            "FactionInfluence",
+            "FactionInfluence",
+            "AssassinStronghold",
+        ]
+    ),
+    "ProgressiveHunterChosenHunt": X2WOTCItemData(
+        display_name = chosen_hunt_item_prefix + "Progressive Hunter",
+        id = get_new_item_id(),
+        classification = IC.progression | IC.useful,
+        type = "CovertActionReward",
+        tags = {"chosen_hunt"},
+        dlc = "WOTC",
+        stages = [
+            "FactionInfluence",
+            "FactionInfluence",
+            "HunterStronghold",
+        ]
+    ),
+    "ProgressiveWarlockChosenHunt": X2WOTCItemData(
+        display_name = chosen_hunt_item_prefix + "Progressive Warlock",
+        id = get_new_item_id(),
+        classification = IC.progression | IC.useful,
+        type = "CovertActionReward",
+        tags = {"chosen_hunt"},
+        dlc = "WOTC",
+        stages = [
+            "FactionInfluence",
+            "FactionInfluence",
+            "WarlockStronghold",
+        ]
+    ),
     # Default reward for disabled chosen hunt locations (never add to itempool)
     "DefaultChosenHuntReward": X2WOTCItemData(
         display_name = "Regular Covert Action Reward",

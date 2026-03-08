@@ -12,7 +12,8 @@ from worlds.LauncherComponents import launch as launch_component
 from .EnemyRando import EnemyRandoManager
 from .Items import ItemManager, X2WOTCItem, item_display_name_to_id, item_groups
 from .Locations import LocationManager, loc_display_name_to_id, loc_groups
-from .Options import AlienHuntersDLC, ChosenWeaponFragments, Goal, X2WOTCOptions, x2wotc_option_groups
+from .Options import AlienHuntersDLC, ChosenHuntSanity, ChosenWeaponFragments, Goal, X2WOTCOptions
+from .Options import x2wotc_option_groups
 from .Regions import RegionManager
 from .Rules import RuleManager
 from .Version import minimum_client_version
@@ -196,13 +197,14 @@ class X2WOTCWorld(World):
                 if loc_data.type == "ItemUse":
                     self.loc_manager.disable_location(loc_name)
 
-        # Enable/disable Chosen Hunt-Sanity
-        if self.options.chosen_hunt_sanity:
-            self.item_manager.enable_chosen_hunt_items()
-        else:
+        # Disable/enable Chosen Huntsanity
+        if self.options.chosen_hunt_sanity.value == ChosenHuntSanity.option_off:
             for loc_name, loc_data in self.loc_manager.location_table.items():
                 if "chosen_hunt" in loc_data.tags:
                     self.loc_manager.disable_location(loc_name)
+        else:
+            progressive = self.options.chosen_hunt_sanity.value == ChosenHuntSanity.option_progressive
+            self.item_manager.enable_chosen_hunt_items(progressive)
 
         # Shuffle enemies
         if self.options.enemy_rando:

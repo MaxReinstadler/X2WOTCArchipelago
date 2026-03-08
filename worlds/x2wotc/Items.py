@@ -126,7 +126,7 @@ class ItemManager:
         self.num_items: int = 0
 
         for item_name, item_data in self.item_table.items():
-            if item_data.normal_location is None:  # Progressive and filler/trap items (and DefaultChosenHuntReward)
+            if item_data.normal_location is None:  # Progressive and filler/trap items (and chosen hunt rewards)
                 self.item_count[item_name] = 0
                 self.real_count[item_name] = 0
             else:
@@ -226,11 +226,16 @@ class ItemManager:
         self.set_item_count(item_name, 0)
         return True
 
-    def enable_chosen_hunt_items(self):
-        self.set_item_count("FactionInfluence", 6)
-        self.set_item_count("AssassinStronghold", 1)
-        self.set_item_count("HunterStronghold", 1)
-        self.set_item_count("WarlockStronghold", 1)
+    def enable_chosen_hunt_items(self, progressive: bool):
+        if progressive:
+            self.set_item_count("ProgressiveAssassinChosenHunt", 3)
+            self.set_item_count("ProgressiveHunterChosenHunt", 3)
+            self.set_item_count("ProgressiveWarlockChosenHunt", 3)
+        else:
+            self.set_item_count("FactionInfluence", 6)
+            self.set_item_count("AssassinStronghold", 1)
+            self.set_item_count("HunterStronghold", 1)
+            self.set_item_count("WarlockStronghold", 1)
 
     def get_filler_item_name(self, random: Random) -> str:
         filler_items = list(
