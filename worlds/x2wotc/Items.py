@@ -80,7 +80,7 @@ for item_data in item_table.values():
         })
 for item_tag in item_tags:
     item_groups[
-        "".join(word.capitalize() for word in item_tag.split("_"))  # convert snake_case tag to PascalCase
+        "".join(word.capitalize() for word in item_tag.split("_"))  # Convert snake_case tag to PascalCase
     ] = {
         item_data.display_name
         for item_data in item_table.values()

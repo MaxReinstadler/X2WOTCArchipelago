@@ -430,7 +430,7 @@ class X2WOTCContext(SuperContext):
                 f"bTrap={bool(entry["flags"] & 0b100)})\n"
             )
 
-        # Enemy Rando
+        # Enemy rando
         if self.slot_data["enemy_rando"]:
             for placed_enemy in self.enemy_rando_manager.enemy_names:
                 placement_enemy = self.enemy_rando_manager.get_placement_enemy(placed_enemy)

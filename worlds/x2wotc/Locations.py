@@ -66,7 +66,7 @@ for loc_data in location_table.values():
         })
 for loc_tag in loc_tags:
     loc_groups[
-        "".join(word.capitalize() for word in loc_tag.split("_"))  # convert snake_case tag to PascalCase
+        "".join(word.capitalize() for word in loc_tag.split("_"))  # Convert snake_case tag to PascalCase
     ] = {
         loc_data.display_name
         for loc_data in location_table.values()

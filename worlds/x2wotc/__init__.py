@@ -100,7 +100,7 @@ class X2WOTCWorld(World):
                 if option_name in slot_data:
                     getattr(self.options, option_name).value = slot_data[option_name]
 
-            # Enemy Rando
+            # Enemy rando
             self.enemy_rando_manager.set_enemy_shuffle(slot_data["enemy_shuffle"])
 
         # Disable inactive mods
@@ -335,7 +335,7 @@ class X2WOTCWorld(World):
     def extend_hint_information(self, hint_data: dict[int, dict[int, str]]):
         hint_data[self.player] = {}
 
-        # Enemy Rando hint data
+        # Enemy rando hint data
         if self.options.enemy_rando:
             for loc_data in self.loc_manager.location_table.values():
                 diff_tag_enemies = [tag[5:] for tag in loc_data.tags if tag.startswith("diff:")]
