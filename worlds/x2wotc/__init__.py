@@ -209,12 +209,22 @@ class X2WOTCWorld(World):
             if mod_data.generate_early and mod_data.name in self.options.active_mods:
                 mod_data.generate_early(self)
 
+        # Adjust logic for corpse cost removal (after mod options, since mods may add diff tags;
+        # LWOTC already removes all of them anyway, so this won't have any effect if it's active)
+        if self.options.remove_corpse_costs:
+            for loc_name, loc_data in self.loc_manager.location_table.items():
+                if loc_data.type == "ItemUse":
+                    self.loc_manager.replace(loc_name, tags={
+                        tag for tag in loc_data.tags
+                        if not tag.startswith("diff:")
+                    })
+
         # Shuffle enemies (after mod options, since LWOTC needs to disable it; this means that mods
         # can't read enemy placements, which is kind of sad and might be worth changing in the future)
         if self.options.enemy_rando:
             self.enemy_rando_manager.shuffle_enemies(self.options.enemy_plando, self.random)
 
-        # Exclude post-goal locations (after enemy shuffle, since it affects location difficulties)
+        # Exclude post-goal locations (after corpse cost logic and enemy shuffle, since they affect difficulties)
         if self.options.exclude_post_goal_locations:
             goal_difficulty = self.loc_manager.get_location_difficulty(Goal.value_to_location[self.options.goal.value])
             for loc_name, loc_data in self.loc_manager.location_table.items():
