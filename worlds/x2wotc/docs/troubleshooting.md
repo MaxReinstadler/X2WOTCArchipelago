@@ -5,7 +5,8 @@
 
 ## I can't launch the client
 
-It may be that you provided an invalid XCOM 2 installation path to the client. You can change it manually by editing the `host.yaml` in your Archipelago installation folder. If this doesn't seem to be the issue, try reproducing with the debug launcher (`ArchipelagoLauncherDebug.exe`) and consult any occuring error messages.
+1. The Archipelago game mod must be installed before launching the client. Refer to the [Setup Guide](https://github.com/MaxReinstadler/X2WOTCArchipelago/blob/main/worlds/x2wotc/docs/setup_en.md) for further instructions.
+2. It may be that you provided an invalid XCOM 2 installation path to the client. You can change it manually by editing the `host.yaml` in your Archipelago installation folder. If this doesn't seem to be the issue, try reproducing with the debug launcher (`ArchipelagoLauncherDebug.exe`) and consult any occuring error messages.
 
 ## Nothing is happening
 
