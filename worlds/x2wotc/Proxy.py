@@ -311,7 +311,7 @@ async def run_proxy(local_ctx: CommonContext):
     site = web.TCPSite(runner, address[0], address[1])
     await site.start()
 
-    logger.info(f"Proxy: Server started at {address[0]}:{address[1]}")
+    ctx.print_info(f"Proxy: Server started at {address[0]}:{address[1]}")
 
     scout_task = asyncio.create_task(scout_loop(), name="scout_loop")
 
@@ -322,4 +322,4 @@ async def run_proxy(local_ctx: CommonContext):
         await runner.cleanup()
         scout_task.cancel()
         await scout_task
-        logger.info("Proxy: Server stopped")
+        ctx.print_info("Proxy: Server stopped")

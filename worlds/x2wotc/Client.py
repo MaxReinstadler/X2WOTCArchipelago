@@ -19,6 +19,7 @@ except ModuleNotFoundError:
     from CommonClient import CommonContext as SuperContext
 
 from .EnemyRando import EnemyRandoManager
+from .Items import item_table, item_display_name_to_key
 from .Options import HintResearchProjects
 from .Proxy import run_proxy
 from .Version import client_version, minimum_world_version, minimum_mod_version
@@ -257,12 +258,34 @@ class X2WOTCContext(SuperContext):
             self.patch_config()
             self.update_config()
             self.patch_encounters()
-            logger.info("Client connected and config updated. Please restart your game if it is already running.")
+            self.print_info("Client connected and config updated. Please restart your game if it is already running.")
 
-        if cmd == "LocationInfo":
+        elif cmd == "LocationInfo":
             scouted_locations = set(item.location for item in args["locations"])
             if self.locations_scouted == scouted_locations:
                 self.scouted.set()
+
+        # Help players who don't know to hint progressive items
+        elif cmd == "PrintJSON":
+            for message in args["data"]:
+                text: str = message.get("text", "").rsplit('"', 1)[0]
+                prefix = text.split('"', 1)[0]
+                if prefix != "Nothing found for recognized item name ":
+                    return
+
+                item_name = text.split('"', 1)[1]
+                item_key = item_display_name_to_key[item_name]
+                progressive_item_names = [
+                        item_data.display_name
+                        for item_data in item_table.values()
+                        if item_data.stages is not None and item_key in item_data.stages
+                ]
+
+                if progressive_item_names:
+                    self.print_info(
+                        "Try hinting one of the following items instead:"
+                        f"\n- {"\n- ".join(progressive_item_names)}"
+                    )
 
     # Client only compares world and client versions;
     # mod and client versions are compared by the mod
@@ -271,7 +294,7 @@ class X2WOTCContext(SuperContext):
         minimum_client_version = self.slot_data["minimum_client_version"]
 
         if tuplize_version(world_version) < tuplize_version(minimum_world_version):
-            logger.error(
+            self.print_error(
                 f"Client version {client_version} requires "
                 f"at least world version {minimum_world_version}, "
                 f"but world was generated with version {world_version}. "
@@ -280,7 +303,7 @@ class X2WOTCContext(SuperContext):
             return False
 
         if tuplize_version(client_version) < tuplize_version(minimum_client_version):
-            logger.error(
+            self.print_error(
                 f"World version {world_version} requires "
                 f"at least client version {minimum_client_version}, "
                 f"but client is version {client_version}. "
@@ -294,6 +317,18 @@ class X2WOTCContext(SuperContext):
         ui = super().make_gui()
         ui.base_title = "Archipelago XCOM 2 War of the Chosen Client"
         return ui
+
+    def print_error(self, text: str):
+        if self.ui:
+            self.ui.print_json([{"text": text, "type": "color", "color": "red"}])
+        else:
+            logger.error(text)
+
+    def print_info(self, text: str):
+        if self.ui:
+            self.ui.print_json([{"text": text, "type": "color", "color": "blue"}])
+        else:
+            logger.info(text)
 
     def start_proxy(self):
         if self.proxy_task:
@@ -320,7 +355,7 @@ class X2WOTCContext(SuperContext):
             if mod_data.name in self.active_mods:
                 for key, value in mod_data.config.items():
                     if key not in insert_dict:
-                        logger.error(
+                        logger.warning(
                             f"X2WOTCClient: Class {key} for mod {mod_data.name} "
                             "not mentioned in config file, skipping"
                         )
@@ -373,7 +408,7 @@ class X2WOTCContext(SuperContext):
             config = file.read()
 
         if "DEF_AP_GEN_ID" not in config:
-            logger.error(
+            self.print_error(
                 "X2WOTCClient: Config file missing required key, most likely due to a corrupted mod installation. "
                 "Please reinstall the XCOM 2 WotC Archipelago Multiworld mod."
             )
