@@ -1,11 +1,11 @@
 from logging import warning
 from textwrap import dedent
-
 from typing import TYPE_CHECKING
-if TYPE_CHECKING:
-    from worlds.x2wotc import X2WOTCWorld
 
 from BaseClasses import ItemClassification as IC
+
+if TYPE_CHECKING:
+    from worlds.x2wotc import X2WOTCWorld
 
 from .Locations import locations, fl_to_diff, fl_to_diff_autopsy, fl_to_diff_pg, PG_GRENADE, PG_GRENADE_M2
 from .Items import items, lwotc_filler_items

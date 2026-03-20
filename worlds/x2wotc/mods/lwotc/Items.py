@@ -1,6 +1,6 @@
 from BaseClasses import ItemClassification as IC
 
-from ...ItemData import X2WOTCItemData, get_new_item_id, tech_item_prefix, pcs_item_prefix
+from worlds.x2wotc.ItemData import X2WOTCItemData, get_new_item_id, tech_item_prefix, pcs_item_prefix
 
 
 # For the full definition of X2WOTCItemData, see worlds/x2wotc/ItemData.py

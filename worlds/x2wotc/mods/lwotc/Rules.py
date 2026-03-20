@@ -2,9 +2,7 @@ from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from worlds.x2wotc import X2WOTCWorld
-from ...Rules import RuleManager
-
-from BaseClasses import CollectionState
+from worlds.x2wotc.Rules import RuleManager
 
 
 class RuleManager_LW(RuleManager):

@@ -6,8 +6,7 @@ from worlds.AutoWorld import LogicMixin
 from worlds.generic.Rules import add_rule, set_rule
 
 if TYPE_CHECKING:
-    from worlds.x2wotc import X2WOTCWorld
-
+    from . import X2WOTCWorld
 from .Items import ItemManager
 from .Locations import LocationManager
 from .Options import Goal, X2WOTCOptions

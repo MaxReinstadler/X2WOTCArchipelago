@@ -1,14 +1,17 @@
 from aiohttp import web
 import asyncio
+from typing import TYPE_CHECKING
 
 from CommonClient import CommonContext, NetworkItem, NetworkSlot, logger
 from NetUtils import ClientStatus
 
+if TYPE_CHECKING:
+    from .Client import X2WOTCContext
 from .Items import item_table, item_id_to_key
 from .Locations import location_table, loc_id_to_key
 
 
-ctx: CommonContext
+ctx: "X2WOTCContext"
 
 LocationsInfo = dict[
     str,  # Location name (internal)
@@ -95,14 +98,13 @@ def get_locations_info(checks: list[str]) -> LocationsInfo:
             item_name = loc_data.normal_item  # Send internal key for disabled locations
             locations_info[loc_name] = (item_name, None, None)
             continue
-        
+
         network_item = ctx.locations_info[loc_id]
         slot_info = get_slot_info(network_item.player)
 
         # Send external name for all locations touched by generation
         # (Receiving is handled by tick calls)
-        item_name_lookup: CommonContext.NameLookupDict = ctx.item_names
-        item_name = item_name_lookup.lookup_in_game(network_item.item, slot_info.game)
+        item_name = ctx.item_names.lookup_in_game(network_item.item, slot_info.game)
 
         locations_info[loc_name] = (item_name, network_item, slot_info)
 
@@ -294,7 +296,7 @@ async def handle_tick_tactical(request: web.Request):
 #                                                     RUN PROXY                                                        #
 #----------------------------------------------------------------------------------------------------------------------#
 
-async def run_proxy(local_ctx: CommonContext):
+async def run_proxy(local_ctx: "X2WOTCContext"):
     global ctx
     ctx = local_ctx
 

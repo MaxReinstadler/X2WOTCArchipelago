@@ -8,7 +8,6 @@ from Options import Option
 
 if TYPE_CHECKING:
     from worlds.x2wotc import X2WOTCWorld
-
 from worlds.x2wotc.ItemData import X2WOTCItemData
 from worlds.x2wotc.LocationData import X2WOTCLocationData
 

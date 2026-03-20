@@ -1,22 +1,21 @@
 import asyncio
 import os
 import re
-from typing import Any
+from typing import Any, TYPE_CHECKING
 import zipfile
 
-from CommonClient import (
-    ClientCommandProcessor,
-    server_loop,
-    get_base_parser,
-    gui_enabled,
-    logger
-)
+from CommonClient import server_loop, get_base_parser, gui_enabled, logger
 import settings
 from Utils import async_start, open_filename, tuplize_version
+
+# Import Context and CommandProcessor from CommonClient when TrackerClient is not available, or for type checking
 try:
-    from worlds.tracker.TrackerClient import TrackerGameContext as SuperContext  # type: ignore
+    from worlds.tracker.TrackerClient import TrackerGameContext as CommonContext  # type: ignore
+    from worlds.tracker.TrackerClient import TrackerCommandProcessor as ClientCommandProcessor  # type: ignore
 except ModuleNotFoundError:
-    from CommonClient import CommonContext as SuperContext
+    from CommonClient import CommonContext, ClientCommandProcessor
+if TYPE_CHECKING:
+    from CommonClient import CommonContext, ClientCommandProcessor
 
 from .EnemyRando import EnemyRandoManager
 from .Items import item_table, item_display_name_to_key
@@ -28,8 +27,7 @@ from .mods import mods_data, mod_names
 
 
 class X2WOTCCommandProcessor(ClientCommandProcessor):
-    def __init__(self, ctx: SuperContext):
-        super().__init__(ctx)
+    ctx: "X2WOTCContext"
 
     def _cmd_version(self) -> bool:
         """Print client version info."""
@@ -129,7 +127,7 @@ class X2WOTCCommandProcessor(ClientCommandProcessor):
         return True
 
 
-class X2WOTCContext(SuperContext):
+class X2WOTCContext(CommonContext):
     command_processor = X2WOTCCommandProcessor
     game = "XCOM 2 War of the Chosen"
     items_handling = 0b111  # full remote

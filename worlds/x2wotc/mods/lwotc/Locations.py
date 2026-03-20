@@ -1,4 +1,4 @@
-from ...LocationData import (
+from worlds.x2wotc.LocationData import (
     X2WOTCLocationData,
     get_new_location_id,
     tech_location_prefix,
@@ -6,6 +6,7 @@ from ...LocationData import (
     enemy_destroy_location_prefix,
     item_use_location_prefix
 )
+
 
 def clamp(x, min_, max_):
     return max(min(x, max_), min_)

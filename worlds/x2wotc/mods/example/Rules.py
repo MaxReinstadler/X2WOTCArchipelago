@@ -1,10 +1,10 @@
 from typing import TYPE_CHECKING
 
-if TYPE_CHECKING:
-    from worlds.x2wotc import X2WOTCWorld
-
 from BaseClasses import CollectionState
 from worlds.generic.Rules import set_rule, add_rule
+
+if TYPE_CHECKING:
+    from worlds.x2wotc import X2WOTCWorld
 
 
 def example_mod_rule(state: CollectionState, player: int) -> bool:

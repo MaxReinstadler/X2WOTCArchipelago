@@ -3,8 +3,7 @@ from typing import TYPE_CHECKING
 from BaseClasses import MultiWorld, Region
 
 if TYPE_CHECKING:
-    from worlds.x2wotc import X2WOTCWorld
-
+    from . import X2WOTCWorld
 from .Locations import X2WOTCLocation, LocationManager
 from .Rules import RuleManager
 
