@@ -141,7 +141,7 @@ class EarlyProvingGround(Toggle):
     """Force the Proving Ground to be unlockable very early (sphere 1).
     This ensures access to many powerful items but may significantly increase the amount of reachable locations."""
     display_name = "Early Proving Ground"
-    default = False
+    default = True
 
 
 class ResourceShare(Range):
@@ -311,7 +311,7 @@ class InstantRookieTraining(Toggle):
     """Make training rookies in the GTS instant.
     Can be changed in-game via Mod Config Menu."""
     display_name = "Instant Rookie Training"
-    default = False
+    default = True
 
 
 class DisableDayOneTraps(Toggle):
