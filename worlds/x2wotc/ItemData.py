@@ -1254,17 +1254,17 @@ event_items: dict[str, X2WOTCItemData] = {
         normal_location = "Broadcast"
     ),
     "Stronghold1": X2WOTCItemData(
-        display_name = "Stronghold1",
+        display_name = "Stronghold 1",
         classification = IC.progression,
         normal_location = "Stronghold1"
     ),
     "Stronghold2": X2WOTCItemData(
-        display_name = "Stronghold2",
+        display_name = "Stronghold 2",
         classification = IC.progression,
         normal_location = "Stronghold2"
     ),
     "Stronghold3": X2WOTCItemData(
-        display_name = "Stronghold3",
+        display_name = "Stronghold 3",
         classification = IC.progression,
         normal_location = "Stronghold3"
     ),
