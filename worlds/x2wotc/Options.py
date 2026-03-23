@@ -37,7 +37,10 @@ class Goal(Choice):
     network_tower:          Beat the ADVENT Network Tower Assault mission. (second to last mission)
     chosen_stronghold_1:    Beat any Chosen Stronghold Assault mission.
     chosen_stronghold_2:    Beat any two Chosen Stronghold Assault missions.
-    chosen_stronghold_3:    Beat all three Chosen Stronghold Assault missions."""
+    chosen_stronghold_3:    Beat all three Chosen Stronghold Assault missions.
+
+    alien_fortress and network_tower (without extra considerations) are only recommended for async settings.
+    For sync settings, maybe try chosen_stronghold_1 first and experimenting from there."""
     display_name = "Goal"
     option_alien_fortress = 0
     option_network_tower = 1
@@ -76,9 +79,10 @@ class ExcludePostGoalLocations(Toggle):
     """Exclude locations that are considered more difficult than the selected goal event.
     Excluded locations can only contain filler or traps, never progression or useful items.
     NOTE: This option is likely to cause generation failures if an early goal is selected,
-    unless enough additional vacant locations are enabled, e.g. through Enemysanity or Itemsanity."""
+    unless enough additional vacant locations are enabled, e.g. through Enemysanity or Itemsanity.
+    If you can, however, consider leaving it on, escpecially in sync settings."""
     display_name = "Exclude Post-Goal Locations"
-    default = False
+    default = True
 
 
 class EnemySanity(Toggle):
@@ -233,7 +237,7 @@ class HintResearchProjects(Choice):
     option_off = 0
     option_partial = 1
     option_full = 2
-    default = 0
+    default = 1
 
 
 class SkipMissionTypes(OptionSet):
@@ -323,7 +327,8 @@ class DisableDayOneTraps(Toggle):
 
 
 class RemoveCorpseCosts(Toggle):
-    """Remove corpse costs from all items."""
+    """Remove corpse costs from all items. Recommended if Enemy Rando is enabled.
+    Can *NOT* be changed in-game via Mod Config Menu (so choose wisely)."""
     display_name = "Remove Corpse Costs"
     default = False
 
