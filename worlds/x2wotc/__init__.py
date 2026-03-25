@@ -12,7 +12,7 @@ from worlds.LauncherComponents import launch as launch_component
 from .EnemyRando import EnemyRandoManager
 from .Items import ItemManager, X2WOTCItem, item_display_name_to_id, item_groups
 from .Locations import LocationManager, loc_display_name_to_id, loc_groups
-from .Options import AlienHuntersDLC, ChosenHuntSanity, ChosenWeaponFragments, Goal, X2WOTCOptions
+from .Options import AlienHuntersDLC, ChosenHuntSanity, ChosenWeaponFragments, EnemyPlandoPreset, Goal, X2WOTCOptions
 from .Options import x2wotc_option_groups
 from .Regions import RegionManager
 from .Rules import RuleManager
@@ -208,6 +208,10 @@ class X2WOTCWorld(World):
 
         # Shuffle enemies
         if self.options.enemy_rando:
+            if self.options.enemy_plando_preset.value == EnemyPlandoPreset.option_aliens_only:
+                self.options.enemy_plando.value = {"forced": [], "fixed": ["Adv"]}
+            elif self.options.enemy_plando_preset.value == EnemyPlandoPreset.option_separate:
+                self.options.enemy_plando.value = {"forced": [[["Adv"], ["Adv"]]], "fixed": []}
             self.enemy_rando_manager.shuffle_enemies(self.options.enemy_plando, self.random)
 
         # Handle mod options

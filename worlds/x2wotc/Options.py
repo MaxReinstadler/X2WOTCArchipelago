@@ -40,7 +40,7 @@ class Goal(Choice):
     chosen_stronghold_3:    Beat all three Chosen Stronghold Assault missions.
 
     alien_fortress and network_tower (without extra considerations) are only recommended for async settings.
-    For sync settings, maybe try chosen_stronghold_1 first and experimenting from there."""
+    For sync settings, maybe try chosen_stronghold_1 first and experiment from there."""
     display_name = "Goal"
     option_alien_fortress = 0
     option_network_tower = 1
@@ -202,6 +202,19 @@ class EnemyRando(Toggle):
     default = False
 
 
+class EnemyPlandoPreset(Choice):
+    """Override enemy plando with a preset configuration.
+    
+    custom:         All enemies are shuffled by default. Edit enemy plando manually for finer control.
+    aliens_only:    Only alien (non-ADVENT) enemies are shuffled.
+    separate:       ADVENT and non-ADVENT enemies are shuffled separately."""
+    display_name = "Enemy Plando Preset"
+    option_custom = 0
+    option_aliens_only = 1
+    option_separate = 2
+    default = 0
+
+
 class EnemyPlando(OptionDict):
     """If enemy rando is enabled, constrain enemy placements.
     Define explicit shuffle groups with the 'forced' key.
@@ -327,7 +340,7 @@ class DisableDayOneTraps(Toggle):
 
 
 class RemoveCorpseCosts(Toggle):
-    """Remove corpse costs from all items. Recommended if Enemy Rando is enabled.
+    """Remove corpse costs from all items. Recommended if enemy rando is enabled.
     Can *NOT* be changed in-game via Mod Config Menu (so choose wisely)."""
     display_name = "Remove Corpse Costs"
     default = False
@@ -376,6 +389,7 @@ class X2WOTCOptions(PerGameCommonOptions):
 
     # Randomization options
     enemy_rando: EnemyRando
+    enemy_plando_preset: EnemyPlandoPreset
     enemy_plando: EnemyPlando
 
     # Config options
@@ -444,6 +458,7 @@ x2wotc_option_groups: list[OptionGroup] = [
         "Randomization Options",
         [
             EnemyRando,
+            EnemyPlandoPreset,
             EnemyPlando,
         ]
     ),
