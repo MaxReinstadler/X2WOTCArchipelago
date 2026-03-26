@@ -206,12 +206,14 @@ class EnemyPlandoPreset(Choice):
     """Override enemy plando with a preset configuration.
     
     custom:         All enemies are shuffled by default. Edit enemy plando manually for finer control.
+    advent_only:    Only ADVENT enemies are shuffled.
     aliens_only:    Only alien (non-ADVENT) enemies are shuffled.
     separate:       ADVENT and non-ADVENT enemies are shuffled separately."""
     display_name = "Enemy Plando Preset"
     option_custom = 0
-    option_aliens_only = 1
-    option_separate = 2
+    option_advent_only = 1
+    option_aliens_only = 2
+    option_separate = 3
     default = 0
 
 

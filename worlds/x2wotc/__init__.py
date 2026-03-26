@@ -208,7 +208,12 @@ class X2WOTCWorld(World):
 
         # Shuffle enemies
         if self.options.enemy_rando:
-            if self.options.enemy_plando_preset.value == EnemyPlandoPreset.option_aliens_only:
+            if self.options.enemy_plando_preset.value == EnemyPlandoPreset.option_advent_only:
+                self.options.enemy_plando.value = {"forced": [], "fixed": [
+                    enemy_name for enemy_name in self.enemy_rando_manager.enemy_names
+                    if not enemy_name.startswith("Adv")
+                ]}
+            elif self.options.enemy_plando_preset.value == EnemyPlandoPreset.option_aliens_only:
                 self.options.enemy_plando.value = {"forced": [], "fixed": ["Adv"]}
             elif self.options.enemy_plando_preset.value == EnemyPlandoPreset.option_separate:
                 self.options.enemy_plando.value = {"forced": [[["Adv"], ["Adv"]]], "fixed": []}
