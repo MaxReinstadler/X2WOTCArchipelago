@@ -30,6 +30,12 @@ class AlienHuntersDLC(Choice):
     default = 3
 
 
+class ShensLastGiftDLC(Toggle):
+    """Enable locations and items from the Shen's Last Gift DLC."""
+    display_name = "Shen's Last Gift DLC"
+    default = False
+
+
 class Goal(Choice):
     """Set the goal of the seed.
 
@@ -333,6 +339,27 @@ class InstantRookieTraining(Toggle):
     default = True
 
 
+class InstantSPARKConstruction(Toggle):
+    """Make constructing SPARKs in the Proving Ground instant. No effect if Shen's Last Gift DLC is disabled.
+    Can be changed in-game via Mod Config Menu."""
+    display_name = "Instant SPARK Construction"
+    default = True
+
+
+class RefundSPARKCosts(Toggle):
+    """Get construction costs refunded when a SPARK is destroyed. No effect if Shen's Last Gift DLC is disabled.
+    Can be changed in-game via Mod Config Menu."""
+    display_name = "Refund SPARK Costs"
+    default = True
+
+
+class ReplaceFactionHeroes(Toggle):
+    """Gain automatic replacements for dead or missing faction heroes.
+    Can be changed in-game via Mod Config Menu."""
+    display_name = "Replace Faction Heroes"
+    default = True
+
+
 class DisableDayOneTraps(Toggle):
     """Disable traps when they are received during the first day of a campaign.
     One use for this is if you wish to retire traps received during previous runs after a restart.
@@ -365,6 +392,7 @@ class X2WOTCOptions(PerGameCommonOptions):
 
     # DLC options
     alien_hunters_dlc: AlienHuntersDLC
+    shens_last_gift_dlc: ShensLastGiftDLC
 
     # Goal options
     goal: Goal
@@ -403,6 +431,9 @@ class X2WOTCOptions(PerGameCommonOptions):
     extra_xp_gain: ExtraXPGain
     extra_corpse_gain: ExtraCorpseGain
     instant_rookie_training: InstantRookieTraining
+    instant_spark_construction: InstantSPARKConstruction
+    refund_spark_costs: RefundSPARKCosts
+    replace_faction_heroes: ReplaceFactionHeroes
     disable_day_one_traps: DisableDayOneTraps
     remove_corpse_costs: RemoveCorpseCosts
 
@@ -419,6 +450,7 @@ x2wotc_option_groups: list[OptionGroup] = [
         "DLC Options",
         [
             AlienHuntersDLC,
+            ShensLastGiftDLC,
         ]
     ),
     OptionGroup(
@@ -475,6 +507,9 @@ x2wotc_option_groups: list[OptionGroup] = [
             ExtraXPGain,
             ExtraCorpseGain,
             InstantRookieTraining,
+            InstantSPARKConstruction,
+            RefundSPARKCosts,
+            ReplaceFactionHeroes,
             DisableDayOneTraps,
             RemoveCorpseCosts,
         ]
