@@ -247,6 +247,12 @@ class EnemyPlando(OptionDict):
     default = {"forced": [], "fixed": []}
 
 
+class RemoveCorpseCosts(Toggle):
+    """Remove corpse costs from all items. Recommended if enemy rando is enabled."""
+    display_name = "Remove Corpse Costs"
+    default = False
+
+
 class HintResearchProjects(Choice):
     """Enable research project hints in the Avenger laboratory and shadow chamber.
     Can be changed in-game via Mod Config Menu.
@@ -368,13 +374,6 @@ class DisableDayOneTraps(Toggle):
     default = False
 
 
-class RemoveCorpseCosts(Toggle):
-    """Remove corpse costs from all items. Recommended if enemy rando is enabled.
-    Can *NOT* be changed in-game via Mod Config Menu (so choose wisely)."""
-    display_name = "Remove Corpse Costs"
-    default = False
-
-
 class ActiveMods(OptionSet):
     """Activate these mods from the x2wotc/mods directory.
     This is only relevant when modding *the APWorld* (NOT the game), leave empty if you're unsure what that means.
@@ -421,6 +420,8 @@ class X2WOTCOptions(PerGameCommonOptions):
     enemy_rando: EnemyRando
     enemy_plando_preset: EnemyPlandoPreset
     enemy_plando: EnemyPlando
+    remove_corpse_costs: RemoveCorpseCosts
+
 
     # Config options
     hint_research_projects: HintResearchProjects
@@ -435,7 +436,6 @@ class X2WOTCOptions(PerGameCommonOptions):
     refund_spark_costs: RefundSPARKCosts
     replace_faction_heroes: ReplaceFactionHeroes
     disable_day_one_traps: DisableDayOneTraps
-    remove_corpse_costs: RemoveCorpseCosts
 
     # Mod options
     active_mods: ActiveMods
@@ -494,6 +494,7 @@ x2wotc_option_groups: list[OptionGroup] = [
             EnemyRando,
             EnemyPlandoPreset,
             EnemyPlando,
+            RemoveCorpseCosts,
         ]
     ),
     OptionGroup(
@@ -511,7 +512,6 @@ x2wotc_option_groups: list[OptionGroup] = [
             RefundSPARKCosts,
             ReplaceFactionHeroes,
             DisableDayOneTraps,
-            RemoveCorpseCosts,
         ]
     ),
     OptionGroup(
