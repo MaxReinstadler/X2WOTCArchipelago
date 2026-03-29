@@ -5,8 +5,9 @@ from typing import Any, TYPE_CHECKING
 import zipfile
 
 from CommonClient import server_loop, get_base_parser, gui_enabled, logger
+from MultiServer import mark_raw
 import settings
-from Utils import async_start, open_filename, tuplize_version
+from Utils import async_start, get_intended_text, open_filename, tuplize_version
 
 # Import Context and CommandProcessor from CommonClient when TrackerClient is not available, or for type checking
 try:
@@ -57,6 +58,39 @@ class X2WOTCCommandProcessor(ClientCommandProcessor):
         self.ctx.proxy_port = port
         self.ctx.start_proxy()
         self.output("Config updated. Please restart your game if it is already running.")
+        return True
+
+    @mark_raw
+    def _cmd_stages(self, progressive_item: str = "") -> bool:
+        """Print progressive item stages."""
+        progressive_items = [
+            item_data.display_name
+            for item_data in item_table.values()
+            if item_data.stages is not None
+        ]
+
+        if progressive_item == "":
+            self.output("All progressive items:")
+            for item_name in progressive_items:
+                self.output(f"- {item_name}")
+            return True
+
+        result, usable, response = get_intended_text(progressive_item, progressive_items)
+        if not usable:
+            self.output(response)
+            self.ctx.ui.last_autofillable_command = "/stages"
+            return False
+
+        item_key = item_display_name_to_key[result]
+        stages = item_table[item_key].stages
+        if not stages:
+            self.output(f"No stages for progressive item '{result}'.")
+            return True
+
+        self.output(f"Stages for progressive item '{result}':")
+        for stage in stages:
+            stage_name = item_table[stage].display_name if stage in item_table else "Nothing"
+            self.output(f"- {stage_name}")
         return True
 
     def _cmd_mods(self) -> bool:
