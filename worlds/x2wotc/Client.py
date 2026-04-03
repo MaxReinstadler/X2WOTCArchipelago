@@ -4,7 +4,8 @@ import re
 from typing import Any, TYPE_CHECKING
 import zipfile
 
-from CommonClient import server_loop, get_base_parser, gui_enabled, logger
+from CommonClient import gui_enabled, logger
+from CommonClient import get_base_parser, handle_url_arg, server_loop
 from MultiServer import mark_raw
 import settings
 from Utils import async_start, get_intended_text, open_filename, tuplize_version
@@ -544,7 +545,9 @@ def launch(*args):
     import colorama
 
     parser = get_base_parser()
-    parsed_args = parser.parse_args(args)
+    parser.add_argument("--name", default=None, help="Slot name to connect as.")
+    parser.add_argument("url", nargs="?", help="Archipelago connection url.")
+    parsed_args = handle_url_arg(parser.parse_args(args))
 
     colorama.just_fix_windows_console()
     asyncio.run(main(parsed_args))

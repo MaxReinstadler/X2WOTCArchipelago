@@ -21,12 +21,22 @@ from .Version import minimum_client_version
 from .mods import mods_data
 
 
+GAME_NAME = "XCOM 2 War of the Chosen"
+CLIENT_NAME = f"{GAME_NAME} Client"
+
+
 def launch_client(*args):
     from .Client import launch
 
-    launch_component(launch, name="XCOM 2 War of the Chosen Client", args=args)
+    launch_component(launch, name=CLIENT_NAME, args=args)
 
-components.append(Component("XCOM 2 War of the Chosen Client", func=launch_client, component_type=Type.CLIENT))
+components.append(Component(
+    CLIENT_NAME,
+    component_type=Type.CLIENT,
+    func=launch_client,
+    game_name=GAME_NAME,
+    supports_uri=True
+))
 
 
 class X2WOTCWeb(WebWorld):
@@ -64,7 +74,7 @@ class X2WOTCWorld(World):
     resistance to save humanity from the occupation of the Elders!
     """
 
-    game = "XCOM 2 War of the Chosen"
+    game = GAME_NAME
     web = X2WOTCWeb()
 
     settings: ClassVar[X2WOTCSettings]
