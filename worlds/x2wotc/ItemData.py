@@ -786,11 +786,6 @@ chosen_hunt_items: dict[str, X2WOTCItemData] = {
             "WarlockStronghold",
         ]
     ),
-    # Default reward for disabled chosen hunt locations (never add to itempool)
-    "DefaultChosenHuntReward": X2WOTCItemData(
-        display_name = "Regular Covert Action Reward",
-        type = "CovertActionReward"
-    ),
 }
 
 ########################################################################################################################

@@ -949,7 +949,6 @@ chosen_hunt_covert_actions: dict[str, X2WOTCLocationData] = {
         tags = {"chosen_hunt", "meet_first_chosen", "influence:0"},
         difficulty = 20.0,
         dlc = "WOTC",
-        normal_item = "DefaultChosenHuntReward"
     ),
     "ChosenHuntPt1:2": X2WOTCLocationData(
         display_name = covert_action_location_prefix + "Second Chosen Hunt 1/3",
@@ -958,7 +957,6 @@ chosen_hunt_covert_actions: dict[str, X2WOTCLocationData] = {
         tags = {"chosen_hunt", "meet_all_chosen", "influence:0"},
         difficulty = 35.0,
         dlc = "WOTC",
-        normal_item = "DefaultChosenHuntReward"
     ),
     "ChosenHuntPt1:3": X2WOTCLocationData(
         display_name = covert_action_location_prefix + "Third Chosen Hunt 1/3",
@@ -967,7 +965,6 @@ chosen_hunt_covert_actions: dict[str, X2WOTCLocationData] = {
         tags = {"chosen_hunt", "meet_all_chosen", "influence:0"},
         difficulty = 50.0,
         dlc = "WOTC",
-        normal_item = "DefaultChosenHuntReward"
     ),
     "ChosenHuntPt2:1": X2WOTCLocationData(
         display_name = covert_action_location_prefix + "First Chosen Hunt 2/3",
@@ -976,7 +973,6 @@ chosen_hunt_covert_actions: dict[str, X2WOTCLocationData] = {
         tags = {"chosen_hunt", "meet_first_chosen", "influence:1"},
         difficulty = 30.0,
         dlc = "WOTC",
-        normal_item = "DefaultChosenHuntReward"
     ),
     "ChosenHuntPt2:2": X2WOTCLocationData(
         display_name = covert_action_location_prefix + "Second Chosen Hunt 2/3",
@@ -985,7 +981,6 @@ chosen_hunt_covert_actions: dict[str, X2WOTCLocationData] = {
         tags = {"chosen_hunt", "meet_all_chosen", "influence:3"},
         difficulty = 45.0,
         dlc = "WOTC",
-        normal_item = "DefaultChosenHuntReward"
     ),
     "ChosenHuntPt2:3": X2WOTCLocationData(
         display_name = covert_action_location_prefix + "Third Chosen Hunt 2/3",
@@ -994,7 +989,6 @@ chosen_hunt_covert_actions: dict[str, X2WOTCLocationData] = {
         tags = {"chosen_hunt", "meet_all_chosen", "influence:5"},
         difficulty = 60.0,
         dlc = "WOTC",
-        normal_item = "DefaultChosenHuntReward"
     ),
     "ChosenHuntPt3:1": X2WOTCLocationData(
         display_name = covert_action_location_prefix + "First Chosen Hunt 3/3",
@@ -1003,7 +997,6 @@ chosen_hunt_covert_actions: dict[str, X2WOTCLocationData] = {
         tags = {"chosen_hunt", "meet_first_chosen", "influence:2"},
         difficulty = 40.0,
         dlc = "WOTC",
-        normal_item = "DefaultChosenHuntReward"
     ),
     "ChosenHuntPt3:2": X2WOTCLocationData(
         display_name = covert_action_location_prefix + "Second Chosen Hunt 3/3",
@@ -1012,7 +1005,6 @@ chosen_hunt_covert_actions: dict[str, X2WOTCLocationData] = {
         tags = {"chosen_hunt", "meet_all_chosen", "influence:4"},
         difficulty = 55.0,
         dlc = "WOTC",
-        normal_item = "DefaultChosenHuntReward"
     ),
     "ChosenHuntPt3:3": X2WOTCLocationData(
         display_name = covert_action_location_prefix + "Third Chosen Hunt 3/3",
@@ -1021,7 +1013,6 @@ chosen_hunt_covert_actions: dict[str, X2WOTCLocationData] = {
         tags = {"chosen_hunt", "meet_all_chosen", "influence:6"},
         difficulty = 70.0,
         dlc = "WOTC",
-        normal_item = "DefaultChosenHuntReward"
     ),
 }
 
