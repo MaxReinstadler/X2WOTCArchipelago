@@ -58,7 +58,7 @@ item_id_to_key = {
 item_groups: dict[str, set[str]] = {}
 
 # Item type groups
-item_types = set()
+item_types: set[str] = set()
 for item_data in item_table.values():
     if item_data.id and "example" not in item_data.type.lower():
         item_types.add(item_data.type)
@@ -70,7 +70,7 @@ for item_type in item_types:
     }
 
 # Item tag groups
-item_tags = set()
+item_tags: set[str] = set()
 for item_data in item_table.values():
     if item_data.id:
         item_tags.update({
@@ -114,19 +114,21 @@ class ItemManager:
         self.item_table: dict[str, X2WOTCItemData] = deepcopy(item_table)
         self.locked: bool = False
 
-        self.resource_items = set(resource_item_table.keys())
-        self.weapon_mod_items = set(weapon_mod_item_table.keys())
-        self.pcs_items = set(pcs_item_table.keys())
-        self.staff_items = set(staff_item_table.keys())
-        self.trap_items = set(trap_item_table.keys())
-        self.nothing_items = set(nothing_items.keys())
+        self.resource_items: set[str] = set(resource_item_table.keys())
+        self.weapon_mod_items: set[str] = set(weapon_mod_item_table.keys())
+        self.pcs_items: set[str] = set(pcs_item_table.keys())
+        self.staff_items: set[str] = set(staff_item_table.keys())
+        self.trap_items: set[str] = set(trap_item_table.keys())
+        self.nothing_items: set[str] = set(nothing_items.keys())
 
         self.item_count: dict[str, int] = {}
         self.real_count: dict[str, int] = {}
         self.num_items: int = 0
 
+        # NOTE: not all non-filler items define normal_location,
+        # those that don't must be added in generate_early
         for item_name, item_data in self.item_table.items():
-            if item_data.normal_location is None:  # Progressive and filler/trap items (and chosen hunt rewards)
+            if item_data.normal_location is None:
                 self.item_count[item_name] = 0
                 self.real_count[item_name] = 0
             else:
@@ -237,12 +239,22 @@ class ItemManager:
             self.set_item_count("HunterStronghold", 1)
             self.set_item_count("WarlockStronghold", 1)
 
+    def get_nothing_item(self, random: Random) -> str:
+        if not len(self.nothing_items):
+            return "Nothing"
+        return random.choice(list(self.nothing_items))
+
     def get_filler_item_name(self, random: Random) -> str:
         filler_items = list(
-            self.resource_items |
-            self.weapon_mod_items |
-            self.staff_items
+            self.resource_items
+            | self.weapon_mod_items
+            | self.pcs_items
+            | self.staff_items
         )
+
+        if not len(filler_items):
+            nothing_item = self.get_nothing_item(random)
+            return self.item_table[nothing_item].display_name
 
         filler_item = random.choice(filler_items)
         return self.item_table[filler_item].display_name
@@ -259,37 +271,43 @@ class ItemManager:
             nothing_share: int,
             random: Random
         ):
-        total_share = sum([
+        items_per_share = num_filler_items / max(1, sum([
             resource_share,
             weapon_mod_share,
             pcs_share,
             staff_share,
             trap_share,
             nothing_share,
-        ])
+        ]))
         num_names_pairs = [
-            (round((num_filler_items / total_share) * resource_share), list(self.resource_items)),
-            (round((num_filler_items / total_share) * weapon_mod_share), list(self.weapon_mod_items)),
-            (round((num_filler_items / total_share) * pcs_share), list(self.pcs_items)),
-            (round((num_filler_items / total_share) * staff_share), list(self.staff_items)),
-            (round((num_filler_items / total_share) * trap_share), list(self.trap_items)),
-            (round((num_filler_items / total_share) * nothing_share), list(self.nothing_items)),
+            # Sort by priority for filling missing items (due to rounding errors, or in case all shares are 0)
+            (round(items_per_share * nothing_share), list(self.nothing_items)),
+            (round(items_per_share * resource_share), list(self.resource_items)),
+            (round(items_per_share * weapon_mod_share), list(self.weapon_mod_items)),
+            (round(items_per_share * pcs_share), list(self.pcs_items)),
+            (round(items_per_share * staff_share), list(self.staff_items)),
+            (round(items_per_share * trap_share), list(self.trap_items)),
         ]
 
-        # Adjust largest share to fill any rounding errors
+        # Adjust largest share to fill missing items, respecting priority
+        max_num = max([n for n, _ in num_names_pairs])
+        missing = num_filler_items - sum([n for n, _ in num_names_pairs])
         for index, (num, names) in enumerate(num_names_pairs):
-            max_num = max([n for n, _ in num_names_pairs])
             if num == max_num:
-                num += num_filler_items - sum([n for n, _ in num_names_pairs])
-                num_names_pairs[index] = (num, names)
+                num_names_pairs[index] = (num + missing, names)
                 break
 
         # Add specified number of each type of filler/trap
         for (num, names) in num_names_pairs:
             for _ in range(num):
-                item_name = random.choice(names)
-                if self.item_table[item_name].classification & IC.useful:
-                    max_useful_filler -= 1
-                    if max_useful_filler < 0:
-                        item_name = random.choice(list(self.nothing_items))
-                self.add_item(item_name)
+                if len(names):
+                    filler_item = random.choice(names)
+
+                    # Don't add more useful items than allowed
+                    if self.item_table[filler_item].classification & IC.useful:
+                        max_useful_filler -= 1
+                        if max_useful_filler < 0:
+                            filler_item = self.get_nothing_item(random)
+                else:
+                    filler_item = self.get_nothing_item(random)
+                self.add_item(filler_item)

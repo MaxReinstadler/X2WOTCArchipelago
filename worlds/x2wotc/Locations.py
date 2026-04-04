@@ -44,7 +44,7 @@ loc_id_to_key = {
 loc_groups: dict[str, set[str]] = {}
 
 # Location type groups
-loc_types = set()
+loc_types: set[str] = set()
 for loc_data in location_table.values():
     if loc_data.id and "example" not in loc_data.type.lower():
         loc_types.add(loc_data.type)
@@ -56,7 +56,7 @@ for loc_type in loc_types:
     }
 
 # Location tag groups
-loc_tags = set()
+loc_tags: set[str] = set()
 for loc_data in location_table.values():
     if loc_data.id:
         loc_tags.update({
