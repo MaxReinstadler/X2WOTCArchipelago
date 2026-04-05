@@ -23,7 +23,7 @@ from .EnemyRando import EnemyRandoManager
 from .Items import item_table, item_display_name_to_key
 from .Options import HintResearchProjects
 from .Proxy import run_proxy
-from .Version import client_version, minimum_world_version, minimum_mod_version
+from .Version import CLIENT_NAME, GAME_NAME, client_version, minimum_mod_version, minimum_world_version
 
 from .mods import mods_data, mod_names
 
@@ -33,11 +33,17 @@ class X2WOTCCommandProcessor(ClientCommandProcessor):
 
     def _cmd_version(self) -> bool:
         """Print client version info."""
-        self.output(
-            f"Client version: {client_version}\n"
-            f"Minimum world version: {minimum_world_version}\n"
-            f"Minimum mod version: {minimum_mod_version}"
-        )
+        self.output(f"Client version: {client_version}")
+        self.output(f"Minimum world version: {minimum_world_version}")
+        self.output(f"Minimum mod version: {minimum_mod_version}")
+
+        if self.ctx.connected.is_set():
+            world_version = self.ctx.slot_data["world_version"]
+            self.output(f"Connected world version: {world_version}")
+            self.output(f"Connected mod version: {self.ctx.mod_version}")
+        else:
+            self.output("Connect to a slot for more information.")
+
         return True
 
     def _cmd_proxy(self, port: str = "") -> bool:
@@ -164,7 +170,7 @@ class X2WOTCCommandProcessor(ClientCommandProcessor):
 
 class X2WOTCContext(CommonContext):
     command_processor = X2WOTCCommandProcessor
-    game = "XCOM 2 War of the Chosen"
+    game = GAME_NAME
     items_handling = 0b111  # full remote
     tags = {"AP"}
 
@@ -200,6 +206,15 @@ class X2WOTCContext(CommonContext):
     slot_data: dict[str, Any]
     active_mods: list[str]
 
+    enemy_rando_manager: EnemyRandoManager
+
+    config_file: str | None
+    spoiler_file: str | None
+    encounters_file: str | None
+    encounter_lists_file: str | None
+    mod_version: str | None
+    mod_minimum_client_version: str | None
+
     def __init__(self, server_address: str | None, password: str | None):
         super().__init__(server_address, password)
         self.locations_checked = set()
@@ -216,50 +231,12 @@ class X2WOTCContext(CommonContext):
 
         self.enemy_rando_manager = EnemyRandoManager()
 
-        self.set_config_paths()
-
-    def set_config_paths(self):
-        manual_folders = ["WOTCArchipelago", "3281191663"]
-        manual_exts = [
-            f"/XCom2-WarOfTheChosen/XComGame/Mods/{manual_folder}/Config/XComWOTCArchipelago.ini"
-            for manual_folder in manual_folders
-        ]
-        workshop_ext = "/content/268500/3281191663/Config/XComWOTCArchipelago.ini"  # after /steamapps/workshop
-
-        # Check for the mod config file in possible manual installation locations first,
-        # then fall back to the default Steam workshop installation path if it doesn't exist
-        self.game_path: str = settings.get_settings()["x2wotc_options"]["game_path"]
-        for manual_ext in manual_exts:
-            self.config_file = self.game_path + manual_ext
-            if os.path.isfile(self.config_file):
-                break
-        else:
-            self.workshop_path = self.game_path.split("/common/")[0] + "/workshop"
-            self.config_file = self.workshop_path + workshop_ext
-
-        # If this also fails, ask for a potential foreign Steam workshop path
-        if not os.path.isfile(self.config_file):
-            self.workshop_path: str = settings.get_settings()["x2wotc_options"]["workshop_path"]
-            self.config_file = self.workshop_path + workshop_ext
-
-        # If this STILL fails, raise an error
-        if not os.path.isfile(self.config_file):
-            raise FileNotFoundError(
-                "X2WOTCClient: Config file not found in game folder or Steam workshop folder. "
-                "Please check the game_path setting in your host.yaml and make sure the mod is installed."
-            )
-
-        self.spoiler_file = self.config_file.replace("XComWOTCArchipelago.ini", "XComWOTCArchipelago_Spoiler.ini")
-        self.encounters_file = self.config_file.replace("XComWOTCArchipelago.ini", "XComEncounters.ini")
-        self.encounter_lists_file = self.config_file.replace("XComWOTCArchipelago.ini", "XComEncounterLists.ini")
-
-        if (not os.path.isfile(self.spoiler_file) or
-            not os.path.isfile(self.encounters_file) or
-            not os.path.isfile(self.encounter_lists_file)):
-            raise FileNotFoundError(
-                "X2WOTCClient: Some but not all config files found. This is most likely due to a version mismatch. "
-                "Please install the required mod version as indicated by the /version client command."
-            )
+        self.config_file = None
+        self.spoiler_file = None
+        self.encounters_file = None
+        self.encounter_lists_file = None
+        self.mod_version = None
+        self.mod_minimum_client_version = None
 
     async def server_auth(self, password_requested: bool = False):
         if password_requested and not self.password:
@@ -269,24 +246,29 @@ class X2WOTCContext(CommonContext):
 
     async def disconnect(self, allow_autoreconnect: bool = False):
         await super().disconnect(allow_autoreconnect)
+        if self.connected.is_set():
+            self.reset_config()
+        self.connected.clear()
+        self.scouted.clear()
         self.locations_scouted = set()
         self.slot_data = {}
         self.active_mods = []
-        self.connected.clear()
-        self.scouted.clear()
-        self.reset_config()
 
     def on_package(self, cmd: str, args: dict):
         super().on_package(cmd, args)
 
         if cmd == "Connected":
             self.slot_data = args["slot_data"]
-            if not self.validate_versions():
+            if not self.validate_world_version():
                 async_start(self.disconnect())
                 return
 
             self.active_mods = sorted(self.slot_data.get("active_mods", []))
             self.enemy_rando_manager.set_enemy_shuffle(self.slot_data["enemy_shuffle"])
+            if not self.validate_mod_config_and_version():
+                async_start(self.disconnect())
+                return
+
             self.connected.set()
             self.patch_config()
             self.update_config()
@@ -315,16 +297,13 @@ class X2WOTCContext(CommonContext):
                 ]
 
                 if progressive_item_names:
-                    self.print_info(
-                        "Try hinting one of the following items instead:"
-                        f"\n- {"\n- ".join(progressive_item_names)}"
-                    )
+                    self.print_info("Try hinting one of the following items instead:")
+                    for progressive_item_name in progressive_item_names:
+                        self.print_info(f"- {progressive_item_name}")
 
-    # Client only compares world and client versions;
-    # mod and client versions are compared by the mod
-    def validate_versions(self) -> bool:
+    def validate_world_version(self) -> bool:
         world_version = self.slot_data["world_version"]
-        minimum_client_version = self.slot_data["minimum_client_version"]
+        world_minimum_client_version = self.slot_data["minimum_client_version"]
 
         if tuplize_version(world_version) < tuplize_version(minimum_world_version):
             self.print_error(
@@ -335,10 +314,10 @@ class X2WOTCContext(CommonContext):
             )
             return False
 
-        if tuplize_version(client_version) < tuplize_version(minimum_client_version):
+        if tuplize_version(client_version) < tuplize_version(world_minimum_client_version):
             self.print_error(
                 f"World version {world_version} requires "
-                f"at least client version {minimum_client_version}, "
+                f"at least client version {world_minimum_client_version}, "
                 f"but client is version {client_version}. "
                 "Please update to a newer version of the client."
             )
@@ -346,9 +325,92 @@ class X2WOTCContext(CommonContext):
 
         return True
 
+    def validate_mod_config_and_version(self) -> bool:
+        manual_folders = ["WOTCArchipelago", "3281191663"]
+        manual_exts = [
+            f"/XCom2-WarOfTheChosen/XComGame/Mods/{manual_folder}/Config/XComWOTCArchipelago.ini"
+            for manual_folder in manual_folders
+        ]
+        workshop_ext = "/content/268500/3281191663/Config/XComWOTCArchipelago.ini"  # after /steamapps/workshop
+
+        # Check for the mod config file in possible manual installation locations first,
+        # then fall back to the default Steam workshop installation path if it doesn't exist
+        game_path: str = settings.get_settings()["x2wotc_options"]["game_path"]
+        for manual_ext in manual_exts:
+            self.config_file = game_path + manual_ext
+            if os.path.isfile(self.config_file):
+                break
+        else:
+            workshop_path: str = game_path.split("/common/")[0] + "/workshop"
+            self.config_file = workshop_path + workshop_ext
+
+        # If this also fails, ask for a potential foreign Steam workshop path
+        if not os.path.isfile(self.config_file):
+            workshop_path: str = settings.get_settings()["x2wotc_options"]["workshop_path"]
+            self.config_file = workshop_path + workshop_ext
+
+        # If this STILL fails, give up and print an error
+        if not os.path.isfile(self.config_file):
+            self.print_error(
+                "Config file not found in game folder or Steam workshop folder. "
+                "Please check the game_path setting in your host.yaml and make sure the mod is installed."
+            )
+            return False
+
+        self.spoiler_file = self.config_file.replace("XComWOTCArchipelago.ini", "XComWOTCArchipelago_Spoiler.ini")
+        self.encounters_file = self.config_file.replace("XComWOTCArchipelago.ini", "XComEncounters.ini")
+        self.encounter_lists_file = self.config_file.replace("XComWOTCArchipelago.ini", "XComEncounterLists.ini")
+
+        if (not os.path.isfile(self.spoiler_file) or
+            not os.path.isfile(self.encounters_file) or
+            not os.path.isfile(self.encounter_lists_file)):
+            self.print_error(
+                "Some but not all config files found. This is most likely due to a version mismatch. "
+                "Please install the required mod version as indicated by the /version client command."
+            )
+            return False
+
+        # Retrieve mod version info from config file
+        with open(self.config_file, "r") as file:
+            config = file.read()
+
+        match_mod_version = re.search(f"\nModVersion={r"(?P<mod_version>\S*)"}", config)
+        match_minimum_client_version = re.search(f"\nMinimumClientVersion={r"(?P<minimum_client_version>\S*)"}", config)
+
+        if not match_mod_version or not match_minimum_client_version:
+            self.print_error(
+                "Config file missing version information, most likely due to a corrupted mod installation. "
+                "Please reinstall the XCOM 2 WotC Archipelago Multiworld mod."
+            )
+            return False
+
+        self.mod_version = match_mod_version["mod_version"]
+        self.mod_minimum_client_version = match_minimum_client_version["minimum_client_version"]
+
+        # Validate mod version
+        if tuplize_version(self.mod_version) < tuplize_version(minimum_mod_version):
+            self.print_error(
+                f"Client version {client_version} requires "
+                f"at least mod version {minimum_mod_version}, "
+                f"but mod is version {self.mod_version}. "
+                "Please update to a newer version of the mod."
+            )
+            return False
+
+        if tuplize_version(client_version) < tuplize_version(self.mod_minimum_client_version):
+            self.print_error(
+                f"Mod version {self.mod_version} requires "
+                f"at least client version {self.mod_minimum_client_version}, "
+                f"but client is version {client_version}. "
+                "Please revert to an older version of the mod."
+            )
+            return False
+
+        return True
+
     def make_gui(self):
         ui = super().make_gui()
-        ui.base_title = "Archipelago XCOM 2 War of the Chosen Client"
+        ui.base_title = CLIENT_NAME
         return ui
 
     def print_error(self, text: str):
@@ -367,7 +429,8 @@ class X2WOTCContext(CommonContext):
         if self.proxy_task:
             self.proxy_task.cancel()
         self.proxy_task = asyncio.create_task(run_proxy(self), name="proxy")
-        self.update_config({"ProxyPort": str(self.proxy_port)})
+        if self.connected.is_set():
+            self.update_config({"ProxyPort": str(self.proxy_port)})
 
     def patch_config(self):
         CLASS_PREFIX = "[WOTCArchipelago."
@@ -416,6 +479,7 @@ class X2WOTCContext(CommonContext):
             config_values = {
                 "ClientVersion": client_version,
                 "MinimumModVersion": minimum_mod_version,
+                "WorldVersion": self.slot_data["world_version"],
                 "ProxyPort": str(self.proxy_port),
                 "bRequirePsiGate": str("PsiGateObjective" in campaign_completion_requirements),
                 "bRequireStasisSuit": str("StasisSuitObjective" in campaign_completion_requirements),
@@ -443,15 +507,8 @@ class X2WOTCContext(CommonContext):
         with open(self.config_file, "r") as file:
             config = file.read()
 
-        if "DEF_AP_GEN_ID" not in config:
-            self.print_error(
-                "X2WOTCClient: Config file missing required key, most likely due to a corrupted mod installation. "
-                "Please reinstall the XCOM 2 WotC Archipelago Multiworld mod."
-            )
-            return
-
         for key, value in config_values.items():
-            config = re.sub(f"\n{re.escape(key)}=(\S*)", f"\n{key}={value}", config)
+            config = re.sub(f"\n{re.escape(key)}={r"(\S*)"}", f"\n{key}={value}", config)
 
         with open(self.config_file, "w") as file:
             file.write(config)
@@ -460,6 +517,7 @@ class X2WOTCContext(CommonContext):
         self.update_config({
             "ClientVersion": "",
             "MinimumModVersion": "",
+            "WorldVersion": "",
             "DEF_AP_GEN_ID": "",
         })
 

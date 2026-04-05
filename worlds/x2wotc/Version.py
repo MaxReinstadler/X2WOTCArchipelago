@@ -1,3 +1,6 @@
+GAME_NAME = "XCOM 2 War of the Chosen"
+CLIENT_NAME = f"{GAME_NAME} Client"
+
 # world_version is defined in archipelago.json manifest file
 minimum_client_version = "0.10.9"
 client_version = "0.10.10"

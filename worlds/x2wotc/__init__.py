@@ -16,13 +16,9 @@ from .Options import AlienHuntersDLC, ChosenHuntSanity, ChosenWeaponFragments, E
 from .Options import x2wotc_option_groups
 from .Regions import RegionManager
 from .Rules import RuleManager
-from .Version import minimum_client_version
+from .Version import CLIENT_NAME, GAME_NAME, minimum_client_version
 
 from .mods import mods_data
-
-
-GAME_NAME = "XCOM 2 War of the Chosen"
-CLIENT_NAME = f"{GAME_NAME} Client"
 
 
 def launch_client(*args):
@@ -54,12 +50,13 @@ class X2WOTCWeb(WebWorld):
 
 class X2WOTCSettings(Group):
     class GamePath(UserFolderPath):
-        """Path to your installation of XCOM 2, most likely ending in `/XCOM 2`"""
+        """Path to your installation of XCOM 2, most likely ending in `/XCOM 2`."""
 
         description = "XCOM 2 installation folder"
-    
+
     class WorkshopPath(UserFolderPath):
-        """Path to your Steam workshop folder, most likely ending in `/steamapps/workshop`"""
+        """Path to your Steam workshop folder, most likely ending in `/steamapps/workshop`.
+        This is only required if the mod is installed in a different Steam archive to the game (e.g. on another drive)."""
 
         description = "Steam workshop folder"
 
