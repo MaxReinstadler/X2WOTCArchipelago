@@ -597,7 +597,8 @@ def launch(*args):
 
         await ctx.exit_event.wait()
         await ctx.proxy_task
-        ctx.reset_config()
+        if ctx.connected.is_set():
+            ctx.reset_config()
         await ctx.shutdown()
 
     import colorama
