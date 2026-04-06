@@ -324,4 +324,4 @@ async def run_proxy(local_ctx: "X2WOTCContext"):
         await runner.cleanup()
         scout_task.cancel()
         await scout_task
-        ctx.print_info("Proxy: Server stopped")
+        logger.debug("Proxy: Server stopped")
