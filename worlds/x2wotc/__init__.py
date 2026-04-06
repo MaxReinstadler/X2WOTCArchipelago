@@ -271,12 +271,12 @@ class X2WOTCWorld(World):
         self.item_manager.add_filler_items(
             num_filler_items,
             max_useful_filler,
-            self.options.resource_share,
-            self.options.weapon_mod_share,
-            self.options.pcs_share,
-            self.options.staff_share,
-            self.options.trap_share,
-            self.options.nothing_share,
+            self.options.resource_share.value,
+            self.options.weapon_mod_share.value,
+            self.options.pcs_share.value,
+            self.options.staff_share.value,
+            self.options.trap_share.value,
+            self.options.nothing_share.value,
             self.random
         )
 
@@ -317,7 +317,15 @@ class X2WOTCWorld(World):
                 mod_data.set_rules(self)
 
     def get_filler_item_name(self) -> str:
-        return self.item_manager.get_filler_item_name(self.random)
+        return self.item_manager.get_filler_item_name(
+            self.options.resource_share.value,
+            self.options.weapon_mod_share.value,
+            self.options.pcs_share.value,
+            self.options.staff_share.value,
+            self.options.trap_share.value,
+            self.options.nothing_share.value,
+            self.random
+        )
 
     # Invalidate power cache on collect/remove
     def collect(self, state: CollectionState, item: Item) -> bool:

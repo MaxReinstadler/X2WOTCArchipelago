@@ -240,24 +240,37 @@ class ItemManager:
             self.set_item_count("WarlockStronghold", 1)
 
     def get_nothing_item(self, random: Random) -> str:
-        if not len(self.nothing_items):
-            return "Nothing"
-        return random.choice(list(self.nothing_items))
+        if self.nothing_items:
+            return random.choice(sorted(self.nothing_items))
+        return "Nothing"
 
-    def get_filler_item_name(self, random: Random) -> str:
-        filler_items = list(
-            self.resource_items
-            | self.weapon_mod_items
-            | self.pcs_items
-            | self.staff_items
+    def get_filler_item_name(
+            self,
+            resource_share: int,
+            weapon_mod_share: int,
+            pcs_share: int,
+            staff_share: int,
+            trap_share: int,
+            nothing_share: int,
+            random: Random
+        ) -> str:
+        filler_item_sets = (
+            [self.resource_items] * resource_share
+            + [self.weapon_mod_items] * weapon_mod_share
+            + [self.pcs_items] * pcs_share
+            + [self.staff_items] * staff_share
+            + [self.trap_items] * trap_share
+            + [self.nothing_items] * nothing_share
         )
 
-        if not len(filler_items):
-            nothing_item = self.get_nothing_item(random)
-            return self.item_table[nothing_item].display_name
+        if filler_item_sets:
+            filler_items = sorted(random.choice(filler_item_sets))
+            if filler_items:
+                filler_item = random.choice(filler_items)
+                return self.item_table[filler_item].display_name
 
-        filler_item = random.choice(filler_items)
-        return self.item_table[filler_item].display_name
+        nothing_item = self.get_nothing_item(random)
+        return self.item_table[nothing_item].display_name
 
     def add_filler_items(
             self,
@@ -281,12 +294,12 @@ class ItemManager:
         ]))
         num_names_pairs = [
             # Sort by priority for filling missing items (due to rounding errors, or in case all shares are 0)
-            (round(items_per_share * nothing_share), list(self.nothing_items)),
-            (round(items_per_share * resource_share), list(self.resource_items)),
-            (round(items_per_share * weapon_mod_share), list(self.weapon_mod_items)),
-            (round(items_per_share * pcs_share), list(self.pcs_items)),
-            (round(items_per_share * staff_share), list(self.staff_items)),
-            (round(items_per_share * trap_share), list(self.trap_items)),
+            (round(items_per_share * nothing_share), sorted(self.nothing_items)),
+            (round(items_per_share * resource_share), sorted(self.resource_items)),
+            (round(items_per_share * weapon_mod_share), sorted(self.weapon_mod_items)),
+            (round(items_per_share * pcs_share), sorted(self.pcs_items)),
+            (round(items_per_share * staff_share), sorted(self.staff_items)),
+            (round(items_per_share * trap_share), sorted(self.trap_items)),
         ]
 
         # Adjust largest share to fill missing items, respecting priority
@@ -300,7 +313,7 @@ class ItemManager:
         # Add specified number of each type of filler/trap
         for (num, names) in num_names_pairs:
             for _ in range(num):
-                if len(names):
+                if names:
                     filler_item = random.choice(names)
 
                     # Don't add more useful items than allowed
