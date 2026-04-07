@@ -2,7 +2,7 @@ from aiohttp import web
 import asyncio
 from typing import TYPE_CHECKING
 
-from CommonClient import CommonContext, NetworkItem, NetworkSlot, logger
+from CommonClient import NetworkItem, NetworkSlot, logger
 from NetUtils import ClientStatus
 
 if TYPE_CHECKING:
