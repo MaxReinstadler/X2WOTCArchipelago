@@ -55,14 +55,6 @@ class Goal(Choice):
     option_chosen_stronghold_3 = 4
     default = 0
 
-    value_to_location: dict[int, str] = {
-        0: "Victory",
-        1: "Broadcast",
-        2: "Stronghold1",
-        3: "Stronghold2",
-        4: "Stronghold3",
-    }
-
 
 class CampaignCompletionRequirements(OptionSet):
     """Require these objectives to be completed for the final mission to be unlocked.

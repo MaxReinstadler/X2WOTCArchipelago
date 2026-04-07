@@ -19,11 +19,12 @@ except ModuleNotFoundError:
 if TYPE_CHECKING:
     from CommonClient import CommonContext, ClientCommandProcessor
 
+from .Constants import CLIENT_NAME, GAME_NAME
 from .EnemyRando import EnemyRandoManager
 from .Items import item_table, item_display_name_to_key
 from .Options import HintResearchProjects
 from .Proxy import run_proxy
-from .Version import CLIENT_NAME, GAME_NAME, client_version, minimum_mod_version, minimum_world_version
+from .Version import client_version, client_minimum_mod_version, client_minimum_world_version
 
 from .mods import mods_data, mod_names
 
@@ -34,8 +35,8 @@ class X2WOTCCommandProcessor(ClientCommandProcessor):
     def _cmd_version(self) -> bool:
         """Print client version info."""
         self.output(f"Client version: {client_version}")
-        self.output(f"Minimum world version: {minimum_world_version}")
-        self.output(f"Minimum mod version: {minimum_mod_version}")
+        self.output(f"Minimum world version: {client_minimum_world_version}")
+        self.output(f"Minimum mod version: {client_minimum_mod_version}")
 
         if self.ctx.connected.is_set():
             world_version = self.ctx.slot_data["world_version"]
@@ -305,10 +306,10 @@ class X2WOTCContext(CommonContext):
         world_version = self.slot_data["world_version"]
         world_minimum_client_version = self.slot_data["minimum_client_version"]
 
-        if tuplize_version(world_version) < tuplize_version(minimum_world_version):
+        if tuplize_version(world_version) < tuplize_version(client_minimum_world_version):
             self.print_error(
                 f"Client version {client_version} requires "
-                f"at least world version {minimum_world_version}, "
+                f"at least world version {client_minimum_world_version}, "
                 f"but world was generated with version {world_version}. "
                 "Please revert to an older version of the client."
             )
@@ -388,10 +389,10 @@ class X2WOTCContext(CommonContext):
         self.mod_minimum_client_version = match_minimum_client_version["minimum_client_version"]
 
         # Validate mod version
-        if tuplize_version(self.mod_version) < tuplize_version(minimum_mod_version):
+        if tuplize_version(self.mod_version) < tuplize_version(client_minimum_mod_version):
             self.print_error(
                 f"Client version {client_version} requires "
-                f"at least mod version {minimum_mod_version}, "
+                f"at least mod version {client_minimum_mod_version}, "
                 f"but mod is version {self.mod_version}. "
                 "Please update to a newer version of the mod."
             )
@@ -478,7 +479,7 @@ class X2WOTCContext(CommonContext):
             disable_covert_action_risks = self.slot_data.get("disable_covert_action_risks", [])
             config_values = {
                 "ClientVersion": client_version,
-                "MinimumModVersion": minimum_mod_version,
+                "MinimumModVersion": client_minimum_mod_version,
                 "WorldVersion": self.slot_data["world_version"],
                 "ProxyPort": str(self.proxy_port),
                 "bRequirePsiGate": str("PsiGateObjective" in campaign_completion_requirements),

@@ -3,7 +3,6 @@ from logging import warning
 import pkgutil
 from typing import NamedTuple, Callable, TYPE_CHECKING
 
-from BaseClasses import MultiWorld
 from Options import Option
 
 if TYPE_CHECKING:
@@ -17,7 +16,7 @@ class X2WOTCModData(NamedTuple):
     rule_priority: float = 0.0
     items: dict[str, X2WOTCItemData] = {}
     locations: dict[str, X2WOTCLocationData] = {}
-    set_rules: Callable[[MultiWorld, int], None] | None = None
+    set_rules: Callable[["X2WOTCWorld"], None] | None = None
     options: list[tuple[str, type[Option]]] = []
     generate_early: Callable[["X2WOTCWorld"], None] | None = None
     config: dict[str, str] = {}
@@ -34,8 +33,8 @@ mod_options: list[tuple[str, type[Option]]] = []
 for loader, module_name, ispkg in pkgutil.iter_modules(__path__):
     try:
         module = importlib.import_module(f".{module_name}", __name__)
-    except ImportError:
-        warning(f"X2WOTC: Failed to import module mods/{module_name}")
+    except ImportError as e:
+        warning(f"X2WOTC: Failed to import module mods/{module_name}, {e}")
         continue
 
     mods_data.append(X2WOTCModData(

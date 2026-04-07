@@ -7,9 +7,10 @@ from worlds.generic.Rules import add_rule, set_rule
 
 if TYPE_CHECKING:
     from . import X2WOTCWorld
-from .Items import ItemManager
-from .Locations import LocationManager
-from .Options import Goal, X2WOTCOptions
+    from .Items import ItemManager
+    from .Locations import LocationManager
+    from .Options import X2WOTCOptions
+from .Constants import GOAL_VALUE_TO_EVENT
 
 
 # Cache per-state current power values
@@ -24,9 +25,9 @@ class X2WOTCState(LogicMixin):
 
 class RuleManager:
     def __init__(self, world: "X2WOTCWorld"):
-        self.item_manager: ItemManager = world.item_manager
-        self.loc_manager: LocationManager = world.loc_manager
-        self.options: X2WOTCOptions = world.options
+        self.item_manager: "ItemManager" = world.item_manager
+        self.loc_manager: "LocationManager" = world.loc_manager
+        self.options: "X2WOTCOptions" = world.options
         self.multiworld: MultiWorld = world.multiworld
         self.player: int = world.player
 
@@ -278,16 +279,7 @@ class RuleManager:
 
     # Victory
     def has_won(self, state: CollectionState) -> bool:
-        return (   (self.options.goal == Goal.option_alien_fortress
-                    and self.has_item_or_impossible(state, "Victory"))
-                or (self.options.goal == Goal.option_network_tower
-                    and self.has_item_or_impossible(state, "Broadcast"))
-                or (self.options.goal == Goal.option_chosen_stronghold_1
-                    and self.has_item_or_impossible(state, "Stronghold1"))
-                or (self.options.goal == Goal.option_chosen_stronghold_2
-                    and self.has_item_or_impossible(state, "Stronghold2"))
-                or (self.options.goal == Goal.option_chosen_stronghold_3
-                    and self.has_item_or_impossible(state, "Stronghold3")))
+        return self.has_item_or_impossible(state, GOAL_VALUE_TO_EVENT[self.options.goal.value])
 
     #==================================================================================================================#
     #                                                 SET RULES                                                        #
