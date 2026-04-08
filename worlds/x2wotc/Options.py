@@ -361,11 +361,17 @@ class ReplaceFactionHeroes(Toggle):
 
 
 class DisableDayOneTraps(Toggle):
-    """Disable traps when they are received during the first day of a campaign.
-    One use for this is if you wish to retire traps received during previous runs after a restart.
+    """Disable traps received during the first day of a campaign.
     Can be changed in-game via Mod Config Menu."""
     display_name = "Disable Day One Traps"
-    default = False
+    default = True
+
+
+class DisableTurnOneTraps(Toggle):
+    """Disable traps received during (or before) the first turn of a mission.
+    Can be changed in-game via Mod Config Menu."""
+    display_name = "Disable Turn One Traps"
+    default = True
 
 
 class ActiveMods(OptionSet):
@@ -430,6 +436,7 @@ class X2WOTCOptions(PerGameCommonOptions):
     refund_spark_costs: RefundSPARKCosts
     replace_faction_heroes: ReplaceFactionHeroes
     disable_day_one_traps: DisableDayOneTraps
+    disable_turn_one_traps: DisableTurnOneTraps
 
     # Mod options
     active_mods: ActiveMods
@@ -506,6 +513,7 @@ x2wotc_option_groups: list[OptionGroup] = [
             RefundSPARKCosts,
             ReplaceFactionHeroes,
             DisableDayOneTraps,
+            DisableTurnOneTraps,
         ]
     ),
     OptionGroup(

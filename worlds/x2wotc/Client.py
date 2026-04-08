@@ -502,6 +502,7 @@ class X2WOTCContext(CommonContext):
                 "DEF_REFUND_SPARK_COST": str(self.slot_data.get("refund_spark_costs", False)),
                 "DEF_REPLACE_FACTION_HERO": str(self.slot_data.get("replace_faction_heroes", False)),
                 "DEF_NO_STARTING_TRAPS": str(self.slot_data.get("disable_day_one_traps", False)),
+                "DEF_NO_STARTING_TRAPS_TACTICAL": str(self.slot_data.get("disable_turn_one_traps", False)),
             }
 
         with open(self.config_file, "r") as file:
