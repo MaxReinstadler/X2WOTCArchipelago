@@ -27,7 +27,7 @@ class AlienHuntersDLC(Choice):
     option_no_integrated_dlc = 1
     option_no_alien_rulers = 2
     option_none = 3
-    default = 3
+    default = option_none
 
 
 class ShensLastGiftDLC(Toggle):
@@ -53,7 +53,7 @@ class Goal(Choice):
     option_chosen_stronghold_1 = 2
     option_chosen_stronghold_2 = 3
     option_chosen_stronghold_3 = 4
-    default = 0
+    default = option_alien_fortress
 
 
 class CampaignCompletionRequirements(OptionSet):
@@ -101,7 +101,7 @@ class ChosenHuntSanity(Choice):
     option_off = 0
     option_separate = 1
     option_progressive = 2
-    default = 0
+    default = option_off
 
 
 class ProgressiveItems(OptionSet):
@@ -136,7 +136,7 @@ class ChosenWeaponFragments(Choice):
     option_off = 0
     option_two = 1
     option_three = 2
-    default = 0
+    default = option_off
 
 
 class EarlyProvingGround(Toggle):
@@ -212,7 +212,7 @@ class EnemyPlandoPreset(Choice):
     option_advent_only = 1
     option_aliens_only = 2
     option_separate = 3
-    default = 0
+    default = option_custom
 
 
 class EnemyPlando(OptionDict):
@@ -256,7 +256,7 @@ class HintResearchProjects(Choice):
     option_off = 0
     option_partial = 1
     option_full = 2
-    default = 1
+    default = option_partial
 
 
 class SkipMissionTypes(OptionSet):
