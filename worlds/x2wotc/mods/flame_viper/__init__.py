@@ -1,11 +1,11 @@
 from BaseClasses import ItemClassification
 
-from worlds.x2wotc.ItemData import X2WOTCItemData, get_new_item_id, tech_item_prefix
+from worlds.x2wotc.ItemData import X2WOTCItemData, TECH_ITEM_PREFIX, get_new_item_id
 from worlds.x2wotc.LocationData import (
     X2WOTCLocationData,
-    get_new_location_id,
-    tech_location_prefix,
-    enemy_kill_location_prefix
+    TECH_LOCATION_PREFIX,
+    ENEMY_KILL_LOCATION_PREFIX,
+    get_new_location_id
 )
 
 
@@ -14,7 +14,7 @@ name = "Flame Viper - WotC"
 
 items: dict[str, X2WOTCItemData] = {
     "Autopsy_AshFlameViperCompleted": X2WOTCItemData(
-        display_name = tech_item_prefix + "Flame Viper Autopsy",
+        display_name = TECH_ITEM_PREFIX + "Flame Viper Autopsy",
         id = get_new_item_id(),
         classification = ItemClassification.progression,
         layer = "Strategy",
@@ -28,7 +28,7 @@ items: dict[str, X2WOTCItemData] = {
 # Electing not to add ammo checks because they require specific experimental ammo to build which involves RNG
 locations: dict[str, X2WOTCLocationData] = {
     "Autopsy_AshFlameViper": X2WOTCLocationData(
-        display_name = tech_location_prefix + "Flame Viper Autopsy",
+        display_name = TECH_LOCATION_PREFIX + "Flame Viper Autopsy",
         id = get_new_location_id(),
         layer = "Strategy",
         type = "Tech",
@@ -37,7 +37,7 @@ locations: dict[str, X2WOTCLocationData] = {
         normal_item = "Autops_AshFlameViperCompleted"
     ),
     "KillAshFlameViper": X2WOTCLocationData(
-        display_name = enemy_kill_location_prefix + "Flame Viper",
+        display_name = ENEMY_KILL_LOCATION_PREFIX + "Flame Viper",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "EnemyKill",

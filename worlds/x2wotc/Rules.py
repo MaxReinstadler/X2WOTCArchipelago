@@ -10,7 +10,7 @@ if TYPE_CHECKING:
     from .Items import ItemManager
     from .Locations import LocationManager
     from .Options import X2WOTCOptions
-from .Constants import GOAL_VALUE_TO_EVENT
+from .ItemData import GOAL_VALUE_TO_ITEM
 
 
 # Cache per-state current power values
@@ -279,7 +279,7 @@ class RuleManager:
 
     # Victory
     def has_won(self, state: CollectionState) -> bool:
-        return self.has_item_or_impossible(state, GOAL_VALUE_TO_EVENT[self.options.goal.value])
+        return self.has_item_or_impossible(state, GOAL_VALUE_TO_ITEM[self.options.goal.value])
 
     #==================================================================================================================#
     #                                                 SET RULES                                                        #

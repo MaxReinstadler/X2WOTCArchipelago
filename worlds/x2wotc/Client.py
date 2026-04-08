@@ -19,12 +19,11 @@ except ModuleNotFoundError:
 if TYPE_CHECKING:
     from CommonClient import CommonContext, ClientCommandProcessor
 
-from .Constants import CLIENT_NAME, GAME_NAME
 from .EnemyRando import EnemyRandoManager
 from .Items import item_table, item_display_name_to_key
 from .Options import HintResearchProjects
 from .Proxy import run_proxy
-from .Version import client_version, client_minimum_mod_version, client_minimum_world_version
+from .Version import CLIENT_NAME, GAME_NAME, client_version, client_minimum_mod_version, client_minimum_world_version
 
 from .mods import mods_data, mod_names
 

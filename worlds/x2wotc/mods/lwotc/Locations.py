@@ -1,10 +1,10 @@
 from worlds.x2wotc.LocationData import (
     X2WOTCLocationData,
     get_new_location_id,
-    tech_location_prefix,
-    enemy_kill_location_prefix,
-    enemy_destroy_location_prefix,
-    item_use_location_prefix
+    TECH_LOCATION_PREFIX,
+    ENEMY_KILL_LOCATION_PREFIX,
+    ENEMY_DESTROY_LOCATION_PREFIX,
+    ITEM_USE_LOCATION_PREFIX
 )
 
 
@@ -42,7 +42,7 @@ PG_AMMO = {
 
 lwotc_techs: dict[str, X2WOTCLocationData] = {
     "AutopsyDrone": X2WOTCLocationData(
-        display_name = tech_location_prefix + "ADVENT Robotics",
+        display_name = TECH_LOCATION_PREFIX + "ADVENT Robotics",
         id = get_new_location_id(),
         layer = "Strategy",
         type = "Tech",
@@ -51,7 +51,7 @@ lwotc_techs: dict[str, X2WOTCLocationData] = {
         normal_item = "AutopsyDroneCompleted"
     ),
     "AutopsyMutonElite": X2WOTCLocationData(
-        display_name = tech_location_prefix + "Muton Elite Autopsy",
+        display_name = TECH_LOCATION_PREFIX + "Muton Elite Autopsy",
         id = get_new_location_id(),
         layer = "Strategy",
         type = "Tech",
@@ -60,7 +60,7 @@ lwotc_techs: dict[str, X2WOTCLocationData] = {
         normal_item = "AutopsyMutonEliteCompleted"
     ),
     "LaserWeapons": X2WOTCLocationData(
-        display_name = tech_location_prefix + "Laser Weapons",
+        display_name = TECH_LOCATION_PREFIX + "Laser Weapons",
         id = get_new_location_id(),
         layer = "Strategy",
         type = "Tech",
@@ -69,7 +69,7 @@ lwotc_techs: dict[str, X2WOTCLocationData] = {
         normal_item = "LaserWeaponsCompleted"
     ),
     "AdvancedLasers": X2WOTCLocationData(
-        display_name = tech_location_prefix + "Advanced Laser Weapons",
+        display_name = TECH_LOCATION_PREFIX + "Advanced Laser Weapons",
         id = get_new_location_id(),
         layer = "Strategy",
         type = "Tech",
@@ -78,7 +78,7 @@ lwotc_techs: dict[str, X2WOTCLocationData] = {
         normal_item = "AdvancedLasersCompleted"
     ),
     "Coilguns": X2WOTCLocationData(
-        display_name = tech_location_prefix + "Coilguns",
+        display_name = TECH_LOCATION_PREFIX + "Coilguns",
         id = get_new_location_id(),
         layer = "Strategy",
         type = "Tech",
@@ -87,7 +87,7 @@ lwotc_techs: dict[str, X2WOTCLocationData] = {
         normal_item = "CoilgunsCompleted"
     ),
     "AdvancedCoilguns": X2WOTCLocationData(
-        display_name = tech_location_prefix + "Advanced Coilguns",
+        display_name = TECH_LOCATION_PREFIX + "Advanced Coilguns",
         id = get_new_location_id(),
         layer = "Strategy",
         type = "Tech",
@@ -96,7 +96,7 @@ lwotc_techs: dict[str, X2WOTCLocationData] = {
         normal_item = "AdvancedCoilgunsCompleted"
     ),
     "EXOSuit": X2WOTCLocationData(
-        display_name = tech_location_prefix + "Battle Armor",
+        display_name = TECH_LOCATION_PREFIX + "Battle Armor",
         id = get_new_location_id(),
         layer = "Strategy",
         type = "Tech",
@@ -105,7 +105,7 @@ lwotc_techs: dict[str, X2WOTCLocationData] = {
         normal_item = "EXOSuitCompleted"
     ),
     "WARSuit": X2WOTCLocationData(
-        display_name = tech_location_prefix + "Battlesuits",
+        display_name = TECH_LOCATION_PREFIX + "Battlesuits",
         id = get_new_location_id(),
         layer = "Strategy",
         type = "Tech",
@@ -114,7 +114,7 @@ lwotc_techs: dict[str, X2WOTCLocationData] = {
         normal_item = "WARSuitCompleted"
     ),
     "SpiderSuit": X2WOTCLocationData(
-        display_name = tech_location_prefix + "Mobile Armor",
+        display_name = TECH_LOCATION_PREFIX + "Mobile Armor",
         id = get_new_location_id(),
         layer = "Strategy",
         type = "Tech",
@@ -123,7 +123,7 @@ lwotc_techs: dict[str, X2WOTCLocationData] = {
         normal_item = "SpiderSuitCompleted"
     ),
     "WraithSuit": X2WOTCLocationData(
-        display_name = tech_location_prefix + "Shadow Armor",
+        display_name = TECH_LOCATION_PREFIX + "Shadow Armor",
         id = get_new_location_id(),
         layer = "Strategy",
         type = "Tech",
@@ -135,7 +135,7 @@ lwotc_techs: dict[str, X2WOTCLocationData] = {
 
 lwotc_item_uses: dict[str, X2WOTCLocationData] = {
     "UseShapedCharge": X2WOTCLocationData(
-        display_name = item_use_location_prefix + "Shaped Charge",
+        display_name = ITEM_USE_LOCATION_PREFIX + "Shaped Charge",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "ItemUse",
@@ -143,7 +143,7 @@ lwotc_item_uses: dict[str, X2WOTCLocationData] = {
         difficulty = 0.0,
     ),
     "UseGasGrenade": X2WOTCLocationData(
-        display_name = item_use_location_prefix + "Gas Grenade",
+        display_name = ITEM_USE_LOCATION_PREFIX + "Gas Grenade",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "ItemUse",
@@ -151,7 +151,7 @@ lwotc_item_uses: dict[str, X2WOTCLocationData] = {
         difficulty = fl_to_diff_pg(3),
     ),
     "UseGasGrenadeMk2": X2WOTCLocationData(
-        display_name = item_use_location_prefix + "Gas Bomb",
+        display_name = ITEM_USE_LOCATION_PREFIX + "Gas Bomb",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "ItemUse",
@@ -159,7 +159,7 @@ lwotc_item_uses: dict[str, X2WOTCLocationData] = {
         difficulty = fl_to_diff_pg(3),
     ),
     "UseFirebomb": X2WOTCLocationData(
-        display_name = item_use_location_prefix + "Incendiary Grenade",
+        display_name = ITEM_USE_LOCATION_PREFIX + "Incendiary Grenade",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "ItemUse",
@@ -167,7 +167,7 @@ lwotc_item_uses: dict[str, X2WOTCLocationData] = {
         difficulty = fl_to_diff_pg(4),
     ),
     "UseFirebombMk2": X2WOTCLocationData(
-        display_name = item_use_location_prefix + "Incendiary Bomb",
+        display_name = ITEM_USE_LOCATION_PREFIX + "Incendiary Bomb",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "ItemUse",
@@ -175,7 +175,7 @@ lwotc_item_uses: dict[str, X2WOTCLocationData] = {
         tags = {"item:AutopsyAdventPurifierCompleted"} | PG_GRENADE_M2,
     ),
     "UseAcidGrenade": X2WOTCLocationData(
-        display_name = item_use_location_prefix + "Acid Grenade",
+        display_name = ITEM_USE_LOCATION_PREFIX + "Acid Grenade",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "ItemUse",
@@ -183,7 +183,7 @@ lwotc_item_uses: dict[str, X2WOTCLocationData] = {
         difficulty = fl_to_diff_pg(8),
     ),
     "UseAcidGrenadeMk2": X2WOTCLocationData(
-        display_name = item_use_location_prefix + "Acid Bomb",
+        display_name = ITEM_USE_LOCATION_PREFIX + "Acid Bomb",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "ItemUse",
@@ -191,7 +191,7 @@ lwotc_item_uses: dict[str, X2WOTCLocationData] = {
         difficulty = fl_to_diff_pg(8),
     ),
     "UsePrototypePlasmaBlaster": X2WOTCLocationData(
-        display_name = item_use_location_prefix + "Prototype Plasma Blaster",
+        display_name = ITEM_USE_LOCATION_PREFIX + "Prototype Plasma Blaster",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "ItemUse",
@@ -199,7 +199,7 @@ lwotc_item_uses: dict[str, X2WOTCLocationData] = {
         difficulty = fl_to_diff_pg(10),
     ),
     "UsePlasmaBlaster": X2WOTCLocationData(
-        display_name = item_use_location_prefix + "Plasma Blaster",
+        display_name = ITEM_USE_LOCATION_PREFIX + "Plasma Blaster",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "ItemUse",
@@ -207,7 +207,7 @@ lwotc_item_uses: dict[str, X2WOTCLocationData] = {
         difficulty = fl_to_diff_pg(17),
     ),
     "UseShredderGun": X2WOTCLocationData(
-        display_name = item_use_location_prefix + "Shredder Gun",
+        display_name = ITEM_USE_LOCATION_PREFIX + "Shredder Gun",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "ItemUse",
@@ -215,7 +215,7 @@ lwotc_item_uses: dict[str, X2WOTCLocationData] = {
         difficulty = fl_to_diff_pg(10),
     ),
     "UseShredstormCannon": X2WOTCLocationData(
-        display_name = item_use_location_prefix + "Shredstorm Cannon",
+        display_name = ITEM_USE_LOCATION_PREFIX + "Shredstorm Cannon",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "ItemUse",
@@ -223,7 +223,7 @@ lwotc_item_uses: dict[str, X2WOTCLocationData] = {
         difficulty = fl_to_diff_pg(18),
     ),
     "UseAPRounds": X2WOTCLocationData(
-        display_name = item_use_location_prefix + "AP Rounds",
+        display_name = ITEM_USE_LOCATION_PREFIX + "AP Rounds",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "ItemUse",
@@ -231,7 +231,7 @@ lwotc_item_uses: dict[str, X2WOTCLocationData] = {
         difficulty = 0.0,
     ),
     "UseTracerRounds": X2WOTCLocationData(
-        display_name = item_use_location_prefix + "Tracer Rounds",
+        display_name = ITEM_USE_LOCATION_PREFIX + "Tracer Rounds",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "ItemUse",
@@ -239,7 +239,7 @@ lwotc_item_uses: dict[str, X2WOTCLocationData] = {
         difficulty = 0.0,
     ),
     "UseTalonRounds": X2WOTCLocationData(
-        display_name = item_use_location_prefix + "Talon Rounds",
+        display_name = ITEM_USE_LOCATION_PREFIX + "Talon Rounds",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "ItemUse",
@@ -247,7 +247,7 @@ lwotc_item_uses: dict[str, X2WOTCLocationData] = {
         difficulty = fl_to_diff_pg(2),
     ),
     "UseVenomRounds": X2WOTCLocationData(
-        display_name = item_use_location_prefix + "Venom Rounds",
+        display_name = ITEM_USE_LOCATION_PREFIX + "Venom Rounds",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "ItemUse",
@@ -255,7 +255,7 @@ lwotc_item_uses: dict[str, X2WOTCLocationData] = {
         difficulty = fl_to_diff_pg(3),
     ),
     "UseIncendiaryRounds": X2WOTCLocationData(
-        display_name = item_use_location_prefix + "Dragon Rounds",
+        display_name = ITEM_USE_LOCATION_PREFIX + "Dragon Rounds",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "ItemUse",
@@ -263,7 +263,7 @@ lwotc_item_uses: dict[str, X2WOTCLocationData] = {
         difficulty = fl_to_diff_pg(13),
     ),
     "UseStilettoRounds": X2WOTCLocationData(
-        display_name = item_use_location_prefix + "Stiletto Rounds",
+        display_name = ITEM_USE_LOCATION_PREFIX + "Stiletto Rounds",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "ItemUse",
@@ -271,7 +271,7 @@ lwotc_item_uses: dict[str, X2WOTCLocationData] = {
         difficulty = fl_to_diff_pg(7),
     ),
     "UseFlechetteRounds": X2WOTCLocationData(
-        display_name = item_use_location_prefix + "Flechette Rounds",
+        display_name = ITEM_USE_LOCATION_PREFIX + "Flechette Rounds",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "ItemUse",
@@ -279,7 +279,7 @@ lwotc_item_uses: dict[str, X2WOTCLocationData] = {
         difficulty = fl_to_diff_pg(9),
     ),
     "UseRedscreenRounds": X2WOTCLocationData(
-        display_name = item_use_location_prefix + "Redscreen Rounds",
+        display_name = ITEM_USE_LOCATION_PREFIX + "Redscreen Rounds",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "ItemUse",
@@ -287,7 +287,7 @@ lwotc_item_uses: dict[str, X2WOTCLocationData] = {
         difficulty = fl_to_diff_pg(1),
     ),
     "UseNeedleRounds": X2WOTCLocationData(
-        display_name = item_use_location_prefix + "Needle Rounds",
+        display_name = ITEM_USE_LOCATION_PREFIX + "Needle Rounds",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "ItemUse",
@@ -295,7 +295,7 @@ lwotc_item_uses: dict[str, X2WOTCLocationData] = {
         difficulty = fl_to_diff_pg(3),
     ),
     "UseFalconRounds": X2WOTCLocationData(
-        display_name = item_use_location_prefix + "Shredder Rounds",
+        display_name = ITEM_USE_LOCATION_PREFIX + "Shredder Rounds",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "ItemUse",
@@ -306,7 +306,7 @@ lwotc_item_uses: dict[str, X2WOTCLocationData] = {
 
 lwotc_enemy_kills: dict[str, X2WOTCLocationData] = {
     "KillAdvEngineer": X2WOTCLocationData(
-        display_name = enemy_kill_location_prefix + "ADVENT Engineer",
+        display_name = ENEMY_KILL_LOCATION_PREFIX + "ADVENT Engineer",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "EnemyKill",
@@ -314,7 +314,7 @@ lwotc_enemy_kills: dict[str, X2WOTCLocationData] = {
         difficulty = 0.0
     ),
     "KillAdvGunner": X2WOTCLocationData(
-        display_name = enemy_kill_location_prefix + "ADVENT Gunner",
+        display_name = ENEMY_KILL_LOCATION_PREFIX + "ADVENT Gunner",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "EnemyKill",
@@ -322,7 +322,7 @@ lwotc_enemy_kills: dict[str, X2WOTCLocationData] = {
         difficulty = 0.0
     ),
     "KillAdvSentry": X2WOTCLocationData(
-        display_name = enemy_kill_location_prefix + "ADVENT Sentry",
+        display_name = ENEMY_KILL_LOCATION_PREFIX + "ADVENT Sentry",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "EnemyKill",
@@ -330,7 +330,7 @@ lwotc_enemy_kills: dict[str, X2WOTCLocationData] = {
         difficulty = 0.0
     ),
     "KillAdvRocketeer": X2WOTCLocationData(
-        display_name = enemy_kill_location_prefix + "ADVENT Rocketeer",
+        display_name = ENEMY_KILL_LOCATION_PREFIX + "ADVENT Rocketeer",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "EnemyKill",
@@ -338,7 +338,7 @@ lwotc_enemy_kills: dict[str, X2WOTCLocationData] = {
         difficulty = fl_to_diff(4)
     ),
     "KillAdvScout": X2WOTCLocationData(
-        display_name = enemy_kill_location_prefix + "ADVENT Scout",
+        display_name = ENEMY_KILL_LOCATION_PREFIX + "ADVENT Scout",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "EnemyKill",
@@ -346,7 +346,7 @@ lwotc_enemy_kills: dict[str, X2WOTCLocationData] = {
         difficulty = fl_to_diff(5)
     ),
     "KillAdvSergeant": X2WOTCLocationData(
-        display_name = enemy_kill_location_prefix + "ADVENT Sergeant",
+        display_name = ENEMY_KILL_LOCATION_PREFIX + "ADVENT Sergeant",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "EnemyKill",
@@ -354,7 +354,7 @@ lwotc_enemy_kills: dict[str, X2WOTCLocationData] = {
         difficulty = fl_to_diff(6)
     ),
     "KillAdvGrenadier": X2WOTCLocationData(
-        display_name = enemy_kill_location_prefix + "ADVENT Grenadier",
+        display_name = ENEMY_KILL_LOCATION_PREFIX + "ADVENT Grenadier",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "EnemyKill",
@@ -362,7 +362,7 @@ lwotc_enemy_kills: dict[str, X2WOTCLocationData] = {
         difficulty = fl_to_diff(7)
     ),
     "KillAdvGeneral_LW": X2WOTCLocationData(
-        display_name = enemy_kill_location_prefix + "ADVENT General",
+        display_name = ENEMY_KILL_LOCATION_PREFIX + "ADVENT General",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "EnemyKill",
@@ -370,7 +370,7 @@ lwotc_enemy_kills: dict[str, X2WOTCLocationData] = {
         difficulty = fl_to_diff(10)
     ),
     "KillAdvShockTroop": X2WOTCLocationData(
-        display_name = enemy_kill_location_prefix + "ADVENT Shock Trooper",
+        display_name = ENEMY_KILL_LOCATION_PREFIX + "ADVENT Shock Trooper",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "EnemyKill",
@@ -378,7 +378,7 @@ lwotc_enemy_kills: dict[str, X2WOTCLocationData] = {
         difficulty = fl_to_diff(14)
     ),
     "KillAdvVanguard": X2WOTCLocationData(
-        display_name = enemy_kill_location_prefix + "ADVENT Vanguard",
+        display_name = ENEMY_KILL_LOCATION_PREFIX + "ADVENT Vanguard",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "EnemyKill",
@@ -386,7 +386,7 @@ lwotc_enemy_kills: dict[str, X2WOTCLocationData] = {
         difficulty = fl_to_diff(14)
     ),
     "KillLWDrone": X2WOTCLocationData(
-        display_name = enemy_destroy_location_prefix + "Drone",
+        display_name = ENEMY_DESTROY_LOCATION_PREFIX + "Drone",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "EnemyKill",
@@ -394,7 +394,7 @@ lwotc_enemy_kills: dict[str, X2WOTCLocationData] = {
         difficulty = 0.0
     ),
     "KillAdvMECArcher": X2WOTCLocationData(
-        display_name = enemy_destroy_location_prefix + "MEC Archer",
+        display_name = ENEMY_DESTROY_LOCATION_PREFIX + "MEC Archer",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "EnemyKill",
@@ -402,7 +402,7 @@ lwotc_enemy_kills: dict[str, X2WOTCLocationData] = {
         difficulty = fl_to_diff(8)
     ),
     "KillSidewinder": X2WOTCLocationData(
-        display_name = enemy_kill_location_prefix + "Sidewinder",
+        display_name = ENEMY_KILL_LOCATION_PREFIX + "Sidewinder",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "EnemyKill",
@@ -410,7 +410,7 @@ lwotc_enemy_kills: dict[str, X2WOTCLocationData] = {
         difficulty = fl_to_diff(4)
     ),
     "KillNaja": X2WOTCLocationData(
-        display_name = enemy_kill_location_prefix + "Naja",
+        display_name = ENEMY_KILL_LOCATION_PREFIX + "Naja",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "EnemyKill",
@@ -418,7 +418,7 @@ lwotc_enemy_kills: dict[str, X2WOTCLocationData] = {
         difficulty = fl_to_diff(5)
     ),
     "KillMutonM2_LW": X2WOTCLocationData(
-        display_name = enemy_kill_location_prefix + "Muton Centurion",
+        display_name = ENEMY_KILL_LOCATION_PREFIX + "Muton Centurion",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "EnemyKill",
@@ -426,7 +426,7 @@ lwotc_enemy_kills: dict[str, X2WOTCLocationData] = {
         difficulty = fl_to_diff(9)
     ),
     "KillMutonM3_LW": X2WOTCLocationData(
-        display_name = enemy_kill_location_prefix + "Muton Elite",
+        display_name = ENEMY_KILL_LOCATION_PREFIX + "Muton Elite",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "EnemyKill",
@@ -434,7 +434,7 @@ lwotc_enemy_kills: dict[str, X2WOTCLocationData] = {
         difficulty = fl_to_diff(13)
     ),
     "KillChryssalidSoldier": X2WOTCLocationData(
-        display_name = enemy_kill_location_prefix + "Chryssalid Soldier",
+        display_name = ENEMY_KILL_LOCATION_PREFIX + "Chryssalid Soldier",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "EnemyKill",
@@ -442,7 +442,7 @@ lwotc_enemy_kills: dict[str, X2WOTCLocationData] = {
         difficulty = fl_to_diff(14)
     ),
     "KillHiveQueen": X2WOTCLocationData(
-        display_name = enemy_kill_location_prefix + "Hive Queen",
+        display_name = ENEMY_KILL_LOCATION_PREFIX + "Hive Queen",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "EnemyKill",

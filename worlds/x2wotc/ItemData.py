@@ -3,6 +3,25 @@ from typing import NamedTuple
 from BaseClasses import ItemClassification as IC
 
 
+TECH_ITEM_PREFIX = "[Tech] "
+SHADOW_TECH_ITEM_PREFIX = "[Tech] "
+CHOSEN_HUNT_ITEM_PREFIX = "[Chosen Hunt] "
+RESOURCE_ITEM_PREFIX = "[Resource] "
+WEAPON_MOD_ITEM_PREFIX = "[Upgrade] "
+PCS_ITEM_PREFIX = "[PCS] "
+STAFF_ITEM_PREFIX = "[Staff] "
+TRAP_ITEM_PREFIX = "[Trap] "
+
+GOAL_VALUE_TO_ITEM: dict[int, str] = {
+    0: "Victory",
+    1: "Broadcast",
+    2: "Stronghold1",
+    3: "Stronghold2",
+    4: "Stronghold3"
+}
+GOAL_ITEM_TO_VALUE: dict[str, int] = {item: value for value, item in GOAL_VALUE_TO_ITEM.items()}
+
+
 class X2WOTCItemData(NamedTuple):
     display_name: str
     id: int | None = None
@@ -36,14 +55,6 @@ def get_new_item_id() -> int:
     next_item_id += 1
     return new_item_id
 
-tech_item_prefix = "[Tech] "
-shadow_tech_item_prefix = "[Tech] "
-chosen_hunt_item_prefix = "[Chosen Hunt] "
-resource_item_prefix = "[Resource] "
-weapon_mod_item_prefix = "[Upgrade] "
-pcs_item_prefix = "[PCS] "
-staff_item_prefix = "[Staff] "
-trap_item_prefix = "[Trap] "
 
 ########################################################################################################################
 ##                        TECH COMPLETION ITEMS (RESEARCH PROJECTS / SHADOW PROJECTS)                                 ##
@@ -55,7 +66,7 @@ trap_item_prefix = "[Trap] "
 
 vanilla_weapon_tech_items: dict[str, X2WOTCItemData] = {
     "ModularWeaponsCompleted": X2WOTCItemData(
-        display_name = tech_item_prefix + "Modular Weapons",
+        display_name = TECH_ITEM_PREFIX + "Modular Weapons",
         id = get_new_item_id(),
         classification = IC.progression,
         type = "TechCompleted",
@@ -64,7 +75,7 @@ vanilla_weapon_tech_items: dict[str, X2WOTCItemData] = {
         normal_location = "ModularWeapons"
     ),
     "MagnetizedWeaponsCompleted": X2WOTCItemData(
-        display_name = tech_item_prefix + "Magnetic Weapons",
+        display_name = TECH_ITEM_PREFIX + "Magnetic Weapons",
         id = get_new_item_id(),
         classification = IC.progression | IC.useful,
         type = "TechCompleted",
@@ -73,7 +84,7 @@ vanilla_weapon_tech_items: dict[str, X2WOTCItemData] = {
         normal_location = "MagnetizedWeapons"
     ),
     "GaussWeaponsCompleted": X2WOTCItemData(
-        display_name = tech_item_prefix + "Gauss Weapons",
+        display_name = TECH_ITEM_PREFIX + "Gauss Weapons",
         id = get_new_item_id(),
         classification = IC.progression | IC.useful,
         type = "TechCompleted",
@@ -82,7 +93,7 @@ vanilla_weapon_tech_items: dict[str, X2WOTCItemData] = {
         normal_location = "GaussWeapons"
     ),
     "PlasmaRifleCompleted": X2WOTCItemData(
-        display_name = tech_item_prefix + "Plasma Rifle",
+        display_name = TECH_ITEM_PREFIX + "Plasma Rifle",
         id = get_new_item_id(),
         classification = IC.progression | IC.useful,
         type = "TechCompleted",
@@ -91,7 +102,7 @@ vanilla_weapon_tech_items: dict[str, X2WOTCItemData] = {
         normal_location = "PlasmaRifle"
     ),
     "HeavyPlasmaCompleted": X2WOTCItemData(
-        display_name = tech_item_prefix + "Beam Cannon",
+        display_name = TECH_ITEM_PREFIX + "Beam Cannon",
         id = get_new_item_id(),
         classification = IC.progression | IC.useful,
         type = "TechCompleted",
@@ -100,7 +111,7 @@ vanilla_weapon_tech_items: dict[str, X2WOTCItemData] = {
         normal_location = "HeavyPlasma"
     ),
     "PlasmaSniperCompleted": X2WOTCItemData(
-        display_name = tech_item_prefix + "Plasma Lance",
+        display_name = TECH_ITEM_PREFIX + "Plasma Lance",
         id = get_new_item_id(),
         classification = IC.progression | IC.useful,
         type = "TechCompleted",
@@ -109,7 +120,7 @@ vanilla_weapon_tech_items: dict[str, X2WOTCItemData] = {
         normal_location = "PlasmaSniper"
     ),
     "AlloyCannonCompleted": X2WOTCItemData(
-        display_name = tech_item_prefix + "Storm Gun",
+        display_name = TECH_ITEM_PREFIX + "Storm Gun",
         id = get_new_item_id(),
         classification = IC.progression | IC.useful,
         type = "TechCompleted",
@@ -121,7 +132,7 @@ vanilla_weapon_tech_items: dict[str, X2WOTCItemData] = {
 
 vanilla_armor_tech_items: dict[str, X2WOTCItemData] = {
     "HybridMaterialsCompleted": X2WOTCItemData(
-        display_name = tech_item_prefix + "Hybrid Materials",
+        display_name = TECH_ITEM_PREFIX + "Hybrid Materials",
         id = get_new_item_id(),
         classification = IC.progression_deprioritized_skip_balancing,
         type = "TechCompleted",
@@ -130,7 +141,7 @@ vanilla_armor_tech_items: dict[str, X2WOTCItemData] = {
         normal_location = "HybridMaterials"
     ),
     "PlatedArmorCompleted": X2WOTCItemData(
-        display_name = tech_item_prefix + "Plated Armor",
+        display_name = TECH_ITEM_PREFIX + "Plated Armor",
         id = get_new_item_id(),
         classification = IC.progression | IC.useful,
         type = "TechCompleted",
@@ -139,7 +150,7 @@ vanilla_armor_tech_items: dict[str, X2WOTCItemData] = {
         normal_location = "PlatedArmor"
     ),
     "PoweredArmorCompleted": X2WOTCItemData(
-        display_name = tech_item_prefix + "Powered Armor",
+        display_name = TECH_ITEM_PREFIX + "Powered Armor",
         id = get_new_item_id(),
         classification = IC.progression | IC.useful,
         type = "TechCompleted",
@@ -151,7 +162,7 @@ vanilla_armor_tech_items: dict[str, X2WOTCItemData] = {
 
 vanilla_autopsy_tech_items: dict[str, X2WOTCItemData] = {
     "AutopsySectoidCompleted": X2WOTCItemData(
-        display_name = tech_item_prefix + "Sectoid Autopsy",
+        display_name = TECH_ITEM_PREFIX + "Sectoid Autopsy",
         id = get_new_item_id(),
         classification = IC.progression,
         type = "TechCompleted",
@@ -160,7 +171,7 @@ vanilla_autopsy_tech_items: dict[str, X2WOTCItemData] = {
         normal_location = "AutopsySectoid"
     ),
     "AutopsyViperCompleted": X2WOTCItemData(
-        display_name = tech_item_prefix + "Viper Autopsy",
+        display_name = TECH_ITEM_PREFIX + "Viper Autopsy",
         id = get_new_item_id(),
         classification = IC.progression,
         type = "TechCompleted",
@@ -169,7 +180,7 @@ vanilla_autopsy_tech_items: dict[str, X2WOTCItemData] = {
         normal_location = "AutopsyViper"
     ),
     "AutopsyMutonCompleted": X2WOTCItemData(
-        display_name = tech_item_prefix + "Muton Autopsy",
+        display_name = TECH_ITEM_PREFIX + "Muton Autopsy",
         id = get_new_item_id(),
         classification = IC.progression | IC.useful,
         type = "TechCompleted",
@@ -178,7 +189,7 @@ vanilla_autopsy_tech_items: dict[str, X2WOTCItemData] = {
         normal_location = "AutopsyMuton"
     ),
     "AutopsyBerserkerCompleted": X2WOTCItemData(
-        display_name = tech_item_prefix + "Berserker Autopsy",
+        display_name = TECH_ITEM_PREFIX + "Berserker Autopsy",
         id = get_new_item_id(),
         classification = IC.progression,
         type = "TechCompleted",
@@ -187,7 +198,7 @@ vanilla_autopsy_tech_items: dict[str, X2WOTCItemData] = {
         normal_location = "AutopsyBerserker"
     ),
     "AutopsyArchonCompleted": X2WOTCItemData(
-        display_name = tech_item_prefix + "Archon Autopsy",
+        display_name = TECH_ITEM_PREFIX + "Archon Autopsy",
         id = get_new_item_id(),
         classification = IC.progression | IC.useful,
         type = "TechCompleted",
@@ -196,7 +207,7 @@ vanilla_autopsy_tech_items: dict[str, X2WOTCItemData] = {
         normal_location = "AutopsyArchon"
     ),
     "AutopsyGatekeeperCompleted": X2WOTCItemData(
-        display_name = tech_item_prefix + "Gatekeeper Autopsy",
+        display_name = TECH_ITEM_PREFIX + "Gatekeeper Autopsy",
         id = get_new_item_id(),
         classification = IC.progression | IC.useful,
         type = "TechCompleted",
@@ -205,7 +216,7 @@ vanilla_autopsy_tech_items: dict[str, X2WOTCItemData] = {
         normal_location = "AutopsyGatekeeper"
     ),
     "AutopsyAndromedonCompleted": X2WOTCItemData(
-        display_name = tech_item_prefix + "Andromedon Autopsy",
+        display_name = TECH_ITEM_PREFIX + "Andromedon Autopsy",
         id = get_new_item_id(),
         classification = IC.progression,
         type = "TechCompleted",
@@ -214,7 +225,7 @@ vanilla_autopsy_tech_items: dict[str, X2WOTCItemData] = {
         normal_location = "AutopsyAndromedon"
     ),
     "AutopsyFacelessCompleted": X2WOTCItemData(
-        display_name = tech_item_prefix + "Faceless Autopsy",
+        display_name = TECH_ITEM_PREFIX + "Faceless Autopsy",
         id = get_new_item_id(),
         classification = IC.progression | IC.useful,
         type = "TechCompleted",
@@ -223,7 +234,7 @@ vanilla_autopsy_tech_items: dict[str, X2WOTCItemData] = {
         normal_location = "AutopsyFaceless"
     ),
     "AutopsyChryssalidCompleted": X2WOTCItemData(
-        display_name = tech_item_prefix + "Chryssalid Autopsy",
+        display_name = TECH_ITEM_PREFIX + "Chryssalid Autopsy",
         id = get_new_item_id(),
         classification = IC.progression,
         type = "TechCompleted",
@@ -232,7 +243,7 @@ vanilla_autopsy_tech_items: dict[str, X2WOTCItemData] = {
         normal_location = "AutopsyChryssalid"
     ),
     "AutopsyAdventTrooperCompleted": X2WOTCItemData(
-        display_name = tech_item_prefix + "ADVENT Trooper Autopsy",
+        display_name = TECH_ITEM_PREFIX + "ADVENT Trooper Autopsy",
         id = get_new_item_id(),
         classification = IC.progression,
         type = "TechCompleted",
@@ -241,7 +252,7 @@ vanilla_autopsy_tech_items: dict[str, X2WOTCItemData] = {
         normal_location = "AutopsyAdventTrooper"
     ),
     "AutopsyAdventStunLancerCompleted": X2WOTCItemData(
-        display_name = tech_item_prefix + "ADVENT Stun Lancer Autopsy",
+        display_name = TECH_ITEM_PREFIX + "ADVENT Stun Lancer Autopsy",
         id = get_new_item_id(),
         classification = IC.progression | IC.useful,
         type = "TechCompleted",
@@ -250,7 +261,7 @@ vanilla_autopsy_tech_items: dict[str, X2WOTCItemData] = {
         normal_location = "AutopsyAdventStunLancer"
     ),
     "AutopsyAdventShieldbearerCompleted": X2WOTCItemData(
-        display_name = tech_item_prefix + "ADVENT Shieldbearer Autopsy",
+        display_name = TECH_ITEM_PREFIX + "ADVENT Shieldbearer Autopsy",
         id = get_new_item_id(),
         classification = IC.progression,
         type = "TechCompleted",
@@ -259,7 +270,7 @@ vanilla_autopsy_tech_items: dict[str, X2WOTCItemData] = {
         normal_location = "AutopsyAdventShieldbearer"
     ),
     "AutopsyAdventMECCompleted": X2WOTCItemData(
-        display_name = tech_item_prefix + "ADVENT MEC Breakdown",
+        display_name = TECH_ITEM_PREFIX + "ADVENT MEC Breakdown",
         id = get_new_item_id(),
         classification = IC.progression | IC.useful,
         type = "TechCompleted",
@@ -268,7 +279,7 @@ vanilla_autopsy_tech_items: dict[str, X2WOTCItemData] = {
         normal_location = "AutopsyAdventMEC"
     ),
     "AutopsyAdventTurretCompleted": X2WOTCItemData(
-        display_name = tech_item_prefix + "ADVENT Turret Breakdown",
+        display_name = TECH_ITEM_PREFIX + "ADVENT Turret Breakdown",
         id = get_new_item_id(),
         classification = IC.progression_deprioritized_skip_balancing,
         type = "TechCompleted",
@@ -277,7 +288,7 @@ vanilla_autopsy_tech_items: dict[str, X2WOTCItemData] = {
         normal_location = "AutopsyAdventTurret"
     ),
     "AutopsySectopodCompleted": X2WOTCItemData(
-        display_name = tech_item_prefix + "Sectopod Breakdown",
+        display_name = TECH_ITEM_PREFIX + "Sectopod Breakdown",
         id = get_new_item_id(),
         classification = IC.progression | IC.useful,
         type = "TechCompleted",
@@ -289,7 +300,7 @@ vanilla_autopsy_tech_items: dict[str, X2WOTCItemData] = {
 
 vanilla_goldenpath_tech_items: dict[str, X2WOTCItemData] = {
     "AlienBiotechCompleted": X2WOTCItemData(
-        display_name = tech_item_prefix + "Alien Biotech",
+        display_name = TECH_ITEM_PREFIX + "Alien Biotech",
         id = get_new_item_id(),
         classification = IC.progression,
         type = "TechCompleted",
@@ -298,7 +309,7 @@ vanilla_goldenpath_tech_items: dict[str, X2WOTCItemData] = {
         normal_location = "AlienBiotech"
     ),
     "ResistanceCommunicationsCompleted": X2WOTCItemData(
-        display_name = tech_item_prefix + "Resistance Communications",
+        display_name = TECH_ITEM_PREFIX + "Resistance Communications",
         id = get_new_item_id(),
         classification = IC.progression | IC.useful,
         type = "TechCompleted",
@@ -307,7 +318,7 @@ vanilla_goldenpath_tech_items: dict[str, X2WOTCItemData] = {
         normal_location = "ResistanceCommunications"
     ),
     "AutopsyAdventOfficerCompleted": X2WOTCItemData(
-        display_name = tech_item_prefix + "ADVENT Officer Autopsy",
+        display_name = TECH_ITEM_PREFIX + "ADVENT Officer Autopsy",
         id = get_new_item_id(),
         classification = IC.progression | IC.useful,
         type = "TechCompleted",
@@ -316,7 +327,7 @@ vanilla_goldenpath_tech_items: dict[str, X2WOTCItemData] = {
         normal_location = "AutopsyAdventOfficer"
     ),
     "AlienEncryptionCompleted": X2WOTCItemData(
-        display_name = tech_item_prefix + "Alien Encryption",
+        display_name = TECH_ITEM_PREFIX + "Alien Encryption",
         id = get_new_item_id(),
         classification = IC.progression,
         type = "TechCompleted",
@@ -325,7 +336,7 @@ vanilla_goldenpath_tech_items: dict[str, X2WOTCItemData] = {
         normal_location = "AlienEncryption"
     ),
     "CodexBrainPt1Completed": X2WOTCItemData(
-        display_name = shadow_tech_item_prefix + "Codex Brain",
+        display_name = SHADOW_TECH_ITEM_PREFIX + "Codex Brain",
         id = get_new_item_id(),
         classification = IC.progression_skip_balancing,
         type = "TechCompleted",
@@ -334,7 +345,7 @@ vanilla_goldenpath_tech_items: dict[str, X2WOTCItemData] = {
         normal_location = "CodexBrainPt1"
     ),
     "CodexBrainPt2Completed": X2WOTCItemData(
-        display_name = shadow_tech_item_prefix + "Encrypted Codex Data",
+        display_name = SHADOW_TECH_ITEM_PREFIX + "Encrypted Codex Data",
         id = get_new_item_id(),
         classification = IC.progression_skip_balancing,
         type = "TechCompleted",
@@ -342,7 +353,7 @@ vanilla_goldenpath_tech_items: dict[str, X2WOTCItemData] = {
         normal_location = "CodexBrainPt2"
     ),
     "BlacksiteDataCompleted": X2WOTCItemData(
-        display_name = shadow_tech_item_prefix + "Blacksite Vial",
+        display_name = SHADOW_TECH_ITEM_PREFIX + "Blacksite Vial",
         id = get_new_item_id(),
         classification = IC.progression_skip_balancing,
         type = "TechCompleted",
@@ -351,7 +362,7 @@ vanilla_goldenpath_tech_items: dict[str, X2WOTCItemData] = {
         normal_location = "BlacksiteData"
     ),
     "ForgeStasisSuitCompleted": X2WOTCItemData(
-        display_name = shadow_tech_item_prefix + "Recovered ADVENT Stasis Suit",
+        display_name = SHADOW_TECH_ITEM_PREFIX + "Recovered ADVENT Stasis Suit",
         id = get_new_item_id(),
         classification = IC.progression_skip_balancing,
         type = "TechCompleted",
@@ -359,7 +370,7 @@ vanilla_goldenpath_tech_items: dict[str, X2WOTCItemData] = {
         normal_location = "ForgeStasisSuit"
     ),
     "PsiGateCompleted": X2WOTCItemData(
-        display_name = shadow_tech_item_prefix + "Psionic Gate",
+        display_name = SHADOW_TECH_ITEM_PREFIX + "Psionic Gate",
         id = get_new_item_id(),
         classification = IC.progression_skip_balancing,
         type = "TechCompleted",
@@ -367,7 +378,7 @@ vanilla_goldenpath_tech_items: dict[str, X2WOTCItemData] = {
         normal_location = "PsiGate"
     ),
     "AutopsyAdventPsiWitchCompleted": X2WOTCItemData(
-        display_name = shadow_tech_item_prefix + "Avatar Autopsy",
+        display_name = SHADOW_TECH_ITEM_PREFIX + "Avatar Autopsy",
         id = get_new_item_id(),
         classification = IC.progression_skip_balancing,
         type = "TechCompleted",
@@ -379,7 +390,7 @@ vanilla_goldenpath_tech_items: dict[str, X2WOTCItemData] = {
 
 vanilla_other_tech_items: dict[str, X2WOTCItemData] = {
     "ResistanceRadioCompleted": X2WOTCItemData(
-        display_name = tech_item_prefix + "Resistance Radio",
+        display_name = TECH_ITEM_PREFIX + "Resistance Radio",
         id = get_new_item_id(),
         classification = IC.progression | IC.useful,
         type = "TechCompleted",
@@ -388,7 +399,7 @@ vanilla_other_tech_items: dict[str, X2WOTCItemData] = {
         normal_location = "ResistanceRadio"
     ),
     "EleriumCompleted": X2WOTCItemData(
-        display_name = tech_item_prefix + "Elerium",
+        display_name = TECH_ITEM_PREFIX + "Elerium",
         id = get_new_item_id(),
         classification = IC.progression,
         type = "TechCompleted",
@@ -397,7 +408,7 @@ vanilla_other_tech_items: dict[str, X2WOTCItemData] = {
         normal_location = "Tech_Elerium"
     ),
     "PsionicsCompleted": X2WOTCItemData(
-        display_name = tech_item_prefix + "Psionics",
+        display_name = TECH_ITEM_PREFIX + "Psionics",
         id = get_new_item_id(),
         classification = IC.progression | IC.useful,
         type = "TechCompleted",
@@ -413,7 +424,7 @@ vanilla_other_tech_items: dict[str, X2WOTCItemData] = {
 
 alien_hunters_tech_items: dict[str, X2WOTCItemData] = {
     "ExperimentalWeaponsCompleted": X2WOTCItemData(
-        display_name = tech_item_prefix + "Experimental Weapons",
+        display_name = TECH_ITEM_PREFIX + "Experimental Weapons",
         id = get_new_item_id(),
         classification = IC.progression | IC.useful,
         type = "TechCompleted",
@@ -423,7 +434,7 @@ alien_hunters_tech_items: dict[str, X2WOTCItemData] = {
         normal_location = "ExperimentalWeapons"
     ),
     "AutopsyViperKingCompleted": X2WOTCItemData(
-        display_name = tech_item_prefix + "Viper King Autopsy",
+        display_name = TECH_ITEM_PREFIX + "Viper King Autopsy",
         id = get_new_item_id(),
         classification = IC.progression | IC.useful,
         type = "TechCompleted",
@@ -433,7 +444,7 @@ alien_hunters_tech_items: dict[str, X2WOTCItemData] = {
         normal_location = "AutopsyViperKing"
     ),
     "AutopsyBerserkerQueenCompleted": X2WOTCItemData(
-        display_name = tech_item_prefix + "Berserker Queen Autopsy",
+        display_name = TECH_ITEM_PREFIX + "Berserker Queen Autopsy",
         id = get_new_item_id(),
         classification = IC.progression | IC.useful,
         type = "TechCompleted",
@@ -443,7 +454,7 @@ alien_hunters_tech_items: dict[str, X2WOTCItemData] = {
         normal_location = "AutopsyBerserkerQueen"
     ),
     "AutopsyArchonKingCompleted": X2WOTCItemData(
-        display_name = tech_item_prefix + "Archon King Autopsy",
+        display_name = TECH_ITEM_PREFIX + "Archon King Autopsy",
         id = get_new_item_id(),
         classification = IC.progression | IC.useful,
         type = "TechCompleted",
@@ -460,7 +471,7 @@ alien_hunters_tech_items: dict[str, X2WOTCItemData] = {
 
 wotc_autopsy_tech_items: dict[str, X2WOTCItemData] = {
     "AutopsyAdventPurifierCompleted": X2WOTCItemData(
-        display_name = tech_item_prefix + "ADVENT Purifier Autopsy",
+        display_name = TECH_ITEM_PREFIX + "ADVENT Purifier Autopsy",
         id = get_new_item_id(),
         classification = IC.progression,
         type = "TechCompleted",
@@ -470,7 +481,7 @@ wotc_autopsy_tech_items: dict[str, X2WOTCItemData] = {
         normal_location = "AutopsyAdventPurifier"
     ),
     "AutopsyAdventPriestCompleted": X2WOTCItemData(
-        display_name = tech_item_prefix + "ADVENT Priest Autopsy",
+        display_name = TECH_ITEM_PREFIX + "ADVENT Priest Autopsy",
         id = get_new_item_id(),
         classification = IC.progression_deprioritized_skip_balancing,
         type = "TechCompleted",
@@ -480,7 +491,7 @@ wotc_autopsy_tech_items: dict[str, X2WOTCItemData] = {
         normal_location = "AutopsyAdventPriest"
     ),
     "AutopsyTheLostCompleted": X2WOTCItemData(
-        display_name = tech_item_prefix + "The Lost Autopsy",
+        display_name = TECH_ITEM_PREFIX + "The Lost Autopsy",
         id = get_new_item_id(),
         classification = IC.progression_deprioritized_skip_balancing,
         type = "TechCompleted",
@@ -490,7 +501,7 @@ wotc_autopsy_tech_items: dict[str, X2WOTCItemData] = {
         normal_location = "AutopsyTheLost"
     ),
     "AutopsySpectreCompleted": X2WOTCItemData(
-        display_name = tech_item_prefix + "Spectre Autopsy",
+        display_name = TECH_ITEM_PREFIX + "Spectre Autopsy",
         id = get_new_item_id(),
         classification = IC.progression,
         type = "TechCompleted",
@@ -503,7 +514,7 @@ wotc_autopsy_tech_items: dict[str, X2WOTCItemData] = {
 
 wotc_chosen_weapon_tech_items: dict[str, X2WOTCItemData] = {
     "ChosenAssassinWeaponsCompleted": X2WOTCItemData(
-        display_name = tech_item_prefix + "Assassin Weapons",
+        display_name = TECH_ITEM_PREFIX + "Assassin Weapons",
         id = get_new_item_id(),
         classification = IC.progression | IC.useful,
         type = "TechCompleted",
@@ -513,7 +524,7 @@ wotc_chosen_weapon_tech_items: dict[str, X2WOTCItemData] = {
         normal_location = "ChosenAssassinWeapons"
     ),
     "ChosenHunterWeaponsCompleted": X2WOTCItemData(
-        display_name = tech_item_prefix + "Hunter Weapons",
+        display_name = TECH_ITEM_PREFIX + "Hunter Weapons",
         id = get_new_item_id(),
         classification = IC.progression | IC.useful,
         type = "TechCompleted",
@@ -523,7 +534,7 @@ wotc_chosen_weapon_tech_items: dict[str, X2WOTCItemData] = {
         normal_location = "ChosenHunterWeapons"
     ),
     "ChosenWarlockWeaponsCompleted": X2WOTCItemData(
-        display_name = tech_item_prefix + "Warlock Weapons",
+        display_name = TECH_ITEM_PREFIX + "Warlock Weapons",
         id = get_new_item_id(),
         classification = IC.progression | IC.useful,
         type = "TechCompleted",
@@ -540,7 +551,7 @@ wotc_chosen_weapon_tech_items: dict[str, X2WOTCItemData] = {
 
 progressive_tech_items: dict[str, X2WOTCItemData] = {
     "ProgressiveRifleTechCompleted": X2WOTCItemData(
-        display_name = tech_item_prefix + "Progressive Rifle",
+        display_name = TECH_ITEM_PREFIX + "Progressive Rifle",
         id = get_new_item_id(),
         classification = IC.progression | IC.useful,
         type = "TechCompleted",
@@ -551,7 +562,7 @@ progressive_tech_items: dict[str, X2WOTCItemData] = {
         ]
     ),
     "ProgressiveRifleTechCompleted+": X2WOTCItemData(
-        display_name = tech_item_prefix + "Progressive Rifle+",
+        display_name = TECH_ITEM_PREFIX + "Progressive Rifle+",
         id = get_new_item_id(),
         classification = IC.progression | IC.useful,
         type = "TechCompleted",
@@ -563,7 +574,7 @@ progressive_tech_items: dict[str, X2WOTCItemData] = {
         ]
     ),
     "ProgressiveArmorTechCompleted": X2WOTCItemData(
-        display_name = tech_item_prefix + "Progressive Armor",
+        display_name = TECH_ITEM_PREFIX + "Progressive Armor",
         id = get_new_item_id(),
         classification = IC.progression | IC.useful,
         type = "TechCompleted",
@@ -574,7 +585,7 @@ progressive_tech_items: dict[str, X2WOTCItemData] = {
         ]
     ),
     "ProgressiveArmorTechCompleted+": X2WOTCItemData(
-        display_name = tech_item_prefix + "Progressive Armor+",
+        display_name = TECH_ITEM_PREFIX + "Progressive Armor+",
         id = get_new_item_id(),
         classification = IC.progression | IC.useful,
         type = "TechCompleted",
@@ -586,7 +597,7 @@ progressive_tech_items: dict[str, X2WOTCItemData] = {
         ]
     ),
     "ProgressiveMeleeTechCompleted": X2WOTCItemData(
-        display_name = tech_item_prefix + "Progressive Melee Weapon",
+        display_name = TECH_ITEM_PREFIX + "Progressive Melee Weapon",
         id = get_new_item_id(),
         classification = IC.progression | IC.useful,
         type = "TechCompleted",
@@ -597,7 +608,7 @@ progressive_tech_items: dict[str, X2WOTCItemData] = {
         ]
     ),
     "ProgressiveGREMLINTechCompleted": X2WOTCItemData(
-        display_name = tech_item_prefix + "Progressive GREMLIN",
+        display_name = TECH_ITEM_PREFIX + "Progressive GREMLIN",
         id = get_new_item_id(),
         classification = IC.progression | IC.useful,
         type = "TechCompleted",
@@ -608,7 +619,7 @@ progressive_tech_items: dict[str, X2WOTCItemData] = {
         ]
     ),
     "ProgressivePsionicsTechCompleted": X2WOTCItemData(
-        display_name = tech_item_prefix + "Progressive Psionics",
+        display_name = TECH_ITEM_PREFIX + "Progressive Psionics",
         id = get_new_item_id(),
         classification = IC.progression | IC.useful,
         type = "TechCompleted",
@@ -626,7 +637,7 @@ progressive_tech_items: dict[str, X2WOTCItemData] = {
 
 tech_fragment_items: dict[str, X2WOTCItemData] = {
     "ChosenAssassinWeaponsFragment2": X2WOTCItemData(
-        display_name = tech_item_prefix + "Assassin Weapons Fragment (1/2)",
+        display_name = TECH_ITEM_PREFIX + "Assassin Weapons Fragment (1/2)",
         id = get_new_item_id(),
         classification = IC.progression_skip_balancing,
         type = "TechCompleted",
@@ -638,7 +649,7 @@ tech_fragment_items: dict[str, X2WOTCItemData] = {
         ]
     ),
     "ChosenHunterWeaponsFragment2": X2WOTCItemData(
-        display_name = tech_item_prefix + "Hunter Weapons Fragment (1/2)",
+        display_name = TECH_ITEM_PREFIX + "Hunter Weapons Fragment (1/2)",
         id = get_new_item_id(),
         classification = IC.progression_skip_balancing,
         type = "TechCompleted",
@@ -650,7 +661,7 @@ tech_fragment_items: dict[str, X2WOTCItemData] = {
         ]
     ),
     "ChosenWarlockWeaponsFragment2": X2WOTCItemData(
-        display_name = tech_item_prefix + "Warlock Weapons Fragment (1/2)",
+        display_name = TECH_ITEM_PREFIX + "Warlock Weapons Fragment (1/2)",
         id = get_new_item_id(),
         classification = IC.progression_skip_balancing,
         type = "TechCompleted",
@@ -662,7 +673,7 @@ tech_fragment_items: dict[str, X2WOTCItemData] = {
         ]
     ),
     "ChosenAssassinWeaponsFragment3": X2WOTCItemData(
-        display_name = tech_item_prefix + "Assassin Weapons Fragment (1/3)",
+        display_name = TECH_ITEM_PREFIX + "Assassin Weapons Fragment (1/3)",
         id = get_new_item_id(),
         classification = IC.progression_skip_balancing,
         type = "TechCompleted",
@@ -675,7 +686,7 @@ tech_fragment_items: dict[str, X2WOTCItemData] = {
         ]
     ),
     "ChosenHunterWeaponsFragment3": X2WOTCItemData(
-        display_name = tech_item_prefix + "Hunter Weapons Fragment (1/3)",
+        display_name = TECH_ITEM_PREFIX + "Hunter Weapons Fragment (1/3)",
         id = get_new_item_id(),
         classification = IC.progression_skip_balancing,
         type = "TechCompleted",
@@ -688,7 +699,7 @@ tech_fragment_items: dict[str, X2WOTCItemData] = {
         ]
     ),
     "ChosenWarlockWeaponsFragment3": X2WOTCItemData(
-        display_name = tech_item_prefix + "Warlock Weapons Fragment (1/3)",
+        display_name = TECH_ITEM_PREFIX + "Warlock Weapons Fragment (1/3)",
         id = get_new_item_id(),
         classification = IC.progression_skip_balancing,
         type = "TechCompleted",
@@ -712,7 +723,7 @@ tech_fragment_items: dict[str, X2WOTCItemData] = {
 
 chosen_hunt_items: dict[str, X2WOTCItemData] = {
     "FactionInfluence": X2WOTCItemData(
-        display_name = chosen_hunt_item_prefix + "Faction Influence",
+        display_name = CHOSEN_HUNT_ITEM_PREFIX + "Faction Influence",
         id = get_new_item_id(),
         classification = IC.progression,
         type = "CovertActionReward",
@@ -721,7 +732,7 @@ chosen_hunt_items: dict[str, X2WOTCItemData] = {
         dlc = "WOTC"
     ),
     "AssassinStronghold": X2WOTCItemData(
-        display_name = chosen_hunt_item_prefix + "Assassin Stronghold",
+        display_name = CHOSEN_HUNT_ITEM_PREFIX + "Assassin Stronghold",
         id = get_new_item_id(),
         classification = IC.progression | IC.useful,
         type = "CovertActionReward",
@@ -730,7 +741,7 @@ chosen_hunt_items: dict[str, X2WOTCItemData] = {
         dlc = "WOTC"
     ),
     "HunterStronghold": X2WOTCItemData(
-        display_name = chosen_hunt_item_prefix + "Hunter Stronghold",
+        display_name = CHOSEN_HUNT_ITEM_PREFIX + "Hunter Stronghold",
         id = get_new_item_id(),
         classification = IC.progression | IC.useful,
         type = "CovertActionReward",
@@ -739,7 +750,7 @@ chosen_hunt_items: dict[str, X2WOTCItemData] = {
         dlc = "WOTC"
     ),
     "WarlockStronghold": X2WOTCItemData(
-        display_name = chosen_hunt_item_prefix + "Warlock Stronghold",
+        display_name = CHOSEN_HUNT_ITEM_PREFIX + "Warlock Stronghold",
         id = get_new_item_id(),
         classification = IC.progression | IC.useful,
         type = "CovertActionReward",
@@ -748,7 +759,7 @@ chosen_hunt_items: dict[str, X2WOTCItemData] = {
         dlc = "WOTC"
     ),
     "ProgressiveAssassinChosenHunt": X2WOTCItemData(
-        display_name = chosen_hunt_item_prefix + "Progressive Assassin",
+        display_name = CHOSEN_HUNT_ITEM_PREFIX + "Progressive Assassin",
         id = get_new_item_id(),
         classification = IC.progression | IC.useful,
         type = "CovertActionReward",
@@ -761,7 +772,7 @@ chosen_hunt_items: dict[str, X2WOTCItemData] = {
         ]
     ),
     "ProgressiveHunterChosenHunt": X2WOTCItemData(
-        display_name = chosen_hunt_item_prefix + "Progressive Hunter",
+        display_name = CHOSEN_HUNT_ITEM_PREFIX + "Progressive Hunter",
         id = get_new_item_id(),
         classification = IC.progression | IC.useful,
         type = "CovertActionReward",
@@ -774,7 +785,7 @@ chosen_hunt_items: dict[str, X2WOTCItemData] = {
         ]
     ),
     "ProgressiveWarlockChosenHunt": X2WOTCItemData(
-        display_name = chosen_hunt_item_prefix + "Progressive Warlock",
+        display_name = CHOSEN_HUNT_ITEM_PREFIX + "Progressive Warlock",
         id = get_new_item_id(),
         classification = IC.progression | IC.useful,
         type = "CovertActionReward",
@@ -798,19 +809,19 @@ chosen_hunt_items: dict[str, X2WOTCItemData] = {
 
 supplies_items: dict[str, X2WOTCItemData] = {
     "Supplies:20": X2WOTCItemData(
-        display_name = resource_item_prefix + "20 Supplies",
+        display_name = RESOURCE_ITEM_PREFIX + "20 Supplies",
         id = get_new_item_id(),
         type = "Resource",
         tags = {"filler", "supplies"}
     ),
     "Supplies:35": X2WOTCItemData(
-        display_name = resource_item_prefix + "35 Supplies",
+        display_name = RESOURCE_ITEM_PREFIX + "35 Supplies",
         id = get_new_item_id(),
         type = "Resource",
         tags = {"filler", "supplies"}
     ),
     "Supplies:50": X2WOTCItemData(
-        display_name = resource_item_prefix + "50 Supplies",
+        display_name = RESOURCE_ITEM_PREFIX + "50 Supplies",
         id = get_new_item_id(),
         classification = IC.useful,
         type = "Resource",
@@ -820,19 +831,19 @@ supplies_items: dict[str, X2WOTCItemData] = {
 
 intel_items: dict[str, X2WOTCItemData] = {
     "Intel:10": X2WOTCItemData(
-        display_name = resource_item_prefix + "10 Intel",
+        display_name = RESOURCE_ITEM_PREFIX + "10 Intel",
         id = get_new_item_id(),
         type = "Resource",
         tags = {"filler", "intel"}
     ),
     "Intel:15": X2WOTCItemData(
-        display_name = resource_item_prefix + "15 Intel",
+        display_name = RESOURCE_ITEM_PREFIX + "15 Intel",
         id = get_new_item_id(),
         type = "Resource",
         tags = {"filler", "intel"}
     ),
     "Intel:20": X2WOTCItemData(
-        display_name = resource_item_prefix + "20 Intel",
+        display_name = RESOURCE_ITEM_PREFIX + "20 Intel",
         id = get_new_item_id(),
         classification = IC.useful,
         type = "Resource",
@@ -842,19 +853,19 @@ intel_items: dict[str, X2WOTCItemData] = {
 
 alien_alloy_items: dict[str, X2WOTCItemData] = {
     "AlienAlloy:5": X2WOTCItemData(
-        display_name = resource_item_prefix + "5 Alien Alloys",
+        display_name = RESOURCE_ITEM_PREFIX + "5 Alien Alloys",
         id = get_new_item_id(),
         type = "Resource",
         tags = {"filler", "alien_alloy"}
     ),
     "AlienAlloy:10": X2WOTCItemData(
-        display_name = resource_item_prefix + "10 Alien Alloys",
+        display_name = RESOURCE_ITEM_PREFIX + "10 Alien Alloys",
         id = get_new_item_id(),
         type = "Resource",
         tags = {"filler", "alien_alloy"}
     ),
     "AlienAlloy:15": X2WOTCItemData(
-        display_name = resource_item_prefix + "15 Alien Alloys",
+        display_name = RESOURCE_ITEM_PREFIX + "15 Alien Alloys",
         id = get_new_item_id(),
         classification = IC.useful,
         type = "Resource",
@@ -864,19 +875,19 @@ alien_alloy_items: dict[str, X2WOTCItemData] = {
 
 elerium_dust_items: dict[str, X2WOTCItemData] = {
     "EleriumDust:5": X2WOTCItemData(
-        display_name = resource_item_prefix + "5 Elerium Crystals",
+        display_name = RESOURCE_ITEM_PREFIX + "5 Elerium Crystals",
         id = get_new_item_id(),
         type = "Resource",
         tags = {"filler", "elerium_dust"}
     ),
     "EleriumDust:10": X2WOTCItemData(
-        display_name = resource_item_prefix + "10 Elerium Crystals",
+        display_name = RESOURCE_ITEM_PREFIX + "10 Elerium Crystals",
         id = get_new_item_id(),
         type = "Resource",
         tags = {"filler", "elerium_dust"}
     ),
     "EleriumDust:15": X2WOTCItemData(
-        display_name = resource_item_prefix + "15 Elerium Crystals",
+        display_name = RESOURCE_ITEM_PREFIX + "15 Elerium Crystals",
         id = get_new_item_id(),
         classification = IC.useful,
         type = "Resource",
@@ -886,7 +897,7 @@ elerium_dust_items: dict[str, X2WOTCItemData] = {
 
 elerium_core_items: dict[str, X2WOTCItemData] = {
     "EleriumCore:1": X2WOTCItemData(
-        display_name = resource_item_prefix + "1 Elerium Core",
+        display_name = RESOURCE_ITEM_PREFIX + "1 Elerium Core",
         id = get_new_item_id(),
         classification = IC.useful,
         type = "Resource",
@@ -896,21 +907,21 @@ elerium_core_items: dict[str, X2WOTCItemData] = {
 
 ability_point_items: dict[str, X2WOTCItemData] = {
     "AbilityPoint:3": X2WOTCItemData(
-        display_name = resource_item_prefix + "3 Ability Points",
+        display_name = RESOURCE_ITEM_PREFIX + "3 Ability Points",
         id = get_new_item_id(),
         type = "Resource",
         tags = {"filler", "ability_point"},
         dlc = "WOTC"
     ),
     "AbilityPoint:5": X2WOTCItemData(
-        display_name = resource_item_prefix + "5 Ability Points",
+        display_name = RESOURCE_ITEM_PREFIX + "5 Ability Points",
         id = get_new_item_id(),
         type = "Resource",
         tags = {"filler", "ability_point"},
         dlc = "WOTC"
     ),
     "AbilityPoint:7": X2WOTCItemData(
-        display_name = resource_item_prefix + "7 Ability Points",
+        display_name = RESOURCE_ITEM_PREFIX + "7 Ability Points",
         id = get_new_item_id(),
         classification = IC.useful,
         type = "Resource",
@@ -925,43 +936,43 @@ ability_point_items: dict[str, X2WOTCItemData] = {
 
 basic_weapon_mod_items: dict[str, X2WOTCItemData] = {
     "AimUpgrade_Bsc:1": X2WOTCItemData(
-        display_name = weapon_mod_item_prefix + "Basic Scope",
+        display_name = WEAPON_MOD_ITEM_PREFIX + "Basic Scope",
         id = get_new_item_id(),
         type = "Resource",
         tags = {"filler", "weapon_mod", "scope", "basic"}
     ),
     "CritUpgrade_Bsc:1": X2WOTCItemData(
-        display_name = weapon_mod_item_prefix + "Basic Laser Sight",
+        display_name = WEAPON_MOD_ITEM_PREFIX + "Basic Laser Sight",
         id = get_new_item_id(),
         type = "Resource",
         tags = {"filler", "weapon_mod", "laser_sight", "basic"}
     ),
     "ReloadUpgrade_Bsc:1": X2WOTCItemData(
-        display_name = weapon_mod_item_prefix + "Basic Auto-Loader",
+        display_name = WEAPON_MOD_ITEM_PREFIX + "Basic Auto-Loader",
         id = get_new_item_id(),
         type = "Resource",
         tags = {"filler", "weapon_mod", "auto_loader", "basic"}
     ),
     "FreeKillUpgrade_Bsc:1": X2WOTCItemData(
-        display_name = weapon_mod_item_prefix + "Basic Repeater",
+        display_name = WEAPON_MOD_ITEM_PREFIX + "Basic Repeater",
         id = get_new_item_id(),
         type = "Resource",
         tags = {"filler", "weapon_mod", "repeater", "basic"}
     ),
     "MissDamageUpgrade_Bsc:1": X2WOTCItemData(
-        display_name = weapon_mod_item_prefix + "Basic Stock",
+        display_name = WEAPON_MOD_ITEM_PREFIX + "Basic Stock",
         id = get_new_item_id(),
         type = "Resource",
         tags = {"filler", "weapon_mod", "stock", "basic"}
     ),
     "FreeFireUpgrade_Bsc:1": X2WOTCItemData(
-        display_name = weapon_mod_item_prefix + "Basic Hair Trigger",
+        display_name = WEAPON_MOD_ITEM_PREFIX + "Basic Hair Trigger",
         id = get_new_item_id(),
         type = "Resource",
         tags = {"filler", "weapon_mod", "hair_trigger", "basic"}
     ),
     "ClipSizeUpgrade_Bsc:1": X2WOTCItemData(
-        display_name = weapon_mod_item_prefix + "Basic Expanded Magazine",
+        display_name = WEAPON_MOD_ITEM_PREFIX + "Basic Expanded Magazine",
         id = get_new_item_id(),
         type = "Resource",
         tags = {"filler", "weapon_mod", "expanded_magazine", "basic"}
@@ -970,43 +981,43 @@ basic_weapon_mod_items: dict[str, X2WOTCItemData] = {
 
 advanced_weapon_mod_items: dict[str, X2WOTCItemData] = {
     "AimUpgrade_Adv:1": X2WOTCItemData(
-        display_name = weapon_mod_item_prefix + "Advanced Scope",
+        display_name = WEAPON_MOD_ITEM_PREFIX + "Advanced Scope",
         id = get_new_item_id(),
         type = "Resource",
         tags = {"filler", "weapon_mod", "scope", "advanced"}
     ),
     "CritUpgrade_Adv:1": X2WOTCItemData(
-        display_name = weapon_mod_item_prefix + "Advanced Laser Sight",
+        display_name = WEAPON_MOD_ITEM_PREFIX + "Advanced Laser Sight",
         id = get_new_item_id(),
         type = "Resource",
         tags = {"filler", "weapon_mod", "laser_sight", "advanced"}
     ),
     "ReloadUpgrade_Adv:1": X2WOTCItemData(
-        display_name = weapon_mod_item_prefix + "Advanced Auto-Loader",
+        display_name = WEAPON_MOD_ITEM_PREFIX + "Advanced Auto-Loader",
         id = get_new_item_id(),
         type = "Resource",
         tags = {"filler", "weapon_mod", "auto_loader", "advanced"}
     ),
     "FreeKillUpgrade_Adv:1": X2WOTCItemData(
-        display_name = weapon_mod_item_prefix + "Advanced Repeater",
+        display_name = WEAPON_MOD_ITEM_PREFIX + "Advanced Repeater",
         id = get_new_item_id(),
         type = "Resource",
         tags = {"filler", "weapon_mod", "repeater", "advanced"}
     ),
     "MissDamageUpgrade_Adv:1": X2WOTCItemData(
-        display_name = weapon_mod_item_prefix + "Advanced Stock",
+        display_name = WEAPON_MOD_ITEM_PREFIX + "Advanced Stock",
         id = get_new_item_id(),
         type = "Resource",
         tags = {"filler", "weapon_mod", "stock", "advanced"}
     ),
     "FreeFireUpgrade_Adv:1": X2WOTCItemData(
-        display_name = weapon_mod_item_prefix + "Advanced Hair Trigger",
+        display_name = WEAPON_MOD_ITEM_PREFIX + "Advanced Hair Trigger",
         id = get_new_item_id(),
         type = "Resource",
         tags = {"filler", "weapon_mod", "hair_trigger", "advanced"}
     ),
     "ClipSizeUpgrade_Adv:1": X2WOTCItemData(
-        display_name = weapon_mod_item_prefix + "Advanced Expanded Magazine",
+        display_name = WEAPON_MOD_ITEM_PREFIX + "Advanced Expanded Magazine",
         id = get_new_item_id(),
         type = "Resource",
         tags = {"filler", "weapon_mod", "expanded_magazine", "advanced"}
@@ -1015,49 +1026,49 @@ advanced_weapon_mod_items: dict[str, X2WOTCItemData] = {
 
 superior_weapon_mod_items: dict[str, X2WOTCItemData] = {
     "AimUpgrade_Sup:1": X2WOTCItemData(
-        display_name = weapon_mod_item_prefix + "Superior Scope",
+        display_name = WEAPON_MOD_ITEM_PREFIX + "Superior Scope",
         id = get_new_item_id(),
         classification = IC.useful,
         type = "Resource",
         tags = {"filler", "weapon_mod", "scope", "superior"}
     ),
     "CritUpgrade_Sup:1": X2WOTCItemData(
-        display_name = weapon_mod_item_prefix + "Superior Laser Sight",
+        display_name = WEAPON_MOD_ITEM_PREFIX + "Superior Laser Sight",
         id = get_new_item_id(),
         classification = IC.useful,
         type = "Resource",
         tags = {"filler", "weapon_mod", "laser_sight", "superior"}
     ),
     "ReloadUpgrade_Sup:1": X2WOTCItemData(
-        display_name = weapon_mod_item_prefix + "Superior Auto-Loader",
+        display_name = WEAPON_MOD_ITEM_PREFIX + "Superior Auto-Loader",
         id = get_new_item_id(),
         classification = IC.useful,
         type = "Resource",
         tags = {"filler", "weapon_mod", "auto_loader", "superior"}
     ),
     "FreeKillUpgrade_Sup:1": X2WOTCItemData(
-        display_name = weapon_mod_item_prefix + "Superior Repeater",
+        display_name = WEAPON_MOD_ITEM_PREFIX + "Superior Repeater",
         id = get_new_item_id(),
         classification = IC.useful,
         type = "Resource",
         tags = {"filler", "weapon_mod", "repeater", "superior"}
     ),
     "MissDamageUpgrade_Sup:1": X2WOTCItemData(
-        display_name = weapon_mod_item_prefix + "Superior Stock",
+        display_name = WEAPON_MOD_ITEM_PREFIX + "Superior Stock",
         id = get_new_item_id(),
         classification = IC.useful,
         type = "Resource",
         tags = {"filler", "weapon_mod", "stock", "superior"}
     ),
     "FreeFireUpgrade_Sup:1": X2WOTCItemData(
-        display_name = weapon_mod_item_prefix + "Superior Hair Trigger",
+        display_name = WEAPON_MOD_ITEM_PREFIX + "Superior Hair Trigger",
         id = get_new_item_id(),
         classification = IC.useful,
         type = "Resource",
         tags = {"filler", "weapon_mod", "hair_trigger", "superior"}
     ),
     "ClipSizeUpgrade_Sup:1": X2WOTCItemData(
-        display_name = weapon_mod_item_prefix + "Superior Expanded Magazine",
+        display_name = WEAPON_MOD_ITEM_PREFIX + "Superior Expanded Magazine",
         id = get_new_item_id(),
         classification = IC.useful,
         type = "Resource",
@@ -1071,31 +1082,31 @@ superior_weapon_mod_items: dict[str, X2WOTCItemData] = {
 
 basic_pcs_items: dict[str, X2WOTCItemData] = {
     "CommonPCSSpeed:1": X2WOTCItemData(
-        display_name = pcs_item_prefix + "Basic Speed",
+        display_name = PCS_ITEM_PREFIX + "Basic Speed",
         id = get_new_item_id(),
         type = "Resource",
         tags = {"filler", "pcs", "speed", "basic"}
     ),
     "CommonPCSConditioning:1": X2WOTCItemData(
-        display_name = pcs_item_prefix + "Basic Conditioning",
+        display_name = PCS_ITEM_PREFIX + "Basic Conditioning",
         id = get_new_item_id(),
         type = "Resource",
         tags = {"filler", "pcs", "conditioning", "basic"}
     ),
     "CommonPCSFocus:1": X2WOTCItemData(
-        display_name = pcs_item_prefix + "Basic Focus",
+        display_name = PCS_ITEM_PREFIX + "Basic Focus",
         id = get_new_item_id(),
         type = "Resource",
         tags = {"filler", "pcs", "focus", "basic"}
     ),
     "CommonPCSPerception:1": X2WOTCItemData(
-        display_name = pcs_item_prefix + "Basic Perception",
+        display_name = PCS_ITEM_PREFIX + "Basic Perception",
         id = get_new_item_id(),
         type = "Resource",
         tags = {"filler", "pcs", "perception", "basic"}
     ),
     "CommonPCSAgility:1": X2WOTCItemData(
-        display_name = pcs_item_prefix + "Basic Agility",
+        display_name = PCS_ITEM_PREFIX + "Basic Agility",
         id = get_new_item_id(),
         type = "Resource",
         tags = {"filler", "pcs", "agility", "basic"}
@@ -1104,31 +1115,31 @@ basic_pcs_items: dict[str, X2WOTCItemData] = {
 
 advanced_pcs_items: dict[str, X2WOTCItemData] = {
     "RarePCSSpeed:1": X2WOTCItemData(
-        display_name = pcs_item_prefix + "Advanced Speed",
+        display_name = PCS_ITEM_PREFIX + "Advanced Speed",
         id = get_new_item_id(),
         type = "Resource",
         tags = {"filler", "pcs", "speed", "advanced"}
     ),
     "RarePCSConditioning:1": X2WOTCItemData(
-        display_name = pcs_item_prefix + "Advanced Conditioning",
+        display_name = PCS_ITEM_PREFIX + "Advanced Conditioning",
         id = get_new_item_id(),
         type = "Resource",
         tags = {"filler", "pcs", "conditioning", "advanced"}
     ),
     "RarePCSFocus:1": X2WOTCItemData(
-        display_name = pcs_item_prefix + "Advanced Focus",
+        display_name = PCS_ITEM_PREFIX + "Advanced Focus",
         id = get_new_item_id(),
         type = "Resource",
         tags = {"filler", "pcs", "focus", "advanced"}
     ),
     "RarePCSPerception:1": X2WOTCItemData(
-        display_name = pcs_item_prefix + "Advanced Perception",
+        display_name = PCS_ITEM_PREFIX + "Advanced Perception",
         id = get_new_item_id(),
         type = "Resource",
         tags = {"filler", "pcs", "perception", "advanced"}
     ),
     "RarePCSAgility:1": X2WOTCItemData(
-        display_name = pcs_item_prefix + "Advanced Agility",
+        display_name = PCS_ITEM_PREFIX + "Advanced Agility",
         id = get_new_item_id(),
         type = "Resource",
         tags = {"filler", "pcs", "agility", "advanced"}
@@ -1137,35 +1148,35 @@ advanced_pcs_items: dict[str, X2WOTCItemData] = {
 
 superior_pcs_items: dict[str, X2WOTCItemData] = {
     "EpicPCSSpeed:1": X2WOTCItemData(
-        display_name = pcs_item_prefix + "Superior Speed",
+        display_name = PCS_ITEM_PREFIX + "Superior Speed",
         id = get_new_item_id(),
         classification = IC.useful,
         type = "Resource",
         tags = {"filler", "pcs", "speed", "superior"}
     ),
     "EpicPCSConditioning:1": X2WOTCItemData(
-        display_name = pcs_item_prefix + "Superior Conditioning",
+        display_name = PCS_ITEM_PREFIX + "Superior Conditioning",
         id = get_new_item_id(),
         classification = IC.useful,
         type = "Resource",
         tags = {"filler", "pcs", "conditioning", "superior"}
     ),
     "EpicPCSFocus:1": X2WOTCItemData(
-        display_name = pcs_item_prefix + "Superior Focus",
+        display_name = PCS_ITEM_PREFIX + "Superior Focus",
         id = get_new_item_id(),
         classification = IC.useful,
         type = "Resource",
         tags = {"filler", "pcs", "focus", "superior"}
     ),
     "EpicPCSPerception:1": X2WOTCItemData(
-        display_name = pcs_item_prefix + "Superior Perception",
+        display_name = PCS_ITEM_PREFIX + "Superior Perception",
         id = get_new_item_id(),
         classification = IC.useful,
         type = "Resource",
         tags = {"filler", "pcs", "perception", "superior"}
     ),
     "EpicPCSAgility:1": X2WOTCItemData(
-        display_name = pcs_item_prefix + "Superior Agility",
+        display_name = PCS_ITEM_PREFIX + "Superior Agility",
         id = get_new_item_id(),
         classification = IC.useful,
         type = "Resource",
@@ -1179,7 +1190,7 @@ superior_pcs_items: dict[str, X2WOTCItemData] = {
 
 scientist_items: dict[str, X2WOTCItemData] = {
     "Scientist:1": X2WOTCItemData(
-        display_name = staff_item_prefix + "1 Scientist",
+        display_name = STAFF_ITEM_PREFIX + "1 Scientist",
         id = get_new_item_id(),
         classification = IC.useful,
         type = "Staff",
@@ -1189,7 +1200,7 @@ scientist_items: dict[str, X2WOTCItemData] = {
 
 engineer_items: dict[str, X2WOTCItemData] = {
     "Engineer:1": X2WOTCItemData(
-        display_name = staff_item_prefix + "1 Engineer",
+        display_name = STAFF_ITEM_PREFIX + "1 Engineer",
         id = get_new_item_id(),
         classification = IC.useful,
         type = "Staff",
@@ -1203,7 +1214,7 @@ engineer_items: dict[str, X2WOTCItemData] = {
 
 doom_items: dict[str, X2WOTCItemData] = {
     "Doom:1": X2WOTCItemData(
-        display_name = trap_item_prefix + "Avatar Project +1",
+        display_name = TRAP_ITEM_PREFIX + "Avatar Project +1",
         id = get_new_item_id(),
         classification = IC.trap,
         type = "Trap",
@@ -1213,7 +1224,7 @@ doom_items: dict[str, X2WOTCItemData] = {
 
 force_level_items: dict[str, X2WOTCItemData] = {
     "ForceLevel:1": X2WOTCItemData(
-        display_name = trap_item_prefix + "Force Level +1",
+        display_name = TRAP_ITEM_PREFIX + "Force Level +1",
         id = get_new_item_id(),
         classification = IC.trap,
         type = "Trap",

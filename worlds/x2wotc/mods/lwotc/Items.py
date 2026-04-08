@@ -1,12 +1,12 @@
 from BaseClasses import ItemClassification as IC
 
-from worlds.x2wotc.ItemData import X2WOTCItemData, get_new_item_id, tech_item_prefix, pcs_item_prefix
+from worlds.x2wotc.ItemData import X2WOTCItemData, TECH_ITEM_PREFIX, PCS_ITEM_PREFIX, get_new_item_id
 
 
 # For the full definition of X2WOTCItemData, see worlds/x2wotc/ItemData.py
 lwotc_items: dict[str, X2WOTCItemData] = {
     "LaserWeaponsCompleted": X2WOTCItemData(
-        display_name = tech_item_prefix + "Laser Weapons",
+        display_name = TECH_ITEM_PREFIX + "Laser Weapons",
         id = get_new_item_id(),
         classification = IC.progression | IC.useful,
         type = "TechCompleted",
@@ -15,7 +15,7 @@ lwotc_items: dict[str, X2WOTCItemData] = {
         normal_location = "LaserWeapons"
     ),
     "AdvancedLasersCompleted": X2WOTCItemData(
-        display_name = tech_item_prefix + "Advanced Laser Weapons",
+        display_name = TECH_ITEM_PREFIX + "Advanced Laser Weapons",
         id = get_new_item_id(),
         classification = IC.progression | IC.useful,
         type = "TechCompleted",
@@ -24,7 +24,7 @@ lwotc_items: dict[str, X2WOTCItemData] = {
         normal_location = "AdvancedLasers"
     ),
     "CoilgunsCompleted": X2WOTCItemData(
-        display_name = tech_item_prefix + "Coilguns",
+        display_name = TECH_ITEM_PREFIX + "Coilguns",
         id = get_new_item_id(),
         classification = IC.progression | IC.useful,
         type = "TechCompleted",
@@ -33,7 +33,7 @@ lwotc_items: dict[str, X2WOTCItemData] = {
         normal_location = "Coilguns"
     ),
     "AdvancedCoilgunsCompleted": X2WOTCItemData(
-        display_name = tech_item_prefix + "Advanced Coilguns",
+        display_name = TECH_ITEM_PREFIX + "Advanced Coilguns",
         id = get_new_item_id(),
         classification = IC.progression | IC.useful,
         type = "TechCompleted",
@@ -42,7 +42,7 @@ lwotc_items: dict[str, X2WOTCItemData] = {
         normal_location = "AdvancedCoilguns"
     ),
     "ProgressiveRifleTechLwotcCompleted": X2WOTCItemData(
-        display_name = tech_item_prefix + "Progressive Rifle (LWOTC)",
+        display_name = TECH_ITEM_PREFIX + "Progressive Rifle (LWOTC)",
         id = get_new_item_id(),
         classification = IC.progression | IC.useful,
         type = "TechCompleted",
@@ -55,7 +55,7 @@ lwotc_items: dict[str, X2WOTCItemData] = {
         ]
     ),
     "ProgressiveRifleTechLwotcCompleted+": X2WOTCItemData(
-        display_name = tech_item_prefix + "Progressive Rifle+ (LWOTC)",
+        display_name = TECH_ITEM_PREFIX + "Progressive Rifle+ (LWOTC)",
         id = get_new_item_id(),
         classification = IC.progression | IC.useful,
         type = "TechCompleted",
@@ -69,7 +69,7 @@ lwotc_items: dict[str, X2WOTCItemData] = {
         ]
     ),
     "ProgressiveAdvancedWeaponTechLwotcCompleted": X2WOTCItemData(
-        display_name = tech_item_prefix + "Progressive Advanced Weapons (LWOTC)",
+        display_name = TECH_ITEM_PREFIX + "Progressive Advanced Weapons (LWOTC)",
         id = get_new_item_id(),
         classification = IC.progression | IC.useful,
         type = "TechCompleted",
@@ -81,7 +81,7 @@ lwotc_items: dict[str, X2WOTCItemData] = {
         ]
     ),
     "ProgressiveHeavyArmorTechLwotcCompleted": X2WOTCItemData(
-        display_name = tech_item_prefix + "Progressive Heavy Armor (LWOTC)",
+        display_name = TECH_ITEM_PREFIX + "Progressive Heavy Armor (LWOTC)",
         id = get_new_item_id(),
         classification = IC.progression | IC.useful,
         type = "TechCompleted",
@@ -92,7 +92,7 @@ lwotc_items: dict[str, X2WOTCItemData] = {
         ]
     ),
     "ProgressiveLightArmorTechLwotcCompleted": X2WOTCItemData(
-        display_name = tech_item_prefix + "Progressive Light Armor (LWOTC)",
+        display_name = TECH_ITEM_PREFIX + "Progressive Light Armor (LWOTC)",
         id = get_new_item_id(),
         classification = IC.progression | IC.useful,
         type = "TechCompleted",
@@ -103,7 +103,7 @@ lwotc_items: dict[str, X2WOTCItemData] = {
         ]
     ),
     "AutopsyDroneCompleted": X2WOTCItemData(
-        display_name = tech_item_prefix + "ADVENT Robotics",
+        display_name = TECH_ITEM_PREFIX + "ADVENT Robotics",
         id = get_new_item_id(),
         classification = IC.progression | IC.useful,
         type = "TechCompleted",
@@ -112,7 +112,7 @@ lwotc_items: dict[str, X2WOTCItemData] = {
         normal_location = "AutopsyDrone"
     ),
     "ProgressiveGREMLINTechLwotcCompleted": X2WOTCItemData(
-        display_name = tech_item_prefix + "Progressive GREMLIN (LWOTC)",
+        display_name = TECH_ITEM_PREFIX + "Progressive GREMLIN (LWOTC)",
         id = get_new_item_id(),
         classification = IC.progression | IC.useful,
         type = "TechCompleted",
@@ -123,7 +123,7 @@ lwotc_items: dict[str, X2WOTCItemData] = {
         ]
     ),
     "AutopsyMutonEliteCompleted": X2WOTCItemData(
-        display_name = tech_item_prefix + "Muton Elite Autopsy",
+        display_name = TECH_ITEM_PREFIX + "Muton Elite Autopsy",
         id = get_new_item_id(),
         classification = IC.progression,
         type = "TechCompleted",
@@ -132,7 +132,7 @@ lwotc_items: dict[str, X2WOTCItemData] = {
         normal_location = "AutopsyMutonElite"
     ),
     "EXOSuitCompleted": X2WOTCItemData(
-        display_name = tech_item_prefix + "Battle Armor",
+        display_name = TECH_ITEM_PREFIX + "Battle Armor",
         id = get_new_item_id(),
         classification = IC.progression,
         type = "TechCompleted",
@@ -141,7 +141,7 @@ lwotc_items: dict[str, X2WOTCItemData] = {
         normal_location = "EXOSuit"
     ),
     "WARSuitCompleted": X2WOTCItemData(
-        display_name = tech_item_prefix + "Battlesuits",
+        display_name = TECH_ITEM_PREFIX + "Battlesuits",
         id = get_new_item_id(),
         classification = IC.progression,
         type = "TechCompleted",
@@ -150,7 +150,7 @@ lwotc_items: dict[str, X2WOTCItemData] = {
         normal_location = "WARSuit"
     ),
     "SpiderSuitCompleted": X2WOTCItemData(
-        display_name = tech_item_prefix + "Mobile Armor",
+        display_name = TECH_ITEM_PREFIX + "Mobile Armor",
         id = get_new_item_id(),
         classification = IC.progression,
         type = "TechCompleted",
@@ -159,7 +159,7 @@ lwotc_items: dict[str, X2WOTCItemData] = {
         normal_location = "SpiderSuit"
     ),
     "WraithSuitCompleted": X2WOTCItemData(
-        display_name = tech_item_prefix + "Shadow Armor",
+        display_name = TECH_ITEM_PREFIX + "Shadow Armor",
         id = get_new_item_id(),
         classification = IC.progression,
         type = "TechCompleted",
@@ -171,127 +171,127 @@ lwotc_items: dict[str, X2WOTCItemData] = {
 
 lwotc_filler_items: dict[str, X2WOTCItemData] = {
     "DepthPerceptionPCS:1": X2WOTCItemData(
-        display_name = pcs_item_prefix + "Depth Perception",
+        display_name = PCS_ITEM_PREFIX + "Depth Perception",
         id = get_new_item_id(),
         type = "Resource",
         classification = IC.useful,
         tags = {"filler", "pcs", "depth_perception"},
     ),
     "HyperReactivePupilsPCS:1": X2WOTCItemData(
-        display_name = pcs_item_prefix + "Hyper-Reactive Pupils",
+        display_name = PCS_ITEM_PREFIX + "Hyper-Reactive Pupils",
         id = get_new_item_id(),
         type = "Resource",
         classification = IC.useful,
         tags = {"filler", "pcs", "hyper_reactive_pupils"},
     ),
     "CombatAwarenessPCS:1": X2WOTCItemData(
-        display_name = pcs_item_prefix + "Unwavering Stance",
+        display_name = PCS_ITEM_PREFIX + "Unwavering Stance",
         id = get_new_item_id(),
         type = "Resource",
         classification = IC.useful,
         tags = {"filler", "pcs", "combat_awareness"},
     ),
     "CombatRushPCS:1": X2WOTCItemData(
-        display_name = pcs_item_prefix + "Combat Rush",
+        display_name = PCS_ITEM_PREFIX + "Combat Rush",
         id = get_new_item_id(),
         type = "Resource",
         classification = IC.useful,
         tags = {"filler", "pcs", "combat_rush"},
     ),
     "DamageControlPCS:1": X2WOTCItemData(
-        display_name = pcs_item_prefix + "Damage Control",
+        display_name = PCS_ITEM_PREFIX + "Damage Control",
         id = get_new_item_id(),
         type = "Resource",
         classification = IC.useful,
         tags = {"filler", "pcs", "damage_control"},
     ),
     "AbsorptionFieldsPCS:1": X2WOTCItemData(
-        display_name = pcs_item_prefix + "Absorption Fields",
+        display_name = PCS_ITEM_PREFIX + "Absorption Fields",
         id = get_new_item_id(),
         type = "Resource",
         classification = IC.useful,
         tags = {"filler", "pcs", "absorption_fields"},
     ),
     "BodyShieldPCS:1": X2WOTCItemData(
-        display_name = pcs_item_prefix + "Body Shield",
+        display_name = PCS_ITEM_PREFIX + "Body Shield",
         id = get_new_item_id(),
         type = "Resource",
         classification = IC.useful,
         tags = {"filler", "pcs", "body_shield"},
     ),
     "EmergencyLifeSupportPCS:1": X2WOTCItemData(
-        display_name = pcs_item_prefix + "Emergency Life Support",
+        display_name = PCS_ITEM_PREFIX + "Emergency Life Support",
         id = get_new_item_id(),
         type = "Resource",
         classification = IC.useful,
         tags = {"filler", "pcs", "emergency_life_support"},
     ),
     "IronSkinPCS:1": X2WOTCItemData(
-        display_name = pcs_item_prefix + "Iron Skin",
+        display_name = PCS_ITEM_PREFIX + "Iron Skin",
         id = get_new_item_id(),
         type = "Resource",
         classification = IC.useful,
         tags = {"filler", "pcs", "iron_skin"},
     ),
     "SmartMacrophagesPCS:1": X2WOTCItemData(
-        display_name = pcs_item_prefix + "Smart Macrophages",
+        display_name = PCS_ITEM_PREFIX + "Smart Macrophages",
         id = get_new_item_id(),
         type = "Resource",
         classification = IC.useful,
         tags = {"filler", "pcs", "smart_macrophages"},
     ),
     "CommonPCSDefense:1": X2WOTCItemData(
-        display_name = pcs_item_prefix + "Basic Defense",
+        display_name = PCS_ITEM_PREFIX + "Basic Defense",
         id = get_new_item_id(),
         type = "Resource",
         tags = {"filler", "pcs", "basic", "defense"},
     ),
     "RarePCSDefense:1": X2WOTCItemData(
-        display_name = pcs_item_prefix + "Advanced Defense",
+        display_name = PCS_ITEM_PREFIX + "Advanced Defense",
         id = get_new_item_id(),
         type = "Resource",
         tags = {"filler", "pcs", "advanced", "defense"},
     ),
     "EpicPCSDefense:1": X2WOTCItemData(
-        display_name = pcs_item_prefix + "Superior Defense",
+        display_name = PCS_ITEM_PREFIX + "Superior Defense",
         id = get_new_item_id(),
         type = "Resource",
         classification = IC.useful,
         tags = {"filler", "pcs", "superior", "defense"},
     ),
     "CommonPCSPsi:1": X2WOTCItemData(
-        display_name = pcs_item_prefix + "Basic Psi",
+        display_name = PCS_ITEM_PREFIX + "Basic Psi",
         id = get_new_item_id(),
         type = "Resource",
         tags = {"filler", "pcs", "basic", "psi"},
     ),
     "RarePCSPsi:1": X2WOTCItemData(
-        display_name = pcs_item_prefix + "Advanced Psi",
+        display_name = PCS_ITEM_PREFIX + "Advanced Psi",
         id = get_new_item_id(),
         type = "Resource",
         tags = {"filler", "pcs", "advanced", "psi"},
     ),
     "EpicPCSPsi:1": X2WOTCItemData(
-        display_name = pcs_item_prefix + "Superior Psi",
+        display_name = PCS_ITEM_PREFIX + "Superior Psi",
         id = get_new_item_id(),
         type = "Resource",
         classification = IC.useful,
         tags = {"filler", "pcs", "superior", "psi"},
     ),
     "CommonPCSHacking:1": X2WOTCItemData(
-        display_name = pcs_item_prefix + "Basic Hacking",
+        display_name = PCS_ITEM_PREFIX + "Basic Hacking",
         id = get_new_item_id(),
         type = "Resource",
         tags = {"filler", "pcs", "basic", "hacking"},
     ),
     "RarePCSHacking:1": X2WOTCItemData(
-        display_name = pcs_item_prefix + "Advanced Hacking",
+        display_name = PCS_ITEM_PREFIX + "Advanced Hacking",
         id = get_new_item_id(),
         type = "Resource",
         tags = {"filler", "pcs", "advanced", "hacking"},
     ),
     "EpicPCSHacking:1": X2WOTCItemData(
-        display_name = pcs_item_prefix + "Superior Hacking",
+        display_name = PCS_ITEM_PREFIX + "Superior Hacking",
         id = get_new_item_id(),
         type = "Resource",
         classification = IC.useful,

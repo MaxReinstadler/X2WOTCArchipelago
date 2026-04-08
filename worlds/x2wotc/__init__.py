@@ -9,15 +9,15 @@ from worlds.AutoWorld import WebWorld, World
 from worlds.LauncherComponents import Component, Type, components
 from worlds.LauncherComponents import launch as launch_component
 
-from .Constants import CLIENT_NAME, GAME_NAME, GOAL_VALUE_TO_EVENT
 from .EnemyRando import EnemyRandoManager
 from .Items import ItemManager, X2WOTCItem, item_display_name_to_id, item_groups
+from .LocationData import GOAL_VALUE_TO_LOCATION
 from .Locations import LocationManager, loc_display_name_to_id, loc_groups
 from .Options import AlienHuntersDLC, ChosenHuntSanity, ChosenWeaponFragments, EnemyPlandoPreset, X2WOTCOptions
 from .Options import x2wotc_option_groups
 from .Regions import RegionManager
 from .Rules import RuleManager
-from .Version import world_minimum_client_version
+from .Version import CLIENT_NAME, GAME_NAME, world_minimum_client_version
 
 from .mods import mods_data
 
@@ -246,7 +246,7 @@ class X2WOTCWorld(World):
 
         # Exclude post-goal locations (after location data becomes immutable)
         if self.options.exclude_post_goal_locations:
-            goal_difficulty = self.loc_manager.get_location_difficulty(GOAL_VALUE_TO_EVENT[self.options.goal.value])
+            goal_difficulty = self.loc_manager.get_location_difficulty(GOAL_VALUE_TO_LOCATION[self.options.goal.value])
             for loc_name, loc_data in self.loc_manager.location_table.items():
                 if not loc_data.id or not self.loc_manager.enabled[loc_name]:
                     continue
@@ -347,7 +347,7 @@ class X2WOTCWorld(World):
             "minimum_client_version": world_minimum_client_version,
             "seed_name": self.multiworld.seed_name,
             "player": self.player,
-            "goal_location": GOAL_VALUE_TO_EVENT[self.options.goal.value],
+            "goal_location": GOAL_VALUE_TO_LOCATION[self.options.goal.value],
             "enemy_shuffle": self.enemy_rando_manager.enemy_shuffle,
         }
 

@@ -1,12 +1,12 @@
 from BaseClasses import ItemClassification
 
-from worlds.x2wotc.ItemData import X2WOTCItemData, get_new_item_id, tech_item_prefix
+from worlds.x2wotc.ItemData import X2WOTCItemData, TECH_ITEM_PREFIX, get_new_item_id
 from worlds.x2wotc.LocationData import (
     X2WOTCLocationData,
-    get_new_location_id,
-    tech_location_prefix,
-    enemy_kill_location_prefix,
-    item_use_location_prefix
+    TECH_LOCATION_PREFIX,
+    ENEMY_KILL_LOCATION_PREFIX,
+    ITEM_USE_LOCATION_PREFIX,
+    get_new_location_id
 )
 
 
@@ -15,7 +15,7 @@ name = "Muton Destroyer - WotC"
 
 items: dict[str, X2WOTCItemData] = {
     "Autopsy_AshMutonDestroyerCompleted": X2WOTCItemData(
-        display_name = tech_item_prefix + "Muton Destroyer Autopsy",
+        display_name = TECH_ITEM_PREFIX + "Muton Destroyer Autopsy",
         id = get_new_item_id(),
         classification = ItemClassification.progression,
         layer = "Strategy",
@@ -28,7 +28,7 @@ items: dict[str, X2WOTCItemData] = {
 
 locations: dict[str, X2WOTCLocationData] = {
     "Autopsy_AshMutonDestroyer": X2WOTCLocationData(
-        display_name = tech_location_prefix + "Muton Destroyer Autopsy",
+        display_name = TECH_LOCATION_PREFIX + "Muton Destroyer Autopsy",
         id = get_new_location_id(),
         layer = "Strategy",
         type = "Tech",
@@ -37,14 +37,14 @@ locations: dict[str, X2WOTCLocationData] = {
         normal_item = "Autopsy_AshMutonDestroyerCompleted"
     ),
     "KillAshMutonDestroyer": X2WOTCLocationData(
-        display_name = enemy_kill_location_prefix + "Muton Destroyer",
+        display_name = ENEMY_KILL_LOCATION_PREFIX + "Muton Destroyer",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "EnemyKill",
         difficulty = 29.0  # FL 7
     ),
     "UseWeapon_AshConcussionGrenadeXCom": X2WOTCLocationData(
-        display_name = item_use_location_prefix + "Concussion Grenade",
+        display_name = ITEM_USE_LOCATION_PREFIX + "Concussion Grenade",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "ItemUse",

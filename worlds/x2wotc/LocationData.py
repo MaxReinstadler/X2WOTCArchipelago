@@ -1,6 +1,23 @@
 from typing import NamedTuple
 
 
+TECH_LOCATION_PREFIX = "Research "
+SHADOW_TECH_LOCATION_PREFIX = "Research "
+ENEMY_KILL_LOCATION_PREFIX = "Kill "
+ENEMY_DESTROY_LOCATION_PREFIX = "Destroy "
+ITEM_USE_LOCATION_PREFIX = "Use "
+COVERT_ACTION_LOCATION_PREFIX = "Complete "
+
+GOAL_VALUE_TO_LOCATION: dict[int, str] = {
+    0: "Victory",
+    1: "Broadcast",
+    2: "Stronghold1",
+    3: "Stronghold2",
+    4: "Stronghold3"
+}
+GOAL_LOCATION_TO_VALUE: dict[str, int] = {location: value for value, location in GOAL_VALUE_TO_LOCATION.items()}
+
+
 class X2WOTCLocationData(NamedTuple):
     display_name: str
     id: int | None = None
@@ -31,12 +48,6 @@ def get_new_location_id() -> int:
     next_location_id += 1
     return new_location_id
 
-tech_location_prefix = "Research "
-shadow_tech_location_prefix = "Research "
-enemy_kill_location_prefix = "Kill "
-enemy_destroy_location_prefix = "Destroy "
-item_use_location_prefix = "Use "
-covert_action_location_prefix = "Complete "
 
 ########################################################################################################################
 ##                            TECH LOCATIONS (RESEARCH PROJECTS / SHADOW PROJECTS)                                    ##
@@ -48,14 +59,14 @@ covert_action_location_prefix = "Complete "
 
 vanilla_weapon_techs: dict[str, X2WOTCLocationData] = {
     "ModularWeapons": X2WOTCLocationData(
-        display_name = tech_location_prefix + "Modular Weapons",
+        display_name = TECH_LOCATION_PREFIX + "Modular Weapons",
         id = get_new_location_id(),
         type = "Tech",
         difficulty = 0.0,
         normal_item = "ModularWeaponsCompleted"
     ),
     "MagnetizedWeapons": X2WOTCLocationData(
-        display_name = tech_location_prefix + "Magnetic Weapons",
+        display_name = TECH_LOCATION_PREFIX + "Magnetic Weapons",
         id = get_new_location_id(),
         type = "Tech",
         tags = {"tree:ModularWeapons"},
@@ -63,7 +74,7 @@ vanilla_weapon_techs: dict[str, X2WOTCLocationData] = {
         normal_item = "MagnetizedWeaponsCompleted"
     ),
     "GaussWeapons": X2WOTCLocationData(
-        display_name = tech_location_prefix + "Gauss Weapons",
+        display_name = TECH_LOCATION_PREFIX + "Gauss Weapons",
         id = get_new_location_id(),
         type = "Tech",
         tags = {"tree:MagnetizedWeapons"},
@@ -71,7 +82,7 @@ vanilla_weapon_techs: dict[str, X2WOTCLocationData] = {
         normal_item = "GaussWeaponsCompleted"
     ),
     "PlasmaRifle": X2WOTCLocationData(
-        display_name = tech_location_prefix + "Plasma Rifle",
+        display_name = TECH_LOCATION_PREFIX + "Plasma Rifle",
         id = get_new_location_id(),
         type = "Tech",
         tags = {"tree:Tech_Elerium"},
@@ -79,7 +90,7 @@ vanilla_weapon_techs: dict[str, X2WOTCLocationData] = {
         normal_item = "PlasmaRifleCompleted"
     ),
     "HeavyPlasma": X2WOTCLocationData(
-        display_name = tech_location_prefix + "Beam Cannon",
+        display_name = TECH_LOCATION_PREFIX + "Beam Cannon",
         id = get_new_location_id(),
         type = "Tech",
         tags = {"tree:PlasmaRifle"},
@@ -87,7 +98,7 @@ vanilla_weapon_techs: dict[str, X2WOTCLocationData] = {
         normal_item = "HeavyPlasmaCompleted"
     ),
     "PlasmaSniper": X2WOTCLocationData(
-        display_name = tech_location_prefix + "Plasma Lance",
+        display_name = TECH_LOCATION_PREFIX + "Plasma Lance",
         id = get_new_location_id(),
         type = "Tech",
         tags = {"tree:PlasmaRifle", "tree:AutopsyArchon"},
@@ -95,7 +106,7 @@ vanilla_weapon_techs: dict[str, X2WOTCLocationData] = {
         normal_item = "PlasmaSniperCompleted"
     ),
     "AlloyCannon": X2WOTCLocationData(
-        display_name = tech_location_prefix + "Storm Gun",
+        display_name = TECH_LOCATION_PREFIX + "Storm Gun",
         id = get_new_location_id(),
         type = "Tech",
         tags = {"tree:PlasmaRifle"},
@@ -106,7 +117,7 @@ vanilla_weapon_techs: dict[str, X2WOTCLocationData] = {
 
 vanilla_armor_techs: dict[str, X2WOTCLocationData] = {
     "HybridMaterials": X2WOTCLocationData(
-        display_name = tech_location_prefix + "Hybrid Materials",
+        display_name = TECH_LOCATION_PREFIX + "Hybrid Materials",
         id = get_new_location_id(),
         type = "Tech",
         tags = {"diff:AdvTrooperM1", "diff:AdvTrooperM2", "diff:AdvTrooperM3"},
@@ -114,7 +125,7 @@ vanilla_armor_techs: dict[str, X2WOTCLocationData] = {
         normal_item = "HybridMaterialsCompleted"
     ),
     "PlatedArmor": X2WOTCLocationData(
-        display_name = tech_location_prefix + "Plated Armor",
+        display_name = TECH_LOCATION_PREFIX + "Plated Armor",
         id = get_new_location_id(),
         type = "Tech",
         tags = {"tree:HybridMaterials"},
@@ -122,7 +133,7 @@ vanilla_armor_techs: dict[str, X2WOTCLocationData] = {
         normal_item = "PlatedArmorCompleted"
     ),
     "PoweredArmor": X2WOTCLocationData(
-        display_name = tech_location_prefix + "Powered Armor",
+        display_name = TECH_LOCATION_PREFIX + "Powered Armor",
         id = get_new_location_id(),
         type = "Tech",
         tags = {"tree:Tech_Elerium"},
@@ -133,98 +144,98 @@ vanilla_armor_techs: dict[str, X2WOTCLocationData] = {
 
 vanilla_autopsy_techs: dict[str, X2WOTCLocationData] = {
     "AutopsySectoid": X2WOTCLocationData(
-        display_name = tech_location_prefix + "Sectoid Autopsy",
+        display_name = TECH_LOCATION_PREFIX + "Sectoid Autopsy",
         id = get_new_location_id(),
         type = "Tech",
         tags = {"autopsy", "tree:AlienBiotech", "diff:Sectoid"},
         normal_item = "AutopsySectoidCompleted"
     ),
     "AutopsyViper": X2WOTCLocationData(
-        display_name = tech_location_prefix + "Viper Autopsy",
+        display_name = TECH_LOCATION_PREFIX + "Viper Autopsy",
         id = get_new_location_id(),
         type = "Tech",
         tags = {"autopsy", "tree:AlienBiotech", "diff:Viper"},
         normal_item = "AutopsyViperCompleted"
     ),
     "AutopsyMuton": X2WOTCLocationData(
-        display_name = tech_location_prefix + "Muton Autopsy",
+        display_name = TECH_LOCATION_PREFIX + "Muton Autopsy",
         id = get_new_location_id(),
         type = "Tech",
         tags = {"autopsy", "tree:AlienBiotech", "diff:Muton"},
         normal_item = "AutopsyMutonCompleted"
     ),
     "AutopsyBerserker": X2WOTCLocationData(
-        display_name = tech_location_prefix + "Berserker Autopsy",
+        display_name = TECH_LOCATION_PREFIX + "Berserker Autopsy",
         id = get_new_location_id(),
         type = "Tech",
         tags = {"autopsy", "tree:AlienBiotech", "diff:Berserker"},
         normal_item = "AutopsyBerserkerCompleted"
     ),
     "AutopsyArchon": X2WOTCLocationData(
-        display_name = tech_location_prefix + "Archon Autopsy",
+        display_name = TECH_LOCATION_PREFIX + "Archon Autopsy",
         id = get_new_location_id(),
         type = "Tech",
         tags = {"autopsy", "tree:AlienBiotech", "diff:Archon"},
         normal_item = "AutopsyArchonCompleted"
     ),
     "AutopsyGatekeeper": X2WOTCLocationData(
-        display_name = tech_location_prefix + "Gatekeeper Autopsy",
+        display_name = TECH_LOCATION_PREFIX + "Gatekeeper Autopsy",
         id = get_new_location_id(),
         type = "Tech",
         tags = {"autopsy", "tree:AlienBiotech", "diff:Gatekeeper"},
         normal_item = "AutopsyGatekeeperCompleted"
     ),
     "AutopsyAndromedon": X2WOTCLocationData(
-        display_name = tech_location_prefix + "Andromedon Autopsy",
+        display_name = TECH_LOCATION_PREFIX + "Andromedon Autopsy",
         id = get_new_location_id(),
         type = "Tech",
         tags = {"autopsy", "tree:AlienBiotech", "diff:AndromedonRobot"},
         normal_item = "AutopsyAndromedonCompleted"
     ),
     "AutopsyFaceless": X2WOTCLocationData(
-        display_name = tech_location_prefix + "Faceless Autopsy",
+        display_name = TECH_LOCATION_PREFIX + "Faceless Autopsy",
         id = get_new_location_id(),
         type = "Tech",
         tags = {"autopsy", "tree:AlienBiotech", "diff:Faceless"},
         normal_item = "AutopsyFacelessCompleted"
     ),
     "AutopsyChryssalid": X2WOTCLocationData(
-        display_name = tech_location_prefix + "Chryssalid Autopsy",
+        display_name = TECH_LOCATION_PREFIX + "Chryssalid Autopsy",
         id = get_new_location_id(),
         type = "Tech",
         tags = {"autopsy", "tree:AlienBiotech", "diff:Chryssalid"},
         normal_item = "AutopsyChryssalidCompleted"
     ),
     "AutopsyAdventTrooper": X2WOTCLocationData(
-        display_name = tech_location_prefix + "ADVENT Trooper Autopsy",
+        display_name = TECH_LOCATION_PREFIX + "ADVENT Trooper Autopsy",
         id = get_new_location_id(),
         type = "Tech",
         tags = {"autopsy", "tree:AutopsyAdventOfficer", "diff:AdvTrooperM1", "diff:AdvTrooperM2", "diff:AdvTrooperM3"},
         normal_item = "AutopsyAdventTrooperCompleted"
     ),
     "AutopsyAdventStunLancer": X2WOTCLocationData(
-        display_name = tech_location_prefix + "ADVENT Stun Lancer Autopsy",
+        display_name = TECH_LOCATION_PREFIX + "ADVENT Stun Lancer Autopsy",
         id = get_new_location_id(),
         type = "Tech",
         tags = {"autopsy", "tree:AutopsyAdventOfficer", "diff:AdvStunLancerM1", "diff:AdvStunLancerM2", "diff:AdvStunLancerM3"},
         normal_item = "AutopsyAdventStunLancerCompleted"
     ),
     "AutopsyAdventShieldbearer": X2WOTCLocationData(
-        display_name = tech_location_prefix + "ADVENT Shieldbearer Autopsy",
+        display_name = TECH_LOCATION_PREFIX + "ADVENT Shieldbearer Autopsy",
         id = get_new_location_id(),
         type = "Tech",
         tags = {"autopsy", "tree:AutopsyAdventOfficer", "diff:AdvShieldBearerM2", "diff:AdvShieldBearerM3"},
         normal_item = "AutopsyAdventShieldbearerCompleted"
     ),
     "AutopsyAdventMEC": X2WOTCLocationData(
-        display_name = tech_location_prefix + "ADVENT MEC Breakdown",
+        display_name = TECH_LOCATION_PREFIX + "ADVENT MEC Breakdown",
         id = get_new_location_id(),
         type = "Tech",
         tags = {"autopsy", "tree:AutopsyAdventOfficer", "diff:AdvMEC_M1", "diff:AdvMEC_M2"},
         normal_item = "AutopsyAdventMECCompleted"
     ),
     "AutopsyAdventTurret": X2WOTCLocationData(
-        display_name = tech_location_prefix + "ADVENT Turret Breakdown",
+        display_name = TECH_LOCATION_PREFIX + "ADVENT Turret Breakdown",
         id = get_new_location_id(),
         type = "Tech",
         tags = {"autopsy", "tree:AutopsyAdventOfficer"},
@@ -232,7 +243,7 @@ vanilla_autopsy_techs: dict[str, X2WOTCLocationData] = {
         normal_item = "AutopsyAdventTurretCompleted"
     ),
     "AutopsySectopod": X2WOTCLocationData(
-        display_name = tech_location_prefix + "Sectopod Breakdown",
+        display_name = TECH_LOCATION_PREFIX + "Sectopod Breakdown",
         id = get_new_location_id(),
         type = "Tech",
         tags = {"autopsy", "tree:AlienBiotech", "diff:Sectopod"},
@@ -242,7 +253,7 @@ vanilla_autopsy_techs: dict[str, X2WOTCLocationData] = {
 
 vanilla_goldenpath_techs: dict[str, X2WOTCLocationData] = {
     "AlienBiotech": X2WOTCLocationData(
-        display_name = tech_location_prefix + "Alien Biotech",
+        display_name = TECH_LOCATION_PREFIX + "Alien Biotech",
         id = get_new_location_id(),
         type = "Tech",
         tags = {"goldenpath"},
@@ -250,7 +261,7 @@ vanilla_goldenpath_techs: dict[str, X2WOTCLocationData] = {
         normal_item = "AlienBiotechCompleted"
     ),
     "ResistanceCommunications": X2WOTCLocationData(
-        display_name = tech_location_prefix + "Resistance Communications",
+        display_name = TECH_LOCATION_PREFIX + "Resistance Communications",
         id = get_new_location_id(),
         type = "Tech",
         tags = {"goldenpath"},
@@ -258,7 +269,7 @@ vanilla_goldenpath_techs: dict[str, X2WOTCLocationData] = {
         normal_item = "ResistanceCommunicationsCompleted"
     ),
     "AutopsyAdventOfficer": X2WOTCLocationData(
-        display_name = tech_location_prefix + "ADVENT Officer Autopsy",
+        display_name = TECH_LOCATION_PREFIX + "ADVENT Officer Autopsy",
         id = get_new_location_id(),
         type = "Tech",
         tags = {"goldenpath", "autopsy", "tree:AlienBiotech"},
@@ -266,7 +277,7 @@ vanilla_goldenpath_techs: dict[str, X2WOTCLocationData] = {
         normal_item = "AutopsyAdventOfficerCompleted"
     ),
     "AlienEncryption": X2WOTCLocationData(
-        display_name = tech_location_prefix + "Alien Encryption",
+        display_name = TECH_LOCATION_PREFIX + "Alien Encryption",
         id = get_new_location_id(),
         type = "Tech",
         tags = {"goldenpath"},
@@ -274,7 +285,7 @@ vanilla_goldenpath_techs: dict[str, X2WOTCLocationData] = {
         normal_item = "AlienEncryptionCompleted"
     ),
     "CodexBrainPt1": X2WOTCLocationData(
-        display_name = shadow_tech_location_prefix + "Codex Brain",
+        display_name = SHADOW_TECH_LOCATION_PREFIX + "Codex Brain",
         id = get_new_location_id(),
         type = "Tech",
         tags = {"goldenpath", "autopsy", "shadow", "skulljack_officer"},
@@ -282,7 +293,7 @@ vanilla_goldenpath_techs: dict[str, X2WOTCLocationData] = {
         normal_item = "CodexBrainPt1Completed"
     ),
     "CodexBrainPt2": X2WOTCLocationData(
-        display_name = shadow_tech_location_prefix + "Encrypted Codex Data",
+        display_name = SHADOW_TECH_LOCATION_PREFIX + "Encrypted Codex Data",
         id = get_new_location_id(),
         type = "Tech",
         tags = {"goldenpath", "shadow", "tree:CodexBrainPt1"},
@@ -290,7 +301,7 @@ vanilla_goldenpath_techs: dict[str, X2WOTCLocationData] = {
         normal_item = "CodexBrainPt2Completed"
     ),
     "BlacksiteData": X2WOTCLocationData(
-        display_name = shadow_tech_location_prefix + "Blacksite Vial",
+        display_name = SHADOW_TECH_LOCATION_PREFIX + "Blacksite Vial",
         id = get_new_location_id(),
         type = "Tech",
         tags = {"goldenpath", "shadow"},
@@ -298,7 +309,7 @@ vanilla_goldenpath_techs: dict[str, X2WOTCLocationData] = {
         normal_item = "BlacksiteDataCompleted"
     ),
     "ForgeStasisSuit": X2WOTCLocationData(
-        display_name = shadow_tech_location_prefix + "Recovered ADVENT Stasis Suit",
+        display_name = SHADOW_TECH_LOCATION_PREFIX + "Recovered ADVENT Stasis Suit",
         id = get_new_location_id(),
         type = "Tech",
         tags = {"goldenpath", "shadow"},
@@ -306,7 +317,7 @@ vanilla_goldenpath_techs: dict[str, X2WOTCLocationData] = {
         normal_item = "ForgeStasisSuitCompleted"
     ),
     "PsiGate": X2WOTCLocationData(
-        display_name = shadow_tech_location_prefix + "Psionic Gate",
+        display_name = SHADOW_TECH_LOCATION_PREFIX + "Psionic Gate",
         id = get_new_location_id(),
         type = "Tech",
         tags = {"goldenpath", "shadow"},
@@ -314,7 +325,7 @@ vanilla_goldenpath_techs: dict[str, X2WOTCLocationData] = {
         normal_item = "PsiGateCompleted"
     ),
     "AutopsyAdventPsiWitch": X2WOTCLocationData(
-        display_name = shadow_tech_location_prefix + "Avatar Autopsy",
+        display_name = SHADOW_TECH_LOCATION_PREFIX + "Avatar Autopsy",
         id = get_new_location_id(),
         type = "Tech",
         tags = {"goldenpath", "autopsy", "shadow", "tree:ForgeStasisSuit", "tree:PsiGate", "skulljack_codex"},
@@ -325,7 +336,7 @@ vanilla_goldenpath_techs: dict[str, X2WOTCLocationData] = {
 
 vanilla_other_techs: dict[str, X2WOTCLocationData] = {
     "ResistanceRadio": X2WOTCLocationData(
-        display_name = tech_location_prefix + "Resistance Radio",
+        display_name = TECH_LOCATION_PREFIX + "Resistance Radio",
         id = get_new_location_id(),
         type = "Tech",
         tags = {"tree:ResistanceCommunications"},
@@ -333,7 +344,7 @@ vanilla_other_techs: dict[str, X2WOTCLocationData] = {
         normal_item = "ResistanceRadioCompleted"
     ),
     "Tech_Elerium": X2WOTCLocationData(
-        display_name = tech_location_prefix + "Elerium",
+        display_name = TECH_LOCATION_PREFIX + "Elerium",
         id = get_new_location_id(),
         type = "Tech",
         tags = {"tree:GaussWeapons", "tree:PlatedArmor", "tree:AutopsyAdventMEC"},
@@ -341,7 +352,7 @@ vanilla_other_techs: dict[str, X2WOTCLocationData] = {
         normal_item = "EleriumCompleted"
     ),
     "Psionics": X2WOTCLocationData(
-        display_name = tech_location_prefix + "Psionics",
+        display_name = TECH_LOCATION_PREFIX + "Psionics",
         id = get_new_location_id(),
         type = "Tech",
         tags = {"tree:AutopsySectoid"},
@@ -356,7 +367,7 @@ vanilla_other_techs: dict[str, X2WOTCLocationData] = {
 
 alien_hunters_techs: dict[str, X2WOTCLocationData] = {
     "ExperimentalWeapons": X2WOTCLocationData(
-        display_name = tech_location_prefix + "Experimental Weapons",
+        display_name = TECH_LOCATION_PREFIX + "Experimental Weapons",
         id = get_new_location_id(),
         type = "Tech",
         difficulty = 5.0,
@@ -364,7 +375,7 @@ alien_hunters_techs: dict[str, X2WOTCLocationData] = {
         normal_item = "ExperimentalWeaponsCompleted"
     ),
     "AutopsyViperKing": X2WOTCLocationData(
-        display_name = tech_location_prefix + "Viper King Autopsy",
+        display_name = TECH_LOCATION_PREFIX + "Viper King Autopsy",
         id = get_new_location_id(),
         type = "Tech",
         tags = {"autopsy", "kill_ruler", "tree:AlienBiotech"},
@@ -373,7 +384,7 @@ alien_hunters_techs: dict[str, X2WOTCLocationData] = {
         normal_item = "AutopsyViperKingCompleted"
     ),
     "AutopsyBerserkerQueen": X2WOTCLocationData(
-        display_name = tech_location_prefix + "Berserker Queen Autopsy",
+        display_name = TECH_LOCATION_PREFIX + "Berserker Queen Autopsy",
         id = get_new_location_id(),
         type = "Tech",
         tags = {"autopsy", "kill_ruler", "tree:AlienBiotech"},
@@ -382,7 +393,7 @@ alien_hunters_techs: dict[str, X2WOTCLocationData] = {
         normal_item = "AutopsyBerserkerQueenCompleted"
     ),
     "AutopsyArchonKing": X2WOTCLocationData(
-        display_name = tech_location_prefix + "Archon King Autopsy",
+        display_name = TECH_LOCATION_PREFIX + "Archon King Autopsy",
         id = get_new_location_id(),
         type = "Tech",
         tags = {"autopsy", "kill_ruler", "tree:AlienBiotech"},
@@ -398,7 +409,7 @@ alien_hunters_techs: dict[str, X2WOTCLocationData] = {
 
 wotc_autopsy_techs: dict[str, X2WOTCLocationData] = {
     "AutopsyAdventPurifier": X2WOTCLocationData(
-        display_name = tech_location_prefix + "ADVENT Purifier Autopsy",
+        display_name = TECH_LOCATION_PREFIX + "ADVENT Purifier Autopsy",
         id = get_new_location_id(),
         type = "Tech",
         tags = {"autopsy", "tree:AutopsyAdventOfficer", "diff:AdvPurifierM1", "diff:AdvPurifierM2", "diff:AdvPurifierM3"},
@@ -406,7 +417,7 @@ wotc_autopsy_techs: dict[str, X2WOTCLocationData] = {
         normal_item = "AutopsyAdventPurifierCompleted"
     ),
     "AutopsyAdventPriest": X2WOTCLocationData(
-        display_name = tech_location_prefix + "ADVENT Priest Autopsy",
+        display_name = TECH_LOCATION_PREFIX + "ADVENT Priest Autopsy",
         id = get_new_location_id(),
         type = "Tech",
         tags = {"autopsy", "tree:AutopsyAdventOfficer", "diff:AdvPriestM1", "diff:AdvPriestM2", "diff:AdvPriestM3"},
@@ -414,7 +425,7 @@ wotc_autopsy_techs: dict[str, X2WOTCLocationData] = {
         normal_item = "AutopsyAdventPriestCompleted"
     ),
     "AutopsyTheLost": X2WOTCLocationData(
-        display_name = tech_location_prefix + "The Lost Autopsy",
+        display_name = TECH_LOCATION_PREFIX + "The Lost Autopsy",
         id = get_new_location_id(),
         type = "Tech",
         tags = {"autopsy", "tree:AlienBiotech"},
@@ -423,7 +434,7 @@ wotc_autopsy_techs: dict[str, X2WOTCLocationData] = {
         normal_item = "AutopsyTheLostCompleted"
     ),
     "AutopsySpectre": X2WOTCLocationData(
-        display_name = tech_location_prefix + "Spectre Autopsy",
+        display_name = TECH_LOCATION_PREFIX + "Spectre Autopsy",
         id = get_new_location_id(),
         type = "Tech",
         tags = {"autopsy", "tree:AlienBiotech", "diff:SpectreM1", "diff:SpectreM2"},
@@ -434,7 +445,7 @@ wotc_autopsy_techs: dict[str, X2WOTCLocationData] = {
 
 wotc_chosen_weapon_techs: dict[str, X2WOTCLocationData] = {
     "ChosenAssassinWeapons": X2WOTCLocationData(
-        display_name = tech_location_prefix + "Assassin Weapons",
+        display_name = TECH_LOCATION_PREFIX + "Assassin Weapons",
         id = get_new_location_id(),
         type = "Tech",
         tags = {"defeat_assassin"},
@@ -443,7 +454,7 @@ wotc_chosen_weapon_techs: dict[str, X2WOTCLocationData] = {
         normal_item = "ChosenAssassinWeaponsCompleted"
     ),
     "ChosenHunterWeapons": X2WOTCLocationData(
-        display_name = tech_location_prefix + "Hunter Weapons",
+        display_name = TECH_LOCATION_PREFIX + "Hunter Weapons",
         id = get_new_location_id(),
         type = "Tech",
         tags = {"defeat_hunter"},
@@ -452,7 +463,7 @@ wotc_chosen_weapon_techs: dict[str, X2WOTCLocationData] = {
         normal_item = "ChosenHunterWeaponsCompleted"
     ),
     "ChosenWarlockWeapons": X2WOTCLocationData(
-        display_name = tech_location_prefix + "Warlock Weapons",
+        display_name = TECH_LOCATION_PREFIX + "Warlock Weapons",
         id = get_new_location_id(),
         type = "Tech",
         tags = {"defeat_warlock"},
@@ -472,91 +483,91 @@ wotc_chosen_weapon_techs: dict[str, X2WOTCLocationData] = {
 
 vanilla_enemy_kills: dict[str, X2WOTCLocationData] = {
     "KillSectoid": X2WOTCLocationData(
-        display_name = enemy_kill_location_prefix + "Sectoid",
+        display_name = ENEMY_KILL_LOCATION_PREFIX + "Sectoid",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "EnemyKill",
         tags = {"diff:Sectoid"}
     ),
     "KillViper": X2WOTCLocationData(
-        display_name = enemy_kill_location_prefix + "Viper",
+        display_name = ENEMY_KILL_LOCATION_PREFIX + "Viper",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "EnemyKill",
         tags = {"diff:Viper"}
     ),
     "KillMuton": X2WOTCLocationData(
-        display_name = enemy_kill_location_prefix + "Muton",
+        display_name = ENEMY_KILL_LOCATION_PREFIX + "Muton",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "EnemyKill",
         tags = {"diff:Muton"}
     ),
     "KillBerserker": X2WOTCLocationData(
-        display_name = enemy_kill_location_prefix + "Berserker",
+        display_name = ENEMY_KILL_LOCATION_PREFIX + "Berserker",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "EnemyKill",
         tags = {"diff:Berserker"}
     ),
     "KillArchon": X2WOTCLocationData(
-        display_name = enemy_kill_location_prefix + "Archon",
+        display_name = ENEMY_KILL_LOCATION_PREFIX + "Archon",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "EnemyKill",
         tags = {"diff:Archon"}
     ),
     "KillGatekeeper": X2WOTCLocationData(
-        display_name = enemy_kill_location_prefix + "Gatekeeper",
+        display_name = ENEMY_KILL_LOCATION_PREFIX + "Gatekeeper",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "EnemyKill",
         tags = {"diff:Gatekeeper"}
     ),
     "KillAndromedon": X2WOTCLocationData(
-        display_name = enemy_kill_location_prefix + "Andromedon",
+        display_name = ENEMY_KILL_LOCATION_PREFIX + "Andromedon",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "EnemyKill",
         tags = {"diff:Andromedon"}
     ),
     "KillAndromedonRobot": X2WOTCLocationData(
-        display_name = enemy_destroy_location_prefix + "Andromedon Shell",
+        display_name = ENEMY_DESTROY_LOCATION_PREFIX + "Andromedon Shell",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "EnemyKill",
         tags = {"diff:AndromedonRobot"}
     ),
     "KillFaceless": X2WOTCLocationData(
-        display_name = enemy_kill_location_prefix + "Faceless",
+        display_name = ENEMY_KILL_LOCATION_PREFIX + "Faceless",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "EnemyKill",
         tags = {"diff:Faceless"},
     ),
     "KillChryssalid": X2WOTCLocationData(
-        display_name = enemy_kill_location_prefix + "Chryssalid",
+        display_name = ENEMY_KILL_LOCATION_PREFIX + "Chryssalid",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "EnemyKill",
         tags = {"diff:Chryssalid"}
     ),
     "KillAdventTrooper": X2WOTCLocationData(
-        display_name = enemy_kill_location_prefix + "ADVENT Trooper",
+        display_name = ENEMY_KILL_LOCATION_PREFIX + "ADVENT Trooper",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "EnemyKill",
         tags = {"diff:AdvTrooperM1", "diff:AdvTrooperM2", "diff:AdvTrooperM3"}
     ),
     "KillAdventCaptain": X2WOTCLocationData(
-        display_name = enemy_kill_location_prefix + "ADVENT Officer",
+        display_name = ENEMY_KILL_LOCATION_PREFIX + "ADVENT Officer",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "EnemyKill",
         difficulty = 0.0  # Not shuffled, Gatecrasher
     ),
     "KillCyberus": X2WOTCLocationData(
-        display_name = enemy_kill_location_prefix + "Codex",
+        display_name = ENEMY_KILL_LOCATION_PREFIX + "Codex",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "EnemyKill",
@@ -564,7 +575,7 @@ vanilla_enemy_kills: dict[str, X2WOTCLocationData] = {
         difficulty = 30.0  # Not shuffled
     ),
     "KillAdventPsiWitch": X2WOTCLocationData(
-        display_name = enemy_kill_location_prefix + "Avatar",
+        display_name = ENEMY_KILL_LOCATION_PREFIX + "Avatar",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "EnemyKill",
@@ -572,35 +583,35 @@ vanilla_enemy_kills: dict[str, X2WOTCLocationData] = {
         difficulty = 60.0  # Not shuffled
     ),
     "KillAdventStunLancer": X2WOTCLocationData(
-        display_name = enemy_kill_location_prefix + "ADVENT Stun Lancer",
+        display_name = ENEMY_KILL_LOCATION_PREFIX + "ADVENT Stun Lancer",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "EnemyKill",
         tags = {"diff:AdvStunLancerM1", "diff:AdvStunLancerM2", "diff:AdvStunLancerM3"}
     ),
     "KillAdventShieldBearer": X2WOTCLocationData(
-        display_name = enemy_kill_location_prefix + "ADVENT Shieldbearer",
+        display_name = ENEMY_KILL_LOCATION_PREFIX + "ADVENT Shieldbearer",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "EnemyKill",
         tags = {"diff:AdvShieldBearerM2", "diff:AdvShieldBearerM3"}
     ),
     "KillAdventMEC": X2WOTCLocationData(
-        display_name = enemy_destroy_location_prefix + "ADVENT MEC",
+        display_name = ENEMY_DESTROY_LOCATION_PREFIX + "ADVENT MEC",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "EnemyKill",
         tags = {"diff:AdvMEC_M1", "diff:AdvMEC_M2"}
     ),
     "KillAdventTurret": X2WOTCLocationData(
-        display_name = enemy_destroy_location_prefix + "ADVENT Turret",
+        display_name = ENEMY_DESTROY_LOCATION_PREFIX + "ADVENT Turret",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "EnemyKill",
         difficulty = 30.0  # Not shuffled
     ),
     "KillSectopod": X2WOTCLocationData(
-        display_name = enemy_destroy_location_prefix + "Sectopod",
+        display_name = ENEMY_DESTROY_LOCATION_PREFIX + "Sectopod",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "EnemyKill",
@@ -614,7 +625,7 @@ vanilla_enemy_kills: dict[str, X2WOTCLocationData] = {
 
 alien_hunters_enemy_kills: dict[str, X2WOTCLocationData] = {
     "KillViperKing": X2WOTCLocationData(
-        display_name = enemy_kill_location_prefix + "Viper King",
+        display_name = ENEMY_KILL_LOCATION_PREFIX + "Viper King",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "EnemyKill",
@@ -623,7 +634,7 @@ alien_hunters_enemy_kills: dict[str, X2WOTCLocationData] = {
         dlc = "AH"
     ),
     "KillBerserkerQueen": X2WOTCLocationData(
-        display_name = enemy_kill_location_prefix + "Berserker Queen",
+        display_name = ENEMY_KILL_LOCATION_PREFIX + "Berserker Queen",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "EnemyKill",
@@ -632,7 +643,7 @@ alien_hunters_enemy_kills: dict[str, X2WOTCLocationData] = {
         dlc = "AH"
     ),
     "KillArchonKing": X2WOTCLocationData(
-        display_name = enemy_kill_location_prefix + "Archon King",
+        display_name = ENEMY_KILL_LOCATION_PREFIX + "Archon King",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "EnemyKill",
@@ -648,7 +659,7 @@ alien_hunters_enemy_kills: dict[str, X2WOTCLocationData] = {
 
 wotc_enemy_kills: dict[str, X2WOTCLocationData] = {
     "KillAdventPurifier": X2WOTCLocationData(
-        display_name = enemy_kill_location_prefix + "ADVENT Purifier",
+        display_name = ENEMY_KILL_LOCATION_PREFIX + "ADVENT Purifier",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "EnemyKill",
@@ -656,7 +667,7 @@ wotc_enemy_kills: dict[str, X2WOTCLocationData] = {
         dlc = "WOTC"
     ),
     "KillAdventPriest": X2WOTCLocationData(
-        display_name = enemy_kill_location_prefix + "ADVENT Priest",
+        display_name = ENEMY_KILL_LOCATION_PREFIX + "ADVENT Priest",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "EnemyKill",
@@ -664,7 +675,7 @@ wotc_enemy_kills: dict[str, X2WOTCLocationData] = {
         dlc = "WOTC"
     ),
     "KillTheLost": X2WOTCLocationData(
-        display_name = enemy_kill_location_prefix + "The Lost",
+        display_name = ENEMY_KILL_LOCATION_PREFIX + "The Lost",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "EnemyKill",
@@ -672,7 +683,7 @@ wotc_enemy_kills: dict[str, X2WOTCLocationData] = {
         dlc = "WOTC"
     ),
     "KillSpectre": X2WOTCLocationData(
-        display_name = enemy_kill_location_prefix + "Spectre",
+        display_name = ENEMY_KILL_LOCATION_PREFIX + "Spectre",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "EnemyKill",
@@ -680,7 +691,7 @@ wotc_enemy_kills: dict[str, X2WOTCLocationData] = {
         dlc = "WOTC"
     ),
     "KillChosenAssassin": X2WOTCLocationData(
-        display_name = enemy_kill_location_prefix + "Chosen Assassin",
+        display_name = ENEMY_KILL_LOCATION_PREFIX + "Chosen Assassin",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "EnemyKill",
@@ -689,7 +700,7 @@ wotc_enemy_kills: dict[str, X2WOTCLocationData] = {
         dlc = "WOTC"
     ),
     "KillChosenSniper": X2WOTCLocationData(
-        display_name = enemy_kill_location_prefix + "Chosen Hunter",
+        display_name = ENEMY_KILL_LOCATION_PREFIX + "Chosen Hunter",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "EnemyKill",
@@ -698,7 +709,7 @@ wotc_enemy_kills: dict[str, X2WOTCLocationData] = {
         dlc = "WOTC"
     ),
     "KillChosenWarlock": X2WOTCLocationData(
-        display_name = enemy_kill_location_prefix + "Chosen Warlock",
+        display_name = ENEMY_KILL_LOCATION_PREFIX + "Chosen Warlock",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "EnemyKill",
@@ -723,7 +734,7 @@ wotc_enemy_kills: dict[str, X2WOTCLocationData] = {
 
 vanilla_item_uses: dict[str, X2WOTCLocationData] = {
     "UseMedikit": X2WOTCLocationData(
-        display_name = item_use_location_prefix + "Medikit",
+        display_name = ITEM_USE_LOCATION_PREFIX + "Medikit",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "ItemUse",
@@ -731,7 +742,7 @@ vanilla_item_uses: dict[str, X2WOTCLocationData] = {
         difficulty = 0.0  # 35 supplies
     ),
     "UseNanoMedikit": X2WOTCLocationData(
-        display_name = item_use_location_prefix + "Nanomedikit",
+        display_name = ITEM_USE_LOCATION_PREFIX + "Nanomedikit",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "ItemUse",
@@ -739,7 +750,7 @@ vanilla_item_uses: dict[str, X2WOTCLocationData] = {
         difficulty = 25.0  # 100 supplies, 1 core, 3 corpses (1 PG project)
     ),
     "UseSKULLJACK": X2WOTCLocationData(
-        display_name = item_use_location_prefix + "Skulljack",
+        display_name = ITEM_USE_LOCATION_PREFIX + "Skulljack",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "ItemUse",
@@ -747,7 +758,7 @@ vanilla_item_uses: dict[str, X2WOTCLocationData] = {
         difficulty = 15.0  # 50 supplies (1 PG project)
     ),
     "UseFragGrenade": X2WOTCLocationData(
-        display_name = item_use_location_prefix + "Frag Grenade",
+        display_name = ITEM_USE_LOCATION_PREFIX + "Frag Grenade",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "ItemUse",
@@ -755,7 +766,7 @@ vanilla_item_uses: dict[str, X2WOTCLocationData] = {
         difficulty = 0.0  # free
     ),
     "UseAlienGrenade": X2WOTCLocationData(
-        display_name = item_use_location_prefix + "Plasma Grenade",
+        display_name = ITEM_USE_LOCATION_PREFIX + "Plasma Grenade",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "ItemUse",
@@ -763,7 +774,7 @@ vanilla_item_uses: dict[str, X2WOTCLocationData] = {
         difficulty = 25.0  # 75 supplies, 1 cores, 5 alloys, 5 elerium (1 PG project)
     ),
     "UseProximityMine": X2WOTCLocationData(
-        display_name = item_use_location_prefix + "Proximity Mine",
+        display_name = ITEM_USE_LOCATION_PREFIX + "Proximity Mine",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "ItemUse",
@@ -771,7 +782,7 @@ vanilla_item_uses: dict[str, X2WOTCLocationData] = {
         difficulty = 5.0  # 100 supplies
     ),
     "UseFlashbangGrenade": X2WOTCLocationData(
-        display_name = item_use_location_prefix + "Flashbang Grenade",
+        display_name = ITEM_USE_LOCATION_PREFIX + "Flashbang Grenade",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "ItemUse",
@@ -779,7 +790,7 @@ vanilla_item_uses: dict[str, X2WOTCLocationData] = {
         difficulty = 0.0  # 35 supplies
     ),
     "UseEMPGrenade": X2WOTCLocationData(
-        display_name = item_use_location_prefix + "EMP Grenade",
+        display_name = ITEM_USE_LOCATION_PREFIX + "EMP Grenade",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "ItemUse",
@@ -787,7 +798,7 @@ vanilla_item_uses: dict[str, X2WOTCLocationData] = {
         difficulty = 20.0  # 50 supplies, 1 core (1 PG project)
     ),
     "UseEMPGrenadeMk2": X2WOTCLocationData(
-        display_name = item_use_location_prefix + "EMP Bomb",
+        display_name = ITEM_USE_LOCATION_PREFIX + "EMP Bomb",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "ItemUse",
@@ -795,7 +806,7 @@ vanilla_item_uses: dict[str, X2WOTCLocationData] = {
         difficulty = 40.0  # 100 supplies, 2 cores, 5 alloys, 5 elerium (3 PG projects)
     ),
     "UseSmokeGrenade": X2WOTCLocationData(
-        display_name = item_use_location_prefix + "Smoke Grenade",
+        display_name = ITEM_USE_LOCATION_PREFIX + "Smoke Grenade",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "ItemUse",
@@ -803,7 +814,7 @@ vanilla_item_uses: dict[str, X2WOTCLocationData] = {
         difficulty = 0.0  # 25 supplies
     ),
     "UseSmokeGrenadeMk2": X2WOTCLocationData(
-        display_name = item_use_location_prefix + "Smoke Bomb",
+        display_name = ITEM_USE_LOCATION_PREFIX + "Smoke Bomb",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "ItemUse",
@@ -811,7 +822,7 @@ vanilla_item_uses: dict[str, X2WOTCLocationData] = {
         difficulty = 35.0  # 100 supplies, 2 cores, 5 alloys, 5 elerium (2 PG projects)
     ),
     "UseBattleScanner": X2WOTCLocationData(
-        display_name = item_use_location_prefix + "Battle Scanner",
+        display_name = ITEM_USE_LOCATION_PREFIX + "Battle Scanner",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "ItemUse",
@@ -819,7 +830,7 @@ vanilla_item_uses: dict[str, X2WOTCLocationData] = {
         difficulty = 0.0  # 30 supplies
     ),
     "UseMimicBeacon": X2WOTCLocationData(
-        display_name = item_use_location_prefix + "Mimic Beacon",
+        display_name = ITEM_USE_LOCATION_PREFIX + "Mimic Beacon",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "ItemUse",
@@ -827,7 +838,7 @@ vanilla_item_uses: dict[str, X2WOTCLocationData] = {
         difficulty = 15.0  # 75 supplies, 2 corpses
     ),
     "UseCombatStims": X2WOTCLocationData(
-        display_name = item_use_location_prefix + "Overdrive Serum",
+        display_name = ITEM_USE_LOCATION_PREFIX + "Overdrive Serum",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "ItemUse",
@@ -835,7 +846,7 @@ vanilla_item_uses: dict[str, X2WOTCLocationData] = {
         difficulty = 0.0  # 35 supplies, 1 corpse
     ),
     "UseBluescreenRounds": X2WOTCLocationData(
-        display_name = item_use_location_prefix + "Bluescreen Rounds",
+        display_name = ITEM_USE_LOCATION_PREFIX + "Bluescreen Rounds",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "ItemUse",
@@ -843,7 +854,7 @@ vanilla_item_uses: dict[str, X2WOTCLocationData] = {
         difficulty = 20.0  # 75 supplies, 1 core (1 PG project)
     ),
     "UseExperimentalAmmo": X2WOTCLocationData(
-        display_name = item_use_location_prefix + "Experimental Ammo",
+        display_name = ITEM_USE_LOCATION_PREFIX + "Experimental Ammo",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "ItemUse",
@@ -851,7 +862,7 @@ vanilla_item_uses: dict[str, X2WOTCLocationData] = {
         difficulty = 15.0  # 1 core (1 PG project)
     ),
     "UseExperimentalGrenade": X2WOTCLocationData(
-        display_name = item_use_location_prefix + "Experimental Grenade",
+        display_name = ITEM_USE_LOCATION_PREFIX + "Experimental Grenade",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "ItemUse",
@@ -859,7 +870,7 @@ vanilla_item_uses: dict[str, X2WOTCLocationData] = {
         difficulty = 15.0  # 1 core (1 PG project)
     ),
     "UseExperimentalGrenadeMk2": X2WOTCLocationData(
-        display_name = item_use_location_prefix + "Experimental Bomb",
+        display_name = ITEM_USE_LOCATION_PREFIX + "Experimental Bomb",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "ItemUse",
@@ -867,7 +878,7 @@ vanilla_item_uses: dict[str, X2WOTCLocationData] = {
         difficulty = 35.0  # 50 supplies, 2 cores, 5 alloys, 5 elerium (2 PG projects)
     ),
     "UseRocketLauncher": X2WOTCLocationData(
-        display_name = item_use_location_prefix + "Rocket Launcher",
+        display_name = ITEM_USE_LOCATION_PREFIX + "Rocket Launcher",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "ItemUse",
@@ -875,7 +886,7 @@ vanilla_item_uses: dict[str, X2WOTCLocationData] = {
         difficulty = 25.0  # 1 core, 5 alloys, 5 elerium, 2 corpses (1 PG project)
     ),
     "UseExperimentalHeavyWeapon": X2WOTCLocationData(
-        display_name = item_use_location_prefix + "Experimental Heavy Weapon",
+        display_name = ITEM_USE_LOCATION_PREFIX + "Experimental Heavy Weapon",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "ItemUse",
@@ -883,7 +894,7 @@ vanilla_item_uses: dict[str, X2WOTCLocationData] = {
         difficulty = 35.0  # 2 cores, 5 alloys, 5 elerium, 2 corpses (2 PG projects)
     ),
     "UseExperimentalPoweredWeapon": X2WOTCLocationData(
-        display_name = item_use_location_prefix + "Experimental Powered Weapon",
+        display_name = ITEM_USE_LOCATION_PREFIX + "Experimental Powered Weapon",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "ItemUse",
@@ -898,7 +909,7 @@ vanilla_item_uses: dict[str, X2WOTCLocationData] = {
 
 alien_hunters_item_uses: dict[str, X2WOTCLocationData] = {
     "UseFrostbomb": X2WOTCLocationData(
-        display_name = item_use_location_prefix + "Frost Bomb",
+        display_name = ITEM_USE_LOCATION_PREFIX + "Frost Bomb",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "ItemUse",
@@ -914,7 +925,7 @@ alien_hunters_item_uses: dict[str, X2WOTCLocationData] = {
 
 wotc_item_uses: dict[str, X2WOTCLocationData] = {
     "UseUltrasonicLure": X2WOTCLocationData(
-        display_name = item_use_location_prefix + "Ultrasonic Lure",
+        display_name = ITEM_USE_LOCATION_PREFIX + "Ultrasonic Lure",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "ItemUse",
@@ -923,7 +934,7 @@ wotc_item_uses: dict[str, X2WOTCLocationData] = {
         dlc = "WOTC"
     ),
     "UseRefractionField": X2WOTCLocationData(
-        display_name = item_use_location_prefix + "Refraction Field",
+        display_name = ITEM_USE_LOCATION_PREFIX + "Refraction Field",
         id = get_new_location_id(),
         layer = "Tactical",
         type = "ItemUse",
@@ -943,7 +954,7 @@ wotc_item_uses: dict[str, X2WOTCLocationData] = {
 
 chosen_hunt_covert_actions: dict[str, X2WOTCLocationData] = {
     "ChosenHuntPt1:1": X2WOTCLocationData(
-        display_name = covert_action_location_prefix + "First Chosen Hunt 1/3",
+        display_name = COVERT_ACTION_LOCATION_PREFIX + "First Chosen Hunt 1/3",
         id = get_new_location_id(),
         type = "CovertAction",
         tags = {"chosen_hunt", "meet_first_chosen", "influence:0"},
@@ -951,7 +962,7 @@ chosen_hunt_covert_actions: dict[str, X2WOTCLocationData] = {
         dlc = "WOTC",
     ),
     "ChosenHuntPt1:2": X2WOTCLocationData(
-        display_name = covert_action_location_prefix + "Second Chosen Hunt 1/3",
+        display_name = COVERT_ACTION_LOCATION_PREFIX + "Second Chosen Hunt 1/3",
         id = get_new_location_id(),
         type = "CovertAction",
         tags = {"chosen_hunt", "meet_all_chosen", "influence:0"},
@@ -959,7 +970,7 @@ chosen_hunt_covert_actions: dict[str, X2WOTCLocationData] = {
         dlc = "WOTC",
     ),
     "ChosenHuntPt1:3": X2WOTCLocationData(
-        display_name = covert_action_location_prefix + "Third Chosen Hunt 1/3",
+        display_name = COVERT_ACTION_LOCATION_PREFIX + "Third Chosen Hunt 1/3",
         id = get_new_location_id(),
         type = "CovertAction",
         tags = {"chosen_hunt", "meet_all_chosen", "influence:0"},
@@ -967,7 +978,7 @@ chosen_hunt_covert_actions: dict[str, X2WOTCLocationData] = {
         dlc = "WOTC",
     ),
     "ChosenHuntPt2:1": X2WOTCLocationData(
-        display_name = covert_action_location_prefix + "First Chosen Hunt 2/3",
+        display_name = COVERT_ACTION_LOCATION_PREFIX + "First Chosen Hunt 2/3",
         id = get_new_location_id(),
         type = "CovertAction",
         tags = {"chosen_hunt", "meet_first_chosen", "influence:1"},
@@ -975,7 +986,7 @@ chosen_hunt_covert_actions: dict[str, X2WOTCLocationData] = {
         dlc = "WOTC",
     ),
     "ChosenHuntPt2:2": X2WOTCLocationData(
-        display_name = covert_action_location_prefix + "Second Chosen Hunt 2/3",
+        display_name = COVERT_ACTION_LOCATION_PREFIX + "Second Chosen Hunt 2/3",
         id = get_new_location_id(),
         type = "CovertAction",
         tags = {"chosen_hunt", "meet_all_chosen", "influence:3"},
@@ -983,7 +994,7 @@ chosen_hunt_covert_actions: dict[str, X2WOTCLocationData] = {
         dlc = "WOTC",
     ),
     "ChosenHuntPt2:3": X2WOTCLocationData(
-        display_name = covert_action_location_prefix + "Third Chosen Hunt 2/3",
+        display_name = COVERT_ACTION_LOCATION_PREFIX + "Third Chosen Hunt 2/3",
         id = get_new_location_id(),
         type = "CovertAction",
         tags = {"chosen_hunt", "meet_all_chosen", "influence:5"},
@@ -991,7 +1002,7 @@ chosen_hunt_covert_actions: dict[str, X2WOTCLocationData] = {
         dlc = "WOTC",
     ),
     "ChosenHuntPt3:1": X2WOTCLocationData(
-        display_name = covert_action_location_prefix + "First Chosen Hunt 3/3",
+        display_name = COVERT_ACTION_LOCATION_PREFIX + "First Chosen Hunt 3/3",
         id = get_new_location_id(),
         type = "CovertAction",
         tags = {"chosen_hunt", "meet_first_chosen", "influence:2"},
@@ -999,7 +1010,7 @@ chosen_hunt_covert_actions: dict[str, X2WOTCLocationData] = {
         dlc = "WOTC",
     ),
     "ChosenHuntPt3:2": X2WOTCLocationData(
-        display_name = covert_action_location_prefix + "Second Chosen Hunt 3/3",
+        display_name = COVERT_ACTION_LOCATION_PREFIX + "Second Chosen Hunt 3/3",
         id = get_new_location_id(),
         type = "CovertAction",
         tags = {"chosen_hunt", "meet_all_chosen", "influence:4"},
@@ -1007,7 +1018,7 @@ chosen_hunt_covert_actions: dict[str, X2WOTCLocationData] = {
         dlc = "WOTC",
     ),
     "ChosenHuntPt3:3": X2WOTCLocationData(
-        display_name = covert_action_location_prefix + "Third Chosen Hunt 3/3",
+        display_name = COVERT_ACTION_LOCATION_PREFIX + "Third Chosen Hunt 3/3",
         id = get_new_location_id(),
         type = "CovertAction",
         tags = {"chosen_hunt", "meet_all_chosen", "influence:6"},
