@@ -12,6 +12,8 @@ from Options import (
     Toggle
 )
 
+from .Constants import GOAL_EVENT_TO_VALUE
+
 from .mods import mod_names, mod_options
 
 
@@ -48,11 +50,11 @@ class Goal(Choice):
     alien_fortress and network_tower (without extra considerations) are only recommended for async settings.
     For sync settings, maybe try chosen_stronghold_1 first and experiment from there."""
     display_name = "Goal"
-    option_alien_fortress = 0
-    option_network_tower = 1
-    option_chosen_stronghold_1 = 2
-    option_chosen_stronghold_2 = 3
-    option_chosen_stronghold_3 = 4
+    option_alien_fortress = GOAL_EVENT_TO_VALUE["Victory"]
+    option_network_tower = GOAL_EVENT_TO_VALUE["Broadcast"]
+    option_chosen_stronghold_1 = GOAL_EVENT_TO_VALUE["Stronghold1"]
+    option_chosen_stronghold_2 = GOAL_EVENT_TO_VALUE["Stronghold2"]
+    option_chosen_stronghold_3 = GOAL_EVENT_TO_VALUE["Stronghold3"]
     default = option_alien_fortress
 
 
